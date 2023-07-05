@@ -1,11 +1,11 @@
-
 import express, { Express, Request, Response } from "express";
-import path from 'path'
-import cookieParser from 'cookie-parser'
-import logger from 'morgan'
-import createError from 'http-errors' 
-
-import indexRouter from './routes/index'
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import createError from "http-errors";
+import mongoose from "mongoose";
+import "dotenv/config";
+import indexRouter from "./routes/index";
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err:any, req: Request, res: Response, next:any) {
+app.use(function (err: any, req: Request, res: Response, next: any) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -36,6 +36,14 @@ app.use(function (err:any, req: Request, res: Response, next:any) {
   res.status(err.status || 500);
   res.render("error");
 });
-// listener
 
+// db connection
+mongoose
+  .connect(process.env.MONGODB_URI ?? "")
+  .then(() => {
+    console.log("MongoDB: Connection successful!");
+  })
+  .catch((err) => console.log(err));
+
+// listener
 module.exports = app;
