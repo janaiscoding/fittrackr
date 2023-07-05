@@ -1,15 +1,14 @@
-import express, { Express, Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 const router = express.Router();
+import postControllers from "../controllers/postControllers";
+//protected (gotta be logged on to see heh)
+router.get("/", postControllers.posts_get);
 
-const array: string[] = [];
-
-router.get("/", function (req: Request, res: Response, next) {
-  res.json({ array });
+router.get("/signup", (req, res, next) => {
+  res.json({ message: "auth signup get" });
 });
-
-router.post("/", function (req: Request, res: Response, next) {
-  array.push(req.body.message);
-  res.json({ message: "POST request simulation works" });
+router.get("/login", (req, res, next) => {
+  res.json({ message: "auth login get" });
 });
 
 export default router;
