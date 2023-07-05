@@ -2,7 +2,7 @@ const request = require("supertest");
 const express = require("express");
 
 const app = express();
-import index from '../routes/index'
+import index from "../routes/index";
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -13,7 +13,20 @@ describe("Index route", () => {
     request(app)
       .get("/")
       .expect("Content-Type", /json/)
-      .expect({ message: "Checking if restarting is automated" })
+      .expect({ array: [] })
       .expect(200, done);
+  });
+  test("Post test works both with Req and Res", (done) => {
+    request(app)
+      .post("/")
+      .type("form")
+      .send({ message: "TEST" })
+      .expect("Content-Type", /json/)
+      .expect({ message: "POST request simulation works" })
+      .then(() => {
+        request(app)
+          .get("/")
+          .expect({ array: ["TEST"] }, done);
+      });
   });
 });

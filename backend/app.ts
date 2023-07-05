@@ -5,14 +5,35 @@ import logger from "morgan";
 import createError from "http-errors";
 import mongoose from "mongoose";
 import "dotenv/config";
+import cors from "cors";
+import passport from "passport";
+import helmet from "helmet";
+import compression from "compression";
+import RateLimit from "express-rate-limit";
+
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+
 import indexRouter from "./routes/index";
 
 const app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
+app.use(passport.initialize());
+// passport.use(JwtStrategy);
 
+app.use(cors());
+app.use(limiter);
+app.use(compression());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'"],
+      // to add my frontend
+    },
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

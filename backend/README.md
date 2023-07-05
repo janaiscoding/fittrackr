@@ -3,9 +3,9 @@
 ### To-do:
 
 1. Integrate and use TypeScript for the backend: **DONE**, much thanks to this guy's [video](https://www.youtube.com/watch?v=qy8PxD3alWw&ab_channel=ColtSteele) for explaining so well
-2. Create db schemas: User / Post / Comments / Workout / Goal
+2. Create db schemas: User / Post / Comments 
 3. Create routes for: homepage / user profiles / workout types
-4. Test the Routes
+4. Test the Routes: had to do TS config for jest, followed this [article](https://bobbyhadz.com/blog/typescript-jest-cannot-use-import-statement-outside-module)
 5. Test the Database operations
 6. Setup secure authentication / look into other strategies
 7. Create controllers for the API
