@@ -4,7 +4,7 @@ import { body, validationResult } from "express-validator";
 import validator from "validator";
 
 const posts_get = asyncHandler(async (req, res, next) => {
-  res.json({ message: "PROTECTED ROUTE" });
+  res.json({ message: "PROTECTED ROUTE WAS ACCESSED" });
 });
 
 export default {

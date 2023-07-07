@@ -10,6 +10,7 @@ import passport from "passport";
 import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
+import Strategy from "./jwtStrategy";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -20,8 +21,8 @@ import indexRouter from "./routes/index";
 
 const app = express();
 
+passport.use(Strategy);
 app.use(passport.initialize());
-// passport.use(JwtStrategy);
 
 app.use(cors());
 app.use(limiter);
@@ -30,7 +31,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'"],
-      // to add my frontend
+      // to add my frontend?
     },
   })
 );
