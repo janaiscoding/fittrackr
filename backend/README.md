@@ -1,5 +1,21 @@
 # Backend API for Fiturself
 
+### API Endpoints:
+
+| API endpoints         | Request | Description                       | Protected |
+| --------------------- | ------- | --------------------------------- | --------- |
+| /                     | GET     | Home page, gets all newest posts. | True      |
+| /login                | POST    | Log in to your existing account.  | False     |
+| /users                | GET     | Fetch all users in the platform.  | True      |
+| /users                | POST    | Create a new user.                | False     |
+| /users/:id            | GET     | Fetch existing user data.         | True      |
+| /users/:id            | PUT     | Update existing user data.        | True      |
+| /users/:id            | DELETE  | Delete user from database.        | True      |
+| /workouts             | GET     | Fetch latest workouts.            | True      |
+| /workouts/:id         | PUT     | Update specific workout.          | True      |
+| /workouts/:id         | DELETE  | Delete specific workout.          | True      |
+| /workouts?user=userId | GET     | Fetch specific user workouts.     | True      |
+
 ### To-do:
 
 1. Integrate and use TypeScript for the backend: **DONE**, much thanks to this guy's [video](https://www.youtube.com/watch?v=qy8PxD3alWw&ab_channel=ColtSteele) for explaining so well
@@ -11,7 +27,6 @@
 7. Create controllers for the API
 8. Test everything with Postman
 9. Profit ??? (Deploy)
-
 
 ### Installation and running
 
@@ -25,7 +40,7 @@ Server is listening on localhost:3000
 
 # Built with
 
-## Technologies 
+## Technologies
 
 - Express.js, Node.js
 - Mongoose, MongoDB

@@ -10,7 +10,6 @@ router.get(
   postControllers.posts_get
 );
 
-
 router.post("/login", authControllers.login_post);
 
 export default router;

@@ -7,11 +7,9 @@ import userController from "../controllers/userControllers";
 import passport from "passport";
 const auth = passport.authenticate("jwt", { session: false });
 
-router.get("/", auth, userController.get_users); // gets all users
-router.post("/", authControllers.create_user); // NEW USER
-router.get("/:id", auth, userController.get_profile); // gets a specific profile with a profile _id
-router.post("/:id", auth, userController.create_post); // you will make one new post on your acc
-router.put("/:id", auth, userController.update_account);
-router.delete("/:id", auth, userController.delete_account);
+router.get("/", auth, workoutControllers.get_workouts); //
+router.post("/", auth, workoutControllers.create_workout); //
+router.delete('/:id',auth, workoutControllers.delete_workout)
+
 
 export default router;

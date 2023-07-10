@@ -19,6 +19,7 @@ const limiter = RateLimit({
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
+import workoutsRouter from './routes/workouts'
 const app = express();
 
 app.use(cors());
@@ -44,7 +45,7 @@ app.use(passport.initialize());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
+app.use('/workouts', workoutsRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

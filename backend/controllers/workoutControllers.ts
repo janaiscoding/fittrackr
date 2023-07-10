@@ -12,20 +12,38 @@ const hiddenFields =
   "-password -email -requestsSent -requestsReceived -friendRequests";
 
 // TO DO: ADD UNESCAPING // DONE: ERROR HANDLING
-const get_user_workouts = asyncHandler(async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id).populate("workouts");
-    if (user && user.workouts.length > 0) {
-      res.json({ info: "User's workouts", workouts: user.workouts });
-    } else {
-      res.status(404).json({ info: "User has no workouts yet!" });
-    }
-  } catch (err: any) {
-    res.status(404).json({ info: "User does not exist!", err: err.message });
+const get_workouts = asyncHandler(async (req, res, next) => {
+  // looking for specific user's workouts
+  console.log(req.query);
+  if (Object.keys(req.query).length > 0) {
+    const userId = req.query.user;
+    res.json({ userId });
+  } else {
+    res.json({ info: "getting all workouts" });
   }
+  // try {
+  //   const user = await User.findById(req.params.id).populate("workouts");
+  //   // user exists, and has workouts
+  //   if (user && user.workouts.length > 0) {
+  //     user.workouts.map((workout) => {
+  //       // @ts-ignore
+  //       workout.name = validator.unescape(workout.name);
+  //       return workout;
+  //     });
+  //     res.json({
+  //       info: `${user.first_name}'s workouts`,
+  //       workouts: user.workouts,
+  //     });
+  //   } else {
+  //     // no workouts
+  //     res.status(404).json({ info: "User has no workouts yet!" });
+  //   }
+  // } catch (err: any) {
+  //   // user issue
+  //   res.status(404).json({ info: "User does not exist!", err: err.message });
+  // }
 });
 
-// TO DO: ADD VALIDATION
 const create_workout = [
   body("name", "Name is required, must be 2-100 characters long")
     .exists()
@@ -85,8 +103,12 @@ const create_workout = [
 // EDIT WORKOUT
 
 // DELETE WORKOUT
-
+const delete_workout = asyncHandler(async (req, res, next) => {
+  console.log(req.params);
+  res.json({ id: req.params.workoutID });
+});
 export default {
   create_workout,
-  get_user_workouts,
+  get_workouts,
+  delete_workout,
 };
