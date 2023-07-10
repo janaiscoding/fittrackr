@@ -6,22 +6,21 @@ import createError from "http-errors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import cors from "cors";
-import passport from "passport";
 import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
-import jwtStrategy from "./jwtStrategy";
+import passport from "passport";
+import { localStrategy, jwtStrategy } from "./passportStrategies";
+
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20,
 });
 
 import indexRouter from "./routes/index";
-
+import usersRouter from "./routes/users";
+import workoutsRouter from './routes/workouts'
 const app = express();
-
-app.use(passport.initialize());
-passport.use(jwtStrategy);
 
 app.use(cors());
 app.use(limiter);
@@ -30,7 +29,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'"],
-      // to add my frontend
+      // to add my frontend?
     },
   })
 );
@@ -40,22 +39,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+app.use(passport.initialize());
 
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use('/workouts', workoutsRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err: any, req: Request, res: Response, next: any) {
+app.use(function (error: any, req: Request, res: Response, next: any) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.message = error.message;
+  res.locals.error = req.app.get("env") === "development" ? error : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.status(error.status || 500);
+  res.json({ error });
 });
 
 // db connection

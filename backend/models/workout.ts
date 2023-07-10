@@ -9,8 +9,8 @@ enum Workouts {
 
 const workoutSchema = new Schema(
   {
-    type: { type: String, enum: Workouts, required: true },
-    duration: { type: Number, required: true },
+    name: { type: String, required: true, minLength: 2, maxLength: 100 },
+    duration: { type: Number, required: true, min: 1, max: 600 },
     // sets?
     // muscle groups targetted?
   },

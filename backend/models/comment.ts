@@ -10,4 +10,8 @@ const commentSchema = new Schema(
   { timestamps: true }
 );
 
+<<<<<<< HEAD
 export default mongoose.model("comment", commentSchema);
+=======
+export default mongoose.model("Comment", commentSchema);
+>>>>>>> 9a310d8e421caf5d474f534afd786aa57e7301d4
