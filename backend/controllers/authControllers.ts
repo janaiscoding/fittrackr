@@ -1,5 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import User from "../models/user";
+import User from '../models/user'
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
@@ -8,7 +8,7 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const signup_post = [
+const create_user = [
   body("age").trim().escape(),
   body("cur_weight").trim().escape(),
   body("goal_weight").trim().escape(),
@@ -98,17 +98,9 @@ const login_post = [
   }),
 ];
 
-const logout = (req: Request, res: Response, next: NextFunction) => {
-  res.json({user: req.user})
-  // req.logout(function (err) {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   res.status(200).json({ message: "user logged out" });
-  // });
-};
+
+
 export default {
-  logout,
   login_post,
-  signup_post,
+  create_user,
 };

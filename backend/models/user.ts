@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -14,7 +15,7 @@ const userSchema = new Schema(
     last_name: { type: String, required: true, minLength: 2 },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minLength: 8 },
-    //Social ?? 
+    //Social ??
     friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
     requestsSent: [{ type: Schema.Types.ObjectId, ref: "User" }],
     requestsReceived: [{ type: Schema.Types.ObjectId, ref: "User" }],
@@ -22,4 +23,4 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model("User", userSchema);

@@ -2,7 +2,7 @@ import passportLocal from "passport-local";
 import passportJWT from "passport-jwt";
 
 import "dotenv/config";
-import User from "./models/user";
+import User from './models/user'
 import bcrypt from "bcryptjs";
 
 const LocalStrategy = passportLocal.Strategy;
@@ -34,6 +34,7 @@ const localStrategy = new LocalStrategy(
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   const user = await User.findById({ _id: payload.userId }).exec();
   if (user) {
+    console.log('found user')
     return done(null, user);
   }
   return done(null, false, {

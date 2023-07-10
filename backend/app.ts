@@ -10,8 +10,6 @@ import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
 import passport from "passport";
-import session from "express-session";
-import User from "./models/user";
 import { localStrategy, jwtStrategy } from "./passportStrategies";
 
 const limiter = RateLimit({
@@ -20,7 +18,7 @@ const limiter = RateLimit({
 });
 
 import indexRouter from "./routes/index";
-import usersRouter from './routes/users'
+import usersRouter from "./routes/users";
 const app = express();
 
 app.use(cors());
@@ -45,7 +43,7 @@ passport.use(jwtStrategy);
 app.use(passport.initialize());
 
 app.use("/", indexRouter);
-app.use('/users', usersRouter)
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -60,9 +58,8 @@ app.use(function (err: any, req: Request, res: Response, next: any) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err, message: '500 status' });
 });
-
 
 // db connection
 mongoose

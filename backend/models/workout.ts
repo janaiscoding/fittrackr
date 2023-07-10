@@ -9,7 +9,7 @@ enum Workouts {
 
 const workoutSchema = new Schema(
   {
-    type: { type: String, enum: Workouts, required: true },
+    type: { type: String, required: true },
     duration: { type: Number, required: true },
     // sets?
     // muscle groups targetted?
@@ -17,4 +17,4 @@ const workoutSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Workout", workoutSchema);
+export default mongoose.models.Workout || mongoose.model('Workout', workoutSchema)

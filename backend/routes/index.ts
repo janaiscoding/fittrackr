@@ -10,7 +10,7 @@ router.get(
   postControllers.posts_get
 );
 
-router.post("/signup", authControllers.signup_post);
+
 router.post("/login", authControllers.login_post);
-router.post('/logout', authControllers.logout)
+
 export default router;
