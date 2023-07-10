@@ -3,8 +3,10 @@ import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import passport from "passport";
 import validator from "validator";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const signup_post = [
   body("age").trim().escape(),
@@ -57,7 +59,7 @@ const signup_post = [
 ];
 
 const login_post = [
-  body("email", "Email is required 122").trim().isEmail().notEmpty().escape(),
+  body("email", "Email is required").trim().isEmail().notEmpty().escape(),
   body("password", "Password is required").trim().notEmpty().escape(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -66,33 +68,47 @@ const login_post = [
       res.status(401).json({ errors: validationErrors.array() });
       return;
     } else {
-      const user = await User.findOne({ email });
-      if (!user) {
-        res.status(404).json({
-          message: "Could not find an account associated with this email",
-        });
-      } else {
-        bcrypt.compare(password, user.password, (err, compare) => {
-          if (err) return next(err);
-          if (compare) {
-            const opts = {
-              expiresIn: "2hr",
-            };
-            const secret = process.env.secret;
-            // @ts-ignore
-            const token = jwt.sign({ email: user.email }, secret, opts);
-            req.user = user;
-            return res.json({ token });
-          } else {
-            res.status(401).json({ message: "Your password is incorrect" });
+      // @ts-ignore
+      passport.authenticate(
+        "local",
+        { session: false },
+        // @ts-ignore
+        (err, user, info) => {
+          if (err) {
+            return next(err);
           }
-        });
-      }
+          if (!user) {
+            return res.status(401).json({
+              error: info.message,
+            });
+          }
+          req.login(user, { session: false }, (err) => {
+            if (err) {
+              return next(err);
+            }
+            // @ts-ignore
+            const token = jwt.sign({ userId: user._id }, process.env.secret, {
+              expiresIn: "1h",
+            });
+            return res.status(200).json({ user, token });
+          });
+        }
+      )(req, res, next);
     }
   }),
 ];
 
+const logout = (req: Request, res: Response, next: NextFunction) => {
+  res.json({user: req.user})
+  // req.logout(function (err) {
+  //   if (err) {
+  //     return next(err);
+  //   }
+  //   res.status(200).json({ message: "user logged out" });
+  // });
+};
 export default {
+  logout,
   login_post,
   signup_post,
 };

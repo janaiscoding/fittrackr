@@ -6,11 +6,13 @@ import createError from "http-errors";
 import mongoose from "mongoose";
 import "dotenv/config";
 import cors from "cors";
-import passport from "passport";
 import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
-import Strategy from "./jwtStrategy";
+import passport from "passport";
+import session from "express-session";
+import User from "./models/user";
+import { localStrategy, jwtStrategy } from "./passportStrategies";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -18,11 +20,8 @@ const limiter = RateLimit({
 });
 
 import indexRouter from "./routes/index";
-
+import usersRouter from './routes/users'
 const app = express();
-
-passport.use(Strategy);
-app.use(passport.initialize());
 
 app.use(cors());
 app.use(limiter);
@@ -41,7 +40,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+app.use(passport.initialize());
+
 app.use("/", indexRouter);
+app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -58,6 +62,7 @@ app.use(function (err: any, req: Request, res: Response, next: any) {
   res.status(err.status || 500);
   res.render("error");
 });
+
 
 // db connection
 mongoose
