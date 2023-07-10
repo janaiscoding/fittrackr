@@ -51,14 +51,14 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err: any, req: Request, res: Response, next: any) {
+app.use(function (error: any, req: Request, res: Response, next: any) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.message = error.message;
+  res.locals.error = req.app.get("env") === "development" ? error : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.json({ error: err, message: '500 status' });
+  res.status(error.status || 500);
+  res.json({ error });
 });
 
 // db connection
