@@ -1,14 +1,12 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 const router = express.Router();
 import postControllers from "../controllers/postControllers";
 import authControllers from "../controllers/authControllers";
 import passport from "passport";
+const auth = passport.authenticate("jwt", { session: false })
 
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  postControllers.posts_get
-);
+router.get("/",auth, postControllers.posts_get)
+router.post('/', auth, postControllers.post_create)
 
 router.post("/login", authControllers.login_post);
 

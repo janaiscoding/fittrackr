@@ -34,7 +34,6 @@ const localStrategy = new LocalStrategy(
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   const user = await User.findById({ _id: payload.userId }).exec();
   if (user) {
-    console.log('found user')
     return done(null, user);
   }
   return done(null, false, {
