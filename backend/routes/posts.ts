@@ -7,8 +7,10 @@ import userController from "../controllers/userControllers";
 import passport from "passport";
 const auth = passport.authenticate("jwt", { session: false });
 
-router.post("/:id", auth, postControllers.post_comment); //on individual post, post a comment
-
-
+router.get("/", auth, postControllers.posts_get);
+router.post("/:postID/:userID", auth, postControllers.post_comment); //on individual post, post a comment
+// must have update/delete button just on logged in user's posts
+router.put("/:postID/:userID", auth, postControllers.post_update);
+router.delete("/:postID/:userID", auth, postControllers.post_delete);
 
 export default router;

@@ -3,11 +3,10 @@ const router = express.Router();
 import postControllers from "../controllers/postControllers";
 import authControllers from "../controllers/authControllers";
 import passport from "passport";
-const auth = passport.authenticate("jwt", { session: false })
+const auth = passport.authenticate("jwt", { session: false });
 
-router.get("/",auth, postControllers.posts_get)
-router.post('/', auth, postControllers.post_create)
-
+router.get("/", auth, postControllers.posts_get);
+router.post("/:userID", auth, postControllers.post_create);
 router.post("/login", authControllers.login_post);
 
 export default router;

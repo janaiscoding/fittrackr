@@ -21,43 +21,35 @@ const get_users = asyncHandler(async (req, res, next) => {
 });
 
 const get_profile = asyncHandler(async (req, res, next) => {
-  // On individual profiles I need to populate all of it, and unescape
-  if (req.params.id === req.query.current) {
-    // Always use query ?current=User._id when I am fetching loggedin profile
-    const user = await User.findById(req.params.id).select("-password -email");
-
-    res.json({ info: "GET my", user });
+  const { userID } = req.params;
+  const user = await User.findById(userID)
+    .select("-password -email -requestsSent -requestsReceived -friendRequests")
+    .populate("workouts")
+    .populate({
+      path: "posts",
+      select: "text comments likes createdAt updatedAt",
+      populate: { path: "comments", select: "text likes createdAt" },
+    })
+    .exec();
+  if (user) {
+    res.json({ info: "GET user profile", user });
   } else {
-    // No query = different
-    const user = await User.findById(req.params.id)
-      .select(
-        "-password -email -requestsSent -requestsReceived -friendRequests"
-      )
-      .populate("workouts")
-      .exec();
-    // const userPosts = await User.find({})
-    //   .select("posts first_name last_name")
-    //   .populate({ path: "posts", select: "text comments likes createdAt" })
-    //   .sort({ posts: 1 })
-    //   .exec();
-    //   .populate({ path: "friends"})
-    //   .populate({ path: "workouts"})
-    //      GOTTA FIX this mess
-    //   .exec();
-
-    res.json({ info: "GET diff", user });
+    res.status(404).json({ info: "User was not found!" });
   }
 });
 
 const create_post = asyncHandler(async (req, res, next) => {
-  res.json({ info: "CREATE POST", id: req.params.id });
+  const { userID } = req.params;
+  res.json({ info: "CREATE POST", userID });
 });
 const update_account = asyncHandler(async (req, res, next) => {
-  res.json({ info: "UPDATE your account.", param: req.params.id });
+  const { userID } = req.params;
+  res.json({ info: "UPDATE your account.", userID });
 });
 
 const delete_account = asyncHandler(async (req, res, next) => {
-  res.json({ info: "DELETE your account.", param: req.params.id });
+  const { userID } = req.params;
+  res.json({ info: "DELETE your account.", userID });
 });
 
 export default {

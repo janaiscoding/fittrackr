@@ -2,19 +2,20 @@
 
 ### API Endpoints:
 
-| API endpoints         | Request | Description                       | Protected |
-| --------------------- | ------- | --------------------------------- | --------- |
-| /                     | GET     | Home page, gets all newest posts. | True      |
-| /login                | POST    | Log in to your existing account.  | False     |
-| /users                | GET     | Fetch all users in the platform.  | True      |
-| /users                | POST    | Create a new user.                | False     |
-| /users/:id            | GET     | Fetch existing user data.         | True      |
-| /users/:id            | PUT     | Update existing user data.        | True      |
-| /users/:id            | DELETE  | Delete user from database.        | True      |
-| /workouts             | GET     | Fetch latest workouts.            | True      |
-| /workouts/:id         | PUT     | Update specific workout.          | True      |
-| /workouts/:id         | DELETE  | Delete specific workout.          | True      |
-| /workouts?user=userId | GET     | Fetch specific user workouts.     | True      |
+| API endpoints          | Request | Description                                  | Protected |
+| ---------------------- | ------- | -------------------------------------------- | --------- |
+| /                      | GET     | Home page, gets all newest posts.            | True      |
+| /:userID               | POST    | Home page, create a new post.                | True      |
+| /login                 | POST    | Log in to your existing account.             | False     |
+| /users                 | GET     | Fetch all users in the platform.             | True      |
+| /users                 | POST    | Create a new user.                           | False     |
+| /users/:userID         | GET     | Fetch existing user data.                    | True      |
+| /users/:userID         | PUT     | Update existing user data.                   | True      |
+| /users/:userID         | DELETE  | Delete user from database.                   | True      |
+| /posts                 | GET     | Posts page, gets all newest posts.           | True      |
+| /posts/:postID/:userID | POST    | Create a comment on a specific post.         | True      |
+| /posts/:postID/:userID | UPDATE  | Update a post and the account data.          | True      |
+| /posts/:postID/:userID | DELETE  | Delete the post and update the account data. | True      |
 
 ### To-do:
 
