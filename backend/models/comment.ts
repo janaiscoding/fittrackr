@@ -5,7 +5,7 @@ const commentSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     text: { type: String, required: true, minLength: 1 }, //min-max length to be added?
-    likes: Number,
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

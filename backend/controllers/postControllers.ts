@@ -73,49 +73,6 @@ const post_create = [
   }),
 ];
 
-const post_comment = [
-  body("text")
-    .trim()
-    .exists()
-    .withMessage("Comment is required.")
-    .isLength({ min: 5 })
-    .withMessage("Comment must be at least 5 characters long.")
-    .isLength({ max: 300 })
-    .withMessage("Comment must be maximum 300 characters long")
-    .escape(),
-  asyncHandler(async (req, res, next) => {
-    const { text } = req.body;
-    const { postID, userID } = req.params;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.json({
-        errors: errors.array(),
-        text: validator.unescape(text),
-      });
-    } else {
-      const user = await User.findById(userID).exec();
-      const post = await Post.findById(postID).exec();
-      if (user && post) {
-        const comment = new Comment({
-          user: userID,
-          text,
-          likes: [],
-        });
-        await comment.save();
-        //@ts-ignore
-        post.comments.push(comment);
-        await post.save();
-        res.json({
-          comment,
-          info: "Comment was posted successfully",
-        });
-      } else {
-        res.json({ info: "No user was not found to make this post." });
-      }
-    }
-  }),
-];
-
 const post_update = [
   body("updatedText")
     .trim()
@@ -189,7 +146,6 @@ const post_like = asyncHandler(async (req, res, next) => {
 export default {
   posts_get,
   post_create,
-  post_comment,
   post_update,
   post_delete,
   post_like,
