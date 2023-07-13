@@ -38,10 +38,6 @@ const get_profile = asyncHandler(async (req, res, next) => {
   }
 });
 
-const create_post = asyncHandler(async (req, res, next) => {
-  const { userID } = req.params;
-  res.json({ info: "CREATE POST", userID });
-});
 const update_account = asyncHandler(async (req, res, next) => {
   const { userID } = req.params;
   res.json({ info: "UPDATE your account.", userID });
@@ -55,7 +51,6 @@ const delete_account = asyncHandler(async (req, res, next) => {
 export default {
   get_users,
   get_profile,
-  create_post,
   update_account,
   delete_account,
 };

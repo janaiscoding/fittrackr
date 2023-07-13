@@ -8,9 +8,10 @@ import passport from "passport";
 const auth = passport.authenticate("jwt", { session: false });
 
 router.get("/", auth, postControllers.posts_get);
+router.post("/:userID", auth, postControllers.post_create); // you will make one new post on your acc
 router.post("/:postID/:userID", auth, postControllers.post_comment); //on individual post, post a comment
 // must have update/delete button just on logged in user's posts
 router.put("/:postID/:userID", auth, postControllers.post_update);
 router.delete("/:postID/:userID", auth, postControllers.post_delete);
-
+router.put("/:postID/:userID/like", auth, postControllers.post_like);
 export default router;

@@ -29,7 +29,6 @@ const posts_get = asyncHandler(async (req, res, next) => {
   }
 });
 
-// validation - user, text, comments, likes
 const post_create = [
   body("text")
     .trim()
@@ -40,7 +39,6 @@ const post_create = [
     .isLength({ max: 300 })
     .withMessage("Post must be maximum 300 characters long.")
     .escape(),
-  body("userID").trim().exists().withMessage("User is required").escape(),
   asyncHandler(async (req, res, next) => {
     const { text } = req.body;
     const { userID } = req.params;
@@ -58,7 +56,7 @@ const post_create = [
           user: userID,
           text,
           comments: [],
-          likes: 0,
+          likes: [],
         });
         await newPost.save();
         const initialPosts = user.posts;
@@ -101,7 +99,7 @@ const post_comment = [
         const comment = new Comment({
           user: userID,
           text,
-          likes: 0,
+          likes: [],
         });
         await comment.save();
         //@ts-ignore
@@ -158,25 +156,41 @@ const post_delete = asyncHandler(async (req, res, next) => {
   const post = await Post.findById(postID);
   const user = await User.findById(userID);
   if (post && user) {
-    // Cleanup comments
+    // Clean-up sequence
     const comments = post.comments;
     for (const comment of comments) {
       await Comment.findByIdAndDelete(comment);
     }
-    // delete post
     await post.deleteOne();
-    // update user
     await User.findByIdAndUpdate(userID, { $pull: { posts: postID } });
     res.json({ info: "Post was deleted successfully!" });
   } else {
     res.status(404).json({ info: "You cannot delete this post." });
   }
 });
-
+const post_like = asyncHandler(async (req, res, next) => {
+  const { postID, userID }: any = req.params;
+  const post = await Post.findById(postID);
+  if (post) {
+    if (post.likes.includes(userID)) {
+      //@ts-ignore
+      post.likes.pull(userID);
+      await post.save();
+      res.json({ info: `${userID} has disliked post ${postID}` });
+    } else {
+      post.likes.push(userID);
+      await post.save();
+      res.json({ info: `${userID} has liked post ${postID}` });
+    }
+  } else {
+    res.status(404).json({ info: "Post was not found!" });
+  }
+});
 export default {
   posts_get,
   post_create,
   post_comment,
   post_update,
   post_delete,
+  post_like,
 };
