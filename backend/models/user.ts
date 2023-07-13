@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema(
   {
     // Personal Info
-    age: Number,
-    cur_weight: Number,
-    goal_weight: Number,
+    age: { type: Number, min: 1, max: 100 },
+    cur_weight: { type: Number, min: 1 },
+    goal_weight: { type: Number, min: 1 },
     workouts: [{ type: Schema.Types.ObjectId, ref: "Workout" }],
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     //For auth only

@@ -9,14 +9,47 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 const create_user = [
-  body("age").trim().escape(),
-  body("cur_weight").trim().escape(),
-  body("goal_weight").trim().escape(),
-  // On sign up, ^ above fields are optional
-  body("first_name", "First name is required").trim().notEmpty().escape(),
-  body("last_name", "Last name is required").trim().notEmpty().escape(),
-  body("email", "Email is required").trim().isEmail().notEmpty().escape(),
-  body("password", "Password is required").trim().notEmpty().escape(),
+  body("uage")
+    .optional()
+    .trim()
+    .toInt()
+    .isInt({ min: 1 })
+    .withMessage("Age must be, technically, above one..")
+    .isInt({ max: 100 })
+    .withMessage("Doubt you're thaaaat old... (less than 100 years old pls)")
+    .escape(),
+  body("ucur_weight")
+    .optional()
+    .trim()
+    .toInt()
+    .isInt({ min: 1 })
+    .withMessage("Weight must be above 1 kilo")
+    .escape(),
+  body("ugoal_weight")
+    .optional()
+    .trim()
+    .toInt()
+    .isInt({ min: 1 })
+    .withMessage("Goal weight must be above 1 kilo")
+    .escape(),
+  body("ufirst_name")
+    .trim()
+    .exists()
+    .withMessage("First name is required.")
+    .isLength({ min: 1 })
+    .withMessage("Name must be above 1 characters long.")
+    .isLength({ max: 30 })
+    .withMessage("Name must be 30 characters maximum.")
+    .escape(),
+  body("ulast_name")
+    .trim()
+    .exists()
+    .withMessage("Last name is required.")
+    .isLength({ min: 1 })
+    .withMessage("Name must be above 1 characters long.")
+    .isLength({ max: 30 })
+    .withMessage("Name must be 30 characters maximum.")
+    .escape(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const {
       age,
@@ -27,14 +60,14 @@ const create_user = [
       email,
       password,
     } = req.body;
-    const validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
       res.json({
         first_name: validator.unescape(first_name),
         last_name: validator.unescape(last_name),
         email: validator.unescape(email),
         password: validator.unescape(password),
-        errors: validationErrors.array(),
+        errors: errors.array(),
       });
       return;
     } else {
