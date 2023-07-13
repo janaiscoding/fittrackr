@@ -1,5 +1,5 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-import User from '../models/user'
+import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
@@ -29,7 +29,13 @@ const create_user = [
     } = req.body;
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      res.json({ errors: validationErrors.array() });
+      res.json({
+        first_name: validator.unescape(first_name),
+        last_name: validator.unescape(last_name),
+        email: validator.unescape(email),
+        password: validator.unescape(password),
+        errors: validationErrors.array(),
+      });
       return;
     } else {
       bcrypt.hash(password, 10, async (err, hashed) => {
@@ -62,7 +68,6 @@ const login_post = [
   body("email", "Email is required").trim().isEmail().notEmpty().escape(),
   body("password", "Password is required").trim().notEmpty().escape(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
       res.status(401).json({ errors: validationErrors.array() });
@@ -90,15 +95,13 @@ const login_post = [
             const token = jwt.sign({ userId: user._id }, process.env.secret, {
               expiresIn: "24h",
             });
-            return res.status(200).json({ user, token });
+            return res.status(200).json({ token, user });
           });
         }
       )(req, res, next);
     }
   }),
 ];
-
-
 
 export default {
   login_post,

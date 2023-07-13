@@ -35,6 +35,11 @@ const get_profile = asyncHandler(async (req, res, next) => {
       )
       .populate("workouts")
       .exec();
+    // const userPosts = await User.find({})
+    //   .select("posts first_name last_name")
+    //   .populate({ path: "posts", select: "text comments likes createdAt" })
+    //   .sort({ posts: 1 })
+    //   .exec();
     //   .populate({ path: "friends"})
     //   .populate({ path: "workouts"})
     //      GOTTA FIX this mess
@@ -43,7 +48,6 @@ const get_profile = asyncHandler(async (req, res, next) => {
     res.json({ info: "GET diff", user });
   }
 });
-
 
 const create_post = asyncHandler(async (req, res, next) => {
   res.json({ info: "CREATE POST", id: req.params.id });
