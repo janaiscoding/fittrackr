@@ -2,20 +2,24 @@
 
 ### API Endpoints:
 
-| API endpoints                          | Request | Description                                                  | Protected |
-| -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
-| /                                      | GET     | Home page, gets all newest posts.                            | True      |
-| /login                                 | POST    | Log in to your existing account.                             | False     |
-| Users                                  | Request | Description                                                  | Protected |
-| -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
-| /users                                 | GET     | Fetch all users in the platform.                             | True      |
-| /users                                 | POST    | Create a new user.                                           | False     |
-| /users/:userID                         | GET     | Fetch existing user data.                                    | True      |
-| /users/:userID                         | PUT     | Update existing user data.                                   | True      |
-| /users/:userID                         | DELETE  | Delete user from database cleanup all user data.             | True      |
-| /users/:userID/friends                 | GET     | Fetch user's friends list.                                   | True      |
-| /users/:userID/friends/received        | GET     | Fetch user's received friend requests.                       | True      |
-| /users/:userID/friends/sent            | GET     | Fetch user's sent friend requests.                           | True      |
+| API endpoints | Request | Description                       | Protected |
+| ------------- | ------- | --------------------------------- | --------- |
+| /             | GET     | Home page, gets all newest posts. | True      |
+| /login        | POST    | Log in to your existing account.  | False     |
+
+| Users                               | Request | Description                                         | Protected |
+| ----------------------------------- | ------- | --------------------------------------------------- | --------- |
+| /users                              | GET     | Fetch all users in the platform.                    | True      |
+| /users                              | POST    | Create a new user.                                  | False     |
+| /users/:userID                      | GET     | Fetch existing user data.                           | True      |
+| /users/:userID                      | PUT     | Update existing user data.                          | True      |
+| /users/:userID                      | DELETE  | Delete user from database cleanup all user data.    | True      |
+| /users/:userID/friends              | GET     | Fetch user's friends list.                          | True      |
+| /users/:userID/friends/received     | GET     | Fetch user's received friend requests.              | True      |
+| /users/:userID/friends/sent         | GET     | Fetch user's sent friend requests.                  | True      |
+| /users/send/:senderID/:receiverID   | PUT     | Send a friend request to a different user.          | True      |
+| /users/accept/:receiverID/:senderID | PUT     | Accept someone's friend request and become friends. | True      |
+
 | Posts                                  | Request | Description                                                  | Protected |
 | -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
 | /posts                                 | GET     | Posts page, gets all newest posts.                           | True      |

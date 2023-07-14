@@ -1,3 +1,4 @@
+import { error } from "console";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
@@ -149,15 +150,16 @@ const get_fr_sent = asyncHandler(async (req, res, next) => {
   }
 });
 
-const send_request_from_to = asyncHandler(async (req, res, next) => {
-  const { fromID, toID }: any = req.params;
-  const fromUser = await User.findById(fromID);
-  const toUser = await User.findById(toID);
-  if (fromUser && toUser) {
+const send_request = asyncHandler(async (req, res, next) => {
+  const { senderID, receiverID }: any = req.params;
+  const sender = await User.findById(senderID);
+  const receiver = await User.findById(receiverID);
+  if (sender && receiver) {
     // check if they're already friends // or if the request is sent // if a request is already received dont allow them to post
-    const isFriends = fromUser.friends.includes(toID);
-    const isFRSent = fromUser.requestsSent.includes(toID);
-    const isFRPending = fromUser.requestsReceived.includes(toID);
+    const isFriends = sender.friends.includes(receiverID);
+    const isFRSent = sender.requestsSent.includes(receiverID);
+    const isFRPending = sender.requestsReceived.includes(receiverID);
+
     switch (true) {
       case isFriends:
         res.json({ info: "You are already friends with this user." });
@@ -166,19 +168,25 @@ const send_request_from_to = asyncHandler(async (req, res, next) => {
         res.json({ info: "You already sent a friend request to this user." });
         break;
       case isFRPending:
-        res.json({ info: "You already have a friend request from this user" });
+        res.json({ info: "You already have a friend request from this user." });
+        break;
+      case senderID === receiverID:
+        res.json({ info: "You can't send a friend request to yourself!" });
         break;
       default:
         {
-          fromUser.requestsSent.push(toID);
-          toUser.requestsReceived.push(fromID);
-          await fromUser.save();
-          await toUser.save();
-          res.json({
-            info: `${fromUser.first_name} sent a successful friend request to ${toUser.first_name}`,
-            from: fromUser.requestsSent,
-            to: toUser.requestsReceived,
-          });
+          Promise.all([
+            sender.updateOne({ $push: { requestsSent: receiverID } }),
+            receiver.updateOne({ $push: { requestsReceived: senderID } }),
+          ])
+            .then(() => {
+              res.json({
+                info: `${sender.first_name} sent a successful friend request to ${receiver.first_name}`,
+              });
+            })
+            .catch((err) => {
+              res.status(500).json({ info: err.message });
+            });
         }
         break;
     }
@@ -188,7 +196,44 @@ const send_request_from_to = asyncHandler(async (req, res, next) => {
       .json({ info: "An error occured while sending this friend request." });
   }
 });
-const accept_f_r = asyncHandler(async (req, res, next) => {});
+const accept_request = asyncHandler(async (req, res, next) => {
+  const { receiverID, senderID }: any = req.params;
+
+  const receiver = await User.findById(receiverID);
+  const sender = await User.findById(senderID);
+
+  if (
+    receiver &&
+    sender &&
+    receiver.requestsReceived.includes(senderID) &&
+    sender.requestsSent.includes(receiverID)
+  ) {
+    Promise.all([
+      receiver.updateOne(
+        {
+          $pull: { requestsReceived: senderID },
+        },
+        { $push: { friends: senderID } }
+      ),
+      sender.updateOne(
+        {
+          $pull: { requestsSent: receiverID },
+        },
+        { $push: { friends: receiverID } }
+      ),
+    ])
+      .then(() => {
+        res.json({
+          info: `${receiver.first_name} is now friends with ${sender.first_name}!`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ info: err.message });
+      });
+  } else {
+    res.status(500).json({ info: "This friend request does not exist." });
+  }
+});
 
 export default {
   get_users,
@@ -198,5 +243,6 @@ export default {
   get_friends_list,
   get_fr_received,
   get_fr_sent,
-  send_request_from_to,
+  send_request,
+  accept_request,
 };

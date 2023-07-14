@@ -15,6 +15,7 @@ router.delete("/:userID", auth, userControllers.delete_account);
 router.get("/:userID/friends", auth, userControllers.get_friends_list);
 router.get("/:userID/friends/received", auth, userControllers.get_fr_received);
 router.get("/:userID/friends/sent", auth, userControllers.get_fr_sent);
-router.put("/send/:fromID/:toID", auth, userControllers.send_request_from_to);
+router.put("/send/:senderID/:receiverID", auth, userControllers.send_request);
+router.put("/accept/:receiverID/:senderID", auth, userControllers.accept_request);
 
 export default router;
