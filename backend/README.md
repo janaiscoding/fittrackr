@@ -7,21 +7,21 @@
 | /             | GET     | Home page, gets all newest posts. | True      |
 | /login        | POST    | Log in to your existing account.  | False     |
 
-| Users                                | Request | Description                                                                    | Protected |
-| ------------------------------------ | ------- | ------------------------------------------------------------------------------ | --------- |
-| /users                               | GET     | Fetch all users in the platform.                                               | True      |
-| /users                               | POST    | Create a new user.                                                             | False     |
-| /users/:userID                       | GET     | Fetch existing user data.                                                      | True      |
-| /users/:userID                       | PUT     | Update existing user data.                                                     | True      |
-| /users/:userID                       | DELETE  | Delete user from database cleanup all user data.                               | True      |
-| /users/:userID/friends               | GET     | Fetch user's friends list.                                                     | True      |
-| /users/:userID/friends/received      | GET     | Fetch user's received friend requests.                                         | True      |
-| /users/:userID/friends/sent          | GET     | Fetch user's sent friend requests.                                             | True      |
-| /users/send/:senderID/:receiverID    | POST    | Send a friend request to a different user.                                     | True      |
-| /users/cancel/:senderID/:receiverID  | DELETE  | Cancel a friend request to a different user you had a pending request sent to. | True      |
-| /users/accept/:receiverID/:senderID  | PUT     | Accept someone's friend request and become friends.                            | True      |
-| /users/decline/:receiverID/:senderID | DELETE  | Decline someone's friend request and become friends.                           | True      |
-| /users/remove/:removerID/:removedID  | DELETE  | Remove someone's from your friend list.                                        | True      |
+| Users                                | Request | Description                                      | Protected |
+| ------------------------------------ | ------- | ------------------------------------------------ | --------- |
+| /users                               | GET     | Fetch all users in the platform.                 | True      |
+| /users                               | POST    | Create a new user.                               | False     |
+| /users/:userID                       | GET     | Fetch existing user data.                        | True      |
+| /users/:userID                       | PUT     | Update existing user data.                       | True      |
+| /users/:userID                       | DELETE  | Delete user from database cleanup all user data. | True      |
+| /users/:userID/friends               | GET     | Fetch user's friends list.                       | True      |
+| /users/:userID/friends/received      | GET     | Fetch user's received friend requests.           | True      |
+| /users/:userID/friends/sent          | GET     | Fetch user's sent friend requests.               | True      |
+| /users/send/:senderID/:receiverID    | POST    | Send a friend request to a different user.       | True      |
+| /users/cancel/:senderID/:receiverID  | DELETE  | Cancel a pending friend request.                 | True      |
+| /users/accept/:receiverID/:senderID  | PUT     | Accept a pending friend request, become friends. | True      |
+| /users/decline/:receiverID/:senderID | DELETE  | Decline a pending friend request.                | True      |
+| /users/remove/:removerID/:removedID  | DELETE  | Remove someone's from your friend list.          | True      |
 
 | Posts                                  | Request | Description                                                  | Protected |
 | -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |

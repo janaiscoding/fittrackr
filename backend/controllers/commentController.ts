@@ -17,7 +17,7 @@ const post_comment = [
     .escape(),
   asyncHandler(async (req, res, next) => {
     const { text } = req.body;
-    const { postID, userID } = req.params;
+    const { postID, commentatorID } = req.params;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
@@ -25,22 +25,29 @@ const post_comment = [
         text: validator.unescape(text),
       });
     } else {
-      const user = await User.findById(userID).exec();
+      const user = await User.findById(commentatorID).exec();
       const post = await Post.findById(postID).exec();
       if (user && post) {
         const comment = new Comment({
-          user: userID,
+          user: commentatorID,
           text,
           likes: [],
         });
-        await comment.save();
-        //@ts-ignore
-        post.comments.push(comment);
-        await post.save();
-        res.json({
-          comment,
-          info: "Comment was posted successfully",
-        });
+        Promise.all([
+          comment.save(),
+          post.updateOne({ $push: { comments: comment } }),
+        ])
+          .then(() => {
+            res.status(200).json({
+              comment,
+              info: "Comment was posted successfully",
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              info: err.message,
+            });
+          });
       } else {
         res.json({ info: "No user was not found to make this post." });
       }

@@ -125,19 +125,18 @@ const post_delete = asyncHandler(async (req, res, next) => {
     res.status(404).json({ info: "You cannot delete this post." });
   }
 });
+
 const post_like = asyncHandler(async (req, res, next) => {
-  const { postID, userID }: any = req.params;
+  const { postID, likerID }: any = req.params;
   const post = await Post.findById(postID);
   if (post) {
-    if (post.likes.includes(userID)) {
+    if (post.likes.includes(likerID)) {
       //@ts-ignore
-      post.likes.pull(userID);
-      await post.save();
-      res.json({ info: `${userID} has disliked post ${postID}` });
+      await post.updateOne({ $pull: { likes: likerID } });
+      res.json({ info: `${likerID} has disliked post ${postID}` });
     } else {
-      post.likes.push(userID);
-      await post.save();
-      res.json({ info: `${userID} has liked post ${postID}` });
+      await post.updateOne({ $push: { likes: likerID } });
+      res.json({ info: `${likerID} has liked post ${postID}` });
     }
   } else {
     res.status(404).json({ info: "Post was not found!" });

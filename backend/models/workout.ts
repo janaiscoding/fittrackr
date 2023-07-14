@@ -9,6 +9,7 @@ enum Workouts {
 
 const workoutSchema = new Schema(
   {
+    user: { type: Schema.Types.ObjectId, ref: "User" },
     name: { type: String, required: true, minLength: 2, maxLength: 100 },
     duration: { type: Number, required: true, min: 1, max: 600 },
     // sets?

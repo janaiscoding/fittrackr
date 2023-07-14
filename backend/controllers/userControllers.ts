@@ -3,6 +3,9 @@ import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
+import Post from "../models/post";
+import Comment from "../models/comment";
+import Workout from "../models/workout";
 const hiddenFields =
   "-password -email -requestsSent -requestsReceived -friendRequests";
 
@@ -106,13 +109,31 @@ const delete_account = asyncHandler(async (req, res, next) => {
   const { userID } = req.params;
   const user = await User.findById(userID);
   if (user) {
-    await user.deleteOne();
-    //remove from everyone's friends lists, friend requests send, friend requests received
-
-    //remove all the posts
-
-    //remove all the comments
-    res.json({ info: "Deleted account successfully." });
+    Promise.all([
+      User.updateMany({ friends: userID }, { $pull: { friends: userID } }),
+      User.updateMany(
+        { requestsReceived: userID },
+        { $pull: { requestsReceived: userID } }
+      ),
+      User.updateMany(
+        { requestsSent: userID },
+        { $pull: { requestsSent: userID } }
+      ),
+      Post.deleteMany({ user: userID }),
+      Comment.deleteMany({ user: userID }),
+      Workout.deleteMany({ user: userID }),
+      user.deleteOne(),
+    ])
+      .then(() => {
+        res.status(200).json({
+          info: "Deleted all account and account-related data successfully.",
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          info: err.message,
+        });
+      });
   } else {
     res.status(404).json({ info: "Cannot delete which that doesn't exist.." });
   }
