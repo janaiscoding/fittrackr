@@ -1,7 +1,6 @@
-import express, { Express, Request, Response } from "express";
+import { Request, Response } from "express";
 import Post from "../models/post";
 import Comment from "../models/comment";
-import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
@@ -31,6 +30,28 @@ const posts_get = async (req: Request, res: Response) => {
     }
   } catch {
     res.status(404).json({ info: "No posts yet." });
+  }
+};
+
+// GET POST --- Add pic + user pics
+const post_get = async (req: Request, res: Response) => {
+  const { postID } = req.params;
+  try {
+    const post = await Post.findById(postID)
+      .populate({
+        path: "comments",
+        select: "text likes createdAt",
+        populate: { path: "user", select: "first_name last_name" }, // + profile pic
+      })
+      .populate({ path: "user", select: "first_name last_name" }); // + profile pic
+    if (post) {
+      post.text = validator.unescape(post.text);
+      res.json({ post });
+    } else {
+      res.status(404).json({ info: "This post doesn't exist" });
+    }
+  } catch {
+    res.status(404).json({ info: "This post doesn't exist." });
   }
 };
 
@@ -91,28 +112,6 @@ const post_create = [
   },
 ];
 
-// GET POST --- Add pic + user pics
-const post_get = async (req: Request, res: Response) => {
-  const { postID } = req.params;
-  try {
-    const post = await Post.findById(postID)
-      .populate({
-        path: "comments",
-        select: "text likes createdAt",
-        populate: { path: "user", select: "first_name last_name" }, // + profile pic
-      })
-      .populate({ path: "user", select: "first_name last_name" }); // + profile pic
-    if (post) {
-      post.text = validator.unescape(post.text);
-      res.json({ post });
-    } else {
-      res.status(404).json({ info: "This post doesn't exist" });
-    }
-  } catch {
-    res.status(404).json({ info: "This post doesn't exist." });
-  }
-};
-
 // UPDATE A POST - COMPLETE
 // router.put("/:postID/:userID", auth, postControllers.post_update);
 const post_update = [
@@ -140,11 +139,13 @@ const post_update = [
       const post = await Post.findById(postID);
       const user = await User.findById(userID);
       if (post && user && post.user?.equals(userID)) {
-        await Post.findByIdAndUpdate(postID, {
-          text: updatedText,
-        }).then(() => {
-          res.status(200).json({ info: "Post was successfully updated!" });
-        });
+        await post
+          .updateOne({
+            text: updatedText,
+          })
+          .then(() => {
+            res.status(200).json({ info: "Post was successfully updated!" });
+          });
       } else {
         res.status(403).json({ info: "You cannot edit this post." });
       }
@@ -154,47 +155,60 @@ const post_update = [
   },
 ];
 
-const post_delete = asyncHandler(async (req, res, next) => {
+// DELETE ONE POST - COMPLETED
+// router.delete("/:postID/:userID", auth, postControllers.post_delete);
+const post_delete = async (req: Request, res: Response) => {
   const { postID, userID } = req.params;
-  const post = await Post.findById(postID);
-  const user = await User.findById(userID);
-  if (post && user) {
-    // Clean-up sequence
-    const comments = post.comments;
-    for (const comment of comments) {
-      await Comment.findByIdAndDelete(comment);
+  try {
+    const post = await Post.findById(postID);
+    const user = await User.findById(userID);
+
+    if (post && user && post.user?.equals(userID)) {
+      // Clean-up comments just for the sake of clean DB
+      const comments = post.comments;
+      for (const comment of comments) {
+        await Comment.findByIdAndDelete(comment);
+      }
+      Promise.all([
+        post.deleteOne(),
+        user.updateOne({ $pull: { posts: postID } }),
+      ])
+        .then(() => {
+          res.status(200).json({ info: "Post was deleted successfully!" });
+        })
+        .catch((err) => {
+          res.status(500).json({ info: err.message });
+        });
+    } else {
+      res.status(404).json({ info: "You cannot delete this post." });
     }
-    Promise.all([
-      post.deleteOne(),
-      User.findByIdAndUpdate(userID, { $pull: { posts: postID } }),
-    ])
-      .then(() => {
-        res.status(200).json({ info: "Post was deleted successfully!" });
-      })
-      .catch((err) => {
-        res.status(500).json({ info: err.message });
-      });
-  } else {
+  } catch {
     res.status(404).json({ info: "You cannot delete this post." });
   }
-});
+};
 
-const post_like = asyncHandler(async (req, res, next) => {
+// LIKE/DISLIKE ONE POST - COMPLETED
+//router.post("/:postID/:userID/like", auth, postControllers.post_like);
+const post_like = async (req: Request, res: Response) => {
   const { postID, userID }: any = req.params;
-  const post = await Post.findById(postID);
-  if (post) {
-    if (post.likes.includes(userID)) {
-      //@ts-ignore
-      await post.updateOne({ $pull: { likes: userID } });
-      res.json({ info: `${userID} has disliked post ${postID}` });
+  try {
+    const post = await Post.findById(postID);
+    if (post) {
+      if (post.likes.includes(userID)) {
+        await post.updateOne({ $pull: { likes: userID } });
+        res.json({ info: `${userID} has disliked post ${postID}` });
+      } else {
+        await post.updateOne({ $push: { likes: userID } });
+        res.json({ info: `${userID} has liked post ${postID}` });
+      }
     } else {
-      await post.updateOne({ $push: { likes: userID } });
-      res.json({ info: `${userID} has liked post ${postID}` });
+      res.status(404).json({ info: "Post was not found!" });
     }
-  } else {
+  } catch {
     res.status(404).json({ info: "Post was not found!" });
   }
-});
+};
+
 export default {
   posts_get,
   post_get,

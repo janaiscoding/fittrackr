@@ -1,4 +1,4 @@
-import { error } from "console";
+import { Request, Response } from "express";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
@@ -9,16 +9,20 @@ import Workout from "../models/workout";
 const hiddenFields =
   "-password -email -requestsSent -requestsReceived -friendRequests";
 
-const get_users = asyncHandler(async (req, res, next) => {
-  const users = await User.find().select("first_name last_name").lean();
-  if (users) {
-    res.json({ info: "GET all users", users });
-  } else {
-    res.status(404).json({ info: "There are no users yet" });
+const get_users = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find().select("first_name last_name").lean();
+    if (users) {
+      res.json({ info: "GET all users", users });
+    } else {
+      res.status(404).json({ info: "There are no users yet" });
+    }
+  } catch (err: any) {
+    res.status(500).json({ info: err.message });
   }
-});
+};
 
-const get_profile = asyncHandler(async (req, res, next) => {
+const get_profile = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const user = await User.findById(userID)
     .select("-password -email") // "-requestsSent -requestsReceived -friendRequests"
@@ -72,7 +76,7 @@ const update_account = [
     .isLength({ max: 30 })
     .withMessage("Name must be 30 characters maximum.")
     .escape(),
-  asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res) => {
     const { userID } = req.params;
     const { uage, ucur_weight, ugoal_weight, ufirst_name, ulast_name } =
       req.body;
@@ -90,7 +94,7 @@ const update_account = [
       });
     } else {
       if (user) {
-        await User.findByIdAndUpdate(userID, {
+        await user.updateOne({
           age: uage,
           cur_weight: ucur_weight,
           goal_weight: ugoal_weight,
@@ -105,7 +109,7 @@ const update_account = [
   }),
 ];
 
-const delete_account = asyncHandler(async (req, res, next) => {
+const delete_account = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const user = await User.findById(userID);
   if (user) {
@@ -139,7 +143,7 @@ const delete_account = asyncHandler(async (req, res, next) => {
   }
 });
 
-const get_friends_list = asyncHandler(async (req, res, next) => {
+const get_friends_list = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const friendsList = await User.findById(userID).select("friends");
   if (friendsList) {
@@ -149,7 +153,7 @@ const get_friends_list = asyncHandler(async (req, res, next) => {
   }
 });
 
-const get_fr_received = asyncHandler(async (req, res, next) => {
+const get_fr_received = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const requestsReceived = await User.findById(userID).select(
     "requestsReceived"
@@ -161,7 +165,7 @@ const get_fr_received = asyncHandler(async (req, res, next) => {
   }
 });
 
-const get_fr_sent = asyncHandler(async (req, res, next) => {
+const get_fr_sent = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const requestsSent = await User.findById(userID).select("requestsSent");
   if (requestsSent) {
@@ -171,7 +175,7 @@ const get_fr_sent = asyncHandler(async (req, res, next) => {
   }
 });
 
-const send_request = asyncHandler(async (req, res, next) => {
+const send_request = asyncHandler(async (req, res) => {
   const { senderID, receiverID }: any = req.params;
   const sender = await User.findById(senderID);
   const receiver = await User.findById(receiverID);
@@ -217,7 +221,7 @@ const send_request = asyncHandler(async (req, res, next) => {
       .json({ info: "An error occured while sending this friend request." });
   }
 });
-const accept_request = asyncHandler(async (req, res, next) => {
+const accept_request = asyncHandler(async (req, res) => {
   const { receiverID, senderID }: any = req.params;
 
   const receiver = await User.findById(receiverID);
@@ -252,7 +256,7 @@ const accept_request = asyncHandler(async (req, res, next) => {
   }
 });
 
-const cancel_request = asyncHandler(async (req, res, next) => {
+const cancel_request = asyncHandler(async (req, res) => {
   const { senderID, receiverID }: any = req.params;
 
   const sender = await User.findById(senderID);
@@ -285,7 +289,7 @@ const cancel_request = asyncHandler(async (req, res, next) => {
   }
 });
 
-const decline_request = asyncHandler(async (req, res, next) => {
+const decline_request = asyncHandler(async (req, res) => {
   const { receiverID, senderID }: any = req.params;
 
   const receiver = await User.findById(receiverID);
@@ -318,7 +322,7 @@ const decline_request = asyncHandler(async (req, res, next) => {
   }
 });
 
-const remove_friend = asyncHandler(async (req, res, next) => {
+const remove_friend = asyncHandler(async (req, res) => {
   const { removerID, removedID }: any = req.params;
   const remover = await User.findById(removerID);
   const removed = await User.findById(removedID);

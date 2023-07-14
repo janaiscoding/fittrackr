@@ -26,13 +26,13 @@
 | Posts                                  | Request | Description                                                  | Protected | Postman Tested |
 | -------------------------------------- | ------- | ------------------------------------------------------------ | --------- | -------------- |
 | /posts                                 | GET     | Posts page, gets all newest posts.                           | True      | True           |
-| /posts/postID                          | GET     | Fetch one individual post                                    | True      | True           |
+| /posts/:postID                         | GET     | Fetch one individual post.                                   | True      | True           |
 | /posts/:userID                         | POST    | Create a new post from your account                          | True      | True           |
-| /posts/:postID/:commentatorID          | POST    | Create a comment on a specific post associated with an user. | True      |
-| /posts/:postID/:userID                 | UPDATE  | Update a post and the account data.                          | True      |
-| /posts/:postID/:userID                 | DELETE  | Delete the post and update the account data.                 | True      |
-| /posts/:postID/:userID/like            | PUT     | Like/dislike a post from a user account.                     | True      |
-| /posts/:postID/:userID/:commentID/like | PUT     | Like/dislike a comment from a user account.                  | True      |
+| /posts/:postID/:userID                 | UPDATE  | Update a post and the account data.                          | True      | True           |
+| /posts/:postID/:userID                 | DELETE  | Delete the post and update the account data.                 | True      | True           |
+| /posts/:postID/:commentatorID          | POST    | Create a comment on a specific post associated with an user. | True      | True           |
+| /posts/:postID/:userID/like            | POST    | Like/dislike a post from a user account.                     | True      | True           |
+| /posts/:postID/:userID/:commentID/like | POST    | Like/dislike a comment from a user account.                  | True      |
 
 ### Installation and running
 
