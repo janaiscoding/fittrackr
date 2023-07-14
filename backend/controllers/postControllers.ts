@@ -1,3 +1,4 @@
+import express, { Express, Request, Response, NextFunction } from "express";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import asyncHandler from "express-async-handler";
@@ -58,20 +59,40 @@ const post_create = [
           comments: [],
           likes: [],
         });
-        await newPost.save();
-        const initialPosts = user.posts;
-        // @ts-ignore
-        initialPosts.push(newPost);
-        await User.findByIdAndUpdate(userID, {
-          posts: initialPosts,
-        });
-        res.json({ info: "New post created, profile updated", newPost });
+        Promise.all([
+          newPost.save(),
+          user.updateOne({ $push: { posts: newPost } }),
+        ])
+          .then(() => {
+            res.status(200).json({
+              info: "New post created, post and user models updated.",
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({ info: err.message });
+          });
       } else {
         res.json({ info: "No user was not found to make this post." });
       }
     }
   }),
 ];
+
+
+const post_get = async (req: Request, res: Response, next: NextFunction) => {
+  const { postID } = req.params;
+  try {
+    const post = await Post.findById(postID).populate("comments");
+    if (post) {
+      post.text = validator.unescape(post.text);
+      res.json({ post });
+    } else {
+      res.status(404).json({ info: "This post doesn't exist" });
+    }
+  } catch {
+    res.status(404).json({ info: "This post doesn't exist" });
+  }
+};
 
 const post_update = [
   body("updatedText")
@@ -87,8 +108,10 @@ const post_update = [
     const { postID, userID } = req.params;
     const { updatedText } = req.body;
     const errors = validationResult(req);
+
     const post = await Post.findById(postID);
     const user = await User.findById(userID);
+
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
@@ -118,25 +141,32 @@ const post_delete = asyncHandler(async (req, res, next) => {
     for (const comment of comments) {
       await Comment.findByIdAndDelete(comment);
     }
-    await post.deleteOne();
-    await User.findByIdAndUpdate(userID, { $pull: { posts: postID } });
-    res.json({ info: "Post was deleted successfully!" });
+    Promise.all([
+      post.deleteOne(),
+      User.findByIdAndUpdate(userID, { $pull: { posts: postID } }),
+    ])
+      .then(() => {
+        res.status(200).json({ info: "Post was deleted successfully!" });
+      })
+      .catch((err) => {
+        res.status(500).json({ info: err.message });
+      });
   } else {
     res.status(404).json({ info: "You cannot delete this post." });
   }
 });
 
 const post_like = asyncHandler(async (req, res, next) => {
-  const { postID, likerID }: any = req.params;
+  const { postID, userID }: any = req.params;
   const post = await Post.findById(postID);
   if (post) {
-    if (post.likes.includes(likerID)) {
+    if (post.likes.includes(userID)) {
       //@ts-ignore
-      await post.updateOne({ $pull: { likes: likerID } });
-      res.json({ info: `${likerID} has disliked post ${postID}` });
+      await post.updateOne({ $pull: { likes: userID } });
+      res.json({ info: `${userID} has disliked post ${postID}` });
     } else {
-      await post.updateOne({ $push: { likes: likerID } });
-      res.json({ info: `${likerID} has liked post ${postID}` });
+      await post.updateOne({ $push: { likes: userID } });
+      res.json({ info: `${userID} has liked post ${postID}` });
     }
   } else {
     res.status(404).json({ info: "Post was not found!" });
@@ -144,6 +174,7 @@ const post_like = asyncHandler(async (req, res, next) => {
 });
 export default {
   posts_get,
+  post_get,
   post_create,
   post_update,
   post_delete,
