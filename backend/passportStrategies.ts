@@ -9,7 +9,7 @@ const LocalStrategy = passportLocal.Strategy;
 const localStrategy = new LocalStrategy(
   { usernameField: "email", passwordField: "password" },
   async (email, password, done) => {
-    const user = await User.findOne({ email }).exec();
+    const user = await User.findOne({ email });
     if (!user)
       return done(null, false, {
         message: "Could not find an account associated with this email.",
@@ -32,7 +32,7 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.secret;
 
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
-  const user = await User.findById({ _id: payload.userId }).exec();
+  const user = await User.findById({ _id: payload.userId });
   if (user) {
     return done(null, user);
   }

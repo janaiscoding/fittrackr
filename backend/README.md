@@ -5,12 +5,12 @@
 | API endpoints | Request | Description                       | Protected | Postman tested |
 | ------------- | ------- | --------------------------------- | --------- | -------------- |
 | /             | GET     | Home page, gets all newest posts. | True      | True           |
+| /signup       | POST    | Create a new user.                | False     | True           |
 | /login        | POST    | Log in to your existing account.  | False     | True           |
 
 | Users                                | Request | Description                                      | Protected | Postman tested |
 | ------------------------------------ | ------- | ------------------------------------------------ | --------- | -------------- |
 | /users                               | GET     | Fetch all users in the platform.                 | True      | True           |
-| /users                               | POST    | Create a new user.                               | False     | True           |
 | /users/:userID                       | GET     | Fetch existing user data.                        | True      | True           |
 | /users/:userID                       | PUT     | Update existing user data.                       | True      | True           |
 | /users/:userID                       | DELETE  | Delete user from database cleanup all user data. | True      | True           |

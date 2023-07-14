@@ -7,8 +7,7 @@ import userControllers from "../controllers/userControllers";
 import passport from "passport";
 const auth = passport.authenticate("jwt", { session: false });
 
-router.get("/", auth, userControllers.get_users); // gets all users
-router.post("/", authControllers.create_user); // NEW USER
+router.get("/", auth, userControllers.get_users);
 router.get("/:userID", auth, userControllers.get_profile); // gets a specific profile with a profile _id
 router.put("/:userID", auth, userControllers.update_account);
 router.delete("/:userID", auth, userControllers.delete_account);
