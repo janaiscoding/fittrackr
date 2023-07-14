@@ -16,6 +16,7 @@ router.get("/:userID/friends", auth, userControllers.get_friends_list);
 router.get("/:userID/friends/received", auth, userControllers.get_fr_received);
 router.get("/:userID/friends/sent", auth, userControllers.get_fr_sent);
 router.post("/send/:senderID/:receiverID", auth, userControllers.send_request);
+router.delete("/cancel/:senderID/:receiverID", auth, userControllers.cancel_request);
 router.put("/accept/:receiverID/:senderID", auth, userControllers.accept_request);
 router.delete("/decline/:receiverID/:senderID", auth, userControllers.decline_request);
 router.delete("/remove/:removerID/:removedID", auth, userControllers.remove_friend);

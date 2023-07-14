@@ -231,6 +231,39 @@ const accept_request = asyncHandler(async (req, res, next) => {
   }
 });
 
+const cancel_request = asyncHandler(async (req, res, next) => {
+  const { senderID, receiverID }: any = req.params;
+
+  const sender = await User.findById(senderID);
+  const receiver = await User.findById(receiverID);
+
+  if (
+    receiver &&
+    sender &&
+    receiver.requestsReceived.includes(senderID) &&
+    sender.requestsSent.includes(receiverID)
+  ) {
+    Promise.all([
+      receiver.updateOne({
+        $pull: { requestsReceived: senderID },
+      }),
+      sender.updateOne({
+        $pull: { requestsSent: receiverID },
+      }),
+    ])
+      .then(() => {
+        res.json({
+          info: `${sender.first_name} canceled their friend request to ${receiver.first_name}. :(`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ info: err.message });
+      });
+  } else {
+    res.status(500).json({ info: "This friend request does not exist." });
+  }
+});
+
 const decline_request = asyncHandler(async (req, res, next) => {
   const { receiverID, senderID }: any = req.params;
 
@@ -294,6 +327,7 @@ const remove_friend = asyncHandler(async (req, res, next) => {
     res.status(500).json({ info: "This friendship does not exist." });
   }
 });
+
 export default {
   get_users,
   get_profile,
@@ -303,6 +337,7 @@ export default {
   get_fr_received,
   get_fr_sent,
   send_request,
+  cancel_request,
   accept_request,
   decline_request,
   remove_friend,
