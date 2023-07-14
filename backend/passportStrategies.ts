@@ -1,18 +1,11 @@
 import passportLocal from "passport-local";
 import passportJWT from "passport-jwt";
-
+// const GoogleStrategy = require("passport-google-oidc");
 import "dotenv/config";
-import User from './models/user'
+import User from "./models/user";
 import bcrypt from "bcryptjs";
 
 const LocalStrategy = passportLocal.Strategy;
-const JwtStrategy = passportJWT.Strategy;
-const ExtractJwt = passportJWT.ExtractJwt;
-
-const opts: any = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.secret;
-
 const localStrategy = new LocalStrategy(
   { usernameField: "email", passwordField: "password" },
   async (email, password, done) => {
@@ -31,6 +24,13 @@ const localStrategy = new LocalStrategy(
   }
 );
 
+const JwtStrategy = passportJWT.Strategy;
+const ExtractJwt = passportJWT.ExtractJwt;
+
+const opts: any = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = process.env.secret;
+
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   const user = await User.findById({ _id: payload.userId }).exec();
   if (user) {
@@ -41,4 +41,14 @@ const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   });
 });
 
+// const googleStrategy = new GoogleStrategy(
+//   {
+//     clientID: process.env.CLIENT_ID,
+//     clientSecret: process.env.CLIENT_SECRET,
+//     callbackURL: process.env.CALLBACK_URL,
+//   },
+//   async (accessToken, refreshToken, profile, done) => {
+//     console.log("user profile is: ", profile);
+//   }
+// );
 export { localStrategy, jwtStrategy };

@@ -6,11 +6,18 @@
 | -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
 | /                                      | GET     | Home page, gets all newest posts.                            | True      |
 | /login                                 | POST    | Log in to your existing account.                             | False     |
+| Users                                  | Request | Description                                                  | Protected |
+| -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
 | /users                                 | GET     | Fetch all users in the platform.                             | True      |
 | /users                                 | POST    | Create a new user.                                           | False     |
 | /users/:userID                         | GET     | Fetch existing user data.                                    | True      |
 | /users/:userID                         | PUT     | Update existing user data.                                   | True      |
 | /users/:userID                         | DELETE  | Delete user from database cleanup all user data.             | True      |
+| /users/:userID/friends                 | GET     | Fetch user's friends list.                                   | True      |
+| /users/:userID/friends/received        | GET     | Fetch user's received friend requests.                       | True      |
+| /users/:userID/friends/sent            | GET     | Fetch user's sent friend requests.                           | True      |
+| Posts                                  | Request | Description                                                  | Protected |
+| -------------------------------------- | ------- | ------------------------------------------------------------ | --------- |
 | /posts                                 | GET     | Posts page, gets all newest posts.                           | True      |
 | /posts/:userID                         | POST    | Create a new post from your account                          | True      |
 | /posts/:postID/:userID                 | POST    | Create a comment on a specific post associated with an user. | True      |

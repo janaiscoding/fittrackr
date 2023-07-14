@@ -17,7 +17,7 @@ const get_users = asyncHandler(async (req, res, next) => {
 const get_profile = asyncHandler(async (req, res, next) => {
   const { userID } = req.params;
   const user = await User.findById(userID)
-    .select("-password -email -requestsSent -requestsReceived -friendRequests")
+    .select("-password -email") // "-requestsSent -requestsReceived -friendRequests"
     .populate("workouts")
     .populate({
       path: "posts",
@@ -49,13 +49,7 @@ const update_account = [
     .isInt({ min: 1 })
     .withMessage("Weight must be above 1 kilo")
     .escape(),
-  body("ugoal_weight")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Goal weight must be above 1 kilo")
-    .escape(),
+  body("ugoal_weight").optional().trim().toInt().escape(),
   body("ufirst_name")
     .trim()
     .exists()
@@ -109,12 +103,100 @@ const update_account = [
 
 const delete_account = asyncHandler(async (req, res, next) => {
   const { userID } = req.params;
-  res.json({ info: "DELETE your account.", userID });
+  const user = await User.findById(userID);
+  if (user) {
+    await user.deleteOne();
+    //remove from everyone's friends lists, friend requests send, friend requests received
+
+    //remove all the posts
+
+    //remove all the comments
+    res.json({ info: "Deleted account successfully." });
+  } else {
+    res.status(404).json({ info: "Cannot delete which that doesn't exist.." });
+  }
 });
+
+const get_friends_list = asyncHandler(async (req, res, next) => {
+  const { userID } = req.params;
+  const friendsList = await User.findById(userID).select("friends");
+  if (friendsList) {
+    res.json(friendsList);
+  } else {
+    res.status(500).json({ error: "Something went wrong." });
+  }
+});
+
+const get_fr_received = asyncHandler(async (req, res, next) => {
+  const { userID } = req.params;
+  const requestsReceived = await User.findById(userID).select(
+    "requestsReceived"
+  );
+  if (requestsReceived) {
+    res.json(requestsReceived);
+  } else {
+    res.status(500).json({ error: "Something went wrong." });
+  }
+});
+
+const get_fr_sent = asyncHandler(async (req, res, next) => {
+  const { userID } = req.params;
+  const requestsSent = await User.findById(userID).select("requestsSent");
+  if (requestsSent) {
+    res.json(requestsSent);
+  } else {
+    res.status(500).json({ error: "Something went wrong." });
+  }
+});
+
+const send_request_from_to = asyncHandler(async (req, res, next) => {
+  const { fromID, toID }: any = req.params;
+  const fromUser = await User.findById(fromID);
+  const toUser = await User.findById(toID);
+  if (fromUser && toUser) {
+    // check if they're already friends // or if the request is sent // if a request is already received dont allow them to post
+    const isFriends = fromUser.friends.includes(toID);
+    const isFRSent = fromUser.requestsSent.includes(toID);
+    const isFRPending = fromUser.requestsReceived.includes(toID);
+    switch (true) {
+      case isFriends:
+        res.json({ info: "You are already friends with this user." });
+        break;
+      case isFRSent:
+        res.json({ info: "You already sent a friend request to this user." });
+        break;
+      case isFRPending:
+        res.json({ info: "You already have a friend request from this user" });
+        break;
+      default:
+        {
+          fromUser.requestsSent.push(toID);
+          toUser.requestsReceived.push(fromID);
+          await fromUser.save();
+          await toUser.save();
+          res.json({
+            info: `${fromUser.first_name} sent a successful friend request to ${toUser.first_name}`,
+            from: fromUser.requestsSent,
+            to: toUser.requestsReceived,
+          });
+        }
+        break;
+    }
+  } else {
+    res
+      .status(500)
+      .json({ info: "An error occured while sending this friend request." });
+  }
+});
+const accept_f_r = asyncHandler(async (req, res, next) => {});
 
 export default {
   get_users,
   get_profile,
   update_account,
   delete_account,
+  get_friends_list,
+  get_fr_received,
+  get_fr_sent,
+  send_request_from_to,
 };
