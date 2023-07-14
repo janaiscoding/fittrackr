@@ -5,8 +5,6 @@ import Comment from "../models/comment";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
 
-// Comment - COMPLETED
-// router.post("/:postID/:commentatorID", auth, commentControllers.post_comment);
 const post_comment = [
   body("text")
     .trim()
@@ -62,7 +60,7 @@ const post_comment = [
     }
   },
 ];
-// LIKE/DISLIKE ONE COMMENT - COMPLETED Route: /:postID/:commentID/:userID/like
+
 const comment_like = async (req: Request, res: Response) => {
   const { postID, commentID, userID }: any = req.params;
   try {
@@ -89,7 +87,7 @@ const comment_like = async (req: Request, res: Response) => {
     res.status(404).json({ info: "The comment was not found!" });
   }
 };
-// DELETE A COMMENT - COMPLETED Route: /:postID/:commentID/:commentatorID
+
 const comment_delete = async (req: Request, res: Response) => {
   const { postID, commentID, commentatorID }: any = req.params;
   try {

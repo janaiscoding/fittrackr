@@ -7,8 +7,7 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-// CREATE USER - COMPLETED - FUTURE PLANS: USER PROFILE PIC/BIO
-// router.post("/", authControllers.create_user);
+// add default User pic + default banner + default bio
 const create_user = [
   body("age")
     .optional()
@@ -116,8 +115,6 @@ const create_user = [
   },
 ];
 
-// LOGIN - COMPLETED
-// router.post("/login", authControllers.login_post);
 const login_post = [
   body("email", "Email is required").trim().isEmail().notEmpty().escape(),
   body("password", "Password is required").trim().notEmpty().escape(),
