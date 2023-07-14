@@ -209,18 +209,14 @@ const accept_request = asyncHandler(async (req, res, next) => {
     sender.requestsSent.includes(receiverID)
   ) {
     Promise.all([
-      receiver.updateOne(
-        {
-          $pull: { requestsReceived: senderID },
-        },
-        { $push: { friends: senderID } }
-      ),
-      sender.updateOne(
-        {
-          $pull: { requestsSent: receiverID },
-        },
-        { $push: { friends: receiverID } }
-      ),
+      receiver.updateOne({
+        $pull: { requestsReceived: senderID },
+      }),
+      receiver.updateOne({ $push: { friends: senderID } }),
+      sender.updateOne({
+        $pull: { requestsSent: receiverID },
+      }),
+      sender.updateOne({ $push: { friends: receiverID } }),
     ])
       .then(() => {
         res.json({
@@ -235,6 +231,69 @@ const accept_request = asyncHandler(async (req, res, next) => {
   }
 });
 
+const decline_request = asyncHandler(async (req, res, next) => {
+  const { receiverID, senderID }: any = req.params;
+
+  const receiver = await User.findById(receiverID);
+  const sender = await User.findById(senderID);
+
+  if (
+    receiver &&
+    sender &&
+    receiver.requestsReceived.includes(senderID) &&
+    sender.requestsSent.includes(receiverID)
+  ) {
+    Promise.all([
+      receiver.updateOne({
+        $pull: { requestsReceived: senderID },
+      }),
+      sender.updateOne({
+        $pull: { requestsSent: receiverID },
+      }),
+    ])
+      .then(() => {
+        res.json({
+          info: `${receiver.first_name} declined ${sender.first_name}'s friend request. :(`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ info: err.message });
+      });
+  } else {
+    res.status(500).json({ info: "This friend request does not exist." });
+  }
+});
+
+const remove_friend = asyncHandler(async (req, res, next) => {
+  const { removerID, removedID }: any = req.params;
+  const remover = await User.findById(removerID);
+  const removed = await User.findById(removedID);
+  if (
+    remover &&
+    removed &&
+    remover.friends.includes(removedID) &&
+    removed.friends.includes(removerID)
+  ) {
+    Promise.all([
+      remover.updateOne({
+        $pull: { friends: removedID },
+      }),
+      removed.updateOne({
+        $pull: { friends: removerID },
+      }),
+    ])
+      .then(() => {
+        res.json({
+          info: `${remover.first_name} removed ${removed.first_name} from their friends list. :(`,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ info: err.message });
+      });
+  } else {
+    res.status(500).json({ info: "This friendship does not exist." });
+  }
+});
 export default {
   get_users,
   get_profile,
@@ -245,4 +304,6 @@ export default {
   get_fr_sent,
   send_request,
   accept_request,
+  decline_request,
+  remove_friend,
 };
