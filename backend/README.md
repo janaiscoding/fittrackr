@@ -2,11 +2,12 @@
 
 ### API Endpoints:
 
-| API endpoints | Request | Description                       | Protected | Postman tested |
-| ------------- | ------- | --------------------------------- | --------- | -------------- |
-| /             | GET     | Home page, gets all newest posts. | True      | True           |
-| /signup       | POST    | Create a new user.                | False     | True           |
-| /login        | POST    | Log in to your existing account.  | False     | True           |
+| API endpoints | Request | Description                         | Protected | Postman tested |
+| ------------- | ------- | ----------------------------------- | --------- | -------------- |
+| /             | GET     | Home page, gets all newest posts.   | True      | True           |
+| /signup       | POST    | Create a new user.                  | False     | True           |
+| /login        | POST    | Log in to your existing account.    | False     | True           |
+| /verify       | POST    | Verify Token and re-send user data. | False     | True           |
 
 | Users                                | Request | Description                                      | Protected | Postman tested    |
 | ------------------------------------ | ------- | ------------------------------------------------ | --------- | ----------------- |
@@ -43,7 +44,7 @@ git clone git@github.com:janaiscoding/fiturself.git
 cd fiturself/backend
 npm install
 npm run dev
-Server is listening on localhost:3000
+Server is listening on localhost:8008
 ```
 
 # Built with

@@ -11,7 +11,7 @@ import uploadPfp from "../middleware/multerConfig";
 
 const get_users = async (req: Request, res: Response) => {
   try {
-    const users = await User.find().select("first_name last_name").lean();
+    const users = await User.find().select("first_name last_name avatar").lean();
     if (users) {
       res.json({ info: "GET all users", users });
     } else {
@@ -128,15 +128,19 @@ const update_pfp = [
   },
   async (req: Request, res: Response) => {
     if (!req.file)
-      return res.status(500).json({ message: "No profile picture upload found" });
+      return res
+        .status(500)
+        .json({ message: "No profile picture upload found" });
     else {
       try {
         const user = await User.findById(req.params.userID);
-        if (user && user.pfp) {
-          user.pfp.data = req.file.buffer;
-          user.pfp.contentType = req.file.mimetype;
+        if (user && user.avatar) {
+          user.avatar.data = req.file.buffer;
+          user.avatar.contentType = req.file.mimetype;
           await user.save();
-          res.status(201).json({ info: "Profile picture updated successfully!" });
+          res
+            .status(201)
+            .json({ info: "Profile picture updated successfully!" });
         }
         if (!user) {
           return res.status(404).json({ error: "This user doesn't exist." });

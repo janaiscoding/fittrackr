@@ -122,7 +122,7 @@ const login_post = [
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(401).json({ errors: errors.array() })
+      return res.status(401).json({ errors: errors.array() });
     } else {
       // @ts-ignore
       passport.authenticate(
@@ -153,8 +153,25 @@ const login_post = [
     }
   },
 ];
-
+const verify_token = async (req: Request, res: Response) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ info: "No token provided, please log in." });
+  }
+  try {
+    // @ts-ignore
+    const verify = jwt.verify(token, process.env.secret);
+    const user = await User.findById(verify.userId).select("-email -password");
+    if (!user) res.status(404).json({ info: "User doesn't exist." });
+    else {
+      res.status(200).json({ user, token });
+    }
+  } catch {
+    res.status(401).json({ info: "Token is invalid." });
+  }
+};
 export default {
   login_post,
   create_user,
+  verify_token,
 };
