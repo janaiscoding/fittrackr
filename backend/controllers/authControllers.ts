@@ -43,7 +43,7 @@ const create_user = [
     .escape(),
   body("last_name")
     .trim()
-    .notEmpty()
+    .exists()
     .withMessage("Last name is required.")
     .isLength({ min: 1 })
     .withMessage("Last name must be above 1 characters long.")
@@ -55,10 +55,11 @@ const create_user = [
     .exists()
     .withMessage("Email is required")
     .isEmail()
-    .withMessage("Must be a valid email."),
+    .withMessage("Must be a valid email.")
+    .escape(),
   body("password")
     .trim()
-    .notEmpty()
+    .exists()
     .withMessage("Password is required.")
     .isLength({ min: 8, max: 24 })
     .withMessage("Password must be between 8 and 24 characters long.")
@@ -75,7 +76,7 @@ const create_user = [
     } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.json({
+      return res.status(400).json({
         errors: errors.array(),
       });
     }
@@ -121,7 +122,7 @@ const login_post = [
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(401).json({ errors: errors.array() });
+      return res.status(401).json({ errors: errors.array() })
     } else {
       // @ts-ignore
       passport.authenticate(

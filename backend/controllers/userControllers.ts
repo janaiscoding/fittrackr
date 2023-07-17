@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
@@ -6,8 +6,8 @@ import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import Workout from "../models/workout";
-const hiddenFields =
-  "-password -email -requestsSent -requestsReceived -friendRequests";
+import multer from "multer";
+import uploadPfp from "../middleware/multerConfig";
 
 const get_users = async (req: Request, res: Response) => {
   try {
@@ -22,23 +22,25 @@ const get_users = async (req: Request, res: Response) => {
   }
 };
 
-const get_profile = asyncHandler(async (req, res) => {
+const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
-  const user = await User.findById(userID)
-    .select("-password -email") // "-requestsSent -requestsReceived -friendRequests"
-    .populate("workouts")
-    .populate({
-      path: "posts",
-      select: "text comments likes createdAt updatedAt",
-      populate: { path: "comments", select: "text likes createdAt" },
-    })
-    .exec();
-  if (user) {
-    res.json({ info: "GET user profile", user });
-  } else {
-    res.status(404).json({ info: "User was not found!" });
+  try {
+    const user = await User.findById(userID)
+      .select("-password -email") // "-requestsSent -requestsReceived -friendRequests"
+      .populate("workouts")
+      .populate({
+        path: "posts",
+        select: "text comments likes createdAt updatedAt",
+        populate: { path: "comments", select: "text likes createdAt" },
+      })
+      .exec();
+    if (user) return res.json({ info: "GET user profile", user });
+
+    return res.status(404).json({ info: "User was not found!" });
+  } catch (err) {
+    return res.status(404).json({ info: "User was not found!" });
   }
-});
+};
 
 const update_account = [
   body("uage")
@@ -80,7 +82,7 @@ const update_account = [
     const { userID } = req.params;
     const { uage, ucur_weight, ugoal_weight, ufirst_name, ulast_name } =
       req.body;
-    const user = await User.findById(userID).select(hiddenFields).exec();
+    const user = await User.findById(userID).exec();
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(400).json({
@@ -107,6 +109,66 @@ const update_account = [
       }
     }
   }),
+];
+const update_pfp = [
+  (req: Request, res: Response, next: NextFunction) => {
+    uploadPfp.single("myImage")(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ error: "File size exceeds the limit of 4MB." });
+        }
+        return res.status(500).json({ error: "File upload error." });
+      } else if (err) {
+        return res.status(400).json(err);
+      }
+      next();
+    });
+  },
+  async (req: Request, res: Response) => {
+    if (!req.file)
+      return res.status(500).json({ message: "No profile picture upload found" });
+    else {
+      try {
+        const user = await User.findById(req.params.userID);
+        if (user && user.pfp) {
+          user.pfp.data = req.file.buffer;
+          user.pfp.contentType = req.file.mimetype;
+          await user.save();
+          res.status(201).json({ info: "Profile picture updated successfully!" });
+        }
+        if (!user) {
+          return res.status(404).json({ error: "This user doesn't exist." });
+        }
+      } catch (err: any) {
+        if (err.kind === "ObjectId") {
+          return res.status(404).json({ error: "This user doesn't exist." });
+        }
+        return res.status(500).json({
+          message: "There was an error updating the user's profile picture.",
+          err,
+        });
+      }
+    }
+  },
+  // // local testing
+  // async (req: Request, res: Response, next: NextFunction) => {
+  //   try {
+  //     const user = await User.findById(req.params.userID);
+  //     if (!user) {
+  //       return res.status(404).json({ error: "This user doesn't exist" });
+  //     }
+  //     res.render("pic", {
+  //       contentType: user.pfp.contentType,
+  //       data: user.pfp.data,
+  //     });
+  //   } catch (err) {
+  //     return res
+  //       .status(500)
+  //       .json({ message: "There was an error upading the user's profile picture." });
+  //   }
+  // },
 ];
 
 const delete_account = asyncHandler(async (req, res) => {
@@ -180,7 +242,6 @@ const send_request = asyncHandler(async (req, res) => {
   const sender = await User.findById(senderID);
   const receiver = await User.findById(receiverID);
   if (sender && receiver) {
-    // check if they're already friends // or if the request is sent // if a request is already received dont allow them to post
     const isFriends = sender.friends.includes(receiverID);
     const isFRSent = sender.requestsSent.includes(receiverID);
     const isFRPending = sender.requestsReceived.includes(receiverID);
@@ -357,6 +418,7 @@ export default {
   get_users,
   get_profile,
   update_account,
+  update_pfp,
   delete_account,
   get_friends_list,
   get_fr_received,

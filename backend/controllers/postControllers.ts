@@ -5,7 +5,7 @@ import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
 
-// GET ALL POSTS --- Add pic + user pics
+//Add pic + user pics
 const posts_get = async (req: Request, res: Response) => {
   try {
     const postsData = await Post.find({})
@@ -13,9 +13,9 @@ const posts_get = async (req: Request, res: Response) => {
       .populate({
         path: "comments",
         select: "text likes createdAt",
-        populate: { path: "user", select: "first_name last_name" }, // + profile pic
+        populate: { path: "user", select: "first_name last_name pfp" },
       })
-      .populate({ path: "user", select: "first_name last_name" }) // + profile pic
+      .populate({ path: "user", select: "first_name last_name pfp" })
       .sort({ createdAt: "desc" })
       .exec();
     if (postsData) {
@@ -33,7 +33,7 @@ const posts_get = async (req: Request, res: Response) => {
   }
 };
 
-// GET POST --- Add pic + user pics
+// Add pic + user pics
 const post_get = async (req: Request, res: Response) => {
   const { postID } = req.params;
   try {
@@ -55,7 +55,7 @@ const post_get = async (req: Request, res: Response) => {
   }
 };
 
-// POST CREATE --- Add pic + user pics
+// - Add pic + user pics
 const post_create = [
   body("text")
     .trim()
@@ -112,8 +112,6 @@ const post_create = [
   },
 ];
 
-// UPDATE A POST - COMPLETE
-// router.put("/:postID/:userID", auth, postControllers.post_update);
 const post_update = [
   body("updatedText")
     .trim()
@@ -155,8 +153,6 @@ const post_update = [
   },
 ];
 
-// DELETE ONE POST - COMPLETED
-// router.delete("/:postID/:userID", auth, postControllers.post_delete);
 const post_delete = async (req: Request, res: Response) => {
   const { postID, userID } = req.params;
   try {
@@ -187,8 +183,6 @@ const post_delete = async (req: Request, res: Response) => {
   }
 };
 
-// LIKE/DISLIKE ONE POST - COMPLETED
-//router.post("/:postID/:userID/like", auth, postControllers.post_like);
 const post_like = async (req: Request, res: Response) => {
   const { postID, userID }: any = req.params;
   try {

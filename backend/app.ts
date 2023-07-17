@@ -19,9 +19,13 @@ const limiter = RateLimit({
 
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
-import workoutsRouter from './routes/workouts'
-import postsRouter from './routes/posts'
+import workoutsRouter from "./routes/workouts";
+import postsRouter from "./routes/posts";
+
 const app = express();
+
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 app.use(cors());
 app.use(limiter);
@@ -44,10 +48,11 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 app.use(passport.initialize());
 
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use('/posts', postsRouter)
-app.use('/workouts', workoutsRouter)
+app.use("/posts", postsRouter);
+app.use("/workouts", workoutsRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

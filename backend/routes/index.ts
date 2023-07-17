@@ -6,7 +6,7 @@ import passport from "passport";
 const auth = passport.authenticate("jwt", { session: false });
 
 router.get("/", auth, postControllers.posts_get);
-router.post("/signup", authControllers.create_user); 
+router.post("/signup", authControllers.create_user);
 router.post("/login", authControllers.login_post);
 
 export default router;
