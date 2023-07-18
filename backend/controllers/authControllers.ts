@@ -41,26 +41,20 @@ const create_user = [
     .isLength({ min: 8, max: 24 })
     .withMessage("Password must be between 8 and 24 characters long.")
     .escape(),
-  body("confPassword")
+  body("conf_password")
     .trim()
     .exists()
-    .withMessage(
-      "Confirmation password must exist and match your other password."
-    )
-    .isLength({ min: 8, max: 24 })
-    .withMessage(
-      "Confirmation password must be between 8 and 24 characters long."
-    )
+    .withMessage("Passwords must match.")
     .escape(),
   async (req: Request, res: Response) => {
-    const { first_name, last_name, email, password, confPassword } = req.body;
+    const { first_name, last_name, email, password, conf_password } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
       });
     }
-    if (password === confPassword) {
+    if (password === conf_password) {
       try {
         bcrypt.hash(password, 10, async (err, hashed) => {
           if (err) {
