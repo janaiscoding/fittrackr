@@ -136,36 +136,34 @@ const login_post = [
   body("email", "Email is required").trim().isEmail().notEmpty().escape(),
   body("password", "Password is required").trim().notEmpty().escape(),
   async (req: Request, res: Response, next: NextFunction) => {
+    const { email, password } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(401).json({ errors: errors.array() });
     } else {
-      // @ts-ignore
-      passport.authenticate(
-        "local",
-        { session: false },
-        // @ts-ignore
-        (err, user, info) => {
-          if (err) {
-            return next(err);
-          }
-          if (!user) {
-            return res.status(404).json({
-              error: info.message,
-            });
-          }
-          req.login(user, { session: false }, (err) => {
-            if (err) {
-              return next(err);
-            }
-            // @ts-ignore
+      try {
+        const user = await User.findOne({ email }).exec();
+        if (!user)
+          return res.status(404).json({
+            message: "Could not find an account associated with this email",
+          });
+        bcrypt.compare(password, user.password, (err, compare) => {
+          if (err) return next(err);
+          if (compare) {
+            //@ts-ignore
             const token = jwt.sign({ userId: user._id }, process.env.secret, {
-              expiresIn: "24h",
+              expiresIn: "24hr",
             });
             return res.status(200).json({ token, user });
-          });
-        }
-      )(req, res, next);
+          } else {
+            return res
+              .status(400)
+              .json({ message: "Your password is incorrect" });
+          }
+        });
+      } catch (err) {
+        res.json(err);
+      }
     }
   },
 ];

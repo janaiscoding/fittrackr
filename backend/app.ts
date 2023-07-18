@@ -10,7 +10,7 @@ import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
 import passport from "passport";
-import { localStrategy, jwtStrategy } from "./passportStrategies";
+import { jwtStrategy } from "./passportStrategies";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -44,10 +44,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-passport.use(localStrategy);
 passport.use(jwtStrategy);
 app.use(passport.initialize());
-
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
