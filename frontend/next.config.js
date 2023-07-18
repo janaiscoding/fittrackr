@@ -13,6 +13,17 @@ const nextConfig = {
         destination: "/login",
         permanent: false,
       },
+      {
+        source: "/login",
+        has: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };

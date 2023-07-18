@@ -2,7 +2,7 @@ import { verifyAPI } from "./endpoints";
 
 const verifyToken = async (
   token: string | null,
-  setUserData: React.Dispatch<any[]>
+  setUserData: React.Dispatch<any[]> //fix user type
 ) => {
   await fetch("https://fiturself.fly.dev/verify", {
     method: "POST",

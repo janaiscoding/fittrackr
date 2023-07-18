@@ -1,13 +1,14 @@
 "use client";
 
-import { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getJwtToken, setJwtToken } from "../utils/auth_handler";
+import { setJwtToken } from "../utils/auth_handler";
 import { loginAPI } from "../utils/api/endpoints";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const router = useRouter();
 
@@ -25,26 +26,21 @@ const Login = () => {
     await fetch(loginAPI, opts)
       .then((res) => res.json())
       .then((data) => {
-        setJwtToken(data.token);
-      })
-      .then(() => {
-        router.push("/");
+        if (data.token) {
+          setJwtToken(data.token);
+          router.push("/");
+        }
+        if (data.message) {
+          setError(data.message);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    const token = getJwtToken();
-    if (token) {
-      router.push("/");
-    }
-    console.log("test");
-  }, [router]);
   return (
     <div>
-      <p>login redirect when not logged in</p>{" "}
+      <p>login redirect when not logged in</p> {error}
       <form onSubmit={(e) => handleLogin(e)}>
         <div className="form-control w-full max-w-xs">
           <label className="label">
@@ -72,14 +68,9 @@ const Login = () => {
           Submit
         </button>
       </form>
-      <button
-        className="btn"
-        onClick={() => {
-          router.push("/signup");
-        }}
-      >
+      <a href="/signup" className="btn">
         Create a new account
-      </button>
+      </a>
     </div>
   );
 };
