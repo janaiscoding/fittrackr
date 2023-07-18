@@ -11,7 +11,9 @@ import uploadPfp from "../middleware/multerConfig";
 
 const get_users = async (req: Request, res: Response) => {
   try {
-    const users = await User.find().select("first_name last_name avatar").lean();
+    const users = await User.find()
+      .select("first_name last_name avatar")
+      .lean();
     if (users) {
       res.json({ info: "GET all users", users });
     } else {
@@ -46,7 +48,8 @@ const update_account = [
   body("uage")
     .optional()
     .trim()
-    .toInt()
+    .isNumeric()
+    .withMessage("Must be a number")
     .isInt({ min: 1 })
     .withMessage("Age must be, technically, above one..")
     .isInt({ max: 100 })
@@ -62,53 +65,53 @@ const update_account = [
   body("ugoal_weight").optional().trim().toInt().escape(),
   body("ufirst_name")
     .trim()
-    .exists()
-    .withMessage("First name is required.")
+    .optional()
     .isLength({ min: 1 })
-    .withMessage("Name must be above 1 characters long.")
+    .withMessage("First name must be above 1 characters long.")
     .isLength({ max: 30 })
-    .withMessage("Name must be 30 characters maximum.")
+    .withMessage("First name must be 30 characters maximum.")
     .escape(),
   body("ulast_name")
     .trim()
-    .exists()
-    .withMessage("Last name is required.")
+    .optional()
     .isLength({ min: 1 })
-    .withMessage("Name must be above 1 characters long.")
+    .withMessage("Last name must be above 1 characters long.")
     .isLength({ max: 30 })
-    .withMessage("Name must be 30 characters maximum.")
+    .withMessage("Last name must be 30 characters maximum.")
     .escape(),
-  asyncHandler(async (req, res) => {
+  async (req: Request, res: Response) => {
     const { userID } = req.params;
-    const { uage, ucur_weight, ugoal_weight, ufirst_name, ulast_name } =
-      req.body;
-    const user = await User.findById(userID).exec();
+    const updateFields = {
+      age: req.body.uage,
+      last_name: req.body.ulast_name,
+      cur_weight: req.body.ucur_weight,
+      goal_weight: req.body.ugoal_weight,
+      first_name: req.body.ufirst_name,
+    };
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(400).json({
-        info: "Errors while validation",
-        errors: errors.array(),
-        uage,
-        ucur_weight,
-        ugoal_weight,
-        ufirst_name: validator.unescape(ufirst_name),
-        ulast_name: validator.unescape(ulast_name),
-      });
-    } else {
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+    try {
+      const user = await User.findById(userID);
       if (user) {
-        await user.updateOne({
-          age: uage,
-          cur_weight: ucur_weight,
-          goal_weight: ugoal_weight,
-          first_name: ufirst_name,
-          last_name: ulast_name,
-        });
-        res.json({ info: "Updated user successfully." });
+        const updateObject = {};
+        for (const field in updateFields) {
+          //@ts-ignore
+          if (updateFields[field]) {
+            //@ts-ignore
+            updateObject[field] = updateFields[field];
+          }
+        }
+        await user.updateOne(updateObject);
+        const userUpdated = await User.findById(userID);
+        res.json({ info: "Updated user successfully.", userUpdated });
       } else {
         res.status(404).json({ info: "This user doesn't exist." });
       }
+    } catch (err) {
+      res.status(500).json(err);
     }
-  }),
+  },
 ];
 const update_pfp = [
   (req: Request, res: Response, next: NextFunction) => {
@@ -156,23 +159,6 @@ const update_pfp = [
       }
     }
   },
-  // // local testing
-  // async (req: Request, res: Response, next: NextFunction) => {
-  //   try {
-  //     const user = await User.findById(req.params.userID);
-  //     if (!user) {
-  //       return res.status(404).json({ error: "This user doesn't exist" });
-  //     }
-  //     res.render("pic", {
-  //       contentType: user.pfp.contentType,
-  //       data: user.pfp.data,
-  //     });
-  //   } catch (err) {
-  //     return res
-  //       .status(500)
-  //       .json({ message: "There was an error upading the user's profile picture." });
-  //   }
-  // },
 ];
 
 const delete_account = asyncHandler(async (req, res) => {
@@ -433,3 +419,21 @@ export default {
   decline_request,
   remove_friend,
 };
+
+// // local testing
+// async (req: Request, res: Response, next: NextFunction) => {
+//   try {
+//     const user = await User.findById(req.params.userID);
+//     if (!user) {
+//       return res.status(404).json({ error: "This user doesn't exist" });
+//     }
+//     res.render("pic", {
+//       contentType: user.pfp.contentType,
+//       data: user.pfp.data,
+//     });
+//   } catch (err) {
+//     return res
+//       .status(500)
+//       .json({ message: "There was an error upading the user's profile picture." });
+//   }
+// },

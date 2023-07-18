@@ -9,29 +9,6 @@ import "dotenv/config";
 
 // add default User pic + default banner + default bio
 const create_user = [
-  body("age")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Age must be, technically, above one..")
-    .isInt({ max: 100 })
-    .withMessage("Doubt you're thaaaat old... (less than 100 years old pls)")
-    .escape(),
-  body("cur_weight")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Weight must be above 1 kilo")
-    .escape(),
-  body("goal_weight")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Goal weight must be above 1 kilo")
-    .escape(),
   body("first_name")
     .trim()
     .notEmpty()
@@ -76,16 +53,7 @@ const create_user = [
     )
     .escape(),
   async (req: Request, res: Response) => {
-    const {
-      age,
-      cur_weight,
-      goal_weight,
-      first_name,
-      last_name,
-      email,
-      password,
-      confPassword,
-    } = req.body;
+    const { first_name, last_name, email, password, confPassword } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -99,9 +67,6 @@ const create_user = [
             res.status(500).json({ message: err.message });
           } else {
             await User.create({
-              age,
-              cur_weight,
-              goal_weight,
               first_name,
               last_name,
               email, // unique in db
