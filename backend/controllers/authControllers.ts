@@ -1,8 +1,7 @@
-import express, { Express, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import User from "../models/user";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
-import passport from "passport";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -12,20 +11,18 @@ const create_user = [
   body("first_name")
     .trim()
     .notEmpty()
-    .withMessage("First name is required.")
     .isLength({ min: 1 })
-    .withMessage("First name must be above 1 characters long.")
+    .withMessage("First name is required.")
     .isLength({ max: 30 })
-    .withMessage("First name must be 30 characters maximum.")
+    .withMessage("First name can't be more than 30 characters.")
     .escape(),
   body("last_name")
     .trim()
     .exists()
-    .withMessage("Last name is required.")
     .isLength({ min: 1 })
-    .withMessage("Last name must be above 1 characters long.")
+    .withMessage("Last name is required.")
     .isLength({ max: 30 })
-    .withMessage("Last name must be 30 characters maximum.")
+    .withMessage("Last name can't be more than 30 characters.")
     .escape(),
   body("email")
     .trim()
@@ -44,6 +41,7 @@ const create_user = [
   body("conf_password")
     .trim()
     .exists()
+    .isLength({ min: 8, max: 24 })
     .withMessage("Passwords must match.")
     .escape(),
   async (req: Request, res: Response) => {
@@ -52,6 +50,8 @@ const create_user = [
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
+        first_name: validator.unescape(first_name),
+        last_name: validator.unescape(last_name),
       });
     }
     if (password === conf_password) {
