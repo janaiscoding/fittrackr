@@ -1,28 +1,47 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
-import { setJwtToken } from "../utils/auth_handler";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getJwtToken, setJwtToken } from "../utils/auth_handler";
+import { loginAPI } from "../utils/api/endpoints";
 
-const Login = ({ setLogged, setUserData }: any) => {
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const router = useRouter();
 
   const handleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await fetch("https://fiturself.fly.dev/login", {
+
+    const opts = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
-    })
+    };
+
+    await fetch(loginAPI, opts)
       .then((res) => res.json())
       .then((data) => {
         setJwtToken(data.token);
-        setLogged(true);
-        setUserData(data.user);
+      })
+      .then(() => {
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
+
+  useEffect(() => {
+    const token = getJwtToken();
+    if (token) {
+      router.push("/");
+    }
+    console.log("test");
+  }, [router]);
   return (
     <div>
       <p>login redirect when not logged in</p>{" "}
@@ -53,6 +72,14 @@ const Login = ({ setLogged, setUserData }: any) => {
           Submit
         </button>
       </form>
+      <button
+        className="btn"
+        onClick={() => {
+          router.push("/signup");
+        }}
+      >
+        Create a new account
+      </button>
     </div>
   );
 };

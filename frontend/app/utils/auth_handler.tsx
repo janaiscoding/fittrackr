@@ -1,8 +1,15 @@
+import Cookies from "js-cookie";
+
 const getJwtToken = () => {
-  return sessionStorage.getItem("JWT_TOKEN");
-};
-const setJwtToken = (token: string) => {
-  return sessionStorage.setItem("JWT_TOKEN", token);
+  return Cookies.get("token");
 };
 
-export { getJwtToken, setJwtToken };
+const setJwtToken = (token: string) => {
+  return Cookies.set("token", token, { expires: 1 });
+};
+
+const removeJwtToken = () => {
+  return Cookies.remove("token");
+};
+
+export { getJwtToken, setJwtToken, removeJwtToken };
