@@ -1,18 +1,19 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { signupAPI } from "../utils/api/endpoints";
 import FormGroup from "../components/FormGroup";
 import { useRouter } from "next/navigation";
+import { getJwtToken, removeJwtToken } from "../utils/auth_handler";
+
 const SignUp = () => {
-  //required
   const [firstName, setFirst] = useState<string>("");
   const [lastName, setLast] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confPassword, setConfirmed] = useState<string>("");
-  // errors
-  const [errors, setErrors] = useState<string[]>([]);
+
+  const [errors, setErrors] = useState<{ msg: string }[]>([]);
 
   //
   const router = useRouter();
@@ -29,27 +30,42 @@ const SignUp = () => {
         last_name: lastName,
         email,
         password,
-        confPassword,
+        conf_password: confPassword,
       }),
     };
     await fetch(signupAPI, opts)
       .then((res) => res.json())
       .then((data) => {
-        // need to handle all errors
-
-        console.log(data);
-        //if successful, redirect to login -- COMPLETE
-        if (data.message && data.message.includes("success")) {
-          console.log("success");
-          router.push("/login");
+        console.log(data)
+        // express-validator errors -- COMPLETE
+        if (data.errors) {
+          setErrors(data.errors);
+        }
+        // success or DB error -- COMPLETE
+        if (data.message) {
+          if (data.message.includes("success")) {
+            router.push("/login");
+          } else {
+            setErrors([{ msg: data.message }]);
+          }
         }
       })
       .catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    const token = getJwtToken();
+    // When manually pathing to /signup
+    if (token) {
+      // Cleanup token so /login redirect is successful
+      removeJwtToken();
+    }
+  }, []);
+
   return (
     <div>
       <p>create a new account</p>
+      {errors && errors.map((err, i) => <p key={i}>{err.msg}</p>)}
       <form onSubmit={(e) => handleSignup(e)}>
         <FormGroup
           labelName="First Name*"
