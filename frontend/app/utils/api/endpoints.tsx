@@ -1,5 +1,9 @@
+// auth
 const loginAPI = "https://fiturself.fly.dev/login";
 const signupAPI = "https://fiturself.fly.dev/signup";
 const verifyAPI = "https://fiturself.fly.dev/verify";
 
-export { loginAPI, signupAPI, verifyAPI };
+// homepage
+const postsAPI = "https://fiturself.fly.dev/";
+const usersAPI = "https://fiturself.fly.dev/users";
+export { loginAPI, signupAPI, verifyAPI, postsAPI, usersAPI };

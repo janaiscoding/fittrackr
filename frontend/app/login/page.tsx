@@ -1,8 +1,8 @@
 "use client";
 
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { setJwtToken } from "../utils/auth_handler";
+import { getJwtToken, setJwtToken } from "../utils/auth_handler";
 import { loginAPI } from "../utils/api/endpoints";
 
 const Login = () => {
@@ -17,9 +17,7 @@ const Login = () => {
 
     const opts = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     };
 
@@ -38,6 +36,7 @@ const Login = () => {
         console.log(err);
       });
   };
+
   return (
     <div>
       <p>login redirect when not logged in</p> {error}

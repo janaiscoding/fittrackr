@@ -1,11 +1,10 @@
-import { verifyAPI } from "./endpoints";
-
-const verifyToken = async (
-  token: string | null,
-  setUserData: React.Dispatch<any[]> //fix user type
+const fetchUser = async (
+  token: string,
+  id: string,
+  setUserData: React.Dispatch<any[]> // fix posts types
 ) => {
-  await fetch(verifyAPI, {
-    method: "POST",
+  await fetch(`https://fiturself.fly.dev/users/${id}`, {
+    method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -19,4 +18,4 @@ const verifyToken = async (
     });
 };
 
-export default verifyToken;
+export default fetchUser;
