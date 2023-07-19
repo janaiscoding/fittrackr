@@ -13,9 +13,9 @@ const posts_get = async (req: Request, res: Response) => {
       .populate({
         path: "comments",
         select: "text likes createdAt",
-        populate: { path: "user", select: "first_name last_name pfp" },
+        populate: { path: "user", select: "first_name last_name avatar" },
       })
-      .populate({ path: "user", select: "first_name last_name pfp" })
+      .populate({ path: "user", select: "first_name last_name avatar" })
       .sort({ createdAt: "desc" })
       .exec();
     if (postsData) {
@@ -26,14 +26,14 @@ const posts_get = async (req: Request, res: Response) => {
         }),
       });
     } else {
-      res.status(404).json({ info: "No posts yet." });
+      res.status(404).json({ message: "No posts yet." });
     }
   } catch {
-    res.status(404).json({ info: "No posts yet." });
+    res.status(404).json({ message: "No posts yet." });
   }
 };
 
-// Add pic + user pics
+// Add pic + user pics --- might not need this after all :D
 const post_get = async (req: Request, res: Response) => {
   const { postID } = req.params;
   try {
@@ -48,10 +48,10 @@ const post_get = async (req: Request, res: Response) => {
       post.text = validator.unescape(post.text);
       res.json({ post });
     } else {
-      res.status(404).json({ info: "This post doesn't exist" });
+      res.status(404).json({ message: "This post doesn't exist" });
     }
   } catch {
-    res.status(404).json({ info: "This post doesn't exist." });
+    res.status(404).json({ message: "This post doesn't exist." });
   }
 };
 
@@ -90,24 +90,20 @@ const post_create = [
         Promise.all([
           newPost.save(),
           user.updateOne({ $push: { posts: newPost } }),
-        ])
-          .then(() => {
-            res.status(200).json({
-              info: "Post was created successfully.",
-            });
-          })
-          .catch((err) => {
-            res.status(500).json({ info: err.message });
+        ]).then(() => {
+          res.status(200).json({
+            message: "Post was created successfully.",
           });
+        });
       } else {
         res
           .status(404)
-          .json({ info: "No user was not found to make this post." });
+          .json({ message: "No user was not found to make this post." });
       }
     } catch {
       res
         .status(404)
-        .json({ info: "No user was not found to make this post." });
+        .json({ message: "No user was not found to make this post." });
     }
   },
 ];
@@ -142,13 +138,13 @@ const post_update = [
             text: updatedText,
           })
           .then(() => {
-            res.status(200).json({ info: "Post was successfully updated!" });
+            res.status(200).json({ message: "Post was successfully updated!" });
           });
       } else {
-        res.status(403).json({ info: "You cannot edit this post." });
+        res.status(403).json({ message: "You cannot edit this post." });
       }
     } catch {
-      res.status(404).json({ info: "This post doesn't exist." });
+      res.status(404).json({ message: "This post doesn't exist." });
     }
   },
 ];
@@ -170,16 +166,16 @@ const post_delete = async (req: Request, res: Response) => {
         user.updateOne({ $pull: { posts: postID } }),
       ])
         .then(() => {
-          res.status(200).json({ info: "Post was deleted successfully!" });
+          res.status(200).json({ message: "Post was deleted successfully!" });
         })
         .catch((err) => {
-          res.status(500).json({ info: err.message });
+          res.status(500).json({ message: err.message });
         });
     } else {
-      res.status(404).json({ info: "You cannot delete this post." });
+      res.status(404).json({ message: "You cannot delete this post." });
     }
   } catch {
-    res.status(404).json({ info: "You cannot delete this post." });
+    res.status(404).json({ message: "You cannot delete this post." });
   }
 };
 
@@ -190,16 +186,16 @@ const post_like = async (req: Request, res: Response) => {
     if (post) {
       if (post.likes.includes(userID)) {
         await post.updateOne({ $pull: { likes: userID } });
-        res.json({ info: `${userID} has disliked post ${postID}` });
+        res.json({ message: `${userID} has disliked post ${postID}` });
       } else {
         await post.updateOne({ $push: { likes: userID } });
-        res.json({ info: `${userID} has liked post ${postID}` });
+        res.json({ message: `${userID} has liked post ${postID}` });
       }
     } else {
-      res.status(404).json({ info: "Post was not found!" });
+      res.status(404).json({ message: "Post was not found!" });
     }
   } catch {
-    res.status(404).json({ info: "Post was not found!" });
+    res.status(404).json({ message: "Post was not found!" });
   }
 };
 

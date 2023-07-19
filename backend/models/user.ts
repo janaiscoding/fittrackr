@@ -23,7 +23,7 @@ const userSchema = new Schema(
     //Images
     avatar: {
       data: { type: Buffer },
-      contentType: { type: String, default: "image/png" },
+      contentType: { type: String },
     },
   },
   { timestamps: true }

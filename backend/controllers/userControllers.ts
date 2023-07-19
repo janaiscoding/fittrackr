@@ -15,12 +15,12 @@ const get_users = async (req: Request, res: Response) => {
       .select("first_name last_name avatar")
       .lean();
     if (users) {
-      res.json({ info: "GET all users", users });
+      res.json({ message: "GET all users", users });
     } else {
-      res.status(404).json({ info: "There are no users yet" });
+      res.status(404).json({ message: "There are no users yet" });
     }
   } catch (err: any) {
-    res.status(500).json({ info: err.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -36,11 +36,11 @@ const get_profile = async (req: Request, res: Response) => {
         populate: { path: "comments", select: "text likes createdAt" },
       })
       .exec();
-    if (user) return res.json({ info: "GET user profile", user });
+    if (user) return res.json({ message: "GET user profile", user });
 
-    return res.status(404).json({ info: "User was not found!" });
+    return res.status(404).json({ message: "User was not found!" });
   } catch (err) {
-    return res.status(404).json({ info: "User was not found!" });
+    return res.status(404).json({ message: "User was not found!" });
   }
 };
 
@@ -104,9 +104,9 @@ const update_account = [
         }
         await user.updateOne(updateObject);
         const userUpdated = await User.findById(userID);
-        res.json({ info: "Updated user successfully.", userUpdated });
+        res.json({ message: "Updated user successfully.", userUpdated });
       } else {
-        res.status(404).json({ info: "This user doesn't exist." });
+        res.status(404).json({ message: "This user doesn't exist." });
       }
     } catch (err) {
       res.status(500).json(err);
@@ -143,7 +143,7 @@ const update_pfp = [
           await user.save();
           res
             .status(201)
-            .json({ info: "Profile picture updated successfully!" });
+            .json({ message: "Profile picture updated successfully!" });
         }
         if (!user) {
           return res.status(404).json({ error: "This user doesn't exist." });
@@ -182,16 +182,16 @@ const delete_account = asyncHandler(async (req, res) => {
     ])
       .then(() => {
         res.status(200).json({
-          info: "Deleted all account and account-related data successfully.",
+          message: "Deleted all account and account-related data successfully.",
         });
       })
       .catch((err) => {
         res.status(500).json({
-          info: err.message,
+          message: err.message,
         });
       });
   } else {
-    res.status(404).json({ info: "Cannot delete which that doesn't exist.." });
+    res.status(404).json({ message: "Cannot delete which that doesn't exist.." });
   }
 });
 
@@ -238,16 +238,16 @@ const send_request = asyncHandler(async (req, res) => {
 
     switch (true) {
       case isFriends:
-        res.json({ info: "You are already friends with this user." });
+        res.json({ message: "You are already friends with this user." });
         break;
       case isFRSent:
-        res.json({ info: "You already sent a friend request to this user." });
+        res.json({ message: "You already sent a friend request to this user." });
         break;
       case isFRPending:
-        res.json({ info: "You already have a friend request from this user." });
+        res.json({ message: "You already have a friend request from this user." });
         break;
       case senderID === receiverID:
-        res.json({ info: "You can't send a friend request to yourself!" });
+        res.json({ message: "You can't send a friend request to yourself!" });
         break;
       default:
         {
@@ -257,11 +257,11 @@ const send_request = asyncHandler(async (req, res) => {
           ])
             .then(() => {
               res.json({
-                info: `${sender.first_name} sent a successful friend request to ${receiver.first_name}`,
+                message: `${sender.first_name} sent a successful friend request to ${receiver.first_name}`,
               });
             })
             .catch((err) => {
-              res.status(500).json({ info: err.message });
+              res.status(500).json({ message: err.message });
             });
         }
         break;
@@ -269,7 +269,7 @@ const send_request = asyncHandler(async (req, res) => {
   } else {
     res
       .status(500)
-      .json({ info: "An error occured while sending this friend request." });
+      .json({ message: "An error occured while sending this friend request." });
   }
 });
 const accept_request = asyncHandler(async (req, res) => {
@@ -296,14 +296,14 @@ const accept_request = asyncHandler(async (req, res) => {
     ])
       .then(() => {
         res.json({
-          info: `${receiver.first_name} is now friends with ${sender.first_name}!`,
+          message: `${receiver.first_name} is now friends with ${sender.first_name}!`,
         });
       })
       .catch((err) => {
-        res.status(500).json({ info: err.message });
+        res.status(500).json({ message: err.message });
       });
   } else {
-    res.status(500).json({ info: "This friend request does not exist." });
+    res.status(500).json({ message: "This friend request does not exist." });
   }
 });
 
@@ -329,14 +329,14 @@ const cancel_request = asyncHandler(async (req, res) => {
     ])
       .then(() => {
         res.json({
-          info: `${sender.first_name} canceled their friend request to ${receiver.first_name}. :(`,
+          message: `${sender.first_name} canceled their friend request to ${receiver.first_name}. :(`,
         });
       })
       .catch((err) => {
-        res.status(500).json({ info: err.message });
+        res.status(500).json({ message: err.message });
       });
   } else {
-    res.status(500).json({ info: "This friend request does not exist." });
+    res.status(500).json({ message: "This friend request does not exist." });
   }
 });
 
@@ -362,14 +362,14 @@ const decline_request = asyncHandler(async (req, res) => {
     ])
       .then(() => {
         res.json({
-          info: `${receiver.first_name} declined ${sender.first_name}'s friend request. :(`,
+          message: `${receiver.first_name} declined ${sender.first_name}'s friend request. :(`,
         });
       })
       .catch((err) => {
-        res.status(500).json({ info: err.message });
+        res.status(500).json({ message: err.message });
       });
   } else {
-    res.status(500).json({ info: "This friend request does not exist." });
+    res.status(500).json({ message: "This friend request does not exist." });
   }
 });
 
@@ -393,14 +393,14 @@ const remove_friend = asyncHandler(async (req, res) => {
     ])
       .then(() => {
         res.json({
-          info: `${remover.first_name} removed ${removed.first_name} from their friends list. :(`,
+          message: `${remover.first_name} removed ${removed.first_name} from their friends list. :(`,
         });
       })
       .catch((err) => {
-        res.status(500).json({ info: err.message });
+        res.status(500).json({ message: err.message });
       });
   } else {
-    res.status(500).json({ info: "This friendship does not exist." });
+    res.status(500).json({ message: "This friendship does not exist." });
   }
 });
 

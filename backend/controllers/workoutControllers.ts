@@ -19,7 +19,7 @@ const get_workouts = asyncHandler(async (req, res, next) => {
     const userId = req.query.user;
     res.json({ userId });
   } else {
-    res.json({ info: "getting all workouts" });
+    res.json({ message: "getting all workouts" });
   }
   // try {
   //   const user = await User.findById(req.params.id).populate("workouts");
@@ -31,16 +31,16 @@ const get_workouts = asyncHandler(async (req, res, next) => {
   //       return workout;
   //     });
   //     res.json({
-  //       info: `${user.first_name}'s workouts`,
+  //       message: `${user.first_name}'s workouts`,
   //       workouts: user.workouts,
   //     });
   //   } else {
   //     // no workouts
-  //     res.status(404).json({ info: "User has no workouts yet!" });
+  //     res.status(404).json({ message: "User has no workouts yet!" });
   //   }
   // } catch (err: any) {
   //   // user issue
-  //   res.status(404).json({ info: "User does not exist!", err: err.message });
+  //   res.status(404).json({ message: "User does not exist!", err: err.message });
   // }
 });
 
@@ -77,7 +77,7 @@ const create_workout = [
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        res.status(404).json({ info: "User does not exist!" });
+        res.status(404).json({ message: "User does not exist!" });
       }
       if (user) {
         const userWorkouts = user.workouts;
@@ -91,7 +91,7 @@ const create_workout = [
         await User.findByIdAndUpdate(req.params.id, {
           workouts: userWorkouts,
         });
-        res.json({ info: "CREATED NEW WORKOUT", workout });
+        res.json({ message: "CREATED NEW WORKOUT", workout });
       }
     } catch (err: any) {
       res.status(400).json({ err: err.message });

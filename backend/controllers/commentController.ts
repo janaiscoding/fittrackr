@@ -43,20 +43,20 @@ const post_comment = [
         ])
           .then(() => {
             res.status(200).json({
-              info: "Comment was successfully sent.",
+              message: "Comment was successfully sent.",
               comment,
             });
           })
           .catch((err) => {
             res.status(500).json({
-              info: err.message,
+              message: err.message,
             });
           });
       } else {
-        res.status(404).json({ info: "The user could not be found." });
+        res.status(404).json({ message: "The user could not be found." });
       }
     } catch {
-      res.status(500).json({ info: "Internal server error." });
+      res.status(500).json({ message: "Internal server error." });
     }
   },
 ];
@@ -72,19 +72,19 @@ const comment_like = async (req: Request, res: Response) => {
       if (comment.likes.includes(userID)) {
         await comment.updateOne({ $pull: { likes: userID } });
         res.json({
-          info: `${user.first_name} has disliked  comment: ${comment.text}`,
+          message: `${user.first_name} has disliked  comment: ${comment.text}`,
         });
       } else {
         await comment.updateOne({ $push: { likes: userID } });
         res.json({
-          info: `${user.first_name} has liked comment: ${comment.text}`,
+          message: `${user.first_name} has liked comment: ${comment.text}`,
         });
       }
     } else {
-      res.status(404).json({ info: "The comment was not found!" });
+      res.status(404).json({ message: "The comment was not found!" });
     }
   } catch {
-    res.status(404).json({ info: "The comment was not found!" });
+    res.status(404).json({ message: "The comment was not found!" });
   }
 };
 
@@ -100,16 +100,16 @@ const comment_delete = async (req: Request, res: Response) => {
         post.updateOne({ $pull: { comments: commentID } }),
       ])
         .then(() => {
-          res.status(200).json({ info: "Comment was successfully deleted" });
+          res.status(200).json({ message: "Comment was successfully deleted" });
         })
         .catch((err: any) => {
-          res.status(400).json({ info: err.message });
+          res.status(400).json({ message: err.message });
         });
     } else {
-      res.json({ info: "You cannot delete this comment." });
+      res.json({ message: "You cannot delete this comment." });
     }
   } catch {
-    res.status(404).json({ info: "The comment was not found!" });
+    res.status(404).json({ message: "The comment was not found!" });
   }
 };
 
