@@ -14,6 +14,7 @@ module.exports = {
       "soft-grey": "#070606",
       input: "#f8f7f717",
       focused: "#f59e9e69",
+      red: "#FF5599",
     },
   },
 };

@@ -9,7 +9,7 @@ const Login = () => {
   return (
     <div className="min-h-screen home-image flex flex-col justify-between items-center">
       <Logo />
-      {isShown ? <LoginForm /> : <IntroCard setShown={setShown} />}
+      <LoginForm /> 
     </div>
   );
 };

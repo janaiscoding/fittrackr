@@ -1,4 +1,4 @@
-const IntroCard = ({ setShown }: any) => {
+const IntroCard = () => {
   return (
     <div className="w-11/12 py-6 px-3 mb-8 flex flex-col items-center justify-center bg-soft-grey rounded-3xl">
       <h1 className="text-3xl text-white text-center font-bold">
@@ -19,7 +19,9 @@ const IntroCard = ({ setShown }: any) => {
       </a>
       <p className="text-center text-grey mt-2">
         Already have an account?{" "}
-        <span className="text-green font-bold"  onClick={() => setShown(true)}>Sign in</span>
+        <a href="/login" className="text-green font-bold">
+          Sign in
+        </a>
       </p>
     </div>
   );

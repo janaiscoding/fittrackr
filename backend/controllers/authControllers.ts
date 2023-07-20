@@ -13,39 +13,35 @@ const create_user = [
     .exists()
     .notEmpty()
     .withMessage("First name is required.")
-    .isLength({ min: 2 })
-    .withMessage("First name must be longer than 2 characters.")
-    .isLength({ max: 30 })
-    .withMessage("First name can't be more than 30 characters.")
+    .isLength({ min: 1, max: 30 })
+    .withMessage("First name is too long.")
     .escape(),
   body("last_name")
     .trim()
     .exists()
     .notEmpty()
     .withMessage("Last name is required.")
-    .isLength({ min: 2 })
-    .withMessage("Last name must be longer than 2 characters.")
-    .isLength({ max: 30 })
-    .withMessage("Last name can't be more than 30 characters.")
+    .isLength({ min: 1, max: 30 })
+    .withMessage("Last name is too long.")
     .escape(),
   body("email")
     .trim()
     .exists()
-    .withMessage("Email is required")
+    .withMessage("Email is required.")
     .isEmail()
-    .withMessage("Must be a valid email.")
+    .withMessage("Email is not valid.")
     .escape(),
   body("password")
     .trim()
     .exists()
     .withMessage("Password is required.")
-    .isLength({ min: 8, max: 24 })
-    .withMessage("Password must be between 8 and 24 characters long.")
+    .isLength({ min: 8 })
+    .withMessage("Password is too short.")
     .escape(),
   body("conf_password")
     .trim()
     .exists()
-    .isLength({ min: 8, max: 24 })
+    .isLength({ min: 8 })
     .withMessage("Passwords must match.")
     .escape(),
   async (req: Request, res: Response) => {
@@ -108,7 +104,7 @@ const login_post = [
         const user = await User.findOne({ email }).exec();
         if (!user)
           return res.status(404).json({
-            message: "Could not find an account associated with this email",
+            message: "Your email is incorrect.",
           });
         bcrypt.compare(password, user.password, (err, compare) => {
           if (err) return next(err);
@@ -121,7 +117,7 @@ const login_post = [
           } else {
             return res
               .status(400)
-              .json({ message: "Your password is incorrect" });
+              .json({ message: "Your password is incorrect." });
           }
         });
       } catch (err) {

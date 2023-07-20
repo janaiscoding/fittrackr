@@ -11,9 +11,18 @@
   --input: "#f8f7f717";
   --focused: "#f59e9e69";
 }
+
+.overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(14, 13, 13, 1) 0%,
+    rgba(0, 0, 0, 0.93) 100%
+  );
+}
+
 .home-image {
-  background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash.webp")
-    no-repeat center 30% fixed;
+  background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash-_2_.webp")
+    no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -21,13 +30,48 @@
   height: auto;
 }
 
+input,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  height: 2.5rem;
+  padding: 0px 1rem;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid #181717 !important;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0 30px #181717 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill,
+input:focus,
+input:-webkit-autofill:focus {
+  color: white;
+  -webkit-text-fill-color: white;
+  border: 1px solid #c7bebe69 !important;
+}
+
+input.invalid,
+input:focus.invalid,
+input:-webkit-autofill:focus.invalid {
+  color: white;
+  border: 1px solid red !important;
+}
+
+input.valid,
+input:focus.valid,
+input:-webkit-autofill:focus.valid {
+  color: white;
+  border: 1px solid #9ef5cf !important;
+}
 body {
   background-color: #010101;
 }
 
 @media only screen and (max-width: 600px) {
   .home-image {
-    background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash.webp")
+    background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash-_2_.webp")
       no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;

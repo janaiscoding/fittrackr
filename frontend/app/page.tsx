@@ -10,24 +10,36 @@ import fetchUsers from "./utils/fetchers/users";
 import { Post, User } from "./utils/types/types";
 import verifyToken from "./utils/api/verifyToken";
 import Logo from "./components/Logo";
+import IntroCard from "./components/intro_card/IntroCard";
 
 export default function Home() {
   const [userData, setUserData] = useState<User | null>(null);
   const [postsData, setPostsData] = useState<Post[] | null>(null);
   const [usersData, setUsersData] = useState<User[] | null>(null);
+  const [isLogged, setIsLogged] = useState<boolean>(false);
 
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
+      setIsLogged(true);
       verifyToken(token, setUserData);
       fetchPosts(token, setPostsData);
       fetchUsers(token, setUsersData);
     }
+    console.log(isLogged);
   }, []);
   return (
-    <div className="home-image min-h-screen flex flex-col items-center">
-      <Logo />
-      {userData ? (
+    <div className="min-h-screen">
+      {isLogged ? (
+        <p className="text-white">im logged</p>
+      ) : (
+        <div className="flex flex-col min-h-screen home-image items-center justify-between">
+          <Logo />
+          <IntroCard />
+        </div>
+      )}
+
+      {/* {userData ? (
         <ProfilePicture userData={userData} />
       ) : (
         <p>fallback component</p>
@@ -54,7 +66,7 @@ export default function Home() {
         ) => (
           <PostComponent key={i} post={p} />
         )
-      )}
+      )} */}
     </div>
   );
 }

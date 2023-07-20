@@ -8,8 +8,11 @@ import { SyntheticEvent, useState } from "react";
 const LoginForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [valid, setValid] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [valid, setEmailValid] = useState(false);
+
+  const emailPattern = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+  // const pwPatter = new RegExp(/^(?=.*\d).{8,}$/g);
 
   const router = useRouter();
 
@@ -40,7 +43,7 @@ const LoginForm = () => {
 
   return (
     <div className="w-11/12 py-6 px-3 mb-8 flex flex-col items-center justify-center bg-soft-grey rounded-3xl">
-      <h1 className="text-3xl text-green text-center font-bold">
+      <h1 className="text-3xl text-green text-center font-bold mb-3">
         Welcome back
       </h1>
       <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
@@ -48,10 +51,11 @@ const LoginForm = () => {
           <span className="self-start text-green">Email</span>
           <input
             type="email"
-            placeholder="Your Email"
-            className={`rounded-xl h-10 px-4 bg-input outline-focused`}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="off"
+            className={`text-white h-10 px-4 ${valid ? "valid" : "invalid"}`}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailValid(emailPattern.test(e.target.value));
+            }}
           />
         </label>
 
@@ -59,15 +63,14 @@ const LoginForm = () => {
           <span className="self-start text-green">Password</span>
           <input
             type="password"
-            className="rounded-xl h-10 px-4"
-            autoComplete="off"
+            className={`text-white h-10 px-4 pass-field`}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-
+        {error && <p className="text-red">{error}</p>}
         <button
           type="submit"
-          className="text-2xl text-center text-black bg-green rounded-2xl font-medium py-2 w-full mt-5"
+          className="text-2xl text-center text-black bg-green rounded-2xl font-medium py-2 w-full mt-3"
         >
           Sign in
         </button>
