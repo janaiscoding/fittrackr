@@ -1,7 +1,9 @@
-const fetchUser = async (
+import { FullUser } from "../types/types";
+
+const fetchFullUser = async (
   token: string,
   id: string,
-  setUserData: React.Dispatch<any[]> // fix posts types
+  setProfileData: React.Dispatch<FullUser> // fix posts types
 ) => {
   await fetch(`https://fiturself.fly.dev/users/${id}`, {
     method: "GET",
@@ -11,11 +13,12 @@ const fetchUser = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      setUserData(data.user);
+      console.log(data.user);
+      setProfileData(data.user);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-export default fetchUser;
+export default fetchFullUser;

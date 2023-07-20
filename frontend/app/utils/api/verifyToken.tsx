@@ -1,8 +1,9 @@
+import { User } from "../types/types";
 import { verifyAPI } from "./endpoints";
 
 const verifyToken = async (
   token: string | null,
-  setUserData: React.Dispatch<any[]> //fix user type
+  setUserData: React.Dispatch<User>
 ) => {
   await fetch(verifyAPI, {
     method: "POST",

@@ -28,7 +28,7 @@ const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
     const user = await User.findById(userID)
-      .select("-password -email") // "-requestsSent -requestsReceived -friendRequests"
+      .select("-password -email -createdAt -updatedAt") // "-requestsSent -requestsReceived -friendRequests"
       .populate("workouts")
       .populate({
         path: "posts",

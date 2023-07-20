@@ -1,10 +1,11 @@
 import { useRouter } from "next/navigation";
 import { removeJwtToken } from "../utils/auth_handler";
 // WORKS as intended
-const Signout = () => {
+const Signout = ({setUserData}:any) => {
   const router = useRouter();
   const handleSignout = () => {
     removeJwtToken();
+    setUserData(null)
     router.push("/login");
   };
   return (

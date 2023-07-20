@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --black: "#010101";
+  --green: "#9EF5CF";
+  --white: "#F3F3F3";
+  --grey: "#AEAEAE";
+  --soft-grey: "#070606";
+  --input: "#f8f7f717";
+  --focused: "#f59e9e69";
+}
+.home-image {
+  background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash.webp")
+    no-repeat center 30% fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: 60%;
+  height: auto;
+}
+
+body {
+  background-color: #010101;
+}
+
+@media only screen and (max-width: 600px) {
+  .home-image {
+    background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash.webp")
+      no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 160%;
+    height: auto;
+  }
+}

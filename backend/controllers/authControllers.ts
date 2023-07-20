@@ -117,13 +117,6 @@ const login_post = [
             const token = jwt.sign({ userId: user._id }, process.env.secret, {
               expiresIn: "24hr",
             });
-
-            // return res
-            //   .cookie("token", token, {
-            //     sameSite: "strict",
-            //     httpOnly: true,
-            //     maxAge: 60 * 1000 * 20,
-            //   })
             return res.status(200).json({ token, user });
           } else {
             return res
@@ -137,23 +130,29 @@ const login_post = [
     }
   },
 ];
+
 const verify_token = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
-    return res.status(401).json({ message: "No token provided, please log in." });
+    return res
+      .status(401)
+      .json({ message: "No token provided, please log in." });
   }
   try {
     // @ts-ignore
     const verify = jwt.verify(token, process.env.secret);
-    const user = await User.findById(verify.userId).select("-email -password");
+    const user = await User.findById(verify.userId).select(
+      "first_name last_name avatar"
+    );
     if (!user) res.status(404).json({ message: "User doesn't exist." });
     else {
-      res.status(200).json({ user, token });
+      res.status(200).json({ user });
     }
   } catch {
     res.status(401).json({ message: "Token is invalid." });
   }
 };
+
 export default {
   login_post,
   create_user,

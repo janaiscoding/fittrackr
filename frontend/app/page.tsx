@@ -1,22 +1,20 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getJwtToken } from "./utils/auth_handler";
-import verifyToken from "./utils/api/verifyToken";
 import Signout from "./components/Signout";
 import ProfilePicture from "./components/ProfilePicture";
 import fetchPosts from "./utils/fetchers/posts";
-import Post from "./posts_components/Post";
+import PostComponent from "./posts_components/Post";
 import fetchUsers from "./utils/fetchers/users";
+import { Post, User } from "./utils/types/types";
+import verifyToken from "./utils/api/verifyToken";
+import Logo from "./components/Logo";
 
 export default function Home() {
-  const [userData, setUserData] = useState<any>([]); //logged in user - need to fix type
-  const [postsData, setPostsData] = useState<any>([]);
-  const [usersData, setUsersData] = useState<any>([]);
-  // to do
-  // friend requests
-  // all users
-  // buttons
+  const [userData, setUserData] = useState<User | null>(null);
+  const [postsData, setPostsData] = useState<Post[] | null>(null);
+  const [usersData, setUsersData] = useState<User[] | null>(null);
 
   useEffect(() => {
     const token = getJwtToken();
@@ -27,30 +25,36 @@ export default function Home() {
     }
   }, []);
   return (
-    <div>
-      {userData.length === 0 ? (
-        <p>fallback component</p>
-      ) : (
+    <div className="home-image min-h-screen flex flex-col items-center">
+      <Logo />
+      {userData ? (
         <ProfilePicture userData={userData} />
+      ) : (
+        <p>fallback component</p>
       )}
 
-      {usersData.length === 0 ? (
-        <p>fallback component for users</p>
-      ) : (
+      {usersData ? (
         <div>
           <p>USER LIST</p>
-          {usersData.map((user, i) => (
+          {usersData?.map((user: User, i: number) => (
             <a href={`/users/${user._id}`} key={i}>
               {i + 1}. {user.first_name}
             </a>
           ))}
         </div>
+      ) : (
+        <p>fallback component for users</p>
       )}
 
-      <Signout />
-      {postsData.map((p, i) => (
-        <Post key={i} post={p} />
-      ))}
+      <Signout setUserData={setUserData} />
+      {postsData?.map(
+        (
+          p: any,
+          i: number //fix here
+        ) => (
+          <PostComponent key={i} post={p} />
+        )
+      )}
     </div>
   );
 }

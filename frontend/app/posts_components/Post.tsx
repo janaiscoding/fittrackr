@@ -1,4 +1,7 @@
-const Post = ({ post }: any) => {
+import { Post } from "../utils/types/types";
+
+const PostComponent = ({ post }: {post: Post}) => {
+
   return (
     <article>
       <h1> {post.text}</h1>
@@ -6,4 +9,4 @@ const Post = ({ post }: any) => {
     </article>
   );
 };
-export default Post;
+export default PostComponent;
