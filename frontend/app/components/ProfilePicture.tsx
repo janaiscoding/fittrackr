@@ -1,14 +1,21 @@
 import Image from "next/image";
-import { User } from "../utils/types/types";
+import { Avatar } from "../utils/types/types";
 
-const ProfilePicture = ({ userData }: {userData: User}) => {
-  //fix user type
+const ProfilePicture = ({
+  avatar,
+  name,
+  userID,
+}: {
+  avatar: Avatar;
+  name: string;
+  userID: string;
+}) => {
   return (
-    <a className="flex" href={`/users/${userData._id}`}>
-      {userData.avatar !== undefined ? (
+    <a href={`/users/${userID}`}>
+      {avatar !== undefined ? (
         <Image
-          src={`data:${userData.avatar?.contentType};base64,${Buffer.from(
-            userData.avatar?.data
+          src={`data:${avatar.contentType};base64,${Buffer.from(
+            avatar.data
           ).toString("base64")}`}
           width={50}
           height={0}
@@ -16,9 +23,11 @@ const ProfilePicture = ({ userData }: {userData: User}) => {
           alt="user-profile-picture"
         />
       ) : (
-        <p className="bg-[#abc] p-10 rounded-full">
-          {userData.first_name?.charAt(0)}
-        </p>
+        name !== undefined && (
+          <p className="bg-green name-circle uppercase font-ubuntu-300">
+            {name.charAt(0)}
+          </p>
+        )
       )}
     </a>
   );

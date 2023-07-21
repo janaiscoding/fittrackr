@@ -2,7 +2,7 @@ import { User } from "../types/types";
 import { verifyAPI } from "./endpoints";
 
 const verifyToken = async (
-  token: string | null,
+  token: string | undefined,
   setUserData: React.Dispatch<User>
 ) => {
   await fetch(verifyAPI, {

@@ -2,17 +2,6 @@
 const nextConfig = {
   redirects: async () => {
     return [
-      // {
-      //   source: "/",
-      //   missing: [
-      //     {
-      //       type: "cookie",
-      //       key: "token",
-      //     },
-      //   ],
-      //   destination: "/login",
-      //   permanent: false,
-      // },
       {
         source: "/users",
         missing: [
@@ -21,7 +10,40 @@ const nextConfig = {
             key: "token",
           },
         ],
-        destination: "/login",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/users/:slug",
+        missing: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/posts",
+        missing: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/posts/:slug",
+        missing: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/",
         permanent: false,
       },
       {

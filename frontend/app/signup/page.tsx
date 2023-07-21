@@ -2,7 +2,6 @@
 
 import { SyntheticEvent, useEffect, useState } from "react";
 import { signupAPI } from "../utils/api/endpoints";
-import FormGroup from "../components/FormGroup";
 import { useRouter } from "next/navigation";
 import { getJwtToken, removeJwtToken } from "../utils/auth_handler";
 
@@ -73,7 +72,10 @@ const SignUp = () => {
   return (
     <div className="home-image min-h-screen">
       <div className="overlay min-h-screen py-8 flex flex-col">
-        <h1 className="font-bold text-4xl text-green text-center">
+        <h1
+          className="font-bold text-4xl text-green text-center"
+          data-testid="welcome-element"
+        >
           Welcome to <span>urjourney.</span>
         </h1>
         <form
@@ -85,7 +87,7 @@ const SignUp = () => {
             <input
               required
               type="text"
-              className={validFirst ? "valid" : "invalid"}
+              className={validFirst ? "valid" : ""}
               onChange={(e) => {
                 setFirst(e.target.value);
                 setValidFirst(namePattern.test(e.target.value));
@@ -122,7 +124,7 @@ const SignUp = () => {
             <span className="self-start text-green">
               Password{" "}
               {!validPW && (
-                <span className="text-xs">minimum 8 characters</span>
+                <span className="text-xs text-red">minimum 8 characters</span>
               )}
             </span>
             <input
@@ -136,10 +138,19 @@ const SignUp = () => {
             />
           </label>
           <label className="flex flex-col">
-            <span className="self-start text-green">Confirm Password</span>
+            <span className="self-start text-green">
+              Confirm Password{" "}
+              {password === confPassword ? (
+                " "
+              ) : (
+                <span className="text-xs text-red">passwords must match</span>
+              )}
+            </span>
+
             <input
               required
               type="password"
+              autoComplete="new-password"
               className={validConf ? "valid" : "invalid"}
               onChange={(e) => {
                 setConfirmed(e.target.value);
@@ -155,7 +166,7 @@ const SignUp = () => {
             ))}
           <button
             type="submit"
-            className="text-2xl text-center text-black bg-green rounded-2xl font-medium py-2 w-full"
+            className="text-2xl text-center text-black bg-green rounded-2xl font-medium py-2 mt-6 w-full"
           >
             Sign up
           </button>

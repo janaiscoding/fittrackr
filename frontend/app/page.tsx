@@ -1,72 +1,68 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { getJwtToken } from "./utils/auth_handler";
-import Signout from "./components/Signout";
-import ProfilePicture from "./components/ProfilePicture";
 import fetchPosts from "./utils/fetchers/posts";
-import PostComponent from "./posts_components/Post";
 import fetchUsers from "./utils/fetchers/users";
 import { Post, User } from "./utils/types/types";
 import verifyToken from "./utils/api/verifyToken";
-import Logo from "./components/Logo";
+import Logo from "./components/svgs/Logo";
 import IntroCard from "./components/intro_card/IntroCard";
+import Homepage from "./homepage/Homepage";
+import TopNav from "./homepage/TopNav";
+
+export const UserContext = createContext<any>({
+  userID: "",
+  name: "",
+  avatar: {},
+  requestsReceived: [],
+  requestsSent: [],
+  posts: [],
+});
 
 export default function Home() {
   const [userData, setUserData] = useState<User | null>(null);
-  const [postsData, setPostsData] = useState<Post[] | null>(null);
-  const [usersData, setUsersData] = useState<User[] | null>(null);
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [postsData, setPostsData] = useState<Post[]>([] as Post[]);
+  // const [usersData, setUsersData] = useState<User[] | null>(null); //get all users
+  const [isLogged, setIsLogged] = useState<boolean>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
       setIsLogged(true);
-      verifyToken(token, setUserData);
+      setLoading(false);
       fetchPosts(token, setPostsData);
-      fetchUsers(token, setUsersData);
+      verifyToken(token, setUserData);
+    } else {
+      setLoading(false);
+      setIsLogged(false);
     }
-    console.log(isLogged);
   }, []);
   return (
     <div className="min-h-screen">
-      {isLogged ? (
-        <p className="text-white">im logged</p>
+      {loading ? (
+        <p>loading animation</p>
+      ) : isLogged ? (
+        <UserContext.Provider
+          value={{
+            userID: userData?._id,
+            name: userData?.first_name,
+            avatar: userData?.avatar,
+            requestsReceived: userData?.requestsReceived,
+            requestsSent: userData?.requestsSent,
+            posts: postsData,
+          }}
+        >
+          <TopNav />
+          <Homepage />
+        </UserContext.Provider>
       ) : (
-        <div className="flex flex-col min-h-screen home-image items-center justify-between">
+        <div className="flex flex-col min-h-screen home-image items-center justify-between pt-4">
           <Logo />
           <IntroCard />
         </div>
       )}
-
-      {/* {userData ? (
-        <ProfilePicture userData={userData} />
-      ) : (
-        <p>fallback component</p>
-      )}
-
-      {usersData ? (
-        <div>
-          <p>USER LIST</p>
-          {usersData?.map((user: User, i: number) => (
-            <a href={`/users/${user._id}`} key={i}>
-              {i + 1}. {user.first_name}
-            </a>
-          ))}
-        </div>
-      ) : (
-        <p>fallback component for users</p>
-      )}
-
-      <Signout setUserData={setUserData} />
-      {postsData?.map(
-        (
-          p: any,
-          i: number //fix here
-        ) => (
-          <PostComponent key={i} post={p} />
-        )
-      )} */}
     </div>
   );
 }

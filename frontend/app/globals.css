@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "OpenMedium";
+  src: url("../public/Open_Sans/static/OpenSans-Medium.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "UbuntuMedium";
+  src: url("../public/Ubuntu/Ubuntu-Medium.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "UbuntuThin";
+  src: url("../public/Ubuntu/Ubuntu-Light.ttf");
+}
 :root {
   --black: "#010101";
   --green: "#9EF5CF";
@@ -11,12 +25,31 @@
   --input: "#f8f7f717";
   --focused: "#f59e9e69";
 }
+::placeholder {
+  color: rgb(185, 131, 131) !important;
+}
+body {
+  font-family: "OpenMedium", sans-serif !important;
+  color: #f3f3f3;
+  /* background-color: #010101; */
+  background: linear-gradient(76deg, rgb(0 0 0) 0%, rgb(14 14 14) 100%);
+}
+.post {
+  /* background-color: #010101; */
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
+  box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
+}
 
+.comment {
+  border-radius: 0.375rem;
+  background: linear-gradient(104deg, rgb(4 4 4) 0%, rgb(15 20 15) 100%);
+}
 .overlay {
   background: linear-gradient(
     90deg,
     rgba(14, 13, 13, 1) 0%,
-    rgba(0, 0, 0, 0.93) 100%
+    rgba(0, 0, 0, 0.9) 100%
   );
 }
 
@@ -29,44 +62,61 @@
   background-size: 60%;
   height: auto;
 }
+.avatar-circle,
+.name-circle {
+  display: inline-block;
+  background-color: #9ef5cf;
+  color: #010101;
+  border-radius: 50%;
+  text-align: center;
+}
+.name-circle {
+  font-size: 1.8rem;
+  line-height: 2.7rem; /* set to same size as width, height */
+  width: 2.7rem;
+  height: 2.7rem;
+}
+.avatar-circle {
+  font-size: 1rem;
+  line-height: 1.7rem; /* set to same size as width, height */
+  width: 1.7rem;
+  height: 1.7rem;
+}
 
 input,
 input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
+input:-webkit-autofill:focus,
+input:-webkit-autofill:focus-visible {
   height: 2.5rem;
   padding: 0px 1rem;
-  border-radius: 0.5rem;
-  outline: none;
-  border: 1px solid #181717 !important;
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0 30px #181717 inset !important;
-  transition: background-color 5000s ease-in-out 0s;
+  border-radius: 1rem;
+  color: #f3f3f3;
+  outline: none !important;
+  -webkit-text-fill-color: #f3f3f3;
+  background-color: #0f0d0d !important;
+  transition: background-color 600000s 0s, color 600000s 0s !important;
 }
-
-input:-webkit-autofill,
+input::placeholder {
+  -webkit-text-fill-color: #bcbabab4;
+}
 input:focus,
-input:-webkit-autofill:focus {
-  color: white;
-  -webkit-text-fill-color: white;
-  border: 1px solid #c7bebe69 !important;
+input:focus-visible,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:focus-visible {
+  border: 1px solid rgba(158, 245, 207, 0.3) !important;
 }
-
 input.invalid,
 input:focus.invalid,
 input:-webkit-autofill:focus.invalid {
-  color: white;
-  border: 1px solid red !important;
+  color: #f3f3f3;
+  border: 1px solid #d78181 !important;
 }
 
 input.valid,
 input:focus.valid,
 input:-webkit-autofill:focus.valid {
-  color: white;
+  color: #f3f3f3;
   border: 1px solid #9ef5cf !important;
-}
-body {
-  background-color: #010101;
 }
 
 @media only screen and (max-width: 600px) {

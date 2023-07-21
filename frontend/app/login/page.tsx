@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Logo from "../components/Logo";
+import Logo from "../components/svgs/Logo";
 import IntroCard from "../components/intro_card/IntroCard";
 import LoginForm from "./LoginForm";
 

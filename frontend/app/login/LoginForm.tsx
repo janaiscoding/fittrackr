@@ -42,7 +42,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-11/12 py-6 px-3 mb-8 flex flex-col items-center justify-center bg-soft-grey rounded-3xl">
+    <div className="w-11/12 p-6 mb-8 bg-black2 rounded-3xl">
       <h1 className="text-3xl text-green text-center font-bold mb-3">
         Welcome back
       </h1>
@@ -51,7 +51,6 @@ const LoginForm = () => {
           <span className="self-start text-green">Email</span>
           <input
             type="email"
-            className={`text-white h-10 px-4 ${valid ? "valid" : "invalid"}`}
             onChange={(e) => {
               setEmail(e.target.value);
               setEmailValid(emailPattern.test(e.target.value));
@@ -63,7 +62,6 @@ const LoginForm = () => {
           <span className="self-start text-green">Password</span>
           <input
             type="password"
-            className={`text-white h-10 px-4 pass-field`}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
