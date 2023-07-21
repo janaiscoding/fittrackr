@@ -12,6 +12,7 @@ const posts_get = async (req: Request, res: Response) => {
       .select("text comments likes createdAt")
       .populate({
         path: "comments",
+        options: { sort: { createdAt: "desc" } },
         select: "text likes createdAt",
         populate: { path: "user", select: "first_name last_name avatar" },
       })
@@ -41,9 +42,9 @@ const post_get = async (req: Request, res: Response) => {
       .populate({
         path: "comments",
         select: "text likes createdAt",
-        populate: { path: "user", select: "first_name last_name" }, // + profile pic
+        populate: { path: "user", select: "first_name last_name avatar" }, // + profile pic
       })
-      .populate({ path: "user", select: "first_name last_name" }); // + profile pic
+      .populate({ path: "user", select: "first_name last_name avatar" }); // + profile pic
     if (post) {
       post.text = validator.unescape(post.text);
       res.json({ post });
@@ -186,10 +187,12 @@ const post_like = async (req: Request, res: Response) => {
     if (post) {
       if (post.likes.includes(userID)) {
         await post.updateOne({ $pull: { likes: userID } });
-        res.json({ message: `${userID} has disliked post ${postID}` });
+        const updatedLikes = await Post.findById(postID).select("likes").lean();
+        res.status(200).json({ likes: updatedLikes?.likes.length });
       } else {
         await post.updateOne({ $push: { likes: userID } });
-        res.json({ message: `${userID} has liked post ${postID}` });
+        const updatedLikes = await Post.findById(postID).select("likes").lean();
+        res.status(200).json({ likes: updatedLikes?.likes.length });
       }
     } else {
       res.status(404).json({ message: "Post was not found!" });

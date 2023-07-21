@@ -10,10 +10,9 @@ const post_comment = [
     .trim()
     .exists()
     .withMessage("Comment is required.")
-    .isLength({ min: 5 })
-    .withMessage("Comment must be at least 5 characters long.")
-    .isLength({ max: 300 })
-    .withMessage("Comment must be maximum 300 characters long")
+    .isLength({ min: 1 })
+    .isLength({ max: 140 })
+    .withMessage("Comment is too long.")
     .escape(),
   async (req: Request, res: Response) => {
     const { text } = req.body;
@@ -41,10 +40,22 @@ const post_comment = [
           comment.save(),
           post.updateOne({ $push: { comments: comment } }),
         ])
-          .then(() => {
+          .then(async () => {
+            const comments = await Post.findById(postID)
+              .select("comments")
+              .populate({
+                path: "comments",
+                options: { sort: { createdAt: "desc" } },
+                select: "text likes createdAt",
+                populate: {
+                  path: "user",
+                  select: "first_name last_name avatar",
+                },
+              });
+            //return fresh comments
             res.status(200).json({
               message: "Comment was successfully sent.",
-              comment,
+              comments,
             });
           })
           .catch((err) => {
@@ -62,23 +73,25 @@ const post_comment = [
 ];
 
 const comment_like = async (req: Request, res: Response) => {
-  const { postID, commentID, userID }: any = req.params;
+  const { postID, userID, commentID }: any = req.params;
   try {
     const post = await Post.findById(postID);
     const comment = await Comment.findById(commentID);
     const user = await User.findById(userID);
-    // All NEED to be valid
+    //All NEED to be valid
     if (post && comment && user) {
       if (comment.likes.includes(userID)) {
         await comment.updateOne({ $pull: { likes: userID } });
-        res.json({
-          message: `${user.first_name} has disliked  comment: ${comment.text}`,
-        });
+        const updatedLikes = await Comment.findById(commentID)
+          .select("likes")
+          .lean();
+        res.status(200).json({ likes: updatedLikes?.likes.length });
       } else {
         await comment.updateOne({ $push: { likes: userID } });
-        res.json({
-          message: `${user.first_name} has liked comment: ${comment.text}`,
-        });
+        const updatedLikes = await Comment.findById(commentID)
+          .select("likes")
+          .lean();
+        res.status(200).json({ likes: updatedLikes?.likes.length });
       }
     } else {
       res.status(404).json({ message: "The comment was not found!" });

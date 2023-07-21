@@ -137,9 +137,7 @@ const verify_token = async (req: Request, res: Response) => {
   try {
     // @ts-ignore
     const verify = jwt.verify(token, process.env.secret);
-    const user = await User.findById(verify.userId).select(
-      "first_name last_name avatar"
-    );
+    const user = await User.findById(verify.userId).select("-email -password");
     if (!user) res.status(404).json({ message: "User doesn't exist." });
     else {
       res.status(200).json({ user });

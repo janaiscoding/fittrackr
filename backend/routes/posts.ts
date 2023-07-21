@@ -15,6 +15,6 @@ router.delete("/:postID/:userID", auth, PC.post_delete);
 router.post("/:postID/:commentatorID", auth, CC.post_comment);
 // Like toggles
 router.post("/:postID/:userID/like", auth, PC.post_like);
-router.post("/:postID/:commentID/:userID/like", auth, CC.comment_like);
-router.delete("/:postID/:commentID/:commentatorID", auth, CC.comment_delete);
+router.post("/:postID/:userID/:commentID/like", auth, CC.comment_like);
+router.delete("/:postID/:commentatorID/:commentID/", auth, CC.comment_delete);
 export default router;

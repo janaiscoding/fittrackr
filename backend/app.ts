@@ -14,7 +14,7 @@ import { jwtStrategy } from "./passportStrategies";
 
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 20,
+  max: 100,
 });
 
 import indexRouter from "./routes/index";
