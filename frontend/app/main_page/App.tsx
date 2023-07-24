@@ -5,9 +5,10 @@ import { getJwtToken, removeJwtToken } from "../api/auth_handler";
 import { useRouter } from "next/navigation";
 import { User } from "../__types__/types";
 import { verifyAPI } from "../api/endpoints";
-import TopNav from "../main_page/TopNav";
+import TopNav from "../ui_components/top_navbar/TopNav";
 import fetchPosts from "../api/fetchers/posts";
 import fetchUsers from "../api/fetchers/users";
+import BotNav from "../ui_components/bottom_navbar/BotNav";
 
 const App = () => {
   const router = useRouter();
@@ -48,12 +49,13 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="px-6 min-h-screen">
+    <div className="min-h-screen flex flex-col justify-between">
       <TopNav />
-      <p>
+      <p className="px-6">
         Welcome back from main_page app:
         {userContext.user?.first_name} {userContext.user?.last_name}
       </p>
+      <BotNav />
     </div>
   );
 };

@@ -31,9 +31,9 @@
 body {
   font-family: "OpenMedium", sans-serif !important;
   color: #f3f3f3;
-  /* background-color: #010101; */
-  background: linear-gradient(76deg, rgb(0 0 0) 0%, rgb(14 14 14) 100%);
+  background: #060606;
 }
+
 .post {
   /* background-color: #010101; */
   -webkit-box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);

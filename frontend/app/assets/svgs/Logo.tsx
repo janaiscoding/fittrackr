@@ -1,7 +1,7 @@
 const Logo = () => {
   return (
     <a href="/">
-      <svg className="h-8 w-full self-center" viewBox="10 0 390 100" data-testid="svg-element">
+      <svg className="h-8 w-full self-center" viewBox="10 0 390 110" data-testid="svg-element">
         <g
           id="SvgjsG2736"
           transform="matrix(2.4537296795964507,0,0,2.4537296795964507,15.092540640807098,-4.046553668115987)"
