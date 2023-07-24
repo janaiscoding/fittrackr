@@ -24,24 +24,35 @@ const get_users = async (req: Request, res: Response) => {
   }
 };
 
+// I need user's: default data + friends + posts(populated) + workouts
 const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
     const user = await User.findById(userID)
       .select("-password -email")
-      .populate("workouts")
       .populate({
         path: "posts",
-        populate: { path: "comments", select: "text likes createdAt" },
+        populate: {
+          path: "comments",
+          populate: { path: "user", select: "first_name last_name avatar" },
+        },
       });
-    if (user) return res.json({ message: "GET user profile", user });
+
+    if (user) {
+      return res.json({ message: "User profile data", user });
+    }
     return res.status(404).json({ message: "User was not found!" });
-  } catch (err) {
-    return res.status(404).json({ message: "User was not found!" });
+  } catch (err: any) {
+    if (err.kind === "ObjectId") {
+      res.status(404).json({ message: "User was not found." });
+    } else {
+      return res.status(500).json({ message: "Unexpected error occured", err });
+    }
   }
 };
 
 const update_account = [
+  body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
   body("ucurrent_weight")
     .optional()
     .trim()
@@ -66,7 +77,6 @@ const update_account = [
     .isLength({ max: 30 })
     .withMessage("Last name must be 30 characters maximum.")
     .escape(),
-  body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
   async (req: Request, res: Response) => {
     const { userID } = req.params;
 
@@ -210,11 +220,9 @@ const get_fr_received = async (req: Request, res: Response) => {
         path: "requestsReceived",
         select: "first_name last_name avatar posts workouts friends",
       });
-    if (user) {
-      res.status(200).json({ requestsReceived: user.requestsReceived });
-    } else {
-      res.status(404).json({ message: "User was not found." });
-    }
+
+    if (user) return res.status(200).json({ received: user.requestsReceived });
+    return res.status(404).json({ message: "User was not found." });
   } catch (err: any) {
     if (err.kind === "ObjectId") {
       res.status(404).json({ message: "User was not found." });
@@ -224,15 +232,23 @@ const get_fr_received = async (req: Request, res: Response) => {
   }
 };
 
-const get_fr_sent = asyncHandler(async (req, res) => {
+const get_fr_sent = async (req: Request, res: Response) => {
   const { userID } = req.params;
-  const requestsSent = await User.findById(userID).select("requestsSent");
-  if (requestsSent) {
-    res.json(requestsSent);
-  } else {
-    res.status(500).json({ error: "Something went wrong." });
+  try {
+    const user = await User.findById(userID).select("requestsSent").populate({
+      path: "requestsSent",
+      select: "first_name last_name avatar posts workouts friends",
+    });
+    if (user) return res.status(200).json({ sent: user.requestsSent });
+    return res.status(404).json({ message: "User was not found." });
+  } catch (err: any) {
+    if (err.kind === "ObjectId") {
+      res.status(404).json({ message: "User was not found." });
+    } else {
+      res.status(500).json({ message: "Unexpected error occured", err });
+    }
   }
-});
+};
 
 const send_request = asyncHandler(async (req, res) => {
   const { senderID, receiverID }: any = req.params;
@@ -283,6 +299,7 @@ const send_request = asyncHandler(async (req, res) => {
       .json({ message: "An error occured while sending this friend request." });
   }
 });
+
 const accept_request = asyncHandler(async (req, res) => {
   const { receiverID, senderID }: any = req.params;
 
@@ -430,21 +447,3 @@ export default {
   decline_request,
   remove_friend,
 };
-
-// // local testing
-// async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const user = await User.findById(req.params.userID);
-//     if (!user) {
-//       return res.status(404).json({ error: "This user doesn't exist" });
-//     }
-//     res.render("pic", {
-//       contentType: user.pfp.contentType,
-//       data: user.pfp.data,
-//     });
-//   } catch (err) {
-//     return res
-//       .status(500)
-//       .json({ message: "There was an error upading the user's profile picture." });
-//   }
-// },

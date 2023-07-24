@@ -62,8 +62,8 @@ const post_create = [
     .withMessage("Post must be present")
     .isLength({ min: 5 })
     .withMessage("Post must be at least 5 characters long.")
-    .isLength({ max: 300 })
-    .withMessage("Post must be maximum 300 characters long.")
+    .isLength({ max: 140 })
+    .withMessage("Post must be maximum 140 characters long.")
     .escape(),
   async (req: Request, res: Response) => {
     const { text } = req.body;
@@ -114,8 +114,8 @@ const post_update = [
     .withMessage("Post must be present")
     .isLength({ min: 5 })
     .withMessage("Post must be at least 5 characters long.")
-    .isLength({ max: 300 })
-    .withMessage("Post must be maximum 300 characters long.")
+    .isLength({ max: 140 })
+    .withMessage("Post must be maximum 140 characters long.")
     .escape(),
   async (req: Request, res: Response) => {
     const { postID, userID } = req.params;
@@ -171,9 +171,9 @@ const post_delete = async (req: Request, res: Response) => {
           res.status(500).json({ message: err.message });
         });
     } else {
-      res.status(404).json({ message: "You cannot delete this post." });
+      res.status(404).json({ message: "This post doesn't exist." });
     }
-  } catch {
+  } catch (err) {
     res.status(404).json({ message: "You cannot delete this post." });
   }
 };
