@@ -9,6 +9,8 @@
 | /login        | POST    | Log in to your existing account.    | False     | True           |
 | /verify       | POST    | Verify Token and re-send user data. | False     | True           |
 
+Token expires in
+
 | Users                                | Request | Description                                      | Protected | Postman tested    |
 | ------------------------------------ | ------- | ------------------------------------------------ | --------- | ----------------- |
 | /users                               | GET     | Fetch all users in the platform.                 | True      | True              |
@@ -17,8 +19,8 @@
 | /users/:userID/upload                | POST    | Upload user profile picture.                     | True      | False(used views) |
 | /users/:userID                       | DELETE  | Delete user from database cleanup all user data. | True      | True              |
 | /users/:userID/friends               | GET     | Fetch user's friends list.                       | True      | True              |
-| /users/:userID/friends/received      | GET     | Fetch user's received friend requests.           | True      | True              |
-| /users/:userID/friends/sent          | GET     | Fetch user's sent friend requests.               | True      | True              |
+| /users/:userID/received              | GET     | Fetch user's received friend requests.           | True      | True              |
+| /users/:userID/sent                  | GET     | Fetch user's sent friend requests.               | True      | True              |
 | /users/send/:senderID/:receiverID    | POST    | Send a friend request to a different user.       | True      | True              |
 | /users/cancel/:senderID/:receiverID  | DELETE  | Cancel a pending friend request.                 | True      | True              |
 | /users/accept/:receiverID/:senderID  | PUT     | Accept a pending friend request, become friends. | True      | True              |

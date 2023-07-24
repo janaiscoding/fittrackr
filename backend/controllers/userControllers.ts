@@ -2,22 +2,22 @@ import { Request, Response, NextFunction } from "express";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
-import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import Workout from "../models/workout";
 import multer from "multer";
 import uploadPfp from "../middleware/multerConfig";
 
+// For searching in the community, for friends list and also friend requests
 const get_users = async (req: Request, res: Response) => {
   try {
     const users = await User.find()
-      .select("first_name last_name avatar")
+      .select("first_name last_name avatar posts workouts friends") // Figure out a default avatar picture so this will get selected properly.
       .lean();
     if (users) {
-      res.json({ message: "GET all users", users });
+      res.json({ message: "List of all users.", users });
     } else {
-      res.status(404).json({ message: "There are no users yet" });
+      res.status(404).json({ message: "There are no users yet!" });
     }
   } catch (err: any) {
     res.status(500).json({ message: err.message });
@@ -28,16 +28,13 @@ const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
     const user = await User.findById(userID)
-      .select("-password -email -createdAt -updatedAt") // "-requestsSent -requestsReceived -friendRequests"
+      .select("-password -email")
       .populate("workouts")
       .populate({
         path: "posts",
-        select: "text comments likes createdAt updatedAt",
         populate: { path: "comments", select: "text likes createdAt" },
-      })
-      .exec();
+      });
     if (user) return res.json({ message: "GET user profile", user });
-
     return res.status(404).json({ message: "User was not found!" });
   } catch (err) {
     return res.status(404).json({ message: "User was not found!" });
@@ -45,17 +42,7 @@ const get_profile = async (req: Request, res: Response) => {
 };
 
 const update_account = [
-  body("uage")
-    .optional()
-    .trim()
-    .isNumeric()
-    .withMessage("Must be a number")
-    .isInt({ min: 1 })
-    .withMessage("Age must be, technically, above one..")
-    .isInt({ max: 100 })
-    .withMessage("Doubt you're thaaaat old... (less than 100 years old pls)")
-    .escape(),
-  body("ucur_weight")
+  body("ucurrent_weight")
     .optional()
     .trim()
     .toInt()
@@ -79,15 +66,18 @@ const update_account = [
     .isLength({ max: 30 })
     .withMessage("Last name must be 30 characters maximum.")
     .escape(),
+  body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
   async (req: Request, res: Response) => {
     const { userID } = req.params;
+
     const updateFields = {
-      age: req.body.uage,
+      birthday: req.body.ubirthday,
       last_name: req.body.ulast_name,
-      cur_weight: req.body.ucur_weight,
+      current_weight: req.body.ucurrent_weight,
       goal_weight: req.body.ugoal_weight,
       first_name: req.body.ufirst_name,
     };
+
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
@@ -103,8 +93,8 @@ const update_account = [
           }
         }
         await user.updateOne(updateObject);
-        const userUpdated = await User.findById(userID);
-        res.json({ message: "Updated user successfully.", userUpdated });
+        const updatedUser = await User.findById(userID);
+        res.json({ message: "Updated user successfully.", updatedUser });
       } else {
         res.status(404).json({ message: "This user doesn't exist." });
       }
@@ -113,6 +103,7 @@ const update_account = [
     }
   },
 ];
+
 const update_pfp = [
   (req: Request, res: Response, next: NextFunction) => {
     uploadPfp.single("myImage")(req, res, function (err) {
@@ -191,13 +182,18 @@ const delete_account = asyncHandler(async (req, res) => {
         });
       });
   } else {
-    res.status(404).json({ message: "Cannot delete which that doesn't exist.." });
+    res
+      .status(404)
+      .json({ message: "Cannot delete which that doesn't exist.." });
   }
 });
 
 const get_friends_list = asyncHandler(async (req, res) => {
   const { userID } = req.params;
-  const friendsList = await User.findById(userID).select("friends");
+  const friendsList = await User.findById(userID).select("friends").populate({
+    path: "friends",
+    select: "first_name last_name avatar posts workouts friends",
+  });
   if (friendsList) {
     res.json(friendsList);
   } else {
@@ -205,17 +201,28 @@ const get_friends_list = asyncHandler(async (req, res) => {
   }
 });
 
-const get_fr_received = asyncHandler(async (req, res) => {
+const get_fr_received = async (req: Request, res: Response) => {
   const { userID } = req.params;
-  const requestsReceived = await User.findById(userID).select(
-    "requestsReceived"
-  );
-  if (requestsReceived) {
-    res.json(requestsReceived);
-  } else {
-    res.status(500).json({ error: "Something went wrong." });
+  try {
+    const user = await User.findById(userID)
+      .select("requestsReceived")
+      .populate({
+        path: "requestsReceived",
+        select: "first_name last_name avatar posts workouts friends",
+      });
+    if (user) {
+      res.status(200).json({ requestsReceived: user.requestsReceived });
+    } else {
+      res.status(404).json({ message: "User was not found." });
+    }
+  } catch (err: any) {
+    if (err.kind === "ObjectId") {
+      res.status(404).json({ message: "User was not found." });
+    } else {
+      res.status(500).json({ message: "Unexpected error occured", err });
+    }
   }
-});
+};
 
 const get_fr_sent = asyncHandler(async (req, res) => {
   const { userID } = req.params;
@@ -241,10 +248,14 @@ const send_request = asyncHandler(async (req, res) => {
         res.json({ message: "You are already friends with this user." });
         break;
       case isFRSent:
-        res.json({ message: "You already sent a friend request to this user." });
+        res.json({
+          message: "You already sent a friend request to this user.",
+        });
         break;
       case isFRPending:
-        res.json({ message: "You already have a friend request from this user." });
+        res.json({
+          message: "You already have a friend request from this user.",
+        });
         break;
       case senderID === receiverID:
         res.json({ message: "You can't send a friend request to yourself!" });

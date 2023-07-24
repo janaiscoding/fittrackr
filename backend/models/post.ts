@@ -5,6 +5,10 @@ const postSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     text: { type: String, required: true, minLength: 5, maxLength: 300 }, //min-max length to be added?
+    image: {
+      data: { type: Buffer },
+      contentType: { type: String, default: "image/png" },
+    },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },

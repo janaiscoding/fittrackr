@@ -5,19 +5,17 @@ import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
 
-//Add pic + user pics
+//Add pic
 const posts_get = async (req: Request, res: Response) => {
   try {
     const postsData = await Post.find({})
-      .select("text comments likes createdAt")
+      .sort({ createdAt: "desc" })
+      .populate({ path: "user", select: "first_name last_name avatar" })
       .populate({
         path: "comments",
         options: { sort: { createdAt: "desc" } },
-        select: "text likes createdAt",
         populate: { path: "user", select: "first_name last_name avatar" },
       })
-      .populate({ path: "user", select: "first_name last_name avatar" })
-      .sort({ createdAt: "desc" })
       .exec();
     if (postsData) {
       res.json({
@@ -34,7 +32,7 @@ const posts_get = async (req: Request, res: Response) => {
   }
 };
 
-// Add pic + user pics --- might not need this after all :D
+// Add pic
 const post_get = async (req: Request, res: Response) => {
   const { postID } = req.params;
   try {
@@ -42,9 +40,9 @@ const post_get = async (req: Request, res: Response) => {
       .populate({
         path: "comments",
         select: "text likes createdAt",
-        populate: { path: "user", select: "first_name last_name avatar" }, // + profile pic
+        populate: { path: "user", select: "first_name last_name avatar" },
       })
-      .populate({ path: "user", select: "first_name last_name avatar" }); // + profile pic
+      .populate({ path: "user", select: "first_name last_name avatar" });
     if (post) {
       post.text = validator.unescape(post.text);
       res.json({ post });
