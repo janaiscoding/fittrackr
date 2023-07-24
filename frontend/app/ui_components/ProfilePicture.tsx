@@ -1,7 +1,7 @@
-import { Avatar } from "@/app/utils/types/types";
 import Image from "next/image";
+import { Avatar } from "../__types__/types";
 
-const AvatarComment = ({
+const ProfilePicture = ({
   avatar,
   name,
   userID,
@@ -17,14 +17,14 @@ const AvatarComment = ({
           src={`data:${avatar.contentType};base64,${Buffer.from(
             avatar.data
           ).toString("base64")}`}
-          width={40}
+          width={50}
           height={0}
           className="h-auto"
           alt="user-profile-picture"
         />
       ) : (
         name !== undefined && (
-          <p className="bg-green avatar-circle uppercase font-ubuntu-300">
+          <p className="bg-green name-circle uppercase font-ubuntu-300">
             {name.charAt(0)}
           </p>
         )
@@ -33,4 +33,4 @@ const AvatarComment = ({
   );
 };
 
-export default AvatarComment;
+export default ProfilePicture;

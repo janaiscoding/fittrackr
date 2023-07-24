@@ -1,15 +1,16 @@
 "use client";
 
-import { loginAPI } from "@/app/utils/api/endpoints";
-import { setJwtToken } from "@/app/utils/auth_handler";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
+import { setJwtToken } from "../api/auth_handler";
+import { loginAPI } from "../api/endpoints";
+import { UserContext } from "../context/userContext";
 
 const LoginForm = () => {
+  const userContext = useContext(UserContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [valid, setEmailValid] = useState(false);
 
   const emailPattern = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
   // const pwPatter = new RegExp(/^(?=.*\d).{8,}$/g);
@@ -49,13 +50,7 @@ const LoginForm = () => {
       <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
         <label className="flex flex-col">
           <span className="self-start text-green">Email</span>
-          <input
-            type="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setEmailValid(emailPattern.test(e.target.value));
-            }}
-          />
+          <input type="email" onChange={(e) => setEmail(e.target.value)} />
         </label>
 
         <label className="flex flex-col">

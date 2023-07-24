@@ -1,10 +1,10 @@
 "use client";
-import { getJwtToken } from "@/app/utils/auth_handler";
-import fetchUser from "@/app/utils/fetchers/fullUser";
-import { useEffect, useState } from "react";
-import { Post, User } from "@/app/utils/types/types";
-import PostComponent from "@/app/components/post_components/PostComponent";
 
+import fetchUser from "@/app/api/fetchers/fullUser";
+import { useEffect, useState } from "react";
+import { Post, User } from "@/app/__types__/types";
+
+import { getJwtToken } from "@/app/api/auth_handler";
 
 
 const ProfilePage = ({ params: { id } }: { params: { id: string } }) => {

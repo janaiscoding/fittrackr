@@ -3,14 +3,14 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/users",
+        source: "/",
         missing: [
           {
             type: "cookie",
             key: "token",
           },
         ],
-        destination: "/",
+        destination: "/login",
         permanent: false,
       },
       {

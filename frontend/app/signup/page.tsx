@@ -1,15 +1,16 @@
 "use client";
 
 import { SyntheticEvent, useEffect, useState } from "react";
-import { signupAPI } from "../utils/api/endpoints";
+import { signupAPI } from "../api/endpoints";
 import { useRouter } from "next/navigation";
-import { getJwtToken, removeJwtToken } from "../utils/auth_handler";
+import { getJwtToken, removeJwtToken } from "../api/auth_handler";
 
 const SignUp = () => {
   const [firstName, setFirst] = useState<string>("");
   const [lastName, setLast] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [birthday, setBirthday] = useState<any>();
   const [confPassword, setConfirmed] = useState<string>("");
 
   const [validFirst, setValidFirst] = useState<boolean | undefined>(undefined);
@@ -37,27 +38,29 @@ const SignUp = () => {
         last_name: lastName,
         email,
         password,
-        conf_password: confPassword,
+        birthday,
       }),
     };
-    await fetch(signupAPI, opts)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        // express-validator errors -- COMPLETE
-        if (data.errors) {
-          setErrors(data.errors);
-        }
-        // success or DB error -- COMPLETE
-        if (data.message) {
-          if (data.message.includes("success")) {
-            router.push("/login");
-          } else {
-            setErrors([{ msg: data.message }]);
+    if (password === confPassword) {
+      await fetch(signupAPI, opts)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.errors) {
+            setErrors(data.errors);
           }
-        }
-      })
-      .catch((err) => console.log(err));
+          // success or DB error -- COMPLETE
+          if (data.message) {
+            if (data.message.includes("success")) {
+              router.push("/login");
+            } else {
+              setErrors([{ msg: data.message }]);
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setErrors([{ msg: "Passwords do not match." }]);
+    }
   };
 
   useEffect(() => {
@@ -157,6 +160,10 @@ const SignUp = () => {
                 setValidConf(password === e.target.value);
               }}
             />
+          </label>
+          <label className="flex flex-col">
+            <span className="self-start text-green">Birthday</span>
+            <input type="date" onChange={(e) => setBirthday(e.target.value)} />
           </label>
           {errors &&
             errors.map((err, i) => (

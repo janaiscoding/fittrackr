@@ -1,9 +1,7 @@
-import { postsAPI } from "../api/endpoints";
+import { postsAPI } from "../endpoints";
 
-const fetchPosts = async (
-  token: string,
-  setPostsData: React.Dispatch<any[]> // fix posts types
-) => {
+const fetchPosts = async (token: string) => {
+  console.log('fetch posts with', token)
   await fetch(postsAPI, {
     method: "GET",
     headers: {
@@ -12,10 +10,10 @@ const fetchPosts = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      setPostsData(data.posts);
+      console.log(data);
     })
     .catch((err) => {
-      console.log(err);
+      console.log("An error occured while fetching");
     });
 };
 
