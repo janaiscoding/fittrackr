@@ -8,7 +8,7 @@ import axios from "axios";
 import PostComponent from "@/app/main_page/PostComponent";
 import ProfilePost from "./ProfilePost";
 
-const UserPage = ({ id }: { id: string }) => {
+const UserPage = ({ id, isShown }: { id: string, isShown:boolean }) => {
   const [profile, setProfile] = useState<User>({} as User);
 
   const router = useRouter();
@@ -56,17 +56,17 @@ const UserPage = ({ id }: { id: string }) => {
       })
       .catch((err) => {
         console.log(err);
-      });
-      console.log(profile.posts)
+      });    console.log("fetched");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isShown]);
   return (
     <div className="p-6">
       <p>
         {profile.first_name} {profile.last_name}
       </p>
-      <p> bio: {profile.bio}</p>
-      {profile.posts.map((post, i) => (
+      <p> bio: {profile.bio}</p> 
+      {/* gotta sort these */}
+      {profile.posts?.map((post, i) => (
         <ProfilePost key={i} post={post} user={profile}/>
       ))}
     </div>

@@ -15,9 +15,9 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
       <div className="min-h-screen flex flex-col justify-between">
         <div>
           <TopNav />
-          <UserPage id={id} />
-          {isShown && <FormPost />}
+          <UserPage id={id} isShown={isShown}/>
         </div>
+        {isShown && <FormPost setShown={setShown} />}
         <BotNav isShown={isShown} setShown={setShown} />
       </div>
     </UserContextProvider>

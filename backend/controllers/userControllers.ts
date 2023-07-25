@@ -42,6 +42,7 @@ const get_profile = async (req: Request, res: Response) => {
           path: "comments",
           populate: { path: "user", select: "first_name last_name avatar" },
         },
+        options: { sort: { createdAt: "desc" } },
       });
 
     if (user) {

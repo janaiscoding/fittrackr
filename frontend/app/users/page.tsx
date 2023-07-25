@@ -2,12 +2,9 @@
 import TopNav from "../ui_components/top_navbar/TopNav";
 import BotNav from "../ui_components/bottom_navbar/BotNav";
 
-import { useContext, useEffect, useState } from "react";
-import { getJwtToken, removeJwtToken } from "../api/auth_handler";
-import { UserContext, UserContextProvider } from "../context/userContext";
-import { useRouter } from "next/navigation";
-import { User } from "../__types__/types";
-import { verifyAPI } from "../api/endpoints";
+import { useState } from "react";
+import { UserContextProvider } from "../context/userContext";
+
 import UsersComponent from "./Users";
 import FormPost from "../main_page/FormPost";
 
@@ -20,8 +17,8 @@ const UserPage = () => {
         <div>
           <TopNav />
           <UsersComponent />
-          {isShown && <FormPost />}
         </div>
+        {isShown && <FormPost setShown={setShown} />}
         <BotNav isShown={isShown} setShown={setShown} />
       </div>
     </UserContextProvider>

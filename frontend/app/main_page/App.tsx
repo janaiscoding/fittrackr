@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { SetStateAction, useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 import { getJwtToken, removeJwtToken } from "../api/auth_handler";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,13 @@ import { verifyAPI } from "../api/endpoints";
 import Posts from "./AllPosts";
 import FormPost from "./FormPost";
 
-const App = ({ isShown }: { isShown: boolean }) => {
+const App = ({
+  isShown,
+  setShown,
+}: {
+  isShown: boolean;
+  setShown: React.Dispatch<SetStateAction<boolean>>;
+}) => {
   const router = useRouter();
   const userContext = useContext(UserContext);
 
@@ -49,7 +55,7 @@ const App = ({ isShown }: { isShown: boolean }) => {
     <div className="p-6">
       Welcome back,{userContext.user?.first_name} {userContext.user?.last_name}
       <Posts />
-      {isShown && <FormPost />}
+      {isShown && <FormPost setShown={setShown} />}
     </div>
   );
 };

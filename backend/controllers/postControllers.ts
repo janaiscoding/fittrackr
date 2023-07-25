@@ -59,9 +59,9 @@ const post_create = [
   body("text")
     .trim()
     .exists()
-    .withMessage("Post must be present")
-    .isLength({ min: 5 })
-    .withMessage("Post must be at least 5 characters long.")
+    .withMessage("Post text is required.")
+    .isLength({ min: 1 })
+    .withMessage("Post is too short.")
     .isLength({ max: 140 })
     .withMessage("Post must be maximum 140 characters long.")
     .escape(),

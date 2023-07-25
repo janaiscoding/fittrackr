@@ -13,7 +13,7 @@ export default function Home() {
       <div className="min-h-screen flex flex-col justify-between">
         <div>
           <TopNav />
-          <App isShown={isShown} />
+          <App isShown={isShown} setShown={setShown} />
         </div>
         <BotNav isShown={isShown} setShown={setShown} />
       </div>
