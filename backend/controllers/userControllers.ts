@@ -124,14 +124,11 @@ const update_account = [
           }
         }
         await user.updateOne(updateObject);
-        const updatedUser = await User.findById(userID).select(
-          "-email -password"
-        );
-        res.json({
-          message: "Updated user successfully.",
-          updatedUser,
-          updateObject,
-        });
+        const uUser = await User.findById(userID).select("-email -password");
+        uUser!.first_name = validator.unescape(user.first_name);
+        uUser!.last_name = validator.unescape(user.last_name);
+        uUser!.bio = validator.unescape(user.bio);
+        res.json({ message: "Updated user successfully.", uUser });
       } else {
         res.status(404).json({ message: "This user doesn't exist." });
       }

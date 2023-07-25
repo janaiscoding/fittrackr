@@ -3,14 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { getJwtToken, removeJwtToken } from "../api/auth_handler";
 import { useRouter } from "next/navigation";
-import { User } from "../__types__/types";
+import { Post, User } from "../__types__/types";
 import { verifyAPI } from "../api/endpoints";
 import TopNav from "../ui_components/top_navbar/TopNav";
 import fetchPosts from "../api/fetchers/posts";
-import fetchUsers from "../api/fetchers/users";
 import BotNav from "../ui_components/bottom_navbar/BotNav";
+import Posts from "./Posts";
+import FormPost from "./FormPost";
 
-const App = () => {
+const App = ({ isShown }: { isShown: boolean }) => {
   const router = useRouter();
   const userContext = useContext(UserContext);
   const verifyToken = async (
@@ -25,7 +26,6 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.user) {
           setUser(data.user);
         } else {
@@ -44,18 +44,15 @@ const App = () => {
     const token = getJwtToken();
     if (token) {
       verifyToken(token, userContext.setUser);
-      fetchPosts(token);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="min-h-screen flex flex-col justify-between">
-      <TopNav />
-      <p className="px-6">
-        Welcome back from main_page app:
-        {userContext.user?.first_name} {userContext.user?.last_name}
-      </p>
-      <BotNav />
+    <div className="p-6">
+      Welcome back from main_page app:
+      {userContext.user?.first_name} {userContext.user?.last_name}
+      <Posts />
+      {isShown && <FormPost />}
     </div>
   );
 };
