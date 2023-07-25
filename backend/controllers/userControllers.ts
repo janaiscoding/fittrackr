@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
+import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import Workout from "../models/workout";
@@ -15,6 +16,11 @@ const get_users = async (req: Request, res: Response) => {
       .select("first_name last_name avatar posts workouts friends") // Figure out a default avatar picture so this will get selected properly.
       .lean();
     if (users) {
+      users.map((user) => {
+        user.first_name = validator.unescape(user.first_name);
+        user.last_name = validator.unescape(user.last_name);
+        return user;
+      });
       res.json({ message: "List of all users.", users });
     } else {
       res.status(404).json({ message: "There are no users yet!" });
@@ -39,6 +45,9 @@ const get_profile = async (req: Request, res: Response) => {
       });
 
     if (user) {
+      user.first_name = validator.unescape(user.first_name);
+      user.last_name = validator.unescape(user.last_name);
+      user.bio = validator.unescape(user.bio);
       return res.json({ message: "User profile data", user });
     }
     return res.status(404).json({ message: "User was not found!" });
@@ -53,14 +62,25 @@ const get_profile = async (req: Request, res: Response) => {
 
 const update_account = [
   body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
+  body("ubio")
+    .optional()
+    .isLength({ min: 1 })
+    .withMessage("Bio is too short,")
+    .isLength({ max: 140 })
+    .withMessage("Bio is too long.")
+    .escape(),
   body("ucurrent_weight")
     .optional()
     .trim()
     .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Weight must be above 1 kilo")
-    .escape(),
-  body("ugoal_weight").optional().trim().toInt().escape(),
+    .isInt({ min: 3 })
+    .withMessage("Weight must be above 3 kilo."),
+  body("ugoal_weight")
+    .optional()
+    .trim()
+    .toInt()
+    .isInt({ min: 3 })
+    .withMessage("Weight must be above 3 kilo."),
   body("ufirst_name")
     .trim()
     .optional()
@@ -82,10 +102,11 @@ const update_account = [
 
     const updateFields = {
       birthday: req.body.ubirthday,
+      first_name: req.body.ufirst_name,
       last_name: req.body.ulast_name,
+      bio: req.body.ubio,
       current_weight: req.body.ucurrent_weight,
       goal_weight: req.body.ugoal_weight,
-      first_name: req.body.ufirst_name,
     };
 
     const errors = validationResult(req);
@@ -103,8 +124,14 @@ const update_account = [
           }
         }
         await user.updateOne(updateObject);
-        const updatedUser = await User.findById(userID);
-        res.json({ message: "Updated user successfully.", updatedUser });
+        const updatedUser = await User.findById(userID).select(
+          "-email -password"
+        );
+        res.json({
+          message: "Updated user successfully.",
+          updatedUser,
+          updateObject,
+        });
       } else {
         res.status(404).json({ message: "This user doesn't exist." });
       }

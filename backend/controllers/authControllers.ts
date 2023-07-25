@@ -13,7 +13,7 @@ const create_user = [
     .exists()
     .notEmpty()
     .withMessage("First name is required.")
-    .isLength({ min: 1, max: 30 })
+    .isLength({ max: 30 })
     .withMessage("First name is too long.")
     .escape(),
   body("last_name")
@@ -21,7 +21,7 @@ const create_user = [
     .exists()
     .notEmpty()
     .withMessage("Last name is required.")
-    .isLength({ min: 1, max: 30 })
+    .isLength({ max: 30 })
     .withMessage("Last name is too long.")
     .escape(),
   body("email")
@@ -65,12 +65,10 @@ const create_user = [
             password: hashed,
             birthday,
           })
-            .then(async () => {
-              const freshLogin = await User.findOne({ email });
-              res.status(201).json({
-                message: "New user successfully created!",
-                freshLogin,
-              });
+            .then(() => {
+              res
+                .status(201)
+                .json({ message: "New user successfully created!" });
             })
             .catch((err) => {
               res.status(400).json({
