@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { getJwtToken, removeJwtToken } from "../api/auth_handler";
-import { UserContext, UserContextProvider } from "../context/userContext";
+import { UserContext } from "../context/userContext";
 import { useRouter } from "next/navigation";
-import { CommunityUser, ShortUser, User } from "../__types__/types";
+import { CommunityUser, User } from "../__types__/types";
 import { verifyAPI } from "../api/endpoints";
-import axios from "axios";
 import UserComponent from "./User";
-import FormPost from "../main_page/FormPost";
+import getUsers from "../api/get_users";
 
 const UsersComponent = () => {
   const [users, setUsers] = useState<CommunityUser[]>([]);
@@ -45,20 +44,7 @@ const UsersComponent = () => {
     if (token) {
       verifyToken(token, userContext.setUser);
     }
-    axios
-      .get(`https://fiturself.fly.dev/users`, {
-        headers: {
-          Authorization: `Bearer ${getJwtToken()}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.users);
-        setUsers(res.data.users);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      console.log('getting all users')
+    getUsers(setUsers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
