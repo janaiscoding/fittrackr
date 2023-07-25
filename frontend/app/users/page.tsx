@@ -1,29 +1,30 @@
 "use client";
+import TopNav from "../ui_components/top_navbar/TopNav";
+import BotNav from "../ui_components/bottom_navbar/BotNav";
 
-import { useEffect, useState } from "react";
-import fetchUsers from "../api/fetchers/users";
-import { getJwtToken } from "../api/auth_handler";
-import {User} from "../__types__/types";
+import { useContext, useEffect, useState } from "react";
+import { getJwtToken, removeJwtToken } from "../api/auth_handler";
+import { UserContext, UserContextProvider } from "../context/userContext";
+import { useRouter } from "next/navigation";
+import { User } from "../__types__/types";
+import { verifyAPI } from "../api/endpoints";
+import UsersComponent from "./Users";
+import FormPost from "../main_page/FormPost";
 
 const UserPage = () => {
-  const [usersData, setUsersData] = useState<any>([]);
-  useEffect(() => {
-    const token = getJwtToken();
-    if (token) {
-      fetchUsers(token);
-    }
-  }, []);
+  const [isShown, setShown] = useState(false);
 
-  //add fallback
   return (
-    <div>
-      <p>USER LIST</p>
-      {usersData.map((user: User, i:number) => (
-        <a href={`/users/${user._id}`} key={i}>
-          {i + 1}. {user.first_name}
-        </a>
-      ))}
-    </div>
+    <UserContextProvider>
+      <div className="min-h-screen flex flex-col justify-between">
+        <div>
+          <TopNav />
+          <UsersComponent />
+          {isShown && <FormPost />}
+        </div>
+        <BotNav isShown={isShown} setShown={setShown} />
+      </div>
+    </UserContextProvider>
   );
 };
 

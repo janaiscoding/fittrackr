@@ -1,14 +1,16 @@
-"use client";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/userContext";
+import { useContext, useEffect, useState } from "react";
 import { getJwtToken, removeJwtToken } from "../api/auth_handler";
+import { UserContext, UserContextProvider } from "../context/userContext";
 import { useRouter } from "next/navigation";
-import { User } from "../__types__/types";
+import { CommunityUser, ShortUser, User } from "../__types__/types";
 import { verifyAPI } from "../api/endpoints";
-import Posts from "./AllPosts";
-import FormPost from "./FormPost";
+import axios from "axios";
+import UserComponent from "./User";
+import FormPost from "../main_page/FormPost";
 
-const App = ({ isShown }: { isShown: boolean }) => {
+const UsersComponent = () => {
+  const [users, setUsers] = useState<CommunityUser[]>([]);
+
   const router = useRouter();
   const userContext = useContext(UserContext);
 
@@ -43,15 +45,30 @@ const App = ({ isShown }: { isShown: boolean }) => {
     if (token) {
       verifyToken(token, userContext.setUser);
     }
+    axios
+      .get(`https://fiturself.fly.dev/users`, {
+        headers: {
+          Authorization: `Bearer ${getJwtToken()}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.users);
+        setUsers(res.data.users);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className="p-6">
-      Welcome back,{userContext.user?.first_name} {userContext.user?.last_name}
-      <Posts />
-      {isShown && <FormPost />}
+      <h1>List of all users</h1>
+      {users.map((user, i) => (
+        <UserComponent key={i} user={user} />
+      ))}
     </div>
   );
 };
 
-export default App;
+export default UsersComponent;

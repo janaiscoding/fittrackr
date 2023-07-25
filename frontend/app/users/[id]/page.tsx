@@ -1,30 +1,27 @@
 "use client";
 
-import fetchUser from "@/app/api/fetchers/fullUser";
-import { useEffect, useState } from "react";
-import { Post, User } from "@/app/__types__/types";
+import TopNav from "@/app/ui_components/top_navbar/TopNav";
+import FormPost from "@/app/main_page/FormPost";
+import BotNav from "@/app/ui_components/bottom_navbar/BotNav";
+import { UserContextProvider } from "@/app/context/userContext";
+import { useState } from "react";
+import UserPage from "./UserPage";
 
-import { getJwtToken } from "@/app/api/auth_handler";
-
-
-const ProfilePage = ({ params: { id } }: { params: { id: string } }) => {
-  const [profileData, setProfileData] = useState< User | null>(null);
-
-  useEffect(() => {
-    const token = getJwtToken();
-    if (token) {
-      fetchUser(token, id, setProfileData);
-    }
-  }, [id]);
+const Page = ({ params: { id } }: { params: { id: string } }) => {
+  const [isShown, setShown] = useState(false);
 
   return (
-    <div>
-      <p> {profileData?.first_name}`s profile page</p>
-      <p> POSTS </p>
-      <p> FRIENDS </p>
-      {/* {profileData?.friends.map((f, i)=> <p key={i}>{f.first_name}</p>)} */}
-    </div>
+    <UserContextProvider>
+      <div className="min-h-screen flex flex-col justify-between">
+        <div>
+          <TopNav />
+          <UserPage id={id} />
+          {isShown && <FormPost />}
+        </div>
+        <BotNav isShown={isShown} setShown={setShown} />
+      </div>
+    </UserContextProvider>
   );
 };
 
-export default ProfilePage;
+export default Page;

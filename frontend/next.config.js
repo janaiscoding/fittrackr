@@ -14,6 +14,17 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: "/users",
+        missing: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/login",
+        permanent: false,
+      },
+      {
         source: "/users/:slug",
         missing: [
           {
@@ -21,7 +32,7 @@ const nextConfig = {
             key: "token",
           },
         ],
-        destination: "/",
+        destination: "/login",
         permanent: false,
       },
       {

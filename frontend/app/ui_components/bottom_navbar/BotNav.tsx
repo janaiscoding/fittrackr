@@ -45,7 +45,6 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
         className="scale-150 -translate-y-2/4"
         onClick={() => {
           setShown(!isShown);
-          console.log(isShown);
         }}
       >
         <Plus />
@@ -55,7 +54,10 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
         <Community />
         <p className="text-xs text-grey">Community</p>
       </a>
-      <div className="flex flex-col gap-1 items-center" onClick={handleSignout}>
+      <div
+        className="flex flex-col gap-1 items-center hover:cursor-pointer"
+        onClick={handleSignout}
+      >
         <SignOut />
         <p className="text-xs text-grey">Sign Out</p>
       </div>

@@ -8,46 +8,64 @@ type User = {
   first_name: String;
   last_name: String;
   birthday: String;
+  bio: String;
   avatar: Avatar | undefined;
   workouts: Workout[];
-  posts: Post[];
+  posts: ProfilePost[];
   friends: string[];
   requestsSent: string[];
   requestsReceived: string[];
   createdAt: String;
   updatedAt: String;
 };
+type ProfilePost = {
+  comments: any[];
+  createdAt: string;
+  image: { contentType: string; data: Buffer | undefined };
+  likes: string[];
+  text: string;
+  updatedAt: string;
+  user: string;
+  _id: string;
+};
+
 //todo
 type Workout = {
-  _id: String;
+  _id: string;
 };
 type CommunityUser = {
   // community, friends, friend req sent/received
   //all users - only displays name, pic and numbered stats of posts workouts and friends
-  _id: String;
-  first_name: String;
-  last_name: String;
+  _id: string;
+  first_name: string;
+  last_name: string;
   avatar: Avatar | undefined;
   posts: string[];
   workouts: string[];
   friends: string[];
 };
-type CommentUser = {
+type ShortUser = {
   //on any post!
-  _id: String;
-  first_name: String;
-  last_name: String;
+  _id: string;
+  first_name: string;
+  last_name: string;
   avatar: Avatar | undefined;
 };
 
 type Post = {
-  _id: String;
-  text: String;
+  _id: string;
+  text: string;
   comments: Comment[];
   likes: string[]; //??
-  user: CommentUser;
+  user: ShortUser;
   createdAt: string;
+  updatedAt: string;
+  image: {
+    contentType: string;
+    data: Buffer | undefined;
+  };
 };
+
 type Comment = {
   user: {
     _id: string;
@@ -59,4 +77,12 @@ type Comment = {
   text: string;
   createdAt: string;
 };
-export type { User, CommunityUser, Post, Avatar, Comment };
+export type {
+  ShortUser,
+  User,
+  CommunityUser,
+  ProfilePost,
+  Post,
+  Avatar,
+  Comment,
+};

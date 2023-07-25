@@ -1,19 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { setJwtToken } from "../api/auth_handler";
 import { loginAPI } from "../api/endpoints";
-import { UserContext } from "../context/userContext";
 
 const LoginForm = () => {
-  const userContext = useContext(UserContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-
-  const emailPattern = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
-  // const pwPatter = new RegExp(/^(?=.*\d).{8,}$/g);
 
   const router = useRouter();
 
