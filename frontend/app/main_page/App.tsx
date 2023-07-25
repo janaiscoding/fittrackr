@@ -1,12 +1,11 @@
 "use client";
 import { SetStateAction, useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
-import { getJwtToken, removeJwtToken } from "../api/auth_handler";
+import { getJwtToken } from "../api/auth_handler";
 import { useRouter } from "next/navigation";
-import { User } from "../__types__/types";
-import { verifyAPI } from "../api/endpoints";
 import Posts from "./AllPosts";
 import FormPost from "./FormPost";
+import verifyToken from "../api/verify_token";
 
 const App = ({
   isShown,
@@ -18,36 +17,10 @@ const App = ({
   const router = useRouter();
   const userContext = useContext(UserContext);
 
-  const verifyToken = async (
-    token: string,
-    setUser: React.Dispatch<React.SetStateAction<User | null>>
-  ) => {
-    await fetch(verifyAPI, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-        } else {
-          //Rejected/Invalid Token!! Remove Token | Clear User | Redirect to login
-          removeJwtToken();
-          setUser(null);
-          router.push("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
     const token = getJwtToken();
-    if (token) {
-      verifyToken(token, userContext.setUser);
+    if (token && router) {
+      verifyToken(token, userContext.setUser, router);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

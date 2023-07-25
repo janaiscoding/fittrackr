@@ -58,7 +58,7 @@ const UsersComponent = () => {
       .catch((err) => {
         console.log(err);
       });
-
+      console.log('getting all users')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

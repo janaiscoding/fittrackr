@@ -1,74 +1,40 @@
 import { useContext, useEffect, useState } from "react";
 import { getJwtToken, removeJwtToken } from "@/app/api/auth_handler";
-import { UserContext, UserContextProvider } from "@/app/context/userContext";
-import { User } from "@/app/__types__/types";
-import { verifyAPI } from "@/app/api/endpoints";
+import { UserContext } from "@/app/context/userContext";
+import { Post, User } from "@/app/__types__/types";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import PostComponent from "@/app/main_page/PostComponent";
-import ProfilePost from "./ProfilePost";
+import getUser from "@/app/api/get_user";
+import getPosts from "@/app/api/get_posts";
+import verifyToken from "@/app/api/verify_token";
 
-const UserPage = ({ id, isShown }: { id: string, isShown:boolean }) => {
+const UserPage = ({ id }: { id: string }) => {
   const [profile, setProfile] = useState<User>({} as User);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const router = useRouter();
   const userContext = useContext(UserContext);
 
-  const verifyToken = async (
-    token: string,
-    setUser: React.Dispatch<React.SetStateAction<User | null>>
-  ) => {
-    await fetch(verifyAPI, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-        } else {
-          //Rejected/Invalid Token!! Remove Token | Clear User | Redirect to login
-          removeJwtToken();
-          setUser(null);
-          router.push("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
-      verifyToken(token, userContext.setUser);
+      verifyToken(token, userContext.setUser, router);
     }
-    axios
-      .get(`https://fiturself.fly.dev/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setProfile(res.data.user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });    console.log("fetched");
+    getUser(id, setProfile);
+    getPosts(setPosts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShown]);
+  }, []);
   return (
-    <div className="p-6">
+    <div className="p-6 overflow-scroll">
       <p>
         {profile.first_name} {profile.last_name}
       </p>
-      <p> bio: {profile.bio}</p> 
-      {/* gotta sort these */}
-      {profile.posts?.map((post, i) => (
-        <ProfilePost key={i} post={post} user={profile}/>
-      ))}
+      <p> bio: {profile.bio}</p>
+      {posts
+        .filter((post) => post.user._id === id)
+        .map((post, i) => (
+          <PostComponent key={i} post={post} />
+        ))}
     </div>
   );
 };
