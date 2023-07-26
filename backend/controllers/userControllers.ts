@@ -56,11 +56,22 @@ const get_profile = async (req: Request, res: Response) => {
 const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    const userPosts = await Post.find({ user: userID }).populate({
-      path: "comments",
-      populate: { path: "user", select: "first_name last_name avatar" },
+    const userPosts = await Post.find({ user: userID })
+      .populate({
+        path: "comments",
+        populate: { path: "user", select: "first_name last_name avatar" },
+      })
+      .populate({ path: "user", select: "first_name last_name avatar" });
+    const posts = userPosts.map((post) => {
+      post.text = validator.unescape(post.text);
+      post.comments.map((comment) => {
+        //@ts-ignore
+        comment.text = validator.unescape(comment.text);
+        return comment;
+      });
+      return post;
     });
-    res.status(200).json({ posts: userPosts });
+    res.status(200).json({ posts });
   } catch (err) {
     res.status(500).json({ message: "An unexpected error has occured.", err });
   }
