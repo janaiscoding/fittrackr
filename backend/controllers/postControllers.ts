@@ -67,7 +67,7 @@ const post_create = [
     .escape(),
   async (req: Request, res: Response) => {
     const { text } = req.body;
-    const { userID } = req.params;
+    const { userID } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -108,7 +108,7 @@ const post_create = [
 ];
 
 const post_update = [
-  body("updatedText")
+  body("uText")
     .trim()
     .exists()
     .withMessage("Post must be present")
@@ -118,14 +118,14 @@ const post_update = [
     .withMessage("Post must be maximum 140 characters long.")
     .escape(),
   async (req: Request, res: Response) => {
-    const { postID, userID } = req.params;
-    const { updatedText } = req.body;
+    const { postID } = req.params;
+    const { uText, userID } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
-        text: validator.unescape(updatedText),
+        text: validator.unescape(uText),
       });
     }
     try {
@@ -134,7 +134,7 @@ const post_update = [
       if (post && user && post.user?.equals(userID)) {
         await post
           .updateOne({
-            text: updatedText,
+            text: uText,
           })
           .then(() => {
             res.status(200).json({ message: "Post was successfully updated!" });
@@ -149,7 +149,8 @@ const post_update = [
 ];
 
 const post_delete = async (req: Request, res: Response) => {
-  const { postID, userID } = req.params;
+  const { postID } = req.params;
+  const { userID } = req.body;
   try {
     const post = await Post.findById(postID);
     const user = await User.findById(userID);
@@ -179,7 +180,8 @@ const post_delete = async (req: Request, res: Response) => {
 };
 
 const post_like = async (req: Request, res: Response) => {
-  const { postID, userID }: any = req.params;
+  const { postID }: any = req.params;
+  const { userID } = req.body;
   try {
     const post = await Post.findById(postID);
     if (post) {

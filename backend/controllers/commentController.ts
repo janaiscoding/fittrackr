@@ -15,9 +15,8 @@ const post_comment = [
     .withMessage("Comment is too long.")
     .escape(),
   async (req: Request, res: Response) => {
-    const { text } = req.body;
-
-    const { postID, commentatorID } = req.params;
+    const { text, userID } = req.body;
+    const { postID } = req.params;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -28,11 +27,11 @@ const post_comment = [
     }
 
     try {
-      const user = await User.findById(commentatorID);
+      const user = await User.findById(userID);
       const post = await Post.findById(postID);
       if (user && post) {
         const comment = new Comment({
-          user: commentatorID,
+          user: userID,
           text,
           likes: [],
         });
@@ -73,7 +72,8 @@ const post_comment = [
 ];
 
 const comment_like = async (req: Request, res: Response) => {
-  const { postID, userID, commentID }: any = req.params;
+  const { postID, commentID }: any = req.params;
+  const { userID } = req.body;
   try {
     const post = await Post.findById(postID);
     const comment = await Comment.findById(commentID);
@@ -102,12 +102,13 @@ const comment_like = async (req: Request, res: Response) => {
 };
 
 const comment_delete = async (req: Request, res: Response) => {
-  const { postID, commentID, commentatorID }: any = req.params;
+  const { postID, commentID }: any = req.params;
+  const { userID } = req.body;
   try {
     const comment = await Comment.findById(commentID);
     const post = await Post.findById(postID);
 
-    if (comment && post && comment.user?._id.equals(commentatorID)) {
+    if (comment && post && comment.user?._id.equals(userID)) {
       Promise.all([
         comment.deleteOne(),
         post.updateOne({ $pull: { comments: commentID } }),
