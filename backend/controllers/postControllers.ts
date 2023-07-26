@@ -15,15 +15,18 @@ const posts_get = async (req: Request, res: Response) => {
         path: "comments",
         options: { sort: { createdAt: "desc" } },
         populate: { path: "user", select: "first_name last_name avatar" },
-      })
-      .exec();
-    if (postsData) {
-      res.json({
-        posts: postsData.map((post) => {
-          post.text = validator.unescape(post.text);
-          return post;
-        }),
       });
+    if (postsData) {
+      const posts = postsData.map((post) => {
+        post.text = validator.unescape(post.text);
+        post.comments.map((c) => {
+          //@ts-ignore
+          c.text = validator.unescape(c.text);
+          return c;
+        });
+        return post;
+      });
+      res.json({ posts });
     } else {
       res.status(404).json({ message: "No posts yet." });
     }
