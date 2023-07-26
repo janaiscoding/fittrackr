@@ -1,38 +1,70 @@
 import { User } from "@/app/__types__/types";
+import acceptRequest from "@/app/api/friends/accept_request";
 import cancelRequest from "@/app/api/friends/cancel_request";
+import declineRequest from "@/app/api/friends/decline_request";
 import removeFriend from "@/app/api/friends/remove_friend";
 import sendRequest from "@/app/api/friends/send_request";
 import { UserContext } from "@/app/context/userContext";
 import { JoinedDate } from "@/app/ui_components/Date";
 import ProfilePicture from "@/app/ui_components/ProfilePicture";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const UserInfo = ({ profile }: { profile: User }) => {
-  const { first_name, last_name } = profile;
+  const {
+    _id,
+    first_name,
+    last_name,
+    bio,
+    birthday,
+    friends,
+    requestsReceived,
+    createdAt,
+  } = profile;
+
   const userContext = useContext(UserContext);
 
-  const [isProfile, setIsProfile] = useState<boolean>(
-    userContext.user!._id === profile._id
-  );
+  const [isFriends, setIsFriends] = useState<boolean>();
+  const [isPending, setIsPending] = useState<boolean>();
+  const [isReceived, setIsReceived] = useState<boolean>();
+  const [isSame, setIsSame] = useState<boolean>();
 
-  const [isFriends, setIsFriends] = useState<boolean>(
-    profile.friends.includes(userContext.user!._id)
-  );
-
-  const [isPending, setIsPending] = useState<boolean>(
-    profile.requestsReceived.includes(userContext.user!._id)
-  );
-
-  const handleFriendship = (receiver: string, sender: string | undefined) => {
-    if (isFriends) {
-      removeFriend(receiver, sender).then(() => setIsFriends(false));
-    }
+  const handleAdd = () => {
     if (isPending) {
-      cancelRequest(receiver, sender).then(() => setIsPending(false));
+      cancelRequest(_id, userContext.user?._id).then(() => setIsPending(false));
     } else {
-      sendRequest(receiver, sender).then(() => setIsPending(true));
+      sendRequest(_id, userContext.user?._id).then(() => setIsPending(true));
     }
   };
+  const handleAccept = () => {
+    acceptRequest(_id, userContext.user?._id).then(() => {
+      setIsReceived(false);
+      setIsPending(false);
+      setIsFriends(true);
+    });
+  };
+
+  const handleDecline = () => {
+    declineRequest(_id, userContext.user?._id).then(() => {
+      setIsReceived(false);
+      setIsPending(false);
+      setIsFriends(false);
+    });
+  };
+  const handleRemove = () => {
+    removeFriend(_id, userContext.user?._id).then(() => setIsFriends(false));
+  };
+
+  useEffect(() => {
+    if (userContext.user && profile) {
+      //means everything loaded so I can check the social status 
+      setIsFriends(friends.includes(userContext.user._id));
+      setIsReceived(userContext.user?.requestsReceived?.includes(_id));
+      setIsPending(requestsReceived.includes(userContext.user._id));
+      setIsFriends(friends.includes(userContext.user!._id));
+      setIsSame(_id === userContext.user._id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userContext, profile]);
 
   return (
     <div>
@@ -60,23 +92,35 @@ const UserInfo = ({ profile }: { profile: User }) => {
       <div className="flex justify-between items-start">
         <div>
           <p className="text-green text-xl font-ubuntu-500">
-            {first_name} {last_name}
+            {first_name} {last_name} <span onClick={()=> console.log('open edit pic')} className="cursor-pointer">pic</span>
           </p>
-          <JoinedDate date={profile.createdAt} />
+          <JoinedDate date={createdAt} />
         </div>
-        {isProfile ? (
-          <button onClick={() => console.log("edit profile")}>
-            Edit Profile
-          </button>
-        ) : (
-          <button
-            onClick={() => handleFriendship(profile._id, userContext.user?._id)}
-          >
-            {isPending ? "Cancel" : "Add"}
-          </button>
-        )}
+        <div>
+          {isFriends && (
+            <button className="social-button" onClick={handleRemove}>
+              Remove
+            </button>
+          )}
+          {isReceived && (
+            <div>
+              <button className="social-button" onClick={handleAccept}>
+                Accept
+              </button>{" "}
+              <button className="social-button" onClick={handleDecline}>
+                Decline
+              </button>
+            </div>
+          )}
+          {!isSame && !isReceived && !isFriends && (
+            <button className="social-button" onClick={handleAdd}>
+              {isPending ? "Cancel" : "Add"}
+            </button>
+          )}
+          {isSame && <button className="social-button">Edit profile</button>}
+        </div>
       </div>
-      <p> {profile.bio}</p>
+      <p> {bio}</p>
     </div>
   );
 };

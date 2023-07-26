@@ -41,30 +41,42 @@ const UserComponent = ({ user }: { user: CommunityUser }) => {
   };
 
   useEffect(() => {
-    if (userContext.user) {
+    if (userContext.user && user) {
       setIsFriends(user.friends.includes(userContext.user._id));
-      setIsReceived(userContext.user.requestsReceived.includes(user._id));
+      setIsReceived(userContext.user?.requestsReceived?.includes(user._id));
       setIsPending(user.requestsReceived.includes(userContext.user._id));
       setIsFriends(user.friends.includes(userContext.user!._id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userContext]);
+  }, [userContext, user]);
   return (
-    <div className="pb-2">
+    <div className="border border-mid-green p-4 mb-2">
       <div className="flex justify-between">
         <a href={`/users/${_id}`} className="text-green">
           {first_name} {last_name}
         </a>
-        {isFriends && <button onClick={handleRemove}>Remove</button>}
-        {isReceived && (
-          <div>
-            <button onClick={handleAccept}>Accept</button>{" "}
-            <button onClick={handleDecline}>Decline</button>
-          </div>
-        )}
-        {!isReceived && !isFriends && (
-          <button onClick={handleAdd}>{isPending ? "Cancel" : "Add"}</button>
-        )}
+        <div>
+          {isFriends && (
+            <button className="social-button" onClick={handleRemove}>
+              Remove
+            </button>
+          )}
+          {isReceived && (
+            <div>
+              <button className="social-button" onClick={handleAccept}>
+                Accept
+              </button>{" "}
+              <button className="social-button" onClick={handleDecline}>
+                Decline
+              </button>
+            </div>
+          )}
+          {!isReceived && !isFriends && (
+            <button className="social-button" onClick={handleAdd}>
+              {isPending ? "Cancel" : "Add"}
+            </button>
+          )}
+        </div>
       </div>
       <div className="flex text-xs text-grey gap-2">
         <p>{posts.length} posts</p>

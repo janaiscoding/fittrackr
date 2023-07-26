@@ -16,22 +16,22 @@
   font-family: "UbuntuThin";
   src: url("../public/Ubuntu/Ubuntu-Light.ttf");
 }
-:root {
-  --black: "#010101";
-  --green: "#9EF5CF";
-  --white: "#F3F3F3";
-  --grey: "#AEAEAE";
-  --soft-grey: "#070606";
-  --input: "#f8f7f717";
-  --focused: "#f59e9e69";
-}
+
 ::placeholder {
   color: rgb(185, 131, 131) !important;
 }
+
 body {
   font-family: "OpenMedium", sans-serif !important;
   color: #f3f3f3;
   background: #060606;
+}
+.social-button {
+  border-radius: 1em;
+  border: 1px solid #0d2b1e;
+  color: #9ef5cf;
+  background-color: #060606;
+  padding: 0.2em 1em;
 }
 
 .post {

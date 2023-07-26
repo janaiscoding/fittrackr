@@ -39,9 +39,9 @@ const UserPage = ({ id, isShown }: { id: string; isShown: boolean }) => {
         <UserInfo profile={profile} />
       )}
 
-      {/* {posts.map((post, i) => (
+      {posts.map((post, i) => (
         <PostComponent key={i} post={post} />
-      ))} */}
+      ))}
     </div>
   );
 };

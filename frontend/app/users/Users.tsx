@@ -31,7 +31,7 @@ const UsersComponent = ({
 
   return (
     <div className="min-h-[87vh] p-6">
-      <h1>List of all users</h1>
+      {Object.keys(users).length === 0 && "Loading animation"}
       {users
         .filter((user) => user._id !== userContext.user?._id) //all except logged in user
         .map((user, i) => (
