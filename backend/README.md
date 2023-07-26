@@ -45,8 +45,9 @@ Token expires in 24hr
 git clone git@github.com:janaiscoding/fiturself.git
 cd fiturself/backend
 npm install
+create .env file with `MONGODB_URI` and `secret` variables
 npm run dev
-Server is listening on localhost:8008
+Server is listening on localhost:3000
 ```
 
 # Built with
