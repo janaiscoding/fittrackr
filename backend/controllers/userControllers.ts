@@ -57,9 +57,11 @@ const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
     const userPosts = await Post.find({ user: userID })
+      .sort({ createdAt: "desc" })
       .populate({
         path: "comments",
         populate: { path: "user", select: "first_name last_name avatar" },
+        options: { sort: { createdAt: "desc" } },
       })
       .populate({ path: "user", select: "first_name last_name avatar" });
     const posts = userPosts.map((post) => {
