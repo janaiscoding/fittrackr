@@ -3,7 +3,7 @@ const signupAPI = "https://fiturself.fly.dev/signup";
 const verifyAPI = "https://fiturself.fly.dev/verify";
 
 
-const postsAPI = "https://fiturself.fly.dev/";
+const postsAPI = "https://fiturself.fly.dev/posts";
 const usersAPI = "https://fiturself.fly.dev/users";
 
 

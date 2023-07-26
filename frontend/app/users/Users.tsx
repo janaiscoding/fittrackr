@@ -1,59 +1,43 @@
-import { useContext, useEffect, useState } from "react";
-import { getJwtToken, removeJwtToken } from "../api/auth_handler";
+import { SetStateAction, useContext, useEffect, useState } from "react";
+import { getJwtToken } from "../api/auth_handler";
 import { UserContext } from "../context/userContext";
 import { useRouter } from "next/navigation";
-import { CommunityUser, User } from "../__types__/types";
-import { verifyAPI } from "../api/endpoints";
+import { CommunityUser } from "../__types__/types";
 import UserComponent from "./User";
 import getUsers from "../api/get_users";
+import verifyToken from "../api/verify_token";
+import FormPost from "../main_page/FormPost";
 
-const UsersComponent = () => {
+const UsersComponent = ({
+  isShown,
+  setShown,
+}: {
+  isShown: boolean;
+  setShown: React.Dispatch<SetStateAction<boolean>>;
+}) => {
   const [users, setUsers] = useState<CommunityUser[]>([]);
 
   const router = useRouter();
   const userContext = useContext(UserContext);
 
-  const verifyToken = async (
-    token: string,
-    setUser: React.Dispatch<React.SetStateAction<User | null>>
-  ) => {
-    await fetch(verifyAPI, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-        } else {
-          //Rejected/Invalid Token!! Remove Token | Clear User | Redirect to login
-          removeJwtToken();
-          setUser(null);
-          router.push("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
-      verifyToken(token, userContext.setUser);
+      verifyToken(token, userContext.setUser, router);
     }
-    getUsers(setUsers);
+    getUsers(setUsers); //Don't need to refresh this.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="min-h-[87vh] p-6">
       <h1>List of all users</h1>
-      {users.map((user, i) => (
-        <UserComponent key={i} user={user} />
-      ))}
+      {users
+        .filter((user) => user._id !== userContext.user?._id) //all except logged in user
+        .map((user, i) => (
+          <UserComponent key={i} user={user} />
+        ))}
+      {isShown && <FormPost setShown={setShown} />}
     </div>
   );
 };

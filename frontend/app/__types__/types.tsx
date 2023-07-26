@@ -4,20 +4,21 @@ type Avatar = {
 };
 
 type User = {
-  _id: String;
-  first_name: String;
-  last_name: String;
-  birthday: String;
-  bio: String;
-  avatar: Avatar | undefined;
+  _id: string;
+  first_name: string;
+  last_name: string;
+  birthday: string;
+  bio: string;
+  avatar: Avatar;
   workouts: Workout[];
   posts: ProfilePost[];
   friends: string[];
   requestsSent: string[];
   requestsReceived: string[];
-  createdAt: String;
-  updatedAt: String;
+  createdAt: string;
+  updatedAt: string;
 };
+
 type ProfilePost = {
   comments: any[];
   createdAt: string;
@@ -43,6 +44,7 @@ type CommunityUser = {
   posts: string[];
   workouts: string[];
   friends: string[];
+  requestsReceived: string[];
 };
 type ShortUser = {
   //on any post!

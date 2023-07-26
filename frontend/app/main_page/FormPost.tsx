@@ -1,8 +1,9 @@
 import { SetStateAction, SyntheticEvent, useContext, useState } from "react";
 import { getJwtToken } from "../api/auth_handler";
 import { UserContext } from "../context/userContext";
-import createPost from "../api/createPost";
+import createPost from "../api/create_post";
 import SendSVG from "../assets/svgs/SendSVG";
+import { usePathname, useRouter } from "next/navigation";
 
 const FormPost = ({
   setShown,
@@ -10,20 +11,36 @@ const FormPost = ({
   setShown: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [text, setText] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+  const path = usePathname();
   const userContext = useContext(UserContext);
-  const createPostAPI = `https://fiturself.fly.dev/posts/${userContext.user?._id}`;
+  const userID = userContext.user!._id;
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    createPost(createPostAPI, text);
-    setShown(false);
+    if (text.length > 0) {
+      createPost(text, userID).then(() => {
+        setShown(false);
+        // Only close form AFTER post logic is finished
+      });
+      if (path !== "/" && path !== `/users/${userID}`) {
+        router.push("/");
+      }
+      setError("");
+    } else {
+      setError("Post is too short.");
+    }
   };
   return (
-    <form className="bg-soft-black p-5" onSubmit={(e) => handleSubmit(e)}>
+    <form
+      className="bg-soft-black p-5 absolute top-1/2"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <label>
         <span className="self-start text-green">Create a new post..</span>
         <input
-          required
           type="text"
           onChange={(e) => {
             setText(e.target.value);
@@ -33,6 +50,7 @@ const FormPost = ({
       <button type="submit">
         <SendSVG />
       </button>
+      <p className="text-red">{error}</p>
     </form>
   );
 };

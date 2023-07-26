@@ -25,7 +25,7 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
   };
 
   return (
-    <div className="flex justify-between items-center px-6 bg-black shadow-sm border-solid border-t border-secondary-green">
+    <div className="sticky bottom-0 flex justify-between items-center px-6 bg-black shadow-sm border-solid border-t border-secondary-green">
       <a
         href={`/users/${userContext.user?._id}`}
         className="flex flex-col gap-1 items-center"
@@ -33,10 +33,7 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
         <User />
         <p className="text-xs text-grey">Profile</p>
       </a>
-      <a
-        href={`/users/${userContext.user?._id}/workouts`}
-        className="flex flex-col gap-1 items-center"
-      >
+      <a href={`/workouts`} className="flex flex-col gap-1 items-center">
         <Dumbbell />
         <p className="text-xs text-grey">Workouts</p>
       </a>

@@ -10,9 +10,10 @@ const ProfilePicture = ({
   name: string;
   userID: string;
 }) => {
+ 
   return (
     <a href={`/users/${userID}`}>
-      {avatar !== undefined ? (
+      {avatar?.data !== undefined ? (
         <Image
           src={`data:${avatar.contentType};base64,${Buffer.from(
             avatar.data
