@@ -12,9 +12,9 @@ import uploadPfp from "../middleware/multerConfig";
 // For searching in the community, for friends list and also friend requests
 const get_users = async (req: Request, res: Response) => {
   try {
-    const users = await User.find()
-      .select("first_name last_name avatar posts workouts friends") // Figure out a default avatar picture so this will get selected properly.
-      .lean();
+    const users = await User.find().select(
+      "first_name last_name avatar posts workouts friends requestsReceived"
+    ); // Figure out a default avatar picture so this will get selected properly.
     if (users) {
       users.map((user) => {
         user.first_name = validator.unescape(user.first_name);
