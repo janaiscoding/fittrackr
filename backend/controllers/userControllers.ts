@@ -276,9 +276,12 @@ const get_fr_sent = async (req: Request, res: Response) => {
 };
 
 const send_request = asyncHandler(async (req, res) => {
-  const { senderID, receiverID }: any = req.params;
+  const { senderID } = req.body;
+  const { receiverID }: any = req.params;
+
   const sender = await User.findById(senderID);
   const receiver = await User.findById(receiverID);
+
   if (sender && receiver) {
     const isFriends = sender.friends.includes(receiverID);
     const isFRSent = sender.requestsSent.includes(receiverID);
@@ -326,7 +329,8 @@ const send_request = asyncHandler(async (req, res) => {
 });
 
 const accept_request = asyncHandler(async (req, res) => {
-  const { receiverID, senderID }: any = req.params;
+  const { senderID }: any = req.params;
+  const { receiverID } = req.body;
 
   const receiver = await User.findById(receiverID);
   const sender = await User.findById(senderID);
@@ -361,7 +365,8 @@ const accept_request = asyncHandler(async (req, res) => {
 });
 
 const cancel_request = asyncHandler(async (req, res) => {
-  const { senderID, receiverID }: any = req.params;
+  const { receiverID }: any = req.params;
+  const { senderID } = req.body;
 
   const sender = await User.findById(senderID);
   const receiver = await User.findById(receiverID);
@@ -394,7 +399,8 @@ const cancel_request = asyncHandler(async (req, res) => {
 });
 
 const decline_request = asyncHandler(async (req, res) => {
-  const { receiverID, senderID }: any = req.params;
+  const { senderID }: any = req.params;
+  const { receiverID } = req.body;
 
   const receiver = await User.findById(receiverID);
   const sender = await User.findById(senderID);
@@ -427,7 +433,9 @@ const decline_request = asyncHandler(async (req, res) => {
 });
 
 const remove_friend = asyncHandler(async (req, res) => {
-  const { removerID, removedID }: any = req.params;
+  const { removedID }: any = req.params;
+  const { removerID } = req.body; 
+  
   const remover = await User.findById(removerID);
   const removed = await User.findById(removedID);
   if (
