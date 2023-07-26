@@ -9,6 +9,7 @@ router.get("/", auth, UC.get_users);
 
 router.post("/:userID/upload", auth, UC.update_pfp);
 router.get("/:userID", auth, UC.get_profile);
+router.get("/:userID/posts", auth, UC.get_user_posts);
 router.put("/:userID", auth, UC.update_account);
 router.delete("/:userID", auth, UC.delete_account);
 

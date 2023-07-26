@@ -14,6 +14,7 @@ const post_comment = [
     .isLength({ max: 140 })
     .withMessage("Comment is too long.")
     .escape(),
+  body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
     const { text, userID } = req.body;
     const { postID } = req.params;
@@ -39,23 +40,8 @@ const post_comment = [
           comment.save(),
           post.updateOne({ $push: { comments: comment } }),
         ])
-          .then(async () => {
-            const comments = await Post.findById(postID)
-              .select("comments")
-              .populate({
-                path: "comments",
-                options: { sort: { createdAt: "desc" } },
-                select: "text likes createdAt",
-                populate: {
-                  path: "user",
-                  select: "first_name last_name avatar",
-                },
-              });
-            //return fresh comments
-            res.status(200).json({
-              message: "Comment was successfully sent.",
-              comments,
-            });
+          .then(() => {
+            res.status(200).json({ message: "Comment was successfully sent." });
           })
           .catch((err) => {
             res.status(500).json({

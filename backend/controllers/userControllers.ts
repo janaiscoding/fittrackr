@@ -34,17 +34,7 @@ const get_users = async (req: Request, res: Response) => {
 const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    const user = await User.findById(userID)
-      .select("-password -email")
-      .populate({
-        path: "posts",
-        populate: {
-          path: "comments",
-          populate: { path: "user", select: "first_name last_name avatar" },
-        },
-        options: { sort: { createdAt: "desc" } },
-      });
-
+    const user = await User.findById(userID).select("-password -email");
     if (user) {
       user.first_name = validator.unescape(user.first_name);
       user.last_name = validator.unescape(user.last_name);
@@ -56,8 +46,23 @@ const get_profile = async (req: Request, res: Response) => {
     if (err.kind === "ObjectId") {
       res.status(404).json({ message: "User was not found." });
     } else {
-      return res.status(500).json({ message: "Unexpected error occured", err });
+      return res
+        .status(500)
+        .json({ message: "An unexpected error has occured", err });
     }
+  }
+};
+
+const get_user_posts = async (req: Request, res: Response) => {
+  const { userID } = req.params;
+  try {
+    const userPosts = await Post.find({ user: userID }).populate({
+      path: "comments",
+      populate: { path: "user", select: "first_name last_name avatar" },
+    });
+    res.status(200).json({ posts: userPosts });
+  } catch (err) {
+    res.status(500).json({ message: "An unexpected error has occured.", err });
   }
 };
 
@@ -434,8 +439,8 @@ const decline_request = asyncHandler(async (req, res) => {
 
 const remove_friend = asyncHandler(async (req, res) => {
   const { removedID }: any = req.params;
-  const { removerID } = req.body; 
-  
+  const { removerID } = req.body;
+
   const remover = await User.findById(removerID);
   const removed = await User.findById(removedID);
   if (
@@ -468,6 +473,7 @@ const remove_friend = asyncHandler(async (req, res) => {
 export default {
   get_users,
   get_profile,
+  get_user_posts,
   update_account,
   update_pfp,
   delete_account,

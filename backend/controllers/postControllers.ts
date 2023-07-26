@@ -45,6 +45,11 @@ const post_get = async (req: Request, res: Response) => {
       .populate({ path: "user", select: "first_name last_name avatar" });
     if (post) {
       post.text = validator.unescape(post.text);
+      post.comments.map((c) => {
+        //@ts-ignore
+        c.text = validator.unescape(c.text);
+        return c;
+      });
       res.json({ post });
     } else {
       res.status(404).json({ message: "This post doesn't exist" });
@@ -65,11 +70,11 @@ const post_create = [
     .isLength({ max: 140 })
     .withMessage("Post must be maximum 140 characters long.")
     .escape(),
+  body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
-    const { text } = req.body;
-    const { userID } = req.body;
-
+    const { text, userID } = req.body;
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),

@@ -27,17 +27,17 @@ Token expires in 24hr
 | /users/:senderID/decline  | DELETE  | Decline a pending friend request.                | True      | True              |
 | /users/:removedID/remove  | DELETE  | Remove someone's from your friend list.          | True      | True              |
 
-| Posts & Comments               | Request | Description                                                   | Protected | Postman Tested |
-| ------------------------------ | ------- | ------------------------------------------------------------- | --------- | -------------- |
-| /posts                         | GET     | Posts page, gets all newest posts.                            | True      | True           |
-| /posts                         | POST    | Create a new post from your account.                          | True      | True           |
-| /posts/:postID                 | GET     | Fetch one individual post.                                    | True      | True           |
-| /posts/:postID                 | UPDATE  | Update a post and the account data.                           | True      | True           |
-| /posts/:postID                 | DELETE  | Delete the post and update the account data.                  | True      | True           |
-| /posts/:postID                 | POST    | Create a comment on a specific post, associated with an user. | True      | True           |
-| /posts/:postID/like            | POST    | Like/dislike a post.                                          | True      | True           |
-| /posts/:postID/:commentID/like | POST    | Like/dislike a comment.                                       | True      | True           |
-| /posts/:postID/:commentID      | DELETE  | Delete a comment from a post.                                 | True      | True           |
+| Posts & Comments               | Request | Description                                                   | Protected | Postman Tested | Body Content  |
+| ------------------------------ | ------- | ------------------------------------------------------------- | --------- | -------------- | ------------- |
+| /posts                         | GET     | Posts page, gets all newest posts.                            | True      | True           | -             |
+| /posts                         | POST    | Create a new post from your account                           | True      | True           | userID, text  |
+| /posts/:postID                 | GET     | Fetch one individual post.                                    | True      | True           | -             |
+| /posts/:postID                 | UPDATE  | Update a post and the account data.                           | True      | True           | userID, uText |
+| /posts/:postID                 | DELETE  | Delete the post and update the account data.                  | True      | True           | userID        |
+| /posts/:postID                 | POST    | Create a comment on a specific post, associated with an user. | True      | True           | userID, text  |
+| /posts/:postID/like            | POST    | Like/dislike a post.                                          | True      | True           | userID        |
+| /posts/:postID/:commentID/like | POST    | Like/dislike a comment.                                       | True      | True           | userID        |
+| /posts/:postID/:commentID      | DELETE  | Delete a comment from a post.                                 | True      | True           | userID        |
 
 ### Installation and running
 
