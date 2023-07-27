@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -8,8 +7,13 @@ const userSchema = new Schema(
     last_name: { type: String, required: true, minLength: 1 },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    birthday: { type: Date, required: true },
-    bio: { type: String, minLength: 1, maxLength: 140, default: "Default user bio here!" },
+    // birthday: { type: Date, required: true },
+    bio: {
+      type: String,
+      minLength: 1,
+      maxLength: 140,
+      default: "Default user bio here!",
+    },
     current_weight: { type: Number, min: 3 },
     goal_weight: { type: Number, min: 3 },
     workouts: [{ type: Schema.Types.ObjectId, ref: "Workout" }],
@@ -18,8 +22,8 @@ const userSchema = new Schema(
     requestsSent: [{ type: Schema.Types.ObjectId, ref: "User" }],
     requestsReceived: [{ type: Schema.Types.ObjectId, ref: "User" }],
     avatar: {
-      data: { type: Buffer, default: "buffer here" },
-      contentType: { type: String, default: "image/png" },
+      data: { type: Buffer },
+      contentType: { type: String },
     },
   },
   { timestamps: true }

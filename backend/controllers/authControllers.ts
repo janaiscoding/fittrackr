@@ -38,13 +38,19 @@ const create_user = [
     .isLength({ min: 8 })
     .withMessage("Password is too short.")
     .escape(),
-  body("birthday")
-    .exists()
-    .withMessage("Birthday is required.")
-    .isDate()
-    .withMessage("Must be a valid date."),
+  // body("birthday")
+  //   .exists()
+  //   .withMessage("Birthday is required.")
+  //   .isDate()
+  //   .withMessage("Must be a valid date."),
   async (req: Request, res: Response) => {
-    const { first_name, last_name, email, password, birthday } = req.body;
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      //  birthday
+    } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -63,7 +69,7 @@ const create_user = [
             last_name,
             email, // unique in db
             password: hashed,
-            birthday,
+            // birthday,
           })
             .then(() => {
               res

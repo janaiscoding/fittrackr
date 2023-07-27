@@ -196,11 +196,11 @@ const post_like = async (req: Request, res: Response) => {
       if (post.likes.includes(userID)) {
         await post.updateOne({ $pull: { likes: userID } });
         const updatedLikes = await Post.findById(postID).select("likes").lean();
-        res.status(200).json({ likes: updatedLikes?.likes.length });
+        res.status(200).json({ likes: updatedLikes?.likes });
       } else {
         await post.updateOne({ $push: { likes: userID } });
         const updatedLikes = await Post.findById(postID).select("likes").lean();
-        res.status(200).json({ likes: updatedLikes?.likes.length });
+        res.status(200).json({ likes: updatedLikes?.likes });
       }
     } else {
       res.status(404).json({ message: "Post was not found!" });

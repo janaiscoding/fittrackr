@@ -71,13 +71,13 @@ const comment_like = async (req: Request, res: Response) => {
         const updatedLikes = await Comment.findById(commentID)
           .select("likes")
           .lean();
-        res.status(200).json({ likes: updatedLikes?.likes.length });
+        res.status(200).json({ likes: updatedLikes?.likes });
       } else {
         await comment.updateOne({ $push: { likes: userID } });
         const updatedLikes = await Comment.findById(commentID)
           .select("likes")
           .lean();
-        res.status(200).json({ likes: updatedLikes?.likes.length });
+        res.status(200).json({ likes: updatedLikes?.likes });
       }
     } else {
       res.status(404).json({ message: "The comment was not found!" });

@@ -80,7 +80,7 @@ const get_user_posts = async (req: Request, res: Response) => {
 };
 
 const update_account = [
-  body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
+  // body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
   body("ubio")
     .optional()
     .isLength({ min: 1 })
@@ -120,7 +120,7 @@ const update_account = [
     const { userID } = req.params;
 
     const updateFields = {
-      birthday: req.body.ubirthday,
+      // birthday: req.body.ubirthday,
       first_name: req.body.ufirst_name,
       last_name: req.body.ulast_name,
       bio: req.body.ubio,
