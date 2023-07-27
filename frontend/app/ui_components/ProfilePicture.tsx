@@ -1,36 +1,16 @@
 import Image from "next/image";
 import { Avatar } from "../__types__/types";
 
-const ProfilePicture = ({
-  avatar,
-  name,
-  userID,
-}: {
-  avatar: Avatar;
-  name: string;
-  userID: string;
-}) => {
- 
+const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
   return (
-    <a href={`/users/${userID}`}>
-      {avatar?.data !== undefined ? (
-        <Image
-          src={`data:${avatar.contentType};base64,${Buffer.from(
-            avatar.data
-          ).toString("base64")}`}
-          width={50}
-          height={0}
-          className="h-auto"
-          alt="user-profile-picture"
-        />
-      ) : (
-        name !== undefined && (
-          <p className="bg-green name-circle uppercase font-ubuntu-300">
-            {name.charAt(0)}
-          </p>
-        )
-      )}
-    </a>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`data:${avatar.contentType};base64,${Buffer.from(
+        avatar.data
+      ).toString("base64")}`}
+      className="w-20 h-20 rounded-full object-cover border-2 border-solid border-mid-green"
+      alt="user-profile-picture"
+    />
   );
 };
 

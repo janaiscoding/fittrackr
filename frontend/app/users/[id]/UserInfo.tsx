@@ -1,13 +1,17 @@
 import { User } from "@/app/__types__/types";
+import { getJwtToken } from "@/app/api/auth_handler";
 import acceptRequest from "@/app/api/friends/accept_request";
 import cancelRequest from "@/app/api/friends/cancel_request";
 import declineRequest from "@/app/api/friends/decline_request";
 import removeFriend from "@/app/api/friends/remove_friend";
 import sendRequest from "@/app/api/friends/send_request";
+import getProfile from "@/app/api/get_profile";
 import { UserContext } from "@/app/context/userContext";
 import { JoinedDate } from "@/app/ui_components/Date";
 import ProfilePicture from "@/app/ui_components/ProfilePicture";
-import { useContext, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
+import { AiOutlineCamera } from "react-icons/ai";
+import Stats from "./Stats";
 
 const UserInfo = ({ profile }: { profile: User }) => {
   const {
@@ -15,6 +19,8 @@ const UserInfo = ({ profile }: { profile: User }) => {
     first_name,
     last_name,
     bio,
+    posts,
+    workouts,
     birthday,
     friends,
     requestsReceived,
@@ -27,6 +33,11 @@ const UserInfo = ({ profile }: { profile: User }) => {
   const [isPending, setIsPending] = useState<boolean>();
   const [isReceived, setIsReceived] = useState<boolean>();
   const [isSame, setIsSame] = useState<boolean>();
+
+  const [file, setFile] = useState<any>();
+  const [uploadError, setUploadError] = useState(" ");
+  const [avatar, setAvatar] = useState(profile.avatar);
+  const [isShown, setShown] = useState<boolean>(false);
 
   const handleAdd = () => {
     if (isPending) {
@@ -50,13 +61,48 @@ const UserInfo = ({ profile }: { profile: User }) => {
       setIsFriends(false);
     });
   };
+
   const handleRemove = () => {
     removeFriend(_id, userContext.user?._id).then(() => setIsFriends(false));
   };
 
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (file) {
+      const formData = new FormData();
+      formData.append("myImage", file);
+      formData.append("mimeType", file.type);
+      await fetch(
+        `https://fiturself.fly.dev/users/${userContext.user?._id}/upload`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${getJwtToken()}`,
+          },
+          body: formData,
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message && data.message.includes("success")) {
+            getProfile(userContext.user!._id, userContext.setUser);
+            setFile(undefined);
+          } else {
+            setUploadError(data);
+            setFile(undefined);
+          }
+        })
+        .then(() => {
+          setFile(undefined);
+          setShown(false);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   useEffect(() => {
     if (userContext.user && profile) {
-      //means everything loaded so I can check the social status 
+      //means everything loaded so I can check the social status
       setIsFriends(friends.includes(userContext.user._id));
       setIsReceived(userContext.user?.requestsReceived?.includes(_id));
       setIsPending(requestsReceived.includes(userContext.user._id));
@@ -65,35 +111,30 @@ const UserInfo = ({ profile }: { profile: User }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext, profile]);
+  useEffect(() => {
+    if (userContext.user && isSame) {
+      setAvatar(userContext.user!.avatar);
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userContext]);
   return (
     <div>
       <div className="flex justify-between items-start">
-        <ProfilePicture
-          avatar={profile.avatar}
-          name={profile.first_name}
-          userID={profile._id}
-        />
-        <div className="flex gap-2 text-green">
-          <p className="flex flex-col items-center">
-            {profile.posts.length}{" "}
-            <span className="text-grey text-xs">Posts</span>
-          </p>
-          <p className="flex flex-col items-center">
-            {profile.workouts.length}{" "}
-            <span className="text-grey text-xs">Workouts</span>
-          </p>
-          <p className="flex flex-col items-center">
-            {profile.friends.length}{" "}
-            <span className="text-grey text-xs">Friends</span>
-          </p>
-        </div>
+        <ProfilePicture avatar={avatar} />
+        <Stats posts={posts} workouts={workouts} friends={friends} />
       </div>
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-green text-xl font-ubuntu-500">
-            {first_name} {last_name} <span onClick={()=> console.log('open edit pic')} className="cursor-pointer">pic</span>
-          </p>
+          <div className=" flex gap-1 items-center text-green text-xl font-ubuntu-500">
+            <p>
+              {first_name} {last_name}
+            </p>
+            <AiOutlineCamera
+              onClick={() => setShown(!isShown)}
+              className="cursor-pointer"
+            />
+          </div>
           <JoinedDate date={createdAt} />
         </div>
         <div>
@@ -121,6 +162,20 @@ const UserInfo = ({ profile }: { profile: User }) => {
         </div>
       </div>
       <p> {bio}</p>
+      {isShown && (
+        <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
+          <input
+            type="file"
+            name="myImage"
+            accept="image/*"
+            onChange={(e) => {
+              setFile(e.target.files![0]);
+            }}
+          />
+          <button type="submit">Update Pic</button>
+          {uploadError}
+        </form>
+      )}
     </div>
   );
 };

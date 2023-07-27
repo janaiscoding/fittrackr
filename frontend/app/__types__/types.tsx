@@ -40,7 +40,7 @@ type CommunityUser = {
   _id: string;
   first_name: string;
   last_name: string;
-  avatar: Avatar | undefined;
+  avatar: Avatar;
   posts: string[];
   workouts: string[];
   friends: string[];
@@ -51,7 +51,7 @@ type ShortUser = {
   _id: string;
   first_name: string;
   last_name: string;
-  avatar: Avatar | undefined;
+  avatar: Avatar;
 };
 
 type Post = {
@@ -73,7 +73,7 @@ type Comment = {
     _id: string;
     first_name: string;
     last_name: string;
-    avatar: Avatar | undefined;
+    avatar: Avatar;
   };
   _id: string;
   text: string;
@@ -87,4 +87,5 @@ export type {
   Post,
   Avatar,
   Comment,
+  Workout
 };

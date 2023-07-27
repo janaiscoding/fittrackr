@@ -1,24 +1,24 @@
-import { SetStateAction } from "react";
-import { Post } from "../__types__/types";
-import { getJwtToken } from "./auth_handler";
 import axios from "axios";
+import { SetStateAction } from "react";
+import { User } from "../__types__/types";
+import { getJwtToken } from "./auth_handler";
 
-const getPost = async (
+const getProfile = async (
   id: string,
-  setter: React.Dispatch<SetStateAction<Post>>
+  setter: React.Dispatch<SetStateAction<User | null>>
 ) => {
   await axios
-    .get(`https://fiturself.fly.dev/posts/${id}`, {
+    .get(`https://fiturself.fly.dev/users/${id}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },
     })
     .then((res) => {
-      setter(res.data.posts);
+      setter(res.data.user);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-export default getPost;
+export default getProfile;

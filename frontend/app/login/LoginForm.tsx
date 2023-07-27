@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-11/12 p-6 mb-8 bg-black2 rounded-3xl">
+    <div className="w-11/12 p-6 mb-8 bg-transparent rounded-3xl">
       <h1 className="text-3xl text-green text-center font-bold mb-3">
         Welcome back
       </h1>

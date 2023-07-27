@@ -6,6 +6,7 @@ import cancelRequest from "../api/friends/cancel_request";
 import sendRequest from "../api/friends/send_request";
 import acceptRequest from "../api/friends/accept_request";
 import declineRequest from "../api/friends/decline_request";
+import CommunityPicture from "../ui_components/CommunityPicture";
 
 const UserComponent = ({ user }: { user: CommunityUser }) => {
   const { _id, first_name, last_name, avatar, posts, workouts, friends } = user;
@@ -52,9 +53,12 @@ const UserComponent = ({ user }: { user: CommunityUser }) => {
   return (
     <div className="border border-mid-green p-4 mb-2">
       <div className="flex justify-between">
+        <div className="flex items-center gap-1">
+        <CommunityPicture avatar={avatar} userID={_id} />
         <a href={`/users/${_id}`} className="text-green">
           {first_name} {last_name}
         </a>
+        </div>
         <div>
           {isFriends && (
             <button className="social-button" onClick={handleRemove}>

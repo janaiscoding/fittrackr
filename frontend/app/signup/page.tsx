@@ -10,7 +10,7 @@ const SignUp = () => {
   const [lastName, setLast] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [birthday, setBirthday] = useState<any>();
+  // const [birthday, setBirthday] = useState<any>();
   const [confPassword, setConfirmed] = useState<string>("");
 
   const [validFirst, setValidFirst] = useState<boolean | undefined>(undefined);
@@ -38,7 +38,7 @@ const SignUp = () => {
         last_name: lastName,
         email,
         password,
-        birthday,
+        // birthday,
       }),
     };
     if (password === confPassword) {
@@ -56,6 +56,7 @@ const SignUp = () => {
               setErrors([{ msg: data.message }]);
             }
           }
+          console.log(data)
         })
         .catch((err) => console.log(err));
     } else {
@@ -74,9 +75,9 @@ const SignUp = () => {
 
   return (
     <div className="home-image min-h-screen">
-      <div className="overlay min-h-screen py-8 flex flex-col">
+      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center">
         <h1
-          className="font-bold text-4xl text-green text-center"
+          className="font-bold text-4xl text-green text-center px-6"
           data-testid="welcome-element"
         >
           Welcome to <span>urjourney.</span>
@@ -161,10 +162,10 @@ const SignUp = () => {
               }}
             />
           </label>
-          <label className="flex flex-col">
+          {/* <label className="flex flex-col">
             <span className="self-start text-green">Birthday</span>
             <input type="date" onChange={(e) => setBirthday(e.target.value)} />
-          </label>
+          </label> */}
           {errors &&
             errors.map((err, i) => (
               <p key={i} className="text-red">
