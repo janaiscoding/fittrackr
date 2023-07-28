@@ -5,8 +5,6 @@ import { UserContext } from "../context/userContext";
 import { FcDislike, FcLike } from "react-icons/fc";
 import { BiCommentDots } from "react-icons/bi";
 import { getJwtToken } from "../api/auth_handler";
-import getPost from "../api/get_post";
-import Delete from "../assets/svgs/Delete";
 import DeleteSVG from "../assets/svgs/DeleteSVG";
 import deletePost from "../api/delete_post";
 
