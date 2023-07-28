@@ -1,13 +1,11 @@
 import { Avatar } from "@/app/__types__/types";
 import Image from "next/image";
-
+import defaultPic from "../../../public/assets/default_avatar.jpg";
 const AvatarComment = ({
   avatar,
-  name,
   userID,
 }: {
   avatar: Avatar;
-  name: string;
   userID: string;
 }) => {
   return (
@@ -19,15 +17,15 @@ const AvatarComment = ({
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="h-auto"
+          className="w-10 h-10 rounded-full object-cover border-2 border-solid border-mid-green"
           alt="user-profile-picture"
         />
       ) : (
-        name !== undefined && (
-          <p className="bg-green avatar-circle uppercase font-ubuntu-300">
-            {name.charAt(0)}
-          </p>
-        )
+        <Image
+          src={defaultPic}
+          className="w-10 h-10 rounded-full object-cover border-2 border-solid border-mid-green"
+          alt="user-default-profile-picture"
+        />
       )}
     </a>
   );

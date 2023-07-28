@@ -10,6 +10,7 @@ import deletePost from "../../api/delete_post";
 import CommunityPicture from "../CommunityPicture";
 import CommentForm from "./CommentForm";
 import getPostComments from "../../api/get_post_comments";
+import UIComment from "./UIComment";
 
 const PostComponent = ({ post }: { post: Post }) => {
   const { _id, text, user, image, createdAt } = post;
@@ -59,16 +60,29 @@ const PostComponent = ({ post }: { post: Post }) => {
   return (
     <article className="border border-mid-green p-4 mt-4" id={_id}>
       <div className="flex justify-between">
-        <div>
+        <div className="flex items-center gap-2">
           <CommunityPicture avatar={user.avatar} userID={user._id} />
-          <a className="text-green" href={`/users/${user._id}`}>
-            {user.first_name} {user.last_name}
-          </a>
-          <Date date={createdAt} />
+          <div>
+            <a className="text-green text-xl" href={`/users/${user._id}`}>
+              {user.first_name} {user.last_name}
+            </a>
+            <Date date={createdAt} />
+          </div>
         </div>
         <div onClick={() => setOpen(true)}>
           {userContext.user?._id === user._id && <DeleteSVG />}
         </div>
+        {isOpen && (
+          <div className="absolute top-50 left-50 bg-black text-green flex flex-col">
+            <p> Are you sure you want to delete this?</p>
+            <div className="flex gap-2">
+              <button onClick={handleDelete}>yes</button>
+              <button onClick={() => setOpen(false)} className="text-red">
+                cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <p>{text}</p>
       <div className="flex justify-between text-green">
@@ -90,20 +104,10 @@ const PostComponent = ({ post }: { post: Post }) => {
         refr={refr}
         setRefr={setRefr}
       />
-      {comments.map((c) => (
-        <div key={c._id}>
-          {c.comment}
-          <Date date={c.createdAt} />
-        </div>
-      ))}
 
-      {isOpen && (
-        <div>
-          <p> Are you sure you want to delete this?</p>
-          <button onClick={handleDelete}>yes</button>
-          <button onClick={() => setOpen(false)}>cancel</button>
-        </div>
-      )}
+      {comments.map((c) => (
+        <UIComment key={c._id} comment={c} />
+      ))}
     </article>
   );
 };

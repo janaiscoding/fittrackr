@@ -19,7 +19,8 @@ module.exports = {
       "dark-green": "#080D0B",
       "soft-black": "#060606",
       black: "#010201",
-      transparent: "#020202e0"
+      transparent: "#020202e0",
+      red: "#F44336"
     },
     boxShadow: {
       sm: "0 1px 8px 0px rgba(30, 30, 30, 0.5)",

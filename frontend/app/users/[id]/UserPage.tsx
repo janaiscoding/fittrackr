@@ -8,7 +8,7 @@ import getUser from "@/app/api/get_user";
 import verifyToken from "@/app/api/verify_token";
 import getUserPosts from "@/app/api/get_user_posts";
 import UserInfo from "./UserInfo";
-import PostComponent from "@/app/ui_components/PostComponent";
+import PostComponent from "@/app/ui_components/ui_posts/PostComponent";
 
 const UserPage = ({ id, isShown }: { id: string; isShown: boolean }) => {
   const [profile, setProfile] = useState<User>({} as User);

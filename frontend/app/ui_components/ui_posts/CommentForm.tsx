@@ -13,9 +13,10 @@ const CommentForm = ({ postID, userID, refr, setRefr }: CommentFormTypes) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    sendComment(postID, comment, userID, setCommentError).then(() =>
-      setRefr(!refr)
-    );
+    sendComment(postID, comment, userID, setCommentError).then(() => {
+      setRefr(!refr);
+      setComment(" ");
+    });
   };
 
   return (
