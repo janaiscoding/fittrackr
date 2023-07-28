@@ -2,37 +2,37 @@
 
 ### API Endpoints:
 
-| API endpoints | Request | Description                         | Protected | Postman tested | Body Content                                     |
-| ------------- | ------- | ----------------------------------- | --------- | -------------- | ------------------------------------------------ |
-| /             | GET     | Home page, gets all newest posts.   | True      | True           | -                                                |
-| /signup       | POST    | Create a new user.                  | False     | True           | first_name, last_name, birthday, email, password |
-| /login        | POST    | Log in to your existing account.    | False     | True           | email, password                                  |
-| /verify       | POST    | Verify Token and re-send user data. | False     | True           | -                                                |
+| API endpoints | Request | Description                         | Protected | Postman tested | Body Content                           |
+| ------------- | ------- | ----------------------------------- | --------- | -------------- | -------------------------------------- |
+| /             | GET     | Home page, gets all newest posts.   | True      | True           | -                                      |
+| /signup       | POST    | Create a new user.                  | False     | True           | first_name, last_name, email, password |
+| /login        | POST    | Log in to your existing account.    | False     | True           | email, password                        |
+| /verify       | POST    | Verify Token and re-send user data. | False     | True           | -                                      |
 
-Token expires in 24hr
+Token expires in 24hr.
 
-| Users                     | Request | Description                                      | Protected | Postman tested    | Body Content                                                            |
-| ------------------------- | ------- | ------------------------------------------------ | --------- | ----------------- | ----------------------------------------------------------------------- |
-| /users                    | GET     | Fetch all users in the platform.                 | True      | True              | -                                                                       |
-| /users/:userID            | GET     | Fetch existing user data.                        | True      | True              | -                                                                       |
-| /users/:userID            | PUT     | Update existing user data.                       | True      | True              | ubirthday, ufirst_name, ulast_name, ubio, ucurrent_weight, ugoal_weight |
-| /users/:userID/upload     | POST    | Upload user profile picture.                     | True      | False(used views) | -                                                                       |
-| /users/:userID            | DELETE  | Delete user from database cleanup all user data. | True      | True              | -                                                                       |
-| /users/:userID/friends    | GET     | Fetch user's friends list.                       | True      | True              | -                                                                       |
-| /users/:userID/received   | GET     | Fetch user's received friend requests.           | True      | True              | -                                                                       |
-| /users/:userID/sent       | GET     | Fetch user's sent friend requests.               | True      | True              | senderID                                                                |
-| /users/:receiverID/send   | POST    | Send a friend request to a different user.       | True      | True              | senderID                                                                |
-| /users/:receiverID/cancel | DELETE  | Cancel a pending friend request.                 | True      | True              | senderID                                                                |
-| /users/:senderID/accept   | PUT     | Accept a pending friend request, become friends. | True      | True              | receiverID                                                              |
-| /users/:senderID/decline  | DELETE  | Decline a pending friend request.                | True      | True              | receiverID                                                              |
-| /users/:removedID/remove  | DELETE  | Remove someone's from your friend list.          | True      | True              | removerID                                                               |
+| Users                     | Request | Description                                      | Protected | Postman tested    | Body Content                                                 |
+| ------------------------- | ------- | ------------------------------------------------ | --------- | ----------------- | ------------------------------------------------------------ |
+| /users                    | GET     | Fetch all users in the platform.                 | True      | True              | -                                                            |
+| /users/:userID            | GET     | Fetch existing user data.                        | True      | True              | -                                                            |
+| /users/:userID            | PUT     | Update existing user data.                       | True      | True              | ufirst_name, ulast_name, ubio, ucurrent_weight, ugoal_weight |
+| /users/:userID/upload     | POST    | Upload user profile picture.                     | True      | False(used views) | -                                                            |
+| /users/:userID            | DELETE  | Delete user from database cleanup all user data. | True      | True              | -                                                            |
+| /users/:userID/friends    | GET     | Fetch user's friends list.                       | True      | True              | -                                                            |
+| /users/:userID/received   | GET     | Fetch user's received friend requests.           | True      | True              | -                                                            |
+| /users/:userID/sent       | GET     | Fetch user's sent friend requests.               | True      | True              | senderID                                                     |
+| /users/:receiverID/send   | POST    | Send a friend request to a different user.       | True      | True              | senderID                                                     |
+| /users/:receiverID/cancel | DELETE  | Cancel a pending friend request.                 | True      | True              | senderID                                                     |
+| /users/:senderID/accept   | PUT     | Accept a pending friend request, become friends. | True      | True              | receiverID                                                   |
+| /users/:senderID/decline  | DELETE  | Decline a pending friend request.                | True      | True              | receiverID                                                   |
+| /users/:removedID/remove  | DELETE  | Remove someone's from your friend list.          | True      | True              | removerID                                                    |
 
 | Posts & Comments               | Request | Description                                                   | Protected | Postman Tested | Body Content    |
 | ------------------------------ | ------- | ------------------------------------------------------------- | --------- | -------------- | --------------- |
 | /posts                         | GET     | Posts page, gets all newest posts.                            | True      | True           | -               |
 | /posts                         | POST    | Create a new post from your account                           | True      | True           | userID, text    |
 | /posts/:postID                 | GET     | Fetch one individual post.                                    | True      | True           | -               |
-| /posts/:postID                 | UPDATE  | Update a post and the account data.                           | True      | True           | userID, uText   |
+| /posts/:postID                 | PUT     | Update a post.                                                | True      | True           | userID, uText   |
 | /posts/:postID                 | DELETE  | Delete the post and update the account data.                  | True      | True           | userID          |
 | /posts/:postID                 | POST    | Create a comment on a specific post, associated with an user. | True      | True           | userID, comment |
 | /posts/:postID/like            | POST    | Like/dislike a post.                                          | True      | True           | userID          |

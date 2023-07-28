@@ -25,9 +25,8 @@ const post_comment = [
       });
     }
     try {
-      const user = await User.findById(userID);
       const post = await Post.findById(postID);
-      if (user && post) {
+      if (post) {
         const newComment = new Comment({
           user: userID,
           comment,
@@ -86,12 +85,10 @@ const comment_like = async (req: Request, res: Response) => {
 
 const comment_delete = async (req: Request, res: Response) => {
   const { postID, commentID }: any = req.params;
-  const { userID } = req.body;
   try {
     const comment = await Comment.findById(commentID);
     const post = await Post.findById(postID);
-
-    if (comment && post && comment.user?._id.equals(userID)) {
+    if (comment && post) {
       Promise.all([
         comment.deleteOne(),
         post.updateOne({ $pull: { comments: commentID } }),
