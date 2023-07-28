@@ -68,7 +68,7 @@ const get_user_posts = async (req: Request, res: Response) => {
       post.text = validator.unescape(post.text);
       post.comments.map((comment) => {
         //@ts-ignore
-        comment.text = validator.unescape(comment.text);
+        comment.comment = validator.unescape(comment.comment);
         return comment;
       });
       return post;

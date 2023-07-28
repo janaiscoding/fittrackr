@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const commentSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    text: { type: String, required: true, minLength: 1 }, //min-max length to be added?
+    comment: { type: String, required: true, minLength: 1 },
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }

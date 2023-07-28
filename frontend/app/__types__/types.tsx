@@ -76,7 +76,7 @@ type Comment = {
     avatar: Avatar;
   };
   _id: string;
-  text: string;
+  comment: string;
   createdAt: string;
 };
 export type {

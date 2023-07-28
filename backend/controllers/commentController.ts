@@ -6,39 +6,36 @@ import { body, validationResult } from "express-validator";
 import validator from "validator";
 
 const post_comment = [
-  body("text")
+  body("comment")
     .trim()
-    .exists()
-    .withMessage("Comment is required.")
+    .notEmpty()
+    .withMessage("Comment is too short.")
     .isLength({ min: 1 })
     .isLength({ max: 140 })
     .withMessage("Comment is too long.")
     .escape(),
-  body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
-    const { text, userID } = req.body;
+    const { comment, userID } = req.body;
     const { postID } = req.params;
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
-        text: validator.unescape(text),
+        comment: validator.unescape(comment),
       });
     }
-
     try {
       const user = await User.findById(userID);
       const post = await Post.findById(postID);
       if (user && post) {
-        const comment = new Comment({
+        const newComment = new Comment({
           user: userID,
-          text,
+          comment,
           likes: [],
         });
         Promise.all([
-          comment.save(),
-          post.updateOne({ $push: { comments: comment } }),
+          newComment.save(),
+          post.updateOne({ $push: { comments: newComment } }),
         ])
           .then(() => {
             res.status(200).json({ message: "Comment was successfully sent." });

@@ -1,9 +1,12 @@
 import { SetStateAction } from "react";
-import { Post } from "../__types__/types";
+import { Comment } from "../__types__/types";
 import { getJwtToken } from "./auth_handler";
 import axios from "axios";
 
-const getPost = (id: string, setter: React.Dispatch<SetStateAction<Post>>) => {
+const getPostComments = (
+  id: string,
+  setter: React.Dispatch<SetStateAction<Comment[]>>
+) => {
   axios
     .get(`https://fiturself.fly.dev/posts/${id}`, {
       headers: {
@@ -11,11 +14,12 @@ const getPost = (id: string, setter: React.Dispatch<SetStateAction<Post>>) => {
       },
     })
     .then((res) => {
-      setter(res.data.posts);
+      // console.log(res.data.post.comments)
+      setter(res.data.post.comments);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-export default getPost;
+export default getPostComments;

@@ -21,7 +21,7 @@ const posts_get = async (req: Request, res: Response) => {
         post.text = validator.unescape(post.text);
         post.comments.map((c) => {
           //@ts-ignore
-          c.text = validator.unescape(c.text);
+          c.comment = validator.unescape(c.comment);
           return c;
         });
         return post;
@@ -42,7 +42,8 @@ const post_get = async (req: Request, res: Response) => {
     const post = await Post.findById(postID)
       .populate({
         path: "comments",
-        select: "text likes createdAt",
+        select: "comment likes createdAt",
+        options: { sort: { createdAt: "desc" } },
         populate: { path: "user", select: "first_name last_name avatar" },
       })
       .populate({ path: "user", select: "first_name last_name avatar" });
@@ -50,7 +51,7 @@ const post_get = async (req: Request, res: Response) => {
       post.text = validator.unescape(post.text);
       post.comments.map((c) => {
         //@ts-ignore
-        c.text = validator.unescape(c.text);
+        c.comment = validator.unescape(c.comment);
         return c;
       });
       res.json({ post });

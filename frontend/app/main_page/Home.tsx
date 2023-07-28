@@ -7,7 +7,7 @@ import FormPost from "../ui_components/FormPost";
 import verifyToken from "../api/verify_token";
 import { Post } from "../__types__/types";
 import getPosts from "../api/get_posts";
-import PostComponent from "../ui_components/PostComponent";
+import PostComponent from "../ui_components/ui_posts/PostComponent";
 
 const Home = ({
   isShown,
