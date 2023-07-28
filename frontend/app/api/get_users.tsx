@@ -2,12 +2,11 @@ import axios from "axios";
 import { SetStateAction } from "react";
 import { CommunityUser } from "../__types__/types";
 import { getJwtToken } from "./auth_handler";
+import { usersAPI } from "./endpoints";
 
-const getUsers = async (
-  setter: React.Dispatch<SetStateAction<CommunityUser[]>>
-) => {
-  await axios
-    .get(`https://fiturself.fly.dev/users`, {
+const getUsers = (setter: React.Dispatch<SetStateAction<CommunityUser[]>>) => {
+  axios
+    .get(usersAPI, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },

@@ -12,7 +12,7 @@ const createPost = async (text: string, userID: string) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      //dont need to do anything with this for now. 
+      //dont need to do anything with this for now.
       //maybe setup error
     })
     .catch(function (error) {

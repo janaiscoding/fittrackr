@@ -158,12 +158,12 @@ const post_update = [
 
 const post_delete = async (req: Request, res: Response) => {
   const { postID } = req.params;
-  const { userID } = req.body;
+  // const { userID } = req.body;
   try {
     const post = await Post.findById(postID);
-    const user = await User.findById(userID);
-
-    if (post && user && post.user?.equals(userID)) {
+    if (post) {
+      const userID = post.user?._id;
+      const user = await User.findById(userID);
       // Clean-up comments just for the sake of clean DB
       const comments = post.comments;
       for (const comment of comments) {
@@ -171,7 +171,7 @@ const post_delete = async (req: Request, res: Response) => {
       }
       Promise.all([
         post.deleteOne(),
-        user.updateOne({ $pull: { posts: postID } }),
+        user!.updateOne({ $pull: { posts: postID } }),
       ])
         .then(() => {
           res.status(200).json({ message: "Post was deleted successfully!" });
@@ -183,7 +183,7 @@ const post_delete = async (req: Request, res: Response) => {
       res.status(404).json({ message: "This post doesn't exist." });
     }
   } catch (err) {
-    res.status(404).json({ message: "You cannot delete this post." });
+    res.status(500).json({ message: "An unexpected error occured." });
   }
 };
 

@@ -7,11 +7,12 @@ import Home from "./main_page/Home";
 
 export default function App() {
   const [isShown, setShown] = useState(false);
+
   return (
     <UserContextProvider>
-        <TopNav />
-        <Home isShown={isShown} setShown={setShown} />
-        <BotNav isShown={isShown} setShown={setShown} />
+      <TopNav />
+      <Home isShown={isShown} setShown={setShown} />
+      <BotNav isShown={isShown} setShown={setShown} />
     </UserContextProvider>
   );
 }

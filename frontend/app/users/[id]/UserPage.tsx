@@ -3,11 +3,12 @@ import { getJwtToken } from "@/app/api/auth_handler";
 import { UserContext } from "@/app/context/userContext";
 import { Post, User } from "@/app/__types__/types";
 import { useRouter } from "next/navigation";
-import PostComponent from "@/app/main_page/PostComponent";
+
 import getUser from "@/app/api/get_user";
 import verifyToken from "@/app/api/verify_token";
 import getUserPosts from "@/app/api/get_user_posts";
 import UserInfo from "./UserInfo";
+import PostComponent from "@/app/ui_components/PostComponent";
 
 const UserPage = ({ id, isShown }: { id: string; isShown: boolean }) => {
   const [profile, setProfile] = useState<User>({} as User);

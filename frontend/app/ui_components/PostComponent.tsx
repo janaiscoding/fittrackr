@@ -1,17 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import { Post } from "../__types__/types";
-import { Date } from "../ui_components/Date";
+import { Date } from "./Date";
 import { UserContext } from "../context/userContext";
 import { FcDislike, FcLike } from "react-icons/fc";
 import { BiCommentDots } from "react-icons/bi";
 import { getJwtToken } from "../api/auth_handler";
 import getPost from "../api/get_post";
+import Delete from "../assets/svgs/Delete";
+import DeleteSVG from "../assets/svgs/DeleteSVG";
+import deletePost from "../api/delete_post";
 
 const PostComponent = ({ post }: { post: Post }) => {
   const { _id, comments, text, user, image, createdAt } = post;
+
   const userContext = useContext(UserContext);
   const [isLiked, setIsLiked] = useState<boolean>();
-  const [render, setRender] = useState<boolean>();
+
+  const [isOpen, setOpen] = useState(false);
 
   const handleLike = async () => {
     await fetch(`https://fiturself.fly.dev/posts/${_id}/like`, {
@@ -29,6 +34,14 @@ const PostComponent = ({ post }: { post: Post }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleDelete = () => {
+    deletePost(_id).then(() => {
+      const element = document.getElementById(_id);
+      element?.remove();
+    });
+    // or perform a fetch again?
+  };
   useEffect(() => {
     if (userContext.user) {
       setIsLiked(post.likes.includes(userContext.user?._id));
@@ -37,7 +50,7 @@ const PostComponent = ({ post }: { post: Post }) => {
   }, [userContext]);
 
   return (
-    <article className="border border-mid-green p-4 mt-4">
+    <article className="border border-mid-green p-4 mt-4" id={_id}>
       <div className="flex justify-between">
         <div>
           <a className="text-green" href={`/users/${user._id}`}>
@@ -45,7 +58,9 @@ const PostComponent = ({ post }: { post: Post }) => {
           </a>
           <Date date={createdAt} />
         </div>
-        <p>{userContext.user?._id === user._id && "Delete"}</p>
+        <div onClick={() => setOpen(true)}>
+          {userContext.user?._id === user._id && <DeleteSVG />}
+        </div>
       </div>
       <p>{text}</p>
       <div className="flex justify-between text-green">
@@ -61,6 +76,13 @@ const PostComponent = ({ post }: { post: Post }) => {
           <p>{comments.length}</p> <BiCommentDots />
         </div>
       </div>
+      {isOpen && (
+        <div>
+          <p> Are you sure you want to delete this?</p>
+          <button onClick={handleDelete}>yes</button>
+          <button onClick={() => setOpen(false)}>cancel</button>
+        </div>
+      )}
     </article>
   );
 };

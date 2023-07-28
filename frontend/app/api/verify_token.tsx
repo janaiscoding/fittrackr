@@ -3,12 +3,12 @@ import { User } from "../__types__/types";
 import { removeJwtToken } from "./auth_handler";
 import { verifyAPI } from "./endpoints";
 
-const verifyToken = async (
+const verifyToken = (
   token: string,
   setUser: React.Dispatch<React.SetStateAction<User | null>>,
   router: AppRouterInstance
 ) => {
-  await fetch(verifyAPI, {
+  fetch(verifyAPI, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,

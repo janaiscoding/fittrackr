@@ -130,10 +130,12 @@ const UserInfo = ({ profile }: { profile: User }) => {
             <p>
               {first_name} {last_name}
             </p>
-            <AiOutlineCamera
-              onClick={() => setShown(!isShown)}
-              className="cursor-pointer"
-            />
+            {isSame && (
+              <AiOutlineCamera
+                onClick={() => setShown(!isShown)}
+                className="cursor-pointer"
+              />
+            )}
           </div>
           <JoinedDate date={createdAt} />
         </div>

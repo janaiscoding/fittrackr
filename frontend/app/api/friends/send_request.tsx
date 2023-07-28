@@ -1,7 +1,9 @@
 import { getJwtToken } from "../auth_handler";
 
-const sendRequest = async (receiverID: string, senderID: string | undefined) => {
-  console.log("seding fr");
+const sendRequest = async (
+  receiverID: string,
+  senderID: string | undefined
+) => {
   await fetch(`https://fiturself.fly.dev/users/${receiverID}/send`, {
     method: "POST",
     headers: {

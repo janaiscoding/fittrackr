@@ -3,11 +3,11 @@ import { SetStateAction } from "react";
 import { User } from "../__types__/types";
 import { getJwtToken } from "./auth_handler";
 
-const getProfile = async (
+const getProfile = (
   id: string,
   setter: React.Dispatch<SetStateAction<User | null>>
 ) => {
-  await axios
+  axios
     .get(`https://fiturself.fly.dev/users/${id}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,

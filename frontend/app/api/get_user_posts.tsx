@@ -3,11 +3,11 @@ import { Post } from "../__types__/types";
 import { getJwtToken } from "./auth_handler";
 import axios from "axios";
 
-const getUserPosts = async (
+const getUserPosts = (
   userID: string,
   setter: React.Dispatch<SetStateAction<Post[]>>
 ) => {
-  await axios
+  axios
     .get(`https://fiturself.fly.dev/users/${userID}/posts`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
