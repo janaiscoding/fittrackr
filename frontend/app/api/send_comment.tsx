@@ -4,7 +4,7 @@ import { getJwtToken } from "./auth_handler";
 const sendComment = async (
   id: string,
   comment: string,
-  userID: string,
+  userID: string | undefined,
   setCommentError: React.Dispatch<SetStateAction<string>>
 ) => {
   await fetch(`https://fiturself.fly.dev/posts/${id}/`, {

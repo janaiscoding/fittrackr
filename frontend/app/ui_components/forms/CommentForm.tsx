@@ -3,7 +3,7 @@ import sendComment from "../../api/send_comment";
 import SendSVG from "../../assets/svgs/SendSVG";
 type CommentFormTypes = {
   postID: string;
-  userID: string;
+  userID: string | undefined;
   refr: boolean;
   setRefr: React.Dispatch<SetStateAction<boolean>>;
 };

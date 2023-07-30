@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { getJwtToken } from "@/app/api/auth_handler";
 import { UserContext } from "@/app/context/userContext";
@@ -20,17 +21,15 @@ const UserPage = ({ id, isShown }: { id: string; isShown: boolean }) => {
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
-      verifyToken(token, userContext.setUser, router);
+      verifyToken(token, userContext.setUser, router); //establishing protected route correctly on /users/:id
     }
     getUser(id, setProfile);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getUserPosts(id, setPosts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShown]);
+    //Refresh if: 1. A new post is created || 2. When user profile picture changes
+  }, [isShown, userContext]);
 
   return (
     <div className="p-6 overflow-hidden">

@@ -15,7 +15,8 @@ const PostArticle = ({ post }: { post: Post }) => {
 
   useEffect(() => {
     getPostComments(post._id, setComments);
-  }, [refr]);
+    console.log("if I change profile pic, refresh post comments also");
+  }, [refr, userContext]);
 
   return (
     <article className="border border-mid-green p-4 mt-4" id={post._id}>
@@ -23,7 +24,7 @@ const PostArticle = ({ post }: { post: Post }) => {
       <PostStats post={post} />
       <CommentForm
         postID={post._id}
-        userID={userContext.user!._id}
+        userID={userContext.user?._id}
         refr={refr}
         setRefr={setRefr}
       />

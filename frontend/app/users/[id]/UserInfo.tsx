@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { User } from "@/app/__types__/types";
 import { getJwtToken } from "@/app/api/auth_handler";
 import acceptRequest from "@/app/api/friends/accept_request";
@@ -9,9 +10,9 @@ import getProfile from "@/app/api/get_profile";
 import { UserContext } from "@/app/context/userContext";
 import { JoinedDate } from "@/app/ui_components/Date";
 import ProfilePicture from "@/app/ui_components/images/ProfilePicture";
-import { SyntheticEvent, useContext, useEffect, useState } from "react";
-import { AiOutlineCamera } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
 import Stats from "./Stats";
+import UploadSVG from "@/app/assets/svgs/Upload";
 
 const UserInfo = ({ profile }: { profile: User }) => {
   const {
@@ -21,23 +22,21 @@ const UserInfo = ({ profile }: { profile: User }) => {
     bio,
     posts,
     workouts,
-    birthday,
     friends,
     requestsReceived,
     createdAt,
   } = profile;
 
   const userContext = useContext(UserContext);
+  const [isSame, setIsSame] = useState<boolean>();
+  const [avatar, setAvatar] = useState(profile.avatar);
 
   const [isFriends, setIsFriends] = useState<boolean>();
   const [isPending, setIsPending] = useState<boolean>();
   const [isReceived, setIsReceived] = useState<boolean>();
-  const [isSame, setIsSame] = useState<boolean>();
 
   const [file, setFile] = useState<any>();
   const [uploadError, setUploadError] = useState(" ");
-  const [avatar, setAvatar] = useState(profile.avatar);
-  const [isShown, setShown] = useState<boolean>(false);
 
   const handleAdd = () => {
     if (isPending) {
@@ -66,57 +65,46 @@ const UserInfo = ({ profile }: { profile: User }) => {
     removeFriend(_id, userContext.user?._id).then(() => setIsFriends(false));
   };
 
-  const handleSubmitAvatar = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const formData = new FormData();
     if (file) {
-      const formData = new FormData();
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
-      await fetch(
-        `https://fiturself.fly.dev/users/${userContext.user?._id}/upload`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${getJwtToken()}`,
-          },
-          body: formData,
-        }
-      )
+      fetch(`https://fiturself.fly.dev/users/${userContext.user?._id}/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getJwtToken()}`,
+        },
+        body: formData,
+      })
         .then((res) => res.json())
         .then((data) => {
-          if (data.message && data.message.includes("success")) {
-            getProfile(userContext.user!._id, userContext.setUser);
-            setFile(undefined);
-          } else {
-            setUploadError(data);
-            setFile(undefined);
-          }
+          data.message
+            ? getProfile(userContext.user?._id, userContext.setUser)
+            : setUploadError(data);
         })
         .then(() => {
           setFile(undefined);
-          setShown(false);
         })
         .catch((err) => console.log(err));
     }
-  };
+  }, [file]);
 
   useEffect(() => {
     if (userContext.user && profile) {
-      //means everything loaded so I can check the social status
+      //all loaded: Check the social status and same profile
       setIsFriends(friends.includes(userContext.user._id));
       setIsReceived(userContext.user?.requestsReceived?.includes(_id));
       setIsPending(requestsReceived.includes(userContext.user._id));
       setIsFriends(friends.includes(userContext.user!._id));
       setIsSame(_id === userContext.user._id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext, profile]);
 
   useEffect(() => {
-    if (userContext.user && isSame) {
-      setAvatar(userContext.user!.avatar);
+    if (isSame && userContext.user) {
+      setAvatar(userContext.user.avatar);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext]);
   return (
     <div>
@@ -131,10 +119,17 @@ const UserInfo = ({ profile }: { profile: User }) => {
               {first_name} {last_name}
             </p>
             {isSame && (
-              <AiOutlineCamera
-                onClick={() => setShown(!isShown)}
-                className="cursor-pointer"
-              />
+              <label htmlFor="upload-avatar">
+                <UploadSVG />
+                <input
+                  type="file"
+                  name="myImage"
+                  id="upload-avatar"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => setFile(e.target.files![0])}
+                />
+              </label>
             )}
           </div>
           <JoinedDate date={createdAt} />
@@ -164,20 +159,6 @@ const UserInfo = ({ profile }: { profile: User }) => {
         </div>
       </div>
       <p> {bio}</p>
-      {isShown && (
-        <form onSubmit={(e) => handleSubmitAvatar(e)}>
-          <input
-            type="file"
-            name="myImage"
-            accept="image/*"
-            onChange={(e) => {
-              setFile(e.target.files![0]);
-            }}
-          />
-          <button type="submit">Update Pic</button>
-          {uploadError}
-        </form>
-      )}
     </div>
   );
 };

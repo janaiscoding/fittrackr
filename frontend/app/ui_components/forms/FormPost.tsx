@@ -1,10 +1,17 @@
-import { SetStateAction, SyntheticEvent, useContext, useState } from "react";
+import {
+  SetStateAction,
+  SyntheticEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getJwtToken } from "../../api/auth_handler";
 import { UserContext } from "../../context/userContext";
 import createPost from "../../api/create_post";
 import SendSVG from "../../assets/svgs/SendSVG";
 import { usePathname, useRouter } from "next/navigation";
 import { postsAPI } from "../../api/endpoints";
+import UploadSVG from "@/app/assets/svgs/Upload";
 
 const FormPost = ({
   setShown,
@@ -13,6 +20,7 @@ const FormPost = ({
 }) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [file, setFile] = useState<any>(undefined);
 
   const router = useRouter();
@@ -38,48 +46,89 @@ const FormPost = ({
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        if (data.errors) {
+          setError(data.errors[0].msg);
+          setSuccess(false);
+        } else if (data === "Error: Please select an image.") {
+          setError(data);
+          setSuccess(false);
+          setFile(undefined);
+        } else {
+          handleSuccess();
+        }
+      })
+      .then(() => {
+        setTimeout(() => {
+          handleCancel();
+          if (path !== "/" && path !== `/users/${userID}`) {
+            router.push("/");
+          }
+        }, 1000);
+      })
       .catch((err) => console.log(err));
-    //   createPost(text, formData, userID).then(() => {
-    //     setShown(false);
-    //     setFile(undefined)
-    //   });
-    //   if (path !== "/" && path !== `/users/${userID}`) {
-    //     router.push("/");
-    //   }
-    //   setError("");
-    // } else {
-    //   setFile(undefined)
-    //   setError("Post is too short.");
   };
+
+  const handleSuccess = () => {
+    setError(" ");
+    setSuccess(true);
+    setFile(undefined);
+  };
+
+  const clearData = () => {
+    setFile(undefined);
+    setError(" ");
+    setSuccess(false);
+  };
+
+  const handleCancel = () => {
+    setShown(false);
+    clearData();
+  };
+  useEffect(() => {
+    clearData();
+  }, [setShown]);
   return (
-    <form
-      className="bg-soft-black p-5 absolute top-50"
-      onSubmit={(e) => handleSubmit(e)}
-      encType="multipart/form-data"
-    >
-      <label>
-        <span className="self-start text-green">Create a new post..</span>
-        <input
-          type="text"
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
-      </label>
-      <input
-        type="file"
-        name="myImage"
-        accept="image/*"
-        onChange={(e) => {
-          setFile(e.target.files![0]);
-        }}
-      />
-      <button type="submit">
-        <SendSVG />
-      </button>
+    <div className="absolute bg-soft-black p-6 top-1/2 left-0">
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl my-2">Create a new post!</h1>
+        <p onClick={handleCancel}>Cancel</p>
+      </div>
+      <form
+        className=" flex items-center"
+        onSubmit={(e) => handleSubmit(e)}
+        encType="multipart/form-data"
+      >
+        <label>
+          <input
+            type="text"
+            className="w-full"
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+          />
+        </label>
+        <label htmlFor="upload-image">
+          <UploadSVG />
+          <input
+            type="file"
+            name="myImage"
+            accept="image/*"
+            id="upload-image"
+            className="hidden"
+            onChange={(e) => {
+              setFile(e.target.files![0]);
+            }}
+          />
+        </label>
+
+        <button type="submit">
+          <SendSVG />
+        </button>
+      </form>
       <p className="text-red">{error}</p>
-    </form>
+      {success && <p className="text-green">Post sent</p>}
+    </div>
   );
 };
 

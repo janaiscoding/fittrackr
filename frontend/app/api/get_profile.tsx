@@ -4,9 +4,10 @@ import { User } from "../__types__/types";
 import { getJwtToken } from "./auth_handler";
 
 const getProfile = (
-  id: string,
+  id: string | undefined,
   setter: React.Dispatch<SetStateAction<User | null>>
 ) => {
+  console.log("called get profile", id);
   axios
     .get(`https://fiturself.fly.dev/users/${id}`, {
       headers: {
