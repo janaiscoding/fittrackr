@@ -8,7 +8,7 @@ import sendRequest from "@/app/api/friends/send_request";
 import getProfile from "@/app/api/get_profile";
 import { UserContext } from "@/app/context/userContext";
 import { JoinedDate } from "@/app/ui_components/Date";
-import ProfilePicture from "@/app/ui_components/ProfilePicture";
+import ProfilePicture from "@/app/ui_components/images/ProfilePicture";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { AiOutlineCamera } from "react-icons/ai";
 import Stats from "./Stats";
@@ -66,7 +66,7 @@ const UserInfo = ({ profile }: { profile: User }) => {
     removeFriend(_id, userContext.user?._id).then(() => setIsFriends(false));
   };
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmitAvatar = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (file) {
       const formData = new FormData();
@@ -111,11 +111,11 @@ const UserInfo = ({ profile }: { profile: User }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext, profile]);
+
   useEffect(() => {
     if (userContext.user && isSame) {
       setAvatar(userContext.user!.avatar);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext]);
   return (
@@ -165,7 +165,7 @@ const UserInfo = ({ profile }: { profile: User }) => {
       </div>
       <p> {bio}</p>
       {isShown && (
-        <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
+        <form onSubmit={(e) => handleSubmitAvatar(e)}>
           <input
             type="file"
             name="myImage"

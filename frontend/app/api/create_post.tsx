@@ -1,17 +1,19 @@
 import { getJwtToken } from "./auth_handler";
 import { postsAPI } from "./endpoints";
 
-const createPost = async (text: string, userID: string) => {
+const createPost = async (formData: any) => {
+
   await fetch(postsAPI, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text, userID }),
+    body: formData
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data)
       //dont need to do anything with this for now.
       //maybe setup error
     })

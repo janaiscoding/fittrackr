@@ -3,11 +3,11 @@ import { SetStateAction, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { getJwtToken } from "../api/auth_handler";
 import { useRouter } from "next/navigation";
-import FormPost from "../ui_components/FormPost";
+import FormPost from "../ui_components/forms/FormPost";
 import verifyToken from "../api/verify_token";
 import { Post } from "../__types__/types";
 import getPosts from "../api/get_posts";
-import PostComponent from "../ui_components/ui_posts/PostComponent";
+import PostComponent from "../ui_components/PostArticle";
 
 const Home = ({
   isShown,

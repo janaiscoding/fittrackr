@@ -22,7 +22,7 @@ type User = {
 type ProfilePost = {
   comments: any[];
   createdAt: string;
-  image: { contentType: string; data: Buffer | undefined };
+  image: Avatar;
   likes: string[];
   text: string;
   updatedAt: string;
@@ -62,10 +62,7 @@ type Post = {
   user: ShortUser;
   createdAt: string;
   updatedAt: string;
-  image: {
-    contentType: string;
-    data: Buffer | undefined;
-  };
+  image: Avatar;
 };
 
 type Comment = {
@@ -87,5 +84,5 @@ export type {
   Post,
   Avatar,
   Comment,
-  Workout
+  Workout,
 };

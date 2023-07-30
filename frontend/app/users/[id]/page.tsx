@@ -6,7 +6,7 @@ import BotNav from "@/app/ui_components/bottom_navbar/BotNav";
 import { UserContextProvider } from "@/app/context/userContext";
 import { useState } from "react";
 import UserPage from "./UserPage";
-import FormPost from "@/app/ui_components/FormPost";
+import FormPost from "@/app/ui_components/forms/FormPost";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   const [isShown, setShown] = useState(false);

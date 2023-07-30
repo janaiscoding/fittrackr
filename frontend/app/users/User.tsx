@@ -6,7 +6,7 @@ import cancelRequest from "../api/friends/cancel_request";
 import sendRequest from "../api/friends/send_request";
 import acceptRequest from "../api/friends/accept_request";
 import declineRequest from "../api/friends/decline_request";
-import CommunityPicture from "../ui_components/CommunityPicture";
+import CommunityPicture from "../ui_components/images/CommunityPicture";
 
 const UserComponent = ({ user }: { user: CommunityUser }) => {
   const { _id, first_name, last_name, avatar, posts, workouts, friends } = user;

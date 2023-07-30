@@ -6,7 +6,7 @@ import { CommunityUser } from "../__types__/types";
 import UserComponent from "./User";
 import getUsers from "../api/get_users";
 import verifyToken from "../api/verify_token";
-import FormPost from "../ui_components/FormPost";
+import FormPost from "../ui_components/forms/FormPost";
 
 const UsersComponent = ({
   isShown,
