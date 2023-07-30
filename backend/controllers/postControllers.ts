@@ -1,11 +1,12 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
+import multer from "multer";
+import uploadPicture from "../middleware/multerConfig";
 
-//Add pic
 const posts_get = async (req: Request, res: Response) => {
   try {
     const postsData = await Post.find({})
@@ -35,7 +36,6 @@ const posts_get = async (req: Request, res: Response) => {
   }
 };
 
-// Add pic
 const post_get = async (req: Request, res: Response) => {
   const { postID } = req.params;
   try {
@@ -63,22 +63,35 @@ const post_get = async (req: Request, res: Response) => {
   }
 };
 
-// - Add pic + user pics
+
 const post_create = [
-  body("text")
+  (req: Request, res: Response, next: NextFunction) => {
+    uploadPicture.single("myImage")(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ error: "File size exceeds the limit of 4MB." });
+        }
+        return res.status(500).json({ error: "File upload error." });
+      } else if (err) {
+        return res.status(400).json(err);
+      }
+      next();
+    });
+  },
+  body("text", "Text is requires")
     .trim()
-    .exists()
-    .withMessage("Post text is required.")
     .isLength({ min: 1 })
     .withMessage("Post is too short.")
     .isLength({ max: 140 })
-    .withMessage("Post must be maximum 140 characters long.")
+    .withMessage("Post can be maximum 140 characters.")
     .escape(),
   body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
     const { text, userID } = req.body;
     const errors = validationResult(req);
-
+    console.log(req.body);
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
@@ -87,14 +100,19 @@ const post_create = [
     }
 
     try {
-      const user = await User.findById(userID); // Get the post writer
+      const user = await User.findById(userID);
       if (user) {
         const newPost = new Post({
           user: userID,
           text,
+          image: {
+            data: req.file?.buffer,
+            contentType: req.file?.mimetype,
+          },
           comments: [],
           likes: [],
         });
+
         Promise.all([
           newPost.save(),
           user.updateOne({ $push: { posts: newPost } }),
@@ -159,7 +177,7 @@ const post_update = [
 
 const post_delete = async (req: Request, res: Response) => {
   const { postID } = req.params;
-  // const { userID } = req.body;
+
   try {
     const post = await Post.findById(postID);
     if (post) {

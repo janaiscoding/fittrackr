@@ -7,7 +7,7 @@ import Post from "../models/post";
 import Comment from "../models/comment";
 import Workout from "../models/workout";
 import multer from "multer";
-import uploadPfp from "../middleware/multerConfig";
+import uploadPicture from "../middleware/multerConfig";
 
 // For searching in the community, for friends list and also friend requests
 const get_users = async (req: Request, res: Response) => {
@@ -159,7 +159,7 @@ const update_account = [
 
 const update_pfp = [
   (req: Request, res: Response, next: NextFunction) => {
-    uploadPfp.single("myImage")(req, res, function (err) {
+    uploadPicture.single("myImage")(req, res, function (err) {
       if (err instanceof multer.MulterError) {
         if (err.code === "LIMIT_FILE_SIZE") {
           return res

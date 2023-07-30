@@ -17,7 +17,7 @@ const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
     return done(null, user);
   }
   return done(null, false, {
-    message: "Could not find an account associated with this email",
+    message: "Could not find an account associated with this email.",
   });
 });
 

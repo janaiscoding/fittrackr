@@ -20,11 +20,11 @@ const fileFilter = (
     callback("Error: Please select an image.", false);
   }
 };
-const uploadPfp = multer({
+const uploadPicture = multer({
   limits: { fileSize: 1024 * 1024 * 4 },
   storage: storage,
   fileFilter: fileFilter,
 });
 
 
-export default uploadPfp;
+export default uploadPicture;

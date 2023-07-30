@@ -7,7 +7,7 @@ const postSchema = new Schema(
     text: { type: String, required: true, minLength: 1, maxLength: 140 },
     image: {
       data: { type: Buffer },
-      contentType: { type: String, default: "image/png" },
+      contentType: { type: String },
     },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],

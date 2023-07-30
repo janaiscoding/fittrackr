@@ -106,7 +106,7 @@ const login_post = [
         const user = await User.findOne({ email });
         if (!user)
           return res.status(404).json({
-            message: "Your email is incorrect.",
+            message: "Could not find an account associated with this email.",
           });
         bcrypt.compare(password, user.password, (err, compare) => {
           if (err) return next(err);
