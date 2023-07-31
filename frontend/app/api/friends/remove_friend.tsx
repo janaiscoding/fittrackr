@@ -1,4 +1,4 @@
-import { getJwtToken } from "../auth_handler";
+import { getJwtToken } from "../auth/auth_handler";
 
 const removeFriend = async (removedID: string, removerID: string | undefined) => {
   await fetch(`https://fiturself.fly.dev/users/${removedID}/remove`, {

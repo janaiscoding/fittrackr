@@ -1,9 +1,9 @@
 "use client";
-import TopNav from "../ui_components/top_navbar/TopNav";
-import BotNav from "../ui_components/bottom_navbar/BotNav";
+import TopNav from "../components/top_navbar/TopNav";
+import BotNav from "../components/bottom_navbar/BotNav";
 import { useState } from "react";
 import { UserContextProvider } from "../context/userContext";
-import UsersComponent from "./Users";
+import UsersComponent from "../components/users/Users";
 
 const UserPage = () => {
   const [isShown, setShown] = useState(false);

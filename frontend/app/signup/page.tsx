@@ -3,7 +3,7 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import { signupAPI } from "../api/endpoints";
 import { useRouter } from "next/navigation";
-import { getJwtToken, removeJwtToken } from "../api/auth_handler";
+import { getJwtToken, removeJwtToken } from "../api/auth/auth_handler";
 
 const SignUp = () => {
   const [firstName, setFirst] = useState<string>("");

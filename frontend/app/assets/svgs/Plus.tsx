@@ -3,7 +3,7 @@ const Plus = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="#9EF5CF"
-      height="4em"
+      height="1.5em"
       viewBox="0 0 512 512"
       className="py-0"
     >

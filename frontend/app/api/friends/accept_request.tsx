@@ -1,4 +1,4 @@
-import { getJwtToken } from "../auth_handler";
+import { getJwtToken } from "../auth/auth_handler";
 
 const acceptRequest = async (
   senderID: string,

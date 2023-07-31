@@ -1,5 +1,5 @@
 import Logo from "../assets/svgs/Logo";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/forms/LoginForm";
 
 const Login = () => {
   return (

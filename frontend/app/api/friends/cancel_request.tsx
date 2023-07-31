@@ -1,4 +1,4 @@
-import { getJwtToken } from "../auth_handler";
+import { getJwtToken } from "../auth/auth_handler";
 
 const cancelRequest = async (receiverID: string, senderID: string | undefined) => {
   await fetch(`https://fiturself.fly.dev/users/${receiverID}/cancel`, {
