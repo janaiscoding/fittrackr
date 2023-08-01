@@ -50,10 +50,9 @@ const FormPost = ({
   const handleSuccess = () => {
     //Display success message
     setSuccess(true);
-    // If im on my profile, reset the fresh user post info.
-    if (path === `/users/${userContext.user?._id}`) {
-      getProfile(userContext.user?._id, userContext.setUser);
-    }
+    //Tell the app the userContext change, so it can fetch the updated posts.
+    console.log("handle success, refresh user data");
+    getProfile(userContext.user?._id, userContext.setUser);
 
     setTimeout(() => {
       //Close form

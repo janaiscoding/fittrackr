@@ -16,8 +16,9 @@ const CommentForm = ({ postID, refr, setRefr }: CommentFormTypes) => {
     e.preventDefault();
     sendComment(postID, comment, userContext.user?._id, setCommentError).then(
       () => {
+        console.log("swapping refr")
         setRefr(!refr);
-        setComment(" ");
+        setComment("");
       }
     );
   };

@@ -1,5 +1,6 @@
 "use client";
 
+import { ModalProps } from "@/app/__types__/reactTypes";
 import { removeJwtToken } from "@/app/api/auth/auth_handler";
 import Community from "@/app/assets/svgs/Community";
 import Dumbbell from "@/app/assets/svgs/Dumbbell";
@@ -8,14 +9,9 @@ import SignOut from "@/app/assets/svgs/SignOut";
 import User from "@/app/assets/svgs/User";
 import { UserContext } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
-import { SetStateAction, useContext, useState } from "react";
+import { useContext } from "react";
 
-type BotNavProps = {
-  isShown: boolean;
-  setShown: React.Dispatch<SetStateAction<boolean>>;
-};
-
-const BotNav = ({ isShown, setShown }: BotNavProps) => {
+const BotNav = ({ isShown, setShown }: ModalProps) => {
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -23,6 +19,9 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
     userContext.setUser(null);
     removeJwtToken();
     router.push("/login");
+  };
+  const handleModal = () => {
+    setShown(!isShown);
   };
 
   return (
@@ -41,9 +40,7 @@ const BotNav = ({ isShown, setShown }: BotNavProps) => {
 
       <button
         className="flex flex-col gap-1 items-center"
-        onClick={() => {
-          setShown(!isShown);
-        }}
+        onClick={handleModal}
       >
         <Plus />
         <p className="text-xs text-grey">New Post</p>

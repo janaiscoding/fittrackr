@@ -15,6 +15,7 @@ import deletePost from "@/app/api/posts/delete_post";
 const PostContent = ({ post }: { post: Post }) => {
   const { _id, text, user, image, createdAt } = post;
   const [isOpen, setOpen] = useState(false);
+  
   const userContext = useContext(UserContext);
   const path = usePathname();
   

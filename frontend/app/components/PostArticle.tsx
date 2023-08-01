@@ -10,10 +10,11 @@ import PostContent from "./posts/PostContent";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const [refr, setRefr] = useState(false);
-  const [comments, setComments] = useState<Comment[]>(post.comments);
-
+  const [comments, setComments] = useState<Comment[]>(post.comments); // Set initial comments
+  console.log(post)
   useEffect(() => {
     getPostComments(post._id, setComments);
+    // Update everytime the comment form is successful
   }, [refr]);
 
   return (

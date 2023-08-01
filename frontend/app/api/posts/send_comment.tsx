@@ -21,6 +21,8 @@ const sendComment = async (
         setCommentError(data.errors[0].msg);
       } 
       //comment success
+      setCommentError(" ")
+      console.log(data)
     })
     .catch((err) => console.log(err));
 };

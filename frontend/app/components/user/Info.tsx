@@ -92,7 +92,9 @@ const Info = ({ profile }: { profile: User }) => {
         .catch((err) => console.log(err));
     }
   }, [file]);
-
+  const handleEdit = () => {
+    console.log("swapping to edit view");
+  };
   useEffect(() => {
     if (userContext.user && profile) {
       //Determines the relation between userContext and fetched profile
@@ -100,6 +102,7 @@ const Info = ({ profile }: { profile: User }) => {
       setIsReceived(userContext.user?.requestsReceived?.includes(_id));
       setIsPending(requestsReceived.includes(userContext.user._id));
       setIsFriends(friends.includes(userContext.user!._id));
+      // Or if the logged in user is the one on the page
       setIsSame(_id === userContext.user._id);
     }
   }, [userContext, profile]);
@@ -160,7 +163,11 @@ const Info = ({ profile }: { profile: User }) => {
               {isPending ? "Cancel" : "Add"}
             </button>
           )}
-          {isSame && <button className="social-button">Edit profile</button>}
+          {isSame && (
+            <button className="social-button" onClick={handleEdit}>
+              Edit profile
+            </button>
+          )}
         </div>
       </div>
       <p> {bio}</p>
