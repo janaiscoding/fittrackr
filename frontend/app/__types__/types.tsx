@@ -75,6 +75,7 @@ type Comment = {
   _id: string;
   comment: string;
   createdAt: string;
+  likes: string[];
 };
 export type {
   ShortUser,

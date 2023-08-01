@@ -18,13 +18,17 @@ const Home = ({
 
   useEffect(() => {
     getPosts(setPosts);
-    console.log("fetched new post on main page", posts);
   }, [userContext]);
+
   return (
-    <div className="min-h-[90vh] flex flex-col px-6 ">
-      {posts.map((post, i) => (
-        <PostArticle key={i} post={post} />
-      ))}
+    <div className="min-h-[90vh] my-4 flex flex-col md:items-center">
+      {/* <h1 className="text-2xl font-ubuntu-500 px-4">Feed..</h1> */}
+      <div className="flex flex-col gap-6 md:w-1/2">
+        {posts.length === 0 && "Loading animation"}
+        {posts.map((post, i) => (
+          <PostArticle key={i} post={post} />
+        ))}
+      </div>
       {isShown && <FormPost setShown={setShown} />}
     </div>
   );

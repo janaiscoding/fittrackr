@@ -21,7 +21,7 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-black">
       <TopNav />
       <Home isShown={isShown} setShown={setShown} />
       <BotNav isShown={isShown} setShown={setShown} />

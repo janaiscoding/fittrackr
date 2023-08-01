@@ -16,16 +16,18 @@
   font-family: "UbuntuThin";
   src: url("../public/Ubuntu/Ubuntu-Light.ttf");
 }
+@layer base {
+  html {
+    font-family: "OpenMedium", sans-serif;
+    color: #f4fff3;
+    background: #111111;
+  }
+}
 
 ::placeholder {
-  color: rgb(185, 131, 131) !important;
+  color: #adadad !important;
 }
 
-body {
-  font-family: "OpenMedium", sans-serif !important;
-  color: #f3f3f3;
-  background: #060606;
-}
 .social-button {
   border-radius: 1em;
   border: 1px solid #0d2b1e;
@@ -83,7 +85,7 @@ body {
   height: 1.7rem;
 }
 
-input,
+/* input,
 input:-webkit-autofill,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:focus-visible {
@@ -117,7 +119,7 @@ input:focus.valid,
 input:-webkit-autofill:focus.valid {
   color: #f3f3f3;
   border: 1px solid #9ef5cf !important;
-}
+} */
 
 @media only screen and (max-width: 600px) {
   .home-image {
