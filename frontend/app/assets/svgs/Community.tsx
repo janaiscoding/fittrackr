@@ -2,7 +2,7 @@ const Community = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="#9EF5CF"
+      fill="#F0CC80"
       height="1.5em"
       viewBox="0 0 640 512"
     >

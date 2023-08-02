@@ -13,18 +13,18 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="home-image min-h-screen">
-      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center">
+    <div className="home-image min-h-screen ">
+      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center font-open">
         <h1
-          className="font-bold text-4xl text-green text-center px-6"
+          className="font-bold font-ubuntu-500 text-4xl text-green text-center px-6"
           data-testid="welcome-element"
         >
-          Welcome to <span>urjourney.</span>
+          Welcome to <span className="text-yellow">urjourney.</span>
         </h1>
         <SignUpForm />
-        <p className="text-center text-grey mt-2">
+        <p className="text-center text-white2 mt-2">
           Already have an account?{" "}
-          <span className="text-green font-bold">
+          <span className="text-yellow font-bold">
             <a href="/login">Sign in</a>
           </span>
         </p>

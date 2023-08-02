@@ -13,6 +13,7 @@ import { postsAPI } from "../../api/endpoints";
 import UploadSVG from "@/app/assets/svgs/Upload";
 import getProfile from "@/app/api/users/get_profile";
 import createPost from "@/app/api/posts/create_post";
+import Close from "@/app/assets/svgs/Close";
 
 const FormPost = ({
   setShown,
@@ -83,10 +84,10 @@ const FormPost = ({
     <div className="absolute bg-transparent p-6 top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4">
       <div className="flex justify-between items-center">
         <h1 className="text-xl my-2">Create a new post!</h1>
-        <p onClick={handleClose}>close icon</p>
+        <button onClick={handleClose} aria-label="Close create new post form"><Close/></button>
       </div>
       <form
-        className=" flex items-center"
+        className="flex items-center"
         onSubmit={(e) => handleSubmit(e)}
         encType="multipart/form-data"
       >
@@ -99,7 +100,7 @@ const FormPost = ({
             }}
           />
         </label>
-        <label htmlFor="upload-image">
+        <label htmlFor="upload-image" aria-label="Upload a new picture">
           <UploadSVG />
           <input
             type="file"
@@ -113,7 +114,7 @@ const FormPost = ({
           />
         </label>
 
-        <button type="submit">
+        <button type="submit" aria-label="Submit your new post">
           <SendSVG />
         </button>
       </form>

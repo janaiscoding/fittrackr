@@ -106,20 +106,21 @@ input:focus-visible,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:focus-visible {
   border: 1px solid rgba(158, 245, 207, 0.3) !important;
-}
+} */
+
 input.invalid,
 input:focus.invalid,
 input:-webkit-autofill:focus.invalid {
   color: #f3f3f3;
-  border: 1px solid #d78181 !important;
+  border-bottom: 1px solid #df4444 !important;
 }
 
 input.valid,
 input:focus.valid,
 input:-webkit-autofill:focus.valid {
   color: #f3f3f3;
-  border: 1px solid #9ef5cf !important;
-} */
+  border-bottom: 1px solid #2eb97c !important;
+}
 
 @media only screen and (max-width: 600px) {
   .home-image {

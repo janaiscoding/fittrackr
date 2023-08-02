@@ -7,18 +7,21 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      "open-500": ["OpenMedium", "sans-serif"],
+      open: ["OpenMedium", "sans-serif"],
       "ubuntu-500": ["UbuntuMedium", "sans-serif"],
-      "ubuntu": ["UbuntuThin", "sans-serif"],
+      ubuntu: ["UbuntuThin", "sans-serif"],
     },
     colors: {
-      white: '#F4FFF3',
-      white2: '#ADADAD',
-      yellow: '#F0CC80',
-      yellow2: '#89764B',
-      grey: '#262626',
-      blue: '#1E1F24',
-      black: '#111111', 
+      white: "#F4FFF3",
+      white2: "#ADADAD",
+      yellow: "#F0CC80",
+      yellow2: "#89764B",
+      grey: "#262626",
+      blue: "#1E1F24",
+      black: "#111111",
+      transparent: "#060606ed",
+      error: "#df4444",
+      valid: "#2eb97c"
     },
     boxShadow: {
       sm: "0 1px 8px 0px rgba(30, 30, 30, 0.5)",

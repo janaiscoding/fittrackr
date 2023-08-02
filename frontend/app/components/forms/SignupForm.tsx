@@ -12,7 +12,7 @@ const SignUpForm = () => {
 
   const [validFirst, setValidFirst] = useState<boolean | undefined>(undefined);
   const [validLast, setValidLast] = useState<boolean | undefined>(undefined);
-  const [validEmail, setEmailValid] = useState<boolean | undefined>(undefined);
+  const [validEmail, setEmailValid] = useState<boolean | null>(null);
   const [validPW, setValidPW] = useState<boolean | null>(null);
   const [validConf, setValidConf] = useState<boolean | null>(null);
 
@@ -20,7 +20,7 @@ const SignUpForm = () => {
 
   const emailPattern = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
   const pwPattern = new RegExp(/^.{8,}$/g);
-  const namePattern = new RegExp(/.{2,}/g);
+  const namePattern = new RegExp(/.{1,}/g);
 
   const router = useRouter();
   const handleSignup = async (e: SyntheticEvent) => {
@@ -67,11 +67,12 @@ const SignUpForm = () => {
       onSubmit={(e) => handleSignup(e)}
     >
       <label className="flex flex-col">
-        <span className="self-start text-green">First Name</span>
+        <span className="self-start text-white2">First Name</span>
         <input
           required
           type="text"
-          className={validFirst ? "valid" : ""}
+          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 
+          ${validFirst && "valid"}`}
           onChange={(e) => {
             setFirst(e.target.value);
             setValidFirst(namePattern.test(e.target.value));
@@ -79,11 +80,12 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-green">Last Name</span>
+        <span className="self-start text-white2">Last Name</span>
         <input
           required
           type="text"
-          className={validLast ? "valid" : ""}
+          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2
+          ${validLast && "valid"}`}
           onChange={(e) => {
             setLast(e.target.value);
             setValidLast(namePattern.test(e.target.value));
@@ -91,11 +93,20 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-green">Email </span>
+        <span className="self-start text-white2">
+          Email{" "}
+          {validEmail !== null && !validEmail && (
+            <span className="text-xs text-error">Must be a valid email.</span>
+          )}{" "}
+        </span>
         <input
           required
           type="email"
-          className={`text-white h-10 px-4 ${validEmail ? "valid" : "invalid"}`}
+          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded ${
+            validEmail !== null && validEmail
+              ? "valid"
+              : validEmail !== null && !validEmail && "invalid"
+          }  `}
           onChange={(e) => {
             setEmail(e.target.value);
             setEmailValid(emailPattern.test(e.target.value));
@@ -103,16 +114,20 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-green">
+        <span className="self-start text-white2">
           Password{" "}
-          {!validPW && (
-            <span className="text-xs text-red">minimum 8 characters</span>
+          {validPW !== null && !validPW && (
+            <span className="text-xs text-error">Minimum 8 characters.</span>
           )}
         </span>
         <input
           required
           type="password"
-          className={`${validPW ? "valid" : "invalid"}`}
+          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 ${
+            validPW !== null && validPW
+              ? "valid"
+              : validPW !== null && !validPW && "invalid"
+          }  `}
           onChange={(e) => {
             setPassword(e.target.value);
             setValidPW(pwPattern.test(e.target.value));
@@ -120,12 +135,12 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-green">
+        <span className="self-start text-white2">
           Confirm Password{" "}
           {password === confPassword ? (
             " "
           ) : (
-            <span className="text-xs text-red">passwords must match</span>
+            <span className="text-xs text-error">Passwords must match.</span>
           )}
         </span>
 
@@ -133,7 +148,11 @@ const SignUpForm = () => {
           required
           type="password"
           autoComplete="new-password"
-          className={validConf ? "valid" : "invalid"}
+          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 ${
+            validConf !== null && validConf
+              ? "valid"
+              : validConf !== null && !validConf && "invalid"
+          }  `}
           onChange={(e) => {
             setConfirmed(e.target.value);
             setValidConf(password === e.target.value);
@@ -146,13 +165,13 @@ const SignUpForm = () => {
         </label> */}
       {errors &&
         errors.map((err, i) => (
-          <p key={i} className="text-red">
+          <p key={i} className="text-error">
             {err.msg}
           </p>
         ))}
       <button
         type="submit"
-        className="text-2xl text-center text-black bg-green rounded-2xl font-medium py-2 mt-6 w-full"
+        className="text-2xl text-center text-black bg-yellow rounded-2xl font-medium py-2 mt-6 w-full"
       >
         Sign up
       </button>

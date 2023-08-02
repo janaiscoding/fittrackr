@@ -21,7 +21,7 @@ import sendComment from "../api/posts/send_comment";
 const PostArticle = ({ post }: { post: Post }) => {
   const [refr, setRefr] = useState(false);
   const [comments, setComments] = useState<Comment[]>(post.comments); // Set initial comments
-
+  console.log(post)
   useEffect(() => {
     getPostComments(post._id, setComments);
     // Update everytime the comment form is successful
@@ -35,11 +35,13 @@ const PostArticle = ({ post }: { post: Post }) => {
     </article>
   );
 };
+
 type CommentFormTypes = {
   postID: string;
   refr: boolean;
   setRefr: React.Dispatch<SetStateAction<boolean>>;
 };
+
 const CommentForm = ({ postID, refr, setRefr }: CommentFormTypes) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
@@ -55,7 +57,7 @@ const CommentForm = ({ postID, refr, setRefr }: CommentFormTypes) => {
       }
     );
   };
-
+  
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
@@ -67,7 +69,7 @@ const CommentForm = ({ postID, refr, setRefr }: CommentFormTypes) => {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <button type="submit" className="absolute left-[94%]">
+      <button type="submit" className="absolute left-[90%]">
         <SendSVG />
       </button>
     </form>
