@@ -21,10 +21,10 @@ module.exports = {
       black: "#111111",
       transparent: "#060606ed",
       error: "#df4444",
-      valid: "#2eb97c"
+      valid: "#2eb97c",
     },
     boxShadow: {
-      sm: "0 1px 8px 0px rgba(30, 30, 30, 0.5)",
+      sm: "0 0 5px 3px rgba(189, 178, 163, 0.13)",
     },
   },
 };

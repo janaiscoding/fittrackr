@@ -13,14 +13,15 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="home-image min-h-screen ">
-      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center font-open">
-        <h1
+    <div className="home-image min-h-screen">
+      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center font-open items-center">
+        <div
           className="font-bold font-ubuntu-500 text-4xl text-green text-center px-6"
           data-testid="welcome-element"
         >
-          Welcome to <span className="text-yellow">urjourney.</span>
-        </h1>
+          <h1>Welcome to</h1>
+          <p className="text-yellow">urjourney.</p>
+        </div>
         <SignUpForm />
         <p className="text-center text-white2 mt-2">
           Already have an account?{" "}

@@ -38,7 +38,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-11/12 p-6 mb-8 bg-transparent rounded-3xl">
+    <div className="w-11/12 p-6 mb-8 bg-transparent rounded-3xl md:w-1/2">
       <h1 className="text-3xl font-ubuntu-500 text-center font-bold mb-3">
         Welcome back
       </h1>
@@ -64,16 +64,16 @@ const LoginForm = () => {
         <button
           type="submit"
           className="text-2xl text-center text-black bg-yellow rounded-2xl font-medium py-2 w-full mt-3"
+          aria-label="Sign in button"
         >
           Sign in
         </button>
       </form>
       <p className="text-center text-white2 mt-2">
-        Dont have an account?
-        <span className="text-yellow font-bold">
-          {" "}
+        Dont have an account?{" "}
+        <button className="text-yellow font-bold" aria-label="Click button to navigate to sign up page">
           <a href="/signup">Sign up</a>
-        </span>
+        </button>
       </p>
     </div>
   );

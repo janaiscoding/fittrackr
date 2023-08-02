@@ -21,15 +21,20 @@ const Home = ({
   }, [userContext]);
 
   return (
-    <div className="min-h-[90vh] my-4 flex flex-col md:items-center">
-      {/* <h1 className="text-2xl font-ubuntu-500 px-4">Feed..</h1> */}
-      <div className="flex flex-col gap-6 md:w-1/2">
+    <div className="min-h-[90vh] md:px-20 flex md:justify-between justify-center items-start gap-2">
+      <div className="hidden md:block">left side</div>
+      <div className="flex flex-col gap-6 bg-black">
+        <h1 className="ml-4">Create a new post</h1>
+        <h1 className="ml-4 text-2xl font-ubuntu-500 self-start border-b-2 border-yellow2">
+          Feed..
+        </h1>
         {posts.length === 0 && "Loading animation"}
         {posts.map((post, i) => (
           <PostArticle key={i} post={post} />
         ))}
+        {isShown && <FormPost setShown={setShown} />}
       </div>
-      {isShown && <FormPost setShown={setShown} />}
+      <div className="hidden md:block">right side</div>
     </div>
   );
 };

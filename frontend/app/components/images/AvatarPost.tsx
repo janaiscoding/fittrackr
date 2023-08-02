@@ -1,7 +1,7 @@
 import { Avatar } from "@/app/__types__/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
-const AvatarComment = ({
+const AvatarPost = ({
   avatar,
   userID,
 }: {
@@ -17,13 +17,13 @@ const AvatarComment = ({
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="rounded-full object-cover border-2 border-solid border-grey comment-image"
+          className="w-12 h-12 rounded-full object-cover border-2 border-solid border-mid-green"
           alt="user-profile-picture"
         />
       ) : (
         <Image
           src={defaultPic}
-          className="rounded-full object-cover border-2 border-solid border-grey comment-image"
+          className="w-12 h-12 rounded-full object-cover border-2 border-solid border-mid-green"
           alt="user-default-profile-picture"
         />
       )}
@@ -31,4 +31,4 @@ const AvatarComment = ({
   );
 };
 
-export default AvatarComment;
+export default AvatarPost;

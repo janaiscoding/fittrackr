@@ -25,7 +25,7 @@ const BotNav = ({ isShown, setShown }: ModalProps) => {
   };
 
   return (
-    <div className="sticky bottom-0 flex justify-between items-center px-6 py-2 bg-blue shadow-sm border-solid border-t border-yellow2 md:hidden">
+    <div className="sticky bottom-0 flex justify-between items-center px-6 py-2 bg-blue border-solid border-t border-yellow2 md:hidden">
       <a
         href={`/users/${userContext.user?._id}`}
         className="flex flex-col gap-1 items-center"

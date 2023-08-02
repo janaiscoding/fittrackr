@@ -36,17 +36,6 @@
   padding: 0.2em 1em;
 }
 
-.post {
-  /* background-color: #010101; */
-  -webkit-box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
-  -moz-box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
-  box-shadow: 3px 3px 5px 0px rgba(158, 245, 207, 0.3);
-}
-
-.comment {
-  border-radius: 0.375rem;
-  background: linear-gradient(104deg, rgb(4 4 4) 0%, rgb(15 20 15) 100%);
-}
 .overlay {
   background: linear-gradient(
     90deg,
@@ -56,13 +45,13 @@
 }
 
 .home-image {
-  background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash-_2_.webp")
-    no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: 60%;
-  height: auto;
+  background-color: #111111;
+}
+.comment-image {
+  min-height: 2rem;
+  min-width: 2rem;
+  max-height: 2rem;
+  max-width: 2rem;
 }
 .avatar-circle,
 .name-circle {
@@ -84,29 +73,6 @@
   width: 1.7rem;
   height: 1.7rem;
 }
-
-/* input,
-input:-webkit-autofill,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:focus-visible {
-  height: 2.5rem;
-  padding: 0px 1rem;
-  border-radius: 1rem;
-  color: #f3f3f3;
-  outline: none !important;
-  -webkit-text-fill-color: #f3f3f3;
-  background-color: #0f0d0d !important;
-  transition: background-color 600000s 0s, color 600000s 0s !important;
-}
-input::placeholder {
-  -webkit-text-fill-color: #bcbabab4;
-}
-input:focus,
-input:focus-visible,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:focus-visible {
-  border: 1px solid rgba(158, 245, 207, 0.3) !important;
-} */
 
 input.invalid,
 input:focus.invalid,
