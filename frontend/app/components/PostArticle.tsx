@@ -19,15 +19,15 @@ import SendSVG from "../assets/svgs/SendSVG";
 import sendComment from "../api/posts/send_comment";
 import CommentSVG from "../assets/svgs/CommentSVG";
 import AvatarPost from "./images/AvatarPost";
+import DeleteSVG from "../assets/svgs/DeleteSVG";
 
 const PostArticle = ({ post }: { post: Post }) => {
-  console.log(post);
+  const [comments, setComments] = useState<Comment[]>(post.comments); // Set initial comments
   return (
     <article id={post._id} className="bg-blue rounded py-2 md:max-w-lg">
       <Author post={post} />
-      <PostContent post={post} />
-      <Comments post={post} />
-      <CommentForm postID={post._id} />
+      <PostContent post={post} comments={comments} setComments={setComments} />
+      <Comments post={post} comments={comments} setComments={setComments} />
     </article>
   );
 };
@@ -38,22 +38,31 @@ type CommentFormTypes = {
   setRefresher: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const CommentForm = ({ postID }: { postID: string }) => {
+const CommentForm = ({ postID, refresher, setRefresher }: CommentFormTypes) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
   const userContext = useContext(UserContext);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    sendComment(postID, comment, userContext.user?._id, setCommentError).then(
-      () => {
-        console.log("swapping refr"); //not a good idea, only do this on success (handleSuccess/Error)
-        //setRefresher(!refresher);
-        setComment("");
-      }
+    sendComment(
+      postID,
+      comment,
+      userContext.user?._id,
+      handleSuccess,
+      handleError
     );
   };
-
+  const handleError = (msg: string) => {
+    setCommentError(msg);
+    //error popup
+  };
+  const handleSuccess = () => {
+    console.log("success!!");
+    setRefresher(!refresher);
+    setComment("");
+    //success popup?
+  };
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
@@ -82,6 +91,7 @@ const CommentContainer = ({
   const { comment, user, _id, createdAt } = comm;
   const userContext = useContext(UserContext);
   const [isLiked, setIsLiked] = useState<boolean>();
+  const [isSame, setIsSame] = useState<boolean>();
 
   const handleLike = () => {
     fetch(`https://fiturself.fly.dev/posts/${postID}/${_id}/like`, {
@@ -99,10 +109,13 @@ const CommentContainer = ({
       })
       .catch((err) => console.log(err));
   };
-
+  const openModal = () => {
+    console.log("open delete modal");
+  };
   useEffect(() => {
     if (comment && userContext.user) {
       setIsLiked(comm.likes.includes(userContext.user!._id));
+      setIsSame(userContext.user._id === user._id);
     }
   }, [userContext.user]);
   //avatar //name/text + date
@@ -112,7 +125,7 @@ const CommentContainer = ({
         <div className="flex gap-1 items-center">
           <div className="flex flex-col">
             <div className="flex gap-1 items-center">
-            <AvatarComment avatar={user.avatar} userID={user._id} />
+              <AvatarComment avatar={user.avatar} userID={user._id} />
               <a
                 href={`/users/${user._id}`}
                 className="text-white hover:text-yellow"
@@ -124,34 +137,65 @@ const CommentContainer = ({
             <p className="text-white2 break-all ml-8"> {comment}</p>
           </div>
         </div>
-        <button onClick={handleLike} aria-label="Like comment toggle icon">
-          {isLiked ? <LikeFilled /> : <Like />}
-        </button>
+        <div className="flex gap-1 items-start">
+          <button onClick={handleLike} aria-label="Like comment toggle icon">
+            {isLiked ? <LikeFilled /> : <Like />}
+          </button>
+          <button onClick={openModal} aria-label="Delete this comment">
+            {isSame && <DeleteSVG />}
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const Comments = ({ post }: { post: Post }) => {
+const Comments = ({
+  post,
+  comments,
+  setComments,
+}: {
+  post: Post;
+  setComments: React.Dispatch<SetStateAction<Comment[]>>;
+  comments: Comment[];
+}) => {
   const [refresher, setRefresher] = useState(false);
-  const [comments, setComments] = useState<Comment[]>(post.comments); // Set initial comments
-  // useEffect(() => {
-  //   getPostComments(post._id, setComments);
-  //   // Update everytime the comment form is successful
-  // }, [refresher]);
+
+  useEffect(() => {
+    getPostComments(post._id, setComments);
+    // Update everytime the comment form is successful
+  }, [refresher]);
   return (
-    comments.length > 0 && (
-      <div className="px-4 text-white2 text-ubuntu border-solid border-b border-grey py-2">
-        {comments.map((c) => (
-          <CommentContainer key={c._id} postID={post._id} comm={c} />
-        ))}
-      </div>
-    )
+    <div>
+      {comments.length > 0 && (
+        <div className="px-4 text-white2 text-ubuntu border-solid border-b border-grey py-2">
+          {comments.map((c) => (
+            <CommentContainer key={c._id} postID={post._id} comm={c} />
+          ))}
+        </div>
+      )}
+      <CommentForm
+        postID={post._id}
+        refresher={refresher}
+        setRefresher={setRefresher}
+      />
+    </div>
   );
 };
 
 const Author = ({ post }: { post: Post }) => {
   const { user, createdAt } = post;
+  const userContext = useContext(UserContext);
+  const [isSame, setIsSame] = useState<boolean>();
+
+  const openModal = () => {
+    console.log("open delete modal");
+  };
+  useEffect(() => {
+    if (userContext.user) {
+      setIsSame(userContext.user._id === user._id);
+    }
+  }, [userContext.user]);
   return (
     <div className="flex items-center justify-between px-4">
       <div className="flex items-center gap-2 text-white hover:text-yellow">
@@ -160,12 +204,25 @@ const Author = ({ post }: { post: Post }) => {
           {user.first_name} {user.last_name}
         </a>
       </div>
-      <Date date={createdAt} />
+      <div className="flex gap-1 items-center">
+        <Date date={createdAt} />
+        <button aria-label="Delete current post button" onClick={openModal}>
+          {isSame && <DeleteSVG />}
+        </button>
+      </div>
     </div>
   );
 };
 
-const PostContent = ({ post }: { post: Post }) => {
+const PostContent = ({
+  post,
+  comments,
+  setComments,
+}: {
+  post: Post;
+  comments: Comment[];
+  setComments: React.Dispatch<SetStateAction<Comment[]>>;
+}) => {
   const { text, user, image } = post;
   const userContext = useContext(UserContext);
   const [isLiked, setIsLiked] = useState<boolean>();
@@ -197,16 +254,12 @@ const PostContent = ({ post }: { post: Post }) => {
       <p className="font-ubuntu px-4 text-white break-all max-w-sm">{text}</p>
       <PostImage user={user} image={image} />
       <div className="px-4 border-solid border-b border-grey pb-2">
-        <PostStats post={post} isLiked={isLiked} handleLike={handleLike} />
-        {/* <div className="flex gap-1">
-          <a
-            href={`/users/${user._id}`}
-            className="font-ubuntu-500 text-white hover:text-yellow"
-          >
-            {user.first_name} {user.last_name}
-          </a>
-          <p className="font-ubuntu text-white2">{text}</p>
-        </div> */}
+        <PostStats
+          post={post}
+          comments={comments}
+          isLiked={isLiked}
+          handleLike={handleLike}
+        />
       </div>
     </div>
   );
@@ -214,18 +267,24 @@ const PostContent = ({ post }: { post: Post }) => {
 
 const PostStats = ({
   post,
+  comments,
   isLiked,
   handleLike,
 }: {
   post: Post;
   isLiked: boolean | undefined;
   handleLike: () => void;
+  comments: Comment[];
 }) => {
-  const { likes, comments } = post;
+  const { likes } = post;
   return (
     <div className="flex items-start mt-2 gap-1">
       <div>
-        <div onClick={handleLike} className="hover:cursor-pointer" aria-label="Toggle like button">
+        <div
+          onClick={handleLike}
+          className="hover:cursor-pointer"
+          aria-label="Toggle like button"
+        >
           {isLiked ? <LikeFilled /> : <Like />}
         </div>
         <div className="text-white2 font-ubuntu-500 text-sm">

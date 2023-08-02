@@ -5,9 +5,10 @@ const sendComment = async (
   id: string,
   comment: string,
   userID: string | undefined,
-  setCommentError: React.Dispatch<SetStateAction<string>>
+  handleSuccess: () => void,
+  handleError: (msg) => void
 ) => {
-  console.log('sending comment')
+  console.log("sending comment");
   await fetch(`https://fiturself.fly.dev/posts/${id}/`, {
     method: "POST",
     headers: {
@@ -18,13 +19,10 @@ const sendComment = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       if (data.errors) {
-        setCommentError(data.errors[0].msg);
-      } 
-      //comment success
-      setCommentError(" ")
-      console.log(data)
+        handleError(data.errors[0].msg);
+      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

@@ -14,13 +14,7 @@ const CommentForm = ({ postID, refr, setRefr }: CommentFormTypes) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    sendComment(postID, comment, userContext.user?._id, setCommentError).then(
-      () => {
-        console.log("swapping refr")
-        setRefr(!refr);
-        setComment("");
-      }
-    );
+
   };
 
   return (
