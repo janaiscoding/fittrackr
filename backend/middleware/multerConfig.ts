@@ -12,8 +12,8 @@ const fileFilter = (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
     file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/webp"
-    // || file.mimetype === "image/gif"
+    file.mimetype === "image/webp" ||
+    file.mimetype === "image/gif"
   ) {
     callback(null, true);
   } else {
@@ -25,6 +25,5 @@ const uploadPicture = multer({
   storage: storage,
   fileFilter: fileFilter,
 });
-
 
 export default uploadPicture;

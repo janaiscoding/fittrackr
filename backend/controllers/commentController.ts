@@ -19,7 +19,7 @@ const post_comment = [
     const { postID } = req.params;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.json({
+      return res.status(400).json({
         errors: errors.array(),
         comment: validator.unescape(comment),
       });
@@ -37,18 +37,22 @@ const post_comment = [
           post.updateOne({ $push: { comments: newComment } }),
         ])
           .then(() => {
-            res.status(200).json({ message: "Comment was successfully sent." });
+            return res
+              .status(200)
+              .json({ message: "Comment was successfully sent." });
           })
           .catch((err) => {
-            res.status(500).json({
+            return res.status(500).json({
               message: err.message,
             });
           });
       } else {
-        res.status(404).json({ message: "The user could not be found." });
+        return res
+          .status(404)
+          .json({ message: "The user could not be found." });
       }
     } catch {
-      res.status(500).json({ message: "Internal server error." });
+      return res.status(500).json({ message: "Internal server error." });
     }
   },
 ];
