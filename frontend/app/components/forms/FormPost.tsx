@@ -14,6 +14,8 @@ import UploadSVG from "@/app/assets/svgs/Upload";
 import getProfile from "@/app/api/users/get_profile";
 import createPost from "@/app/api/posts/create_post";
 import Close from "@/app/assets/svgs/Close";
+import { PostsContext } from "@/app/context/postsContext";
+import getPosts from "@/app/api/posts/get_posts";
 
 const FormPost = ({
   setShown,
@@ -28,6 +30,7 @@ const FormPost = ({
   const router = useRouter();
   const path = usePathname();
   const userContext = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -51,9 +54,8 @@ const FormPost = ({
   const handleSuccess = () => {
     //Display success message
     setSuccess(true);
-    //Tell the app the userContext change, so it can fetch the updated posts.
-    console.log("handle success, refresh user data");
-    getProfile(userContext.user?._id, userContext.setUser);
+    //Update postsContext
+    getPosts(postsContext.setPosts);
 
     setTimeout(() => {
       //Close form
@@ -84,7 +86,9 @@ const FormPost = ({
     <div className="absolute bg-transparent p-6 top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4">
       <div className="flex justify-between items-center">
         <h1 className="text-xl my-2">Create a new post!</h1>
-        <button onClick={handleClose} aria-label="Close create new post form"><Close/></button>
+        <button onClick={handleClose} aria-label="Close create new post form">
+          <Close />
+        </button>
       </div>
       <form
         className="flex items-center"

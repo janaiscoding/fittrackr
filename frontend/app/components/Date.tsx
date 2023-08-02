@@ -2,13 +2,10 @@ const { DateTime } = require("luxon");
 
 const Date = ({ date }: { date: string }) => {
   return (
-    <p className="text-white2 text-xs tracking-wider">
-      {DateTime.fromISO(date).toLocaleString({
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-      })}
+    <p className="text-white2 text-xs tracking-wider align-baseline">
+      {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}{" "}
+      - {" "}
+      {DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE)}
     </p>
   );
 };

@@ -8,6 +8,8 @@ import Home from "./main_page/Home";
 import { getJwtToken } from "./api/auth/auth_handler";
 import verifyToken from "./api/auth/verify_token";
 import { useRouter } from "next/navigation";
+import FormPost from "./components/forms/FormPost";
+import { PostsContextProvider } from "./context/postsContext";
 
 export default function App() {
   const [isShown, setShown] = useState(false);
@@ -21,10 +23,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-black">
-      <TopNav />
-      <Home isShown={isShown} setShown={setShown} />
-      <BotNav isShown={isShown} setShown={setShown} />
-    </div>
+    <PostsContextProvider>
+      <div className="bg-black">
+        <TopNav />
+        <Home />
+        {isShown && <FormPost setShown={setShown} />}
+        <BotNav isShown={isShown} setShown={setShown} />
+      </div>
+    </PostsContextProvider>
   );
 }

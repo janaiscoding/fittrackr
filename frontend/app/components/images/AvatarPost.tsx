@@ -17,13 +17,13 @@ const AvatarPost = ({
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="w-12 h-12 rounded-full object-cover border-2 border-solid border-mid-green"
+          className="w-12 h-12 rounded-full object-cover post-avatar-image"
           alt="user-profile-picture"
         />
       ) : (
         <Image
           src={defaultPic}
-          className="w-12 h-12 rounded-full object-cover border-2 border-solid border-mid-green"
+          className="w-12 h-12 rounded-full object-cover post-avatar-image"
           alt="user-default-profile-picture"
         />
       )}

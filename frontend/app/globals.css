@@ -53,6 +53,12 @@
   max-height: 2rem;
   max-width: 2rem;
 }
+.post-avatar-image{
+  min-height: 3rem;
+  min-width: 3rem;
+  max-height: 3rem;
+  max-width: 3rem;
+}
 .avatar-circle,
 .name-circle {
   display: inline-block;

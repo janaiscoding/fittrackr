@@ -5,7 +5,7 @@ import { Post, User } from "@/app/__types__/types";
 import { usePathname, useRouter } from "next/navigation";
 
 import verifyToken from "@/app/api/auth/verify_token";
-import PostArticle from "@/app/components/PostArticle";
+import PostArticle from "@/app/components/post_article/PostArticle";
 import Info from "./Info";
 import getUserPosts from "@/app/api/users/get_user_posts";
 import getUser from "@/app/api/users/get_user";

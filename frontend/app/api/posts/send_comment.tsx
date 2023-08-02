@@ -1,15 +1,15 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-
+//postID, comment, userContext.user?._id, handleSuccess, handleError
 const sendComment = async (
-  id: string,
+  postID: string,
   comment: string,
   userID: string | undefined,
   handleSuccess: () => void,
-  handleError: (msg) => void
+  handleError: (msg:string) => void
 ) => {
-  console.log("sending comment");
-  await fetch(`https://fiturself.fly.dev/posts/${id}/`, {
+  console.log("sending comment", postID, comment, userID);
+  await fetch(`https://fiturself.fly.dev/posts/${postID}/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

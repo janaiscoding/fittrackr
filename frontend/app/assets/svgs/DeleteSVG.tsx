@@ -5,7 +5,7 @@ const DeleteSVG = () => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
+      stroke="#F0CC80"
       className="w-6 h-6"
     >
       <path
