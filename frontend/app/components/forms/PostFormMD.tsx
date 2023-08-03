@@ -54,28 +54,25 @@ const PostFormMD = () => {
 
   return (
     <div className="flex-col hidden md:flex">
-      <h1 className="text-2xl font-ubuntu-500 self-start border-b-2 border-yellow2">
+      <h1 className="text-2xl font-ubuntu-500 self-start border-b-2 border-yellow2 mb-4">
         Feed..
       </h1>
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col gap-1 my-4"
-      >
+      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}
           placeholder="What's on your mind?"
-          onChange={(e) => setText(e.target.value)}
-          className="text-white w-full bg-blue outline-none rounded py-2 pb-10 px-4 pr-12 resize-none"
+          onChange={(e) => {
+            setText(e.target.value);
+            if (e.target.value.length > 1) {
+              setError(" ");
+            }
+          }}
+          className="text-white w-full bg-blue outline-none focus:ring-1 ring-yellow2 rounded py-2 pb-10 px-4 pr-12 mb-2"
         />
-        <div className="font-open flex flex-col gap-2">
-          {success && "Post sent!"}
-          {error && <p className="text-error">{error}</p>}
-          {file && <p className="text-white2">{file.name}</p>}
-        </div>
         <div className="self-end flex gap-4 text-sm">
           <label
             htmlFor="upload-image"
-            className="border border-yellow2 border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
+            className="border border-yellow2 hover:border-yellow hover:cursor-pointer border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
             aria-label="Upload a new picture"
           >
             <UploadSVG />
@@ -95,11 +92,16 @@ const PostFormMD = () => {
           <button
             aria-label="Send a new post"
             type="submit"
-            className="flex gap-1 items-center justify-between border border-yellow2 border-solid py-1 px-3 rounded"
+            className="flex gap-1 items-center justify-between border border-yellow2 hover:border-yellow border-solid py-1 px-3 rounded"
           >
             <SendSVG />
             <p>Create Post</p>
           </button>
+        </div>
+        <div className="font-open flex flex-col gap-2">
+          {success && "Post sent!"}
+          {error && <p className="text-error">{error}</p>}
+          {file && <p className="text-white2">{file.name}</p>}
         </div>
       </form>
     </div>

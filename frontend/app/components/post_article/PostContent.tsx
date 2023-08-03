@@ -22,7 +22,7 @@ const PostContent = ({ post, isLiked, setIsLiked }: PostContentProps) => {
       </p>
       <PostImage user={user} image={image} />
       <div className="px-4 border-solid border-b border-grey pb-2">
-        <PostStats post={post} isLiked={isLiked} setIsLiked={setIsLiked} />
+        <PostStats post={post} />
       </div>
     </div>
   );

@@ -34,7 +34,8 @@ const CommentForm = ({ postID }: { postID: string }) => {
     //success popup?
   };
   return (
-    <form
+    <>
+        <form
       onSubmit={(e) => handleSubmit(e)}
       className="text-ubuntu flex items-center justify-between px-4"
     >
@@ -42,12 +43,21 @@ const CommentForm = ({ postID }: { postID: string }) => {
         className="text-white w-full bg-blue outline-none pt-2 pr-12"
         placeholder={"Add a comment..."}
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={(e) => {
+          setComment(e.target.value)
+          if(e.target.value.length > 1) {
+            setCommentError("")
+          }
+        }}
       />
       <button type="submit" className="left-[90%] md:left-[94%]">
         <SendSVG />
       </button>
     </form>
+      <div className="px-4">
+        <p className="text-error">{commentError}</p>
+      </div>
+      </>
   );
 };
 
