@@ -1,13 +1,11 @@
 import { Avatar } from "@/app/__types__/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
-const AvatarPost = ({
-  avatar,
-  userID,
-}: {
+type AvatarProps = {
   avatar: Avatar;
   userID: string;
-}) => {
+};
+const AvatarPost = ({ avatar, userID }: AvatarProps) => {
   return (
     <a href={`/users/${userID}`}>
       {avatar !== undefined ? (

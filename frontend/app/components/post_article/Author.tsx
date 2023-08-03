@@ -1,43 +1,53 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import deletePost from "@/app/api/posts/delete_post";
 import getPosts from "@/app/api/posts/get_posts";
 import DeleteSVG from "@/app/assets/svgs/DeleteSVG";
 import { PostsContext } from "@/app/context/postsContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Date } from "../Date";
 import AvatarPost from "../images/AvatarPost";
-import { Post } from "@/app/__types__/types";
+import { ShortUser } from "@/app/__types__/types";
+import { UserContext } from "@/app/context/userContext";
 
-const Author = ({
-  post,
-  isSame,
-}: {
-  post: Post;
-  isSame: boolean | undefined;
-}) => {
-  const { user, createdAt } = post;
+type AuthorProps = {
+  postID: string;
+  author: ShortUser;
+  createdAt: string;
+};
+
+const Author = ({ postID, author, createdAt }: AuthorProps) => {
+  const { avatar, _id, first_name, last_name } = author;
+
+  const [isAuthor, setIsAuthor] = useState<boolean>();
+
   const postsContext = useContext(PostsContext);
+  const userContext = useContext(UserContext);
+  //TODO MODAL
   const openModal = () => {
     console.log("open delete modal");
-    // add this on confirm v
-    deletePost(post._id, handleSuccessDELETE);
+    deletePost(postID, handleSuccess);
   };
-  const handleSuccessDELETE = () => {
-    //Updating PostsContext.
+  const handleSuccess = () => {
     getPosts(postsContext.setPosts);
   };
 
+  useEffect(() => {
+    if (userContext.user) {
+      setIsAuthor(author._id === userContext.user._id);
+    }
+  }, [postsContext.posts]);
   return (
     <div className="flex items-center justify-between px-4">
       <div className="flex items-center gap-2 text-white hover:text-yellow">
-        <AvatarPost avatar={user.avatar} userID={user._id} />
-        <a href={`/users/${user._id}`} className="font-ubuntu-500">
-          {user.first_name} {user.last_name}
+        <AvatarPost avatar={avatar} userID={_id} />
+        <a href={`/users/${_id}`} className="font-ubuntu-500">
+          {first_name} {last_name}
         </a>
       </div>
       <div className="flex gap-1 items-center">
         <Date date={createdAt} />
         <button aria-label="Delete current post button" onClick={openModal}>
-          {isSame && <DeleteSVG />}
+          {isAuthor && <DeleteSVG />}
         </button>
       </div>
     </div>

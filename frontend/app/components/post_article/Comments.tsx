@@ -1,47 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Comment, Post } from "@/app/__types__/types";
-import getPostComments from "@/app/api/posts/get_post_comments";
-import { SetStateAction, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CommentContainer from "./CommentContainer";
 import CommentForm from "./CommentForm";
+import { PostsContext } from "@/app/context/postsContext";
 
-const Comments = ({
-  post,
-  comments,
-  setComments,
-}: {
-  post: Post;
-  setComments: React.Dispatch<SetStateAction<Comment[]>>;
-  comments: Comment[];
-}) => {
-  const [refresher, setRefresher] = useState<boolean | null>(null);
+type CommentsProps = {
+  postID: string;
+  postComments: Comment[];
+};
+
+const Comments = ({ postID, postComments }: CommentsProps) => {
+  const [comments, setComments] = useState<Comment[]>([] as Comment[]);
+  const postsContext = useContext(PostsContext);
 
   useEffect(() => {
-    if (refresher !== null) {
-      // Update specific post comments everytime the comment POST is successful
-      getPostComments(post._id, setComments);
-    }
-  }, [refresher]);
+    setComments(postComments);
+  }, [postsContext.posts]);
+
   return (
     <div>
       {comments.length > 0 && (
         <div className="px-4 text-white2 text-ubuntu border-solid border-b border-grey py-2">
           {comments.map((c) => (
-            <CommentContainer
-              key={c._id}
-              postID={post._id}
-              comm={c}
-              refresher={refresher}
-              setRefresher={setRefresher}
-            />
+            <CommentContainer key={c._id} postID={postID} comm={c} />
           ))}
         </div>
       )}
-      <CommentForm
-        postID={post._id}
-        refresher={refresher}
-        setRefresher={setRefresher}
-      />
+      <CommentForm postID={postID} />
     </div>
   );
 };

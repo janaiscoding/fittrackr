@@ -4,60 +4,55 @@ import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
 import AvatarComment from "./AvatarComment";
 import { Date } from "../Date";
-import { SetStateAction, useContext, useEffect, useState } from "react";
-import deleteComment from "@/app/api/posts/delete_comment";
-import { getJwtToken } from "@/app/api/auth/auth_handler";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import { Comment } from "@/app/__types__/types";
+import likeComment from "@/app/api/posts/like_comment";
+import deleteComment from "@/app/api/posts/delete_comment";
+import { PostsContext } from "@/app/context/postsContext";
+import getPosts from "@/app/api/posts/get_posts";
 
-const CommentContainer = ({
-  postID,
-  comm,
-  refresher,
-  setRefresher,
-}: {
+type CommContainerProps = {
   postID: string;
   comm: Comment;
-  refresher: boolean | null;
-  setRefresher: React.Dispatch<SetStateAction<boolean | null>>;
-}) => {
+};
+
+const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const { comment, user, _id, createdAt } = comm;
   const userContext = useContext(UserContext);
+  const postsContext = useContext(PostsContext);
   const [isLiked, setIsLiked] = useState<boolean>();
-  const [isSame, setIsSame] = useState<boolean>();
+  const [isAuthor, setIsAuthor] = useState<boolean>();
 
   const handleLike = () => {
-    fetch(`https://fiturself.fly.dev/posts/${postID}/${_id}/like`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${getJwtToken()}`,
-      },
-      body: JSON.stringify({ userID: userContext.user?._id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        comm.likes = data.likes;
-        setIsLiked(!isLiked);
-      })
-      .catch((err) => console.log(err));
+    likeComment(postID, _id, userContext.user?._id, handleSuccessLike);
+    // handleError placeholder is just a console.log for now.
   };
+
   const openModal = () => {
-    console.log("open delete modal");
+    console.log("Open delete modal.", "And then on confirm:");
     handleDeleteComment();
   };
+
   const handleDeleteComment = () => {
-    //delete comment
-    deleteComment(postID, _id, userContext.user?._id, handleSuccessDELETE);
+    deleteComment(postID, _id, userContext.user?._id, handleSuccessDelete);
   };
-  const handleSuccessDELETE = () => {
-    setRefresher(!refresher);
-    // Updating comments with a GET post/:id/ request - sadly 2 API calls, but optimistic UI was throwing an error related to React re-rendering if I deleted and then posted a new comment.
+
+  const handleSuccessLike = (data: { likes: string[] }) => {
+    //Set the new like counter(maybe add "onHover: displayLikes()") and UI state.
+    comm.likes = data.likes;
+    setIsLiked(!isLiked);
+  };
+
+  const handleSuccessDelete = () => {
+    console.log("On delete success, re-fetch the new comments:");
+    getPosts(postsContext.setPosts);
   };
   useEffect(() => {
+    // When a new comment gets rendered, establish the initial status.
     if (comment && userContext.user) {
       setIsLiked(comm.likes.includes(userContext.user!._id));
-      setIsSame(userContext.user._id === user._id);
+      setIsAuthor(userContext.user._id === user._id);
     }
   }, [userContext.user]);
 
@@ -84,7 +79,7 @@ const CommentContainer = ({
             {isLiked ? <LikeFilled /> : <Like />}
           </button>
           <button onClick={openModal} aria-label="Delete this comment">
-            {isSame && <DeleteSVG />}
+            {isAuthor && <DeleteSVG />}
           </button>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { SetStateAction } from "react";
 import { User } from "../../__types__/types";
 import { getJwtToken } from "../auth/auth_handler";
 
-
 const getProfile = (
   id: string | undefined,
   setter: React.Dispatch<SetStateAction<User | null>>
