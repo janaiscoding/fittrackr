@@ -6,6 +6,7 @@ const createPost = async (
   handleError: (data: string) => void,
   handleSuccess: () => void
 ) => {
+  console.log("create")
   await fetch(postsAPI, {
     method: "POST",
     headers: {

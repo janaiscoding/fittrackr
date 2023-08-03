@@ -38,9 +38,9 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   }, [postsContext.posts]);
   return (
     <div className="flex items-center justify-between px-4">
-      <div className="flex items-center gap-2 text-white hover:text-yellow">
+      <div className="flex items-center gap-2">
         <AvatarPost avatar={avatar} userID={_id} />
-        <a href={`/users/${_id}`} className="font-ubuntu-500">
+        <a href={`/users/${_id}`} className="font-ubuntu-500 text-white hover:text-yellow">
           {first_name} {last_name}
         </a>
       </div>
