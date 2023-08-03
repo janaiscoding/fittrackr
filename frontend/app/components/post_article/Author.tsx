@@ -46,7 +46,7 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
       </div>
       <div className="flex gap-1 items-center">
         <Date date={createdAt} />
-        <button aria-label="Delete current post button" onClick={openModal}>
+        <button aria-label="Delete current post button" onClick={openModal} title="Delete this post">
           {isAuthor && <DeleteSVG />}
         </button>
       </div>

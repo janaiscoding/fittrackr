@@ -75,10 +75,25 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
           </div>
         </div>
         <div className="flex gap-1 items-start">
-          <button onClick={handleLike} aria-label="Like comment toggle icon">
+          <button
+            onClick={handleLike}
+            className="relative"
+            aria-label="Like comment toggle icon"
+            title={` ${comm.likes.length} ${
+              comm.likes.length === 1 ? "like" : "likes"
+            }
+            `}
+          >
+            <p className="text-white2 text-xs absolute left-[90%] top-[-20%]">
+              {comm.likes.length}
+            </p>
             {isLiked ? <LikeFilled /> : <Like />}
           </button>
-          <button onClick={openModal} aria-label="Delete this comment">
+          <button
+            onClick={openModal}
+            aria-label="Delete this comment"
+            title="Delete this comment"
+          >
             {isAuthor && <DeleteSVG />}
           </button>
         </div>
