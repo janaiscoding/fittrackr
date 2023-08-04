@@ -7,7 +7,9 @@ import { useState } from "react";
 import { setJwtToken } from "../api/auth/auth_handler";
 
 const Login = () => {
-  const [errors, setErrors] = useState<{msg:string}[]>([] as {msg:string}[]);
+  const [errors, setErrors] = useState<{ msg: string }[]>(
+    [] as { msg: string }[]
+  );
 
   const demoEmail = "";
   const demoPassword = "";
@@ -19,14 +21,17 @@ const Login = () => {
     setJwtToken(data.token);
     router.push("/");
   };
-  const handleError = (data: { errors: {msg:string}[]; message: string }) => {
+  const handleError = (data: {
+    errors: { msg: string }[];
+    message: string;
+  }) => {
     if (data.errors) {
       setErrors(data.errors);
     } else {
-      setErrors([{msg: data.message}]);
+      setErrors([{ msg: data.message }]);
     }
   };
-  console.log(errors)
+  console.log(errors);
   return (
     <div className="min-h-screen gradient-bg flex flex-col justify-center ">
       <div className=" flex flex-col items-center justify-between gap-10 py-10">
@@ -36,6 +41,8 @@ const Login = () => {
             Sign in to your account
           </div>
           <LoginForm />
+          {errors.length > 0 &&
+            errors.map((err, i) => <p key={i}>{err.msg}</p>)}
           <p className="text-center text-white2 mt-2">
             Dont have an account?{" "}
             <button
@@ -57,7 +64,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-       {errors.length > 0 && errors.map((err, i) => <p key={i}>{err.msg}</p>)} 
     </div>
   );
 };
