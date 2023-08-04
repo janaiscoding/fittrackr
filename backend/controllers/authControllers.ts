@@ -94,8 +94,16 @@ const create_user = [
 ];
 
 const login_post = [
-  body("email", "Email is required").trim().isEmail().notEmpty().escape(),
-  body("password", "Password is required").trim().notEmpty().escape(),
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("Email is required")
+    .escape(),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required")
+    .escape(),
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     const errors = validationResult(req);
