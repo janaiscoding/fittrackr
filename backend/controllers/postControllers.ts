@@ -15,7 +15,10 @@ const posts_get = async (req: Request, res: Response) => {
       .populate({
         path: "comments",
         options: { sort: { createdAt: "desc" } },
-        populate: { path: "user", select: "first_name last_name avatar" },
+        populate: {
+          path: "user",
+          select: "first_name last_name avatar",
+        },
       });
     if (postsData) {
       const posts = postsData.map((post) => {
@@ -44,7 +47,10 @@ const post_get = async (req: Request, res: Response) => {
         path: "comments",
         select: "comment likes createdAt",
         options: { sort: { createdAt: "desc" } },
-        populate: { path: "user", select: "first_name last_name avatar" },
+        populate: {
+          path: "user",
+          select: "first_name last_name avatar",
+        },
       })
       .populate({ path: "user", select: "first_name last_name avatar" });
     if (post) {
@@ -62,7 +68,6 @@ const post_get = async (req: Request, res: Response) => {
     res.status(404).json({ message: "This post doesn't exist." });
   }
 };
-
 
 const post_create = [
   (req: Request, res: Response, next: NextFunction) => {
@@ -122,14 +127,14 @@ const post_create = [
           });
         });
       } else {
-        res
-          .status(404)
-          .json({ message: "No user was not found to make this post." });
+        res.status(404).json({
+          message: "No user was not found to make this post.",
+        });
       }
     } catch {
-      res
-        .status(404)
-        .json({ message: "No user was not found to make this post." });
+      res.status(404).json({
+        message: "No user was not found to make this post.",
+      });
     }
   },
 ];
@@ -164,7 +169,9 @@ const post_update = [
             text: uText,
           })
           .then(() => {
-            res.status(200).json({ message: "Post was successfully updated!" });
+            res.status(200).json({
+              message: "Post was successfully updated!",
+            });
           });
       } else {
         res.status(403).json({ message: "You cannot edit this post." });
@@ -193,7 +200,9 @@ const post_delete = async (req: Request, res: Response) => {
         user!.updateOne({ $pull: { posts: postID } }),
       ])
         .then(() => {
-          res.status(200).json({ message: "Post was deleted successfully!" });
+          res.status(200).json({
+            message: "Post was deleted successfully!",
+          });
         })
         .catch((err) => {
           res.status(500).json({ message: err.message });

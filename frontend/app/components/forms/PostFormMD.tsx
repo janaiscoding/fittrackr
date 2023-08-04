@@ -4,8 +4,6 @@ import SendSVG from "@/app/assets/svgs/SendSVG";
 import UploadSVG from "@/app/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
 import { SyntheticEvent, useContext, useState } from "react";
 
 const PostFormMD = () => {
@@ -27,9 +25,9 @@ const PostFormMD = () => {
       formData.append("mimeType", file.type);
     }
     if (text.length === 0) {
+      //Rather than waiting for the server response, this is pre-handled here instead
       setError("Post is too short.");
     } else {
-      console.log("still here");
       createPost(formData, handleError, handleSuccess);
     }
   };
@@ -58,7 +56,7 @@ const PostFormMD = () => {
   };
 
   return (
-    <div className="flex-col hidden md:flex">
+    <div className="flex-col flex p-4 bg-blue rounded">
       <h1 className="text-2xl font-ubuntu-500 self-start border-b-2 border-yellow2 mb-4">
         Feed..
       </h1>
@@ -72,12 +70,17 @@ const PostFormMD = () => {
               setError(" ");
             }
           }}
-          className="text-white w-full bg-blue outline-none focus:ring-1 ring-yellow2 rounded py-2 pb-10 px-4 pr-12 mb-2"
+          className="text-white w-full bg-black outline-none focus:ring-1 ring-yellow2 rounded py-2 pb-10 px-4 pr-12 mb-2"
         />
-        <div className="self-end flex gap-4 text-sm">
+        <div className="self-end flex gap-4 text-sm items-center">
+          <div className="font-open flex flex-col items-center gap-2">
+            {success && "Post sent!"}
+            {error && <p className="text-xs text-error">{error}</p>}
+            {file && <p className="text-xs text-white2">{file.name}</p>}
+          </div>
           <label
             htmlFor="upload-image"
-            className="border border-yellow2 hover:border-yellow hover:cursor-pointer border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
+            className="border border-yellow2 hover:border-yellow hover:cursor-pointer hover:bg-black border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
             aria-label="Upload a new picture"
           >
             <UploadSVG />
@@ -91,22 +94,16 @@ const PostFormMD = () => {
                 setFile(e.target.files![0]);
               }}
             />
-            <p>Upload Image</p>
           </label>
 
           <button
             aria-label="Send a new post"
             type="submit"
-            className="flex gap-1 items-center justify-between border border-yellow2 hover:border-yellow border-solid py-1 px-3 rounded"
+            className="flex gap-1 items-center justify-between border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
           >
             <SendSVG />
             <p>Create Post</p>
           </button>
-        </div>
-        <div className="font-open flex flex-col gap-2">
-          {success && "Post sent!"}
-          {error && <p className="text-error">{error}</p>}
-          {file && <p className="text-white2">{file.name}</p>}
         </div>
       </form>
     </div>

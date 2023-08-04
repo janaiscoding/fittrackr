@@ -72,9 +72,9 @@ const create_user = [
             // birthday,
           })
             .then(() => {
-              res
-                .status(201)
-                .json({ message: "New user successfully created!" });
+              res.status(201).json({
+                message: "New user successfully created!",
+              });
             })
             .catch((err) => {
               res.status(400).json({
@@ -94,11 +94,7 @@ const create_user = [
 ];
 
 const login_post = [
-  body("email")
-    .trim()
-    .isEmail()
-    .withMessage("Email is not valid.")
-    .escape(),
+  body("email").trim().isEmail().withMessage("Email is not valid.").escape(),
   body("password")
     .trim()
     .notEmpty()
@@ -119,10 +115,14 @@ const login_post = [
         bcrypt.compare(password, user.password, (err, compare) => {
           if (err) return next(err);
           if (compare) {
-            //@ts-ignore
-            const token = jwt.sign({ userID: user._id }, process.env.secret, {
-              expiresIn: "24hr",
-            });
+            const token = jwt.sign(
+              { userID: user._id },
+              //@ts-ignore
+              process.env.secret,
+              {
+                expiresIn: "24hr",
+              }
+            );
             user.password = ""; //Instead of performing a query again and using select("-email -password") - Preventing sending passwords to client.
             return res.status(200).json({ token, user });
           } else {

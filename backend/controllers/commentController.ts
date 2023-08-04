@@ -37,9 +37,9 @@ const post_comment = [
           post.updateOne({ $push: { comments: newComment } }),
         ])
           .then(() => {
-            return res
-              .status(200)
-              .json({ message: "Comment was successfully sent." });
+            return res.status(200).json({
+              message: "Comment was successfully sent.",
+            });
           })
           .catch((err) => {
             return res.status(500).json({
@@ -64,7 +64,6 @@ const comment_like = async (req: Request, res: Response) => {
     const post = await Post.findById(postID);
     const comment = await Comment.findById(commentID);
     const user = await User.findById(userID);
-    //All NEED to be valid
     if (post && comment && user) {
       if (comment.likes.includes(userID)) {
         await comment.updateOne({ $pull: { likes: userID } });
@@ -98,7 +97,9 @@ const comment_delete = async (req: Request, res: Response) => {
         post.updateOne({ $pull: { comments: commentID } }),
       ])
         .then(() => {
-          res.status(200).json({ message: "Comment was successfully deleted" });
+          res.status(200).json({
+            message: "Comment was successfully deleted",
+          });
         })
         .catch((err: any) => {
           res.status(400).json({ message: err.message });
