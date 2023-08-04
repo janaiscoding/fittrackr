@@ -13,22 +13,32 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="home-image min-h-screen">
-      <div className="bg-transparent min-h-screen py-8 flex flex-col justify-center font-open items-center">
-        <div
-          className="font-bold font-ubuntu-500 text-4xl text-green text-center px-6"
-          data-testid="welcome-element"
-        >
-          <h1>Welcome to</h1>
-          <p className="text-yellow">urjourney.</p>
+    <div className="gradient-bg font-open min-h-screen gap-6 flex flex-col md:flex-row justify-center items-center">
+      <div className="flex flex-col md:flex-row gap-6 px-6">
+        <WelcomeElement />
+        <div className="p-10 rounded border border-neutral-900 gradient-form">
+          <SignUpForm />
+          <p className="text-center text-white2 mt-2">
+            Already have an account?{" "}
+            <span className="text-yellow font-bold">
+              <a href="/login">Sign in</a>
+            </span>
+          </p>
         </div>
-        <SignUpForm />
-        <p className="text-center text-white2 mt-2">
-          Already have an account?{" "}
-          <span className="text-yellow font-bold">
-            <a href="/login">Sign in</a>
-          </span>
-        </p>
+      </div>
+    </div>
+  );
+};
+const WelcomeElement = () => {
+  return (
+    <div className="font-ubuntu-500 flex flex-col gap-6 md:w-1/2">
+      <div data-testid="welcome-element" className="text-4xl text-center md:text-left md:text-6xl ">
+        <h1>Welcome to</h1>
+        <p className="text-yellow">urjourney.</p>
+      </div>
+      <div className="hidden md:block text-xl font-open w-2/3">
+        Join our community of passionate athletes and inspire the world with
+        your personal fitness journey!
       </div>
     </div>
   );

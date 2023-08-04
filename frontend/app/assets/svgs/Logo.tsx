@@ -2,7 +2,7 @@ const Logo = () => {
   return (
     <a href="/">
       <svg
-        className="h-8 w-full self-center"
+        className="h-16 w-full self-center"
         viewBox="10 0 390 110"
         data-testid="svg-element"
       >

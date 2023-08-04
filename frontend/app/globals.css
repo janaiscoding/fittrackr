@@ -43,9 +43,17 @@
     rgba(0, 0, 0, 0.9) 100%
   );
 }
-
-.home-image {
-  background-color: #111111;
+.gradient-bg {
+  background: #161719;
+  background: -moz-radial-gradient(center, #161719 0%, #03090F 74%, #000000 100%);
+  background: -webkit-radial-gradient(center, #161719 0%, #03090F 74%, #000000 100%);
+  background: radial-gradient(ellipse at center, #161719 0%, #03090F 74%, #000000 100%);
+}
+.gradient-form{
+  background: #080B11;
+  background: -moz-linear-gradient(45deg, #080B11 0%, #0F0F11 50%, #141416 100%);
+  background: -webkit-linear-gradient(45deg, #080B11 0%, #0F0F11 50%, #141416 100%);
+  background: linear-gradient(45deg, #080B11 0%, #0F0F11 50%, #141416 100%);
 }
 .comment-image {
   min-height: 2rem;
@@ -53,7 +61,7 @@
   max-height: 2rem;
   max-width: 2rem;
 }
-.post-avatar-image{
+.post-avatar-image {
   min-height: 3rem;
   min-width: 3rem;
   max-height: 3rem;
@@ -92,16 +100,4 @@ input:focus.valid,
 input:-webkit-autofill:focus.valid {
   color: #f3f3f3;
   border-bottom: 1px solid #2eb97c !important;
-}
-
-@media only screen and (max-width: 600px) {
-  .home-image {
-    background: url("../public/anastase-maragos-jzP8_Rg6aVU-unsplash-_2_.webp")
-      no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: 160%;
-    height: auto;
-  }
 }

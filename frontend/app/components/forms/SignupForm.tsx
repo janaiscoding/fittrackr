@@ -63,7 +63,7 @@ const SignUpForm = () => {
 
   return (
     <form
-      className="px-6 text-white flex flex-col gap-2 mt-4" 
+      className="text-white flex flex-col gap-2"
       onSubmit={(e) => handleSignup(e)}
     >
       <label className="flex flex-col">
