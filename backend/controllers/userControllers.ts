@@ -29,7 +29,19 @@ const get_users = async (req: Request, res: Response) => {
     res.status(500).json({ message: err.message });
   }
 };
-
+const get_username = async (req: Request, res: Response) => {
+  const { userID } = req.params;
+  try {
+    const user = await User.findById(userID).select("first_name last_name");
+    if (user) {
+      res.status(200).json({ username: user.first_name +" "+ user.last_name });
+    } else {
+      res.status(404).json({ msg: "User not found." });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 // I need user's: default data + friends + posts(populated) + workouts
 const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
@@ -487,6 +499,7 @@ export default {
   get_users,
   get_profile,
   get_user_posts,
+  get_username,
   update_account,
   update_pfp,
   delete_account,

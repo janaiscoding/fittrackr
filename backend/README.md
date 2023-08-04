@@ -15,6 +15,8 @@ Token expires in 24hr.
 | ------------------------- | ------- | ------------------------------------------------ | --------- | ----------------- | ------------------------------------------------------------ |
 | /users                    | GET     | Fetch all users in the platform.                 | True      | True              | -                                                            |
 | /users/:userID            | GET     | Fetch existing user data.                        | True      | True              | -                                                            |
+| /users/:userID/username   | GET     | Fetch existing user username.                    | True      | True              | -                                                            |
+| /users/:userID/posts      | GET     | Fetch existing user posts.                       | True      | True              | -                                                            |
 | /users/:userID            | PUT     | Update existing user data.                       | True      | True              | ufirst_name, ulast_name, ubio, ucurrent_weight, ugoal_weight |
 | /users/:userID/upload     | POST    | Upload user profile picture.                     | True      | False(used views) | -                                                            |
 | /users/:userID            | DELETE  | Delete user from database cleanup all user data. | True      | True              | -                                                            |

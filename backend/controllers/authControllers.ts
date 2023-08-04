@@ -97,12 +97,12 @@ const login_post = [
   body("email")
     .trim()
     .isEmail()
-    .withMessage("Email is required")
+    .withMessage("Email is not valid.")
     .escape(),
   body("password")
     .trim()
     .notEmpty()
-    .withMessage("Password is required")
+    .withMessage("Password is required.")
     .escape(),
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
@@ -114,7 +114,7 @@ const login_post = [
         const user = await User.findOne({ email });
         if (!user)
           return res.status(404).json({
-            message: "Could not find an account associated with this email.",
+            message: "Account not found.",
           });
         bcrypt.compare(password, user.password, (err, compare) => {
           if (err) return next(err);
