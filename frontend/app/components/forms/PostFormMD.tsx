@@ -26,7 +26,12 @@ const PostFormMD = () => {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
-    createPost(formData, handleError, handleSuccess);
+    if (text.length === 0) {
+      setError("Post is too short.");
+    } else {
+      console.log("still here");
+      createPost(formData, handleError, handleSuccess);
+    }
   };
 
   const handleError = (data: string) => {

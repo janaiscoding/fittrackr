@@ -6,7 +6,7 @@ const sendComment = async (
   comment: string,
   userID: string | undefined,
   handleSuccess: () => void,
-  handleError: (msg:string) => void
+  handleError: (msg: string) => void
 ) => {
   console.log("sending comment", postID, comment, userID);
   await fetch(`https://fiturself.fly.dev/posts/${postID}/`, {
@@ -21,8 +21,9 @@ const sendComment = async (
     .then((data) => {
       if (data.errors) {
         handleError(data.errors[0].msg);
+      } else {
+        handleSuccess();
       }
-      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

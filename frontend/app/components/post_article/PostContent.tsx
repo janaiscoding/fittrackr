@@ -8,16 +8,14 @@ import likePost from "@/app/api/posts/like_post";
 
 type PostContentProps = {
   post: Post;
-  isLiked: boolean | undefined;
-  setIsLiked: React.Dispatch<SetStateAction<boolean | undefined>>;
 };
 
-const PostContent = ({ post, isLiked, setIsLiked }: PostContentProps) => {
+const PostContent = ({ post }: PostContentProps) => {
   const { text, user, image } = post;
 
   return (
     <div>
-      <p className="font-ubuntu px-4 mb-2 text-white break-all max-w-sm">
+      <p className="font-ubuntu px-4 my-2 text-white break-all max-w-sm">
         {text}
       </p>
       <PostImage user={user} image={image} />

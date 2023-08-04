@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import DeleteSVG from "@/app/assets/svgs/DeleteSVG";
 import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
 import AvatarComment from "./AvatarComment";
@@ -12,6 +11,7 @@ import deleteComment from "@/app/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/api/posts/get_posts";
 import getUsername from "@/app/api/users/get_username";
+import Close from "@/app/assets/svgs/Close";
 
 type CommContainerProps = {
   postID: string;
@@ -88,13 +88,22 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
             <p className="text-white2 break-all ml-8"> {comment}</p>
           </div>
         </div>
-        <div className="flex gap-1 items-start">
+        <div className="flex flex-col gap-1 items-start">
           {showNames && likenames.length > 0 && (
             <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-blue border border-solid border-slate-900 text-yellow">
               {likenames.map((name, i) => (
                 <p key={i}>{name}</p>
               ))}
             </div>
+          )}
+          {isAuthor && (
+            <button
+              onClick={openModal}
+              aria-label="Delete this comment"
+              title="Delete"
+            >
+              <Close />
+            </button>
           )}
           <button
             onClick={handleLike}
@@ -107,13 +116,6 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
               {comm.likes.length > 0 && comm.likes.length}
             </p>
             {isLiked ? <LikeFilled /> : <Like />}
-          </button>
-          <button
-            onClick={openModal}
-            aria-label="Delete this comment"
-            title="Delete this comment"
-          >
-            {isAuthor && <DeleteSVG />}
           </button>
         </div>
       </div>
