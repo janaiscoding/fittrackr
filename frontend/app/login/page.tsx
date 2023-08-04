@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import loginRequest from "../api/auth/login_request";
-import Logo from "../assets/svgs/Logo";
 import LoginForm from "../components/forms/LoginForm";
 import { useState } from "react";
 import { setJwtToken } from "../api/auth/auth_handler";
+import LogoFront from "../assets/LogoFront";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(
@@ -35,14 +35,18 @@ const Login = () => {
   return (
     <div className="min-h-screen gradient-bg flex flex-col justify-center ">
       <div className=" flex flex-col items-center justify-between gap-10 py-10">
-        <Logo />
+        <LogoFront />
         <div className="flex flex-col items-center justify-between gap-1 p-10 rounded border border-neutral-900 gradient-form ">
           <div className="text-center text-yellow text-2xl font-ubuntu underline">
             Sign in to your account
           </div>
           <LoginForm />
           {errors.length > 0 &&
-            errors.map((err, i) => <p key={i}>{err.msg}</p>)}
+            errors.map((err, i) => (
+              <p className="text-error" key={i}>
+                {err.msg}
+              </p>
+            ))}
           <p className="text-center text-white2 mt-2">
             Dont have an account?{" "}
             <button
@@ -52,6 +56,7 @@ const Login = () => {
               <a href="/signup">Sign up</a>
             </button>{" "}
           </p>
+
           <p className="text-center text-white2">
             or try the{" "}
             <button
@@ -68,4 +73,16 @@ const Login = () => {
   );
 };
 
+const ErrorPopup = ({ errors }: { errors: { msg: string }[] }) => {
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 bg-blue p-20 rounded-xl">
+      {errors.length > 0 &&
+        errors.map((err, i) => (
+          <p className="text-error" key={i}>
+            {err.msg}
+          </p>
+        ))}
+    </div>
+  );
+};
 export default Login;

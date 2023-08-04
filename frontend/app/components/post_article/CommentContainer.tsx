@@ -11,6 +11,7 @@ import likeComment from "@/app/api/posts/like_comment";
 import deleteComment from "@/app/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/api/posts/get_posts";
+import getUsername from "@/app/api/users/get_username";
 
 type CommContainerProps = {
   postID: string;
@@ -21,6 +22,10 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const { comment, user, _id, createdAt } = comm;
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
+
+  const [likenames, setLikenames] = useState<string[]>([] as string[]);
+  const [showNames, setShowNames] = useState(false);
+
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isAuthor, setIsAuthor] = useState<boolean>();
 
@@ -48,6 +53,15 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
     console.log("On delete success, re-fetch the new comments:");
     getPosts(postsContext.setPosts);
   };
+  const getLikeNames = () => {
+    setLikenames([]);
+    comm.likes.forEach((userID) => getUsername(userID, setLikenames));
+  };
+
+  useEffect(() => {
+    getLikeNames();
+  }, [comm.likes]);
+
   useEffect(() => {
     // When a new comment gets rendered, establish the initial status.
     if (comment && userContext.user) {
@@ -75,17 +89,22 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
           </div>
         </div>
         <div className="flex gap-1 items-start">
+          {showNames && likenames.length > 0 && (
+            <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-blue border border-solid border-slate-900 text-yellow">
+              {likenames.map((name, i) => (
+                <p key={i}>{name}</p>
+              ))}
+            </div>
+          )}
           <button
             onClick={handleLike}
             className="relative"
             aria-label="Like comment toggle icon"
-            title={` ${comm.likes.length} ${
-              comm.likes.length === 1 ? "like" : "likes"
-            }
-            `}
+            onMouseEnter={() => setShowNames(true)}
+            onMouseLeave={() => setShowNames(false)}
           >
-            <p className="text-white2 text-xs absolute left-[90%] top-[-20%]">
-              {comm.likes.length}
+            <p className="text-white text-xs absolute left-[90%] top-[-20%]">
+              {comm.likes.length > 0 && comm.likes.length}
             </p>
             {isLiked ? <LikeFilled /> : <Like />}
           </button>

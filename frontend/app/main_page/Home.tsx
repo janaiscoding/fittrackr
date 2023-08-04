@@ -15,12 +15,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-[90vh] md:px-20 flex md:justify-between justify-center items-start gap-2 my-10">
+    <div className="min-h-[90vh] md:px-20 flex md:justify-between justify-center items-start gap-2 py-10">
       <div className="hidden md:block">left side</div>
       {postsContext.posts?.length === 0 ? (
         "Loading animation"
       ) : (
-        <div className="flex flex-col font-ubuntu gap-6 bg-black mb-10">
+        <div className="flex flex-col font-ubuntu gap-6 mb-10">
           <PostFormMD />
           {postsContext.posts?.map((post, i) => (
             <PostArticle key={i} post={post} />

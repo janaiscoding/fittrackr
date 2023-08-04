@@ -8,7 +8,9 @@ import loginRequest from "@/app/api/auth/login_request";
 const LoginForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{ msg: string }[]>(
+    [] as { msg: string }[]
+  );
 
   const router = useRouter();
 
@@ -20,8 +22,15 @@ const LoginForm = () => {
     setJwtToken(data.token);
     router.push("/");
   };
-  const handleError = (data: { message: string }) => {
-    setError(data.message);
+  const handleError = (data: {
+    errors: { msg: string }[];
+    message: string;
+  }) => {
+    if (data.errors) {
+      setErrors(data.errors);
+    } else {
+      setErrors([{ msg: data.message }]);
+    }
   };
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
@@ -41,7 +50,12 @@ const LoginForm = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      {error && <p className="text-red">{error}</p>}
+      {errors.length > 0 &&
+        errors.map((err, i) => (
+          <p className="text-error" key={i}>
+            {err.msg}
+          </p>
+        ))}
       <button
         type="submit"
         className="text-2xl text-center text-black bg-yellow rounded-2xl font-medium py-2 w-full md:self-center mt-3"
