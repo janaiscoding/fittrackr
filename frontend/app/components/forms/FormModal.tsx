@@ -78,44 +78,46 @@ const FormModal = () => {
   };
 
   return (
-    <div className="absolute bg-transparent p-6 top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4">
+    <div className="bg-black2 p-6 absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-full font-ubuntu">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl my-2">Create a new post!</h1>
+        <h1 className="text-xl my-2 text-yellow">Create a new post!</h1>
         <button onClick={handleClose} aria-label="Close create new post form">
           <Close />
         </button>
       </div>
       <form
-        className="flex items-center"
+        className="flex items-center justify-between gap-2"
         onSubmit={(e) => handleSubmit(e)}
         encType="multipart/form-data"
       >
-        <label>
+        <label className="w-full basis-full">
           <input
             type="text"
-            className="w-full"
+            className="text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded "
             onChange={(e) => {
               setText(e.target.value);
             }}
           />
         </label>
-        <label htmlFor="upload-image" aria-label="Upload a new picture">
-          <UploadSVG />
-          <input
-            type="file"
-            name="myImage"
-            accept="image/*"
-            id="upload-image"
-            className="hidden"
-            onChange={(e) => {
-              setFile(e.target.files![0]);
-            }}
-          />
-        </label>
+        <div className="flex gap-2">
+          <label htmlFor="upload-image" aria-label="Upload a new picture">
+            <UploadSVG />
+            <input
+              type="file"
+              name="myImage"
+              accept="image/*"
+              id="upload-image"
+              className="hidden"
+              onChange={(e) => {
+                setFile(e.target.files![0]);
+              }}
+            />
+          </label>
 
-        <button type="submit" aria-label="Submit your new post">
-          <SendSVG />
-        </button>
+          <button type="submit" aria-label="Submit your new post">
+            <SendSVG />
+          </button>
+        </div>
       </form>
       {file !== undefined && <p className="text-green">{file.name}</p>}
       <p className="text-red">{error}</p>

@@ -20,7 +20,7 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
 
   useEffect(() => {
     const token = getJwtToken();
-    token && verifyToken(token, userContext.setUser, router);
+    
   }, []);
   return (
     <div className="min-h-screen flex flex-col justify-between">

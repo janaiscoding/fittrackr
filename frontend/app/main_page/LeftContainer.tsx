@@ -1,27 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/userContext";
-import { User } from "../__types__/types";
+import useCurrentUser from "../hooks/useCurrentUser";
+import useLoadingUser from "../hooks/useLoadingUser";
 
 const LeftContainer = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [user, setUser] = useState<User>({} as User);
-  const userContext = useContext(UserContext);
-
-  useEffect(() => {
-    if (userContext.user) {
-      setLoading(Object.keys(userContext.user).length === 0); //O(n) complexity
-      setUser(userContext.user);
-    }
-    console.log("logged user loaded")
-  }, [userContext.user]);
-
+  const isLoadingUser = useLoadingUser();
+  const currentUser = useCurrentUser();
   return (
     <div className="hidden md:block">
-      {isLoading ? (
+      {isLoadingUser ? (
         "Loading animation for user profile"
       ) : (
         <div>
-          {user.first_name} {user.last_name}
+          {currentUser.first_name} {currentUser.last_name}
         </div>
       )}
     </div>

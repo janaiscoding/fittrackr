@@ -3,24 +3,29 @@
 import { useContext } from "react";
 import BotNav from "./components/bottom_navbar/BotNav";
 import TopNav from "./components/top_navbar/TopNav";
-import Home from "./main_page/Home";
 import { ModalContext } from "./context/modalContext";
 import FormModal from "./components/forms/FormModal";
 import useTokenVerification from "./hooks/useTokenVerification";
+import PostsContainer from "./main_page/PostsContainer";
+import LeftContainer from "./main_page/LeftContainer";
+import RightContainer from "./main_page/RightContainer";
 
-export default function App() {
-  // This custom hook only needs to be called
-  // It will handle the logic for a valid token: sets user context
-  // And invalid: cleans token and user and logs you out.
+const Home = () => {
   useTokenVerification();
   // Handles mobile create a new post form modal.
   const modalContext = useContext(ModalContext);
   return (
     <div className="bg-black">
       <TopNav />
-      <Home />
-      {modalContext.modal && <FormModal />}
+      <div className="min-h-[90vh] flex md:justify-evenly justify-center items-start gap-2 py-4">
+        <LeftContainer />
+        <PostsContainer />
+        <RightContainer />
+        {modalContext.modal && <FormModal />}
+      </div>
       <BotNav />
     </div>
   );
-}
+};
+
+export default Home;

@@ -6,10 +6,12 @@ import { User } from "../__types__/types";
 import { useRouter } from "next/navigation";
 import verifyToken from "../api/auth/verify_token";
 
+// Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid.
 const useTokenVerification = () => {
   const [valid, setValid] = useState<boolean>();
-  const userContext = useContext(UserContext);
+
   const router = useRouter();
+  const userContext = useContext(UserContext);
 
   const handleAuthorized = (user: User) => {
     userContext.setUser(user);
@@ -23,6 +25,7 @@ const useTokenVerification = () => {
     router.push("/login");
     setValid(false);
   };
+
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
