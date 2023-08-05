@@ -2,10 +2,9 @@ import { ModalContextProvider } from "./context/modalContext";
 import { PostsContextProvider } from "./context/postsContext";
 import { UserContextProvider } from "./context/userContext";
 import "./globals.css";
-import { Inter } from "next/font/google";
 
 export const metadata = {
-  title: "Fiturself",
+  title: "fitTrakr",
   description: "Track your milestones, Inspire the world!",
 };
 

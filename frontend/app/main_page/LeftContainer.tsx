@@ -8,10 +8,13 @@ const LeftContainer = () => {
 
   return (
     <div className="hidden md:block">
-      {isLoadingUser && <Loader />}
-      <div>
-        {currentUser.first_name} {currentUser.last_name}
-      </div>
+      {isLoadingUser ? (
+        <Loader />
+      ) : (
+        <div>
+          Welcome back, {currentUser.first_name} {currentUser.last_name}
+        </div>
+      )}
     </div>
   );
 };

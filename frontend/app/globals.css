@@ -147,7 +147,6 @@ input:-webkit-autofill:focus.valid {
   text-indent: 0;
   text-transform: none;
   direction: ltr;
-
   enable-background: accumulate;
 }
 @keyframes pulse {

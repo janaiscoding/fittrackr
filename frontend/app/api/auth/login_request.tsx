@@ -13,7 +13,6 @@ const loginRequest = (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       if (data.token) {
         handleSuccess(data);
       }
