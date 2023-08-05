@@ -78,7 +78,7 @@ const FormModal = () => {
   };
 
   return (
-    <div className="bg-black2 p-6 absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-full font-ubuntu">
+    <div className="bg-black2 p-6 fixed z-[100] top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-full font-ubuntu md:hidden">
       <div className="flex justify-between items-center">
         <h1 className="text-xl my-2 text-yellow">Create a new post!</h1>
         <button onClick={handleClose} aria-label="Close create new post form">

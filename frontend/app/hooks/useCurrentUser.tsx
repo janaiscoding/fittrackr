@@ -10,7 +10,7 @@ const useCurrentUser = () => {
     if (userContext.user) {
       setUser(userContext.user);
     }
-  }, [userContext.user]);
+  }, [userContext]);
   return user;
 };
 

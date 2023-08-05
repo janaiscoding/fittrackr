@@ -14,14 +14,15 @@ const Home = () => {
   useTokenVerification();
   // Handles mobile create a new post form modal.
   const modalContext = useContext(ModalContext);
+
   return (
     <div className="bg-black">
       <TopNav />
       <div className="min-h-[90vh] flex md:justify-evenly justify-center items-start gap-2 py-4">
+        {modalContext.modal && <FormModal />}
         <LeftContainer />
         <PostsContainer />
         <RightContainer />
-        {modalContext.modal && <FormModal />}
       </div>
       <BotNav />
     </div>

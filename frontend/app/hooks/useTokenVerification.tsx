@@ -6,7 +6,7 @@ import { User } from "../__types__/types";
 import { useRouter } from "next/navigation";
 import verifyToken from "../api/auth/verify_token";
 
-// Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid.
+// Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid. Returns valid boolean.
 const useTokenVerification = () => {
   const [valid, setValid] = useState<boolean>();
 
@@ -32,6 +32,7 @@ const useTokenVerification = () => {
       verifyToken(token, handleAuthorized, handleUnauthorized);
     }
   }, []);
+
   return valid;
 };
 

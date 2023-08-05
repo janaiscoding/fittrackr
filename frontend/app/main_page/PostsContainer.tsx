@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect } from "react";
-import getPosts from "../api/posts/get_posts";
 import PostArticle from "../components/post_article/PostArticle";
-import { PostsContext } from "../context/postsContext";
 import PostFormMD from "../components/forms/PostFormMD";
 import useLoadingPosts from "../hooks/useLoadingPosts";
+import Loader from "../assets/Loader";
+import { PostsContext } from "../context/postsContext";
+import { useContext, useEffect } from "react";
+import getPosts from "../api/posts/get_posts";
 
 const PostsContainer = () => {
-  const postsContext = useContext(PostsContext);
   const isLoadingPosts = useLoadingPosts();
+  const postsContext = useContext(PostsContext);
 
   useEffect(() => {
     getPosts(postsContext.setPosts);
@@ -17,15 +18,12 @@ const PostsContainer = () => {
   return (
     <div className="flex flex-col font-ubuntu gap-6 mb-10 w-full md:w-1/2 md:max-w-lg">
       <PostFormMD />
-      {isLoadingPosts ? (
-        "Loading animation for posts container"
-      ) : (
-        <div className="flex flex-col font-ubuntu gap-6">
-          {postsContext.posts?.map((post, i) => (
-            <PostArticle key={i} post={post} />
-          ))}
-        </div>
-      )}
+      {isLoadingPosts && <Loader />}
+      <div className="flex flex-col font-ubuntu gap-6 w-full h-full">
+        {postsContext.posts?.map((post, i) => (
+          <PostArticle key={i} post={post} />
+        ))}
+      </div>
     </div>
   );
 };
