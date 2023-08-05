@@ -5,7 +5,7 @@ import { UserContext } from "../../context/userContext";
 import { CommunityUser } from "../../__types__/types";
 import UserComponent from "./User";
 import getUsers from "../../api/users/get_users";
-import FormPost from "../forms/FormPost";
+import FormPost from "../forms/FormModal";
 
 const UsersComponent = ({
   isShown,

@@ -1,12 +1,10 @@
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { User } from "../../__types__/types";
-import { removeJwtToken } from "./auth_handler";
 import { verifyAPI } from "../endpoints";
 
 const verifyToken = (
-  token: string,
-  setUser: React.Dispatch<React.SetStateAction<User | null>>,
-  router: AppRouterInstance
+  token: string | undefined,
+  handleAuthorized: (user: User) => void,
+  handleUnauthorized: () => void
 ) => {
   fetch(verifyAPI, {
     method: "POST",
@@ -15,16 +13,9 @@ const verifyToken = (
     },
   })
     .then((res) => res.json())
-    .then((data) => {
-      if (data.user) {
-        setUser(data.user);
-      } else {
-        //Rejected/Invalid Token: Remove Token | Clear User | Redirect to login
-        removeJwtToken();
-        setUser(null);
-        router.push("/login");
-      }
-    })
+    .then((data) =>
+      data.user ? handleAuthorized(data.user) : handleUnauthorized()
+    )
     .catch((err) => {
       console.log(err);
     });

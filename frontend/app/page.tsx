@@ -1,37 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "./context/userContext";
+import { useContext } from "react";
 import BotNav from "./components/bottom_navbar/BotNav";
 import TopNav from "./components/top_navbar/TopNav";
 import Home from "./main_page/Home";
-import { getJwtToken } from "./api/auth/auth_handler";
-import verifyToken from "./api/auth/verify_token";
-import { useRouter } from "next/navigation";
-import FormPost from "./components/forms/FormPost";
-import { PostsContextProvider } from "./context/postsContext";
 import { ModalContext } from "./context/modalContext";
+import FormModal from "./components/forms/FormModal";
+import useTokenVerification from "./hooks/useTokenVerification";
 
 export default function App() {
-  const [isShown, setShown] = useState(false);
-
-  const router = useRouter();
-  const userContext = useContext(UserContext);
-  const modalContext = useContext(ModalContext)
-
-  useEffect(() => {
-    const token = getJwtToken();
-    if (token) {
-      verifyToken(token, userContext.setUser, router);
-    }
-  }, []);
-
+  // This custom hook only needs to be called
+  // It will handle the logic for a valid token: sets user context
+  // And invalid: cleans token and user and logs you out.
+  useTokenVerification();
+  // Handles mobile create a new post form modal.
+  const modalContext = useContext(ModalContext);
   return (
-      <div className="bg-black">
-        <TopNav />
-        <Home />
-        {modalContext.modal && <FormPost  />}
-        <BotNav />
-      </div>
+    <div className="bg-black">
+      <TopNav />
+      <Home />
+      {modalContext.modal && <FormModal />}
+      <BotNav />
+    </div>
   );
 }

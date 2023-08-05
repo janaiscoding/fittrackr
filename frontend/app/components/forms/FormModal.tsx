@@ -1,24 +1,15 @@
-import {
-  SetStateAction,
-  SyntheticEvent,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { getJwtToken } from "../../api/auth/auth_handler";
+import { SyntheticEvent, useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import SendSVG from "../../assets/svgs/SendSVG";
 import { usePathname, useRouter } from "next/navigation";
-import { postsAPI } from "../../api/endpoints";
 import UploadSVG from "@/app/assets/svgs/Upload";
-import getProfile from "@/app/api/users/get_profile";
 import createPost from "@/app/api/posts/create_post";
 import Close from "@/app/assets/svgs/Close";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/api/posts/get_posts";
 import { ModalContext } from "@/app/context/modalContext";
 
-const FormPost = ({}: {}) => {
+const FormModal = () => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -26,13 +17,14 @@ const FormPost = ({}: {}) => {
 
   const router = useRouter();
   const path = usePathname();
+
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
   const modalContext = useContext(ModalContext);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    //if file
+    // always needs text and userID, the file image is optional
     const formData = new FormData();
     formData.append("text", text);
     if (userContext.user) formData.append("userID", userContext.user._id);
@@ -40,10 +32,10 @@ const FormPost = ({}: {}) => {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
+    //Handle length error here rather than calling the API.
     if (text.length === 0) {
       setError("Post is too short");
     } else {
-      console.log("still here");
       createPost(formData, handleError, handleSuccess);
     }
   };
@@ -132,4 +124,4 @@ const FormPost = ({}: {}) => {
   );
 };
 
-export default FormPost;
+export default FormModal;
