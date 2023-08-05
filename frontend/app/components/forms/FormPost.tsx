@@ -16,12 +16,9 @@ import createPost from "@/app/api/posts/create_post";
 import Close from "@/app/assets/svgs/Close";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/api/posts/get_posts";
+import { ModalContext } from "@/app/context/modalContext";
 
-const FormPost = ({
-  setShown,
-}: {
-  setShown: React.Dispatch<SetStateAction<boolean>>;
-}) => {
+const FormPost = ({}: {}) => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -31,6 +28,7 @@ const FormPost = ({
   const path = usePathname();
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
+  const modalContext = useContext(ModalContext);
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -45,7 +43,7 @@ const FormPost = ({
     if (text.length === 0) {
       setError("Post is too short");
     } else {
-      console.log("still here")
+      console.log("still here");
       createPost(formData, handleError, handleSuccess);
     }
   };
@@ -84,7 +82,7 @@ const FormPost = ({
 
   const handleClose = () => {
     clearData();
-    setShown(false);
+    modalContext.setModal(false);
   };
 
   return (

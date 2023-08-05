@@ -7,12 +7,14 @@ import Dumbbell from "@/app/assets/svgs/Dumbbell";
 import Plus from "@/app/assets/svgs/Plus";
 import SignOut from "@/app/assets/svgs/SignOut";
 import User from "@/app/assets/svgs/User";
+import { ModalContext } from "@/app/context/modalContext";
 import { UserContext } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
-const BotNav = ({ isShown, setShown }: ModalProps) => {
+const BotNav = () => {
   const userContext = useContext(UserContext);
+  const modalContext = useContext(ModalContext);
   const router = useRouter();
 
   const handleSignout = () => {
@@ -21,7 +23,7 @@ const BotNav = ({ isShown, setShown }: ModalProps) => {
     router.push("/login");
   };
   const handleModal = () => {
-    setShown(!isShown);
+    modalContext.setModal(!modalContext.modal);
   };
 
   return (

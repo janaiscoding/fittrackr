@@ -10,26 +10,28 @@ import verifyToken from "./api/auth/verify_token";
 import { useRouter } from "next/navigation";
 import FormPost from "./components/forms/FormPost";
 import { PostsContextProvider } from "./context/postsContext";
+import { ModalContext } from "./context/modalContext";
 
 export default function App() {
   const [isShown, setShown] = useState(false);
 
   const router = useRouter();
   const userContext = useContext(UserContext);
+  const modalContext = useContext(ModalContext)
 
   useEffect(() => {
     const token = getJwtToken();
-    token && verifyToken(token, userContext.setUser, router);
+    if (token) {
+      verifyToken(token, userContext.setUser, router);
+    }
   }, []);
 
   return (
-    <PostsContextProvider>
       <div className="bg-black">
         <TopNav />
         <Home />
-        {isShown && <FormPost setShown={setShown} />}
-        <BotNav isShown={isShown} setShown={setShown} />
+        {modalContext.modal && <FormPost  />}
+        <BotNav />
       </div>
-    </PostsContextProvider>
   );
 }

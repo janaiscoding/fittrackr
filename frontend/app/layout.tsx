@@ -1,3 +1,5 @@
+import { ModalContextProvider } from "./context/modalContext";
+import { PostsContextProvider } from "./context/postsContext";
 import { UserContextProvider } from "./context/userContext";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -15,7 +17,11 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body>
-        <UserContextProvider>{children}</UserContextProvider>
+        <UserContextProvider>
+          <PostsContextProvider>
+            <ModalContextProvider>{children}</ModalContextProvider>
+          </PostsContextProvider>
+        </UserContextProvider>
       </body>
     </html>
   );
