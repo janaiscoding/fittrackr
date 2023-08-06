@@ -4,7 +4,7 @@ import { UserContextProvider } from "./context/userContext";
 import "./globals.css";
 
 export const metadata = {
-  title: "fitTrakr",
+  title: "fitTrakr • Socially sweating",
   description: "Track your milestones, Inspire the world!",
 };
 

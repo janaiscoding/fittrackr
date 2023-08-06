@@ -9,7 +9,6 @@ import RightContainer from "./main_page/RightContainer";
 
 const Home = () => {
   useTokenVerification();
-  console.log("token verif");
   return (
     <div className="bg-black">
       <TopNav />

@@ -4,7 +4,10 @@ import { CommunityUser } from "../../__types__/types";
 import { getJwtToken } from "../auth/auth_handler";
 import { usersAPI } from "../endpoints";
 
-const getUsers = (setter: React.Dispatch<SetStateAction<CommunityUser[]>>) => {
+const getCommunity = (
+  setter: React.Dispatch<SetStateAction<CommunityUser[]>>,
+  currentID: string
+) => {
   axios
     .get(usersAPI, {
       headers: {
@@ -12,11 +15,14 @@ const getUsers = (setter: React.Dispatch<SetStateAction<CommunityUser[]>>) => {
       },
     })
     .then((res) => {
-      setter(res.data.users);
+      const community = res.data.users.filter(
+        (user: CommunityUser) => user._id !== currentID
+      );
+      setter(community);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-export default getUsers;
+export default getCommunity;

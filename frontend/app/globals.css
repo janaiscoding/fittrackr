@@ -28,14 +28,6 @@
   color: #adadad !important;
 }
 
-.social-button {
-  border-radius: 1em;
-  border: 1px solid #0d2b1e;
-  color: #9ef5cf;
-  background-color: #060606;
-  padding: 0.2em 1em;
-}
-
 .overlay {
   background: linear-gradient(
     90deg,

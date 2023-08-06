@@ -1,29 +1,27 @@
+import { Avatar } from "@/app/__types__/types";
 import Image from "next/image";
-import { Avatar } from "../../__types__/types";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
-
-const CommunityPicture = ({
-  avatar,
-  userID,
-}: {
+type AvatarProps = {
   avatar: Avatar;
   userID: string;
-}) => {
+};
+const AvatarCommunity = ({ avatar, userID }: AvatarProps) => {
   return (
     <a href={`/users/${userID}`}>
-      {avatar?.data !== undefined ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+      {avatar !== undefined ? (
+        <Image
           src={`data:${avatar.contentType};base64,${Buffer.from(
             avatar.data
           ).toString("base64")}`}
-          className="w-16 h-16 rounded-full object-cover border-2 border-solid border-mid-green"
+          width={40}
+          height={0}
+          className="w-24 h-24 rounded-full object-cover"
           alt="user-profile-picture"
         />
       ) : (
         <Image
           src={defaultPic}
-          className="w-16 h-16 rounded-full object-cover border-2 border-solid border-mid-green"
+          className="w-24 h-24 rounded-full object-cover"
           alt="user-default-profile-picture"
         />
       )}
@@ -31,4 +29,4 @@ const CommunityPicture = ({
   );
 };
 
-export default CommunityPicture;
+export default AvatarCommunity;
