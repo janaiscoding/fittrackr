@@ -1,142 +1,73 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user";
-import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
-import validator from "validator";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-// add default User pic + default banner + default bio
-const create_user = [
-  body("first_name")
-    .trim()
-    .exists()
-    .notEmpty()
-    .withMessage("First name is required.")
-    .isLength({ max: 30 })
-    .withMessage("First name is too long.")
-    .escape(),
-  body("last_name")
-    .trim()
-    .exists()
-    .notEmpty()
-    .withMessage("Last name is required.")
-    .isLength({ max: 30 })
-    .withMessage("Last name is too long.")
-    .escape(),
-  body("email")
-    .trim()
-    .exists()
-    .withMessage("Email is required.")
-    .isEmail()
-    .withMessage("Email is not valid.")
-    .escape(),
-  body("password")
-    .trim()
-    .exists()
-    .withMessage("Password is required.")
-    .isLength({ min: 8 })
-    .withMessage("Password is too short.")
-    .escape(),
-  // body("birthday")
-  //   .exists()
-  //   .withMessage("Birthday is required.")
-  //   .isDate()
-  //   .withMessage("Must be a valid date."),
-  async (req: Request, res: Response) => {
-    const {
-      first_name,
-      last_name,
-      email,
-      password,
-      //  birthday
-    } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-        first_name: validator.unescape(first_name),
-        last_name: validator.unescape(last_name),
-      });
-    }
-    try {
-      bcrypt.hash(password, 10, async (err, hashed) => {
-        if (err) {
-          res.status(500).json({ message: err.message });
-        } else {
-          await User.create({
-            first_name,
-            last_name,
-            email, // unique in db
-            password: hashed,
-            // birthday,
-          })
-            .then(() => {
-              res.status(201).json({
-                message: "New user successfully created!",
-              });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: "Email is already in use!",
-                error: err.message,
-              });
+const create_user = async (req: Request, res: Response) => {
+  const { first_name, last_name, email, password } = req.body;
+  try {
+    bcrypt.hash(password, 10, async (err, hashed) => {
+      if (err) {
+        res.status(500).json({ message: err.message }); // hashing error
+      } else {
+        await User.create({
+          first_name,
+          last_name,
+          email, // unique in db
+          password: hashed,
+          // birthday,
+        })
+          .then(() => {
+            res.status(201).json({
+              message: "New user successfully created!",
             });
-        }
-      });
-    } catch (err: any) {
-      res.status(500).json({
-        message: "Internal server error",
-        error: err.message,
-      });
-    }
-  },
-];
-
-const login_post = [
-  body("email").trim().isEmail().withMessage("Email is not valid.").escape(),
-  body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("Password is required.")
-    .escape(),
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(401).json({ errors: errors.array() });
-    } else {
-      try {
-        const user = await User.findOne({ email });
-        if (!user)
-          return res.status(404).json({
-            message: "Account not found.",
+          })
+          .catch((err) => {
+            res.status(500).json({
+              message: "Unexpected database error occured.",
+              error: err.message,
+            });
           });
-        bcrypt.compare(password, user.password, (err, compare) => {
-          if (err) return next(err);
-          if (compare) {
-            const token = jwt.sign(
-              { userID: user._id },
-              //@ts-ignore
-              process.env.secret,
-              {
-                expiresIn: "24hr",
-              }
-            );
-            user.password = ""; //Instead of performing a query again and using select("-email -password") - Preventing sending passwords to client.
-            return res.status(200).json({ token, user });
-          } else {
-            return res
-              .status(400)
-              .json({ message: "Your password is incorrect." });
-          }
-        });
-      } catch (err) {
-        res.status(500).json(err);
       }
-    }
-  },
-];
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      message: "Internal server error.",
+      error: err.message,
+    });
+  }
+};
+
+const login_post = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(404).json({
+        message: "Account not found.",
+      });
+    bcrypt.compare(password, user.password, (err, compare) => {
+      if (err) return next(err);
+      if (compare) {
+        const token = jwt.sign(
+          { userID: user._id },
+          //@ts-ignore
+          process.env.secret,
+          {
+            expiresIn: "24hr",
+          }
+        );
+        user.password = ""; //Instead of performing a query again and using select("-email -password") - Preventing sending passwords to client.
+        return res.status(200).json({ token, user });
+      } else {
+        return res.status(400).json({ message: "Your password is incorrect." });
+      }
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 const verify_token = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
