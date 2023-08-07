@@ -12,10 +12,10 @@ const Home = () => {
   return (
     <div className="bg-black">
       <TopNav />
-      <div className="min-h-[90vh] flex md:justify-evenly justify-center items-start gap-2 py-4">
+      <div className="max-w-5xl m-auto min-h-[90vh] flex justify-between items-start gap-2 py-4">
         <LeftContainer />
         <PostsContainer />
-        <RightContainer />
+        <LeftContainer />
       </div>
       <BotNav />
     </div>

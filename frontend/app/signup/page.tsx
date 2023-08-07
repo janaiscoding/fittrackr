@@ -13,8 +13,8 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className="gradient-bg font-open min-h-screen gap-6 flex flex-col md:flex-row justify-center items-center">
-      <div className="flex flex-col md:flex-row gap-6 px-6">
+    <div className="gradient-bg font-open min-h-screen gap-6 flex justify-center items-center">
+      <div className="flex flex-col md:flex-row justify-center gap-6 px-6">
         <WelcomeElement />
         <div className="p-10 rounded border border-neutral-900 gradient-form">
           <SignUpForm />

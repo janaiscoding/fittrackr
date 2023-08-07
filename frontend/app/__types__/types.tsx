@@ -7,7 +7,7 @@ type User = {
   _id: string;
   first_name: string;
   last_name: string;
-  birthday: string;
+  // birthday: string;
   bio: string;
   avatar: Avatar;
   workouts: Workout[];

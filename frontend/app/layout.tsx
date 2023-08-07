@@ -1,6 +1,7 @@
 import { ModalContextProvider } from "./context/modalContext";
 import { PostsContextProvider } from "./context/postsContext";
 import { UserContextProvider } from "./context/userContext";
+import { ViewContextProvider } from "./context/viewContext";
 import "./globals.css";
 
 export const metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({
       <body>
         <UserContextProvider>
           <PostsContextProvider>
-            <ModalContextProvider>{children}</ModalContextProvider>
+            <ViewContextProvider>
+              <ModalContextProvider>{children}</ModalContextProvider>
+            </ViewContextProvider>
           </PostsContextProvider>
         </UserContextProvider>
       </body>

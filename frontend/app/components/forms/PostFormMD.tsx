@@ -54,12 +54,8 @@ const PostFormMD = () => {
     setFile(undefined);
     setError(" ");
   };
-
   return (
     <div className="flex-col flex p-4 bg-blue rounded">
-      <h1 className="text-2xl font-ubuntu-500 self-start border-b-2 border-yellow2 mb-4">
-        Feed..
-      </h1>
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}
@@ -74,8 +70,8 @@ const PostFormMD = () => {
         />
         <div className="self-end flex gap-4 text-sm items-center">
           <div className="font-open flex flex-col items-center gap-2">
-            {success && "Post sent!"}
-            {error && <p className="text-xs text-error">{error}</p>}
+            {success && <p className="text-xs text-valid">Post sent!</p>}
+            {error.length > 1 && <p className="text-xs text-error">{error}</p>}
             {file && <p className="text-xs text-white2">{file.name}</p>}
           </div>
           <label
