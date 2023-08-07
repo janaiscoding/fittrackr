@@ -10,13 +10,13 @@ module.exports = {
       colors: {
         white: "#F4FFF3",
         white2: "#ADADAD",
-        yellow: "#F0CC80",
-        yellow2: "#89764B",
-        grey: "#262626",
-        blue: "#1E1F24",
-        black: "#111111",
-        black2: "#010101",
-        transparentblack: "#0000009c",
+        yellow: "#F0CC80", // green 4E9F3D
+        green: "#1E5128", // dark green 1E5128
+        yellow2: "#89764B", // soft green 346751
+        grey: "#262626", //separator
+        blue: "#191A19", // 1D2226 - linkedIn color
+        input: "#1D2226",
+        black: "#040303",
         error: "#df4444",
         valid: "#2eb97c",
       },

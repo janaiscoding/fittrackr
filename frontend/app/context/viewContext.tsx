@@ -6,10 +6,8 @@ type ViewContextProviderProps = {
 };
 
 type ViewContextType = {
-  viewFeed: boolean;
-  setViewFeed: React.Dispatch<React.SetStateAction<boolean>>;
-  viewWorkouts: boolean;
-  setViewWorkouts: React.Dispatch<React.SetStateAction<boolean>>;
+  current: string;
+  setCurrent: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const ViewContext = createContext<ViewContextType>(
@@ -17,13 +15,9 @@ export const ViewContext = createContext<ViewContextType>(
 );
 
 export const ViewContextProvider = ({ children }: ViewContextProviderProps) => {
-  const [viewFeed, setViewFeed] = useState<boolean>(true);
-  const [viewWorkouts, setViewWorkouts] = useState<boolean>(false);
-
+  const [current, setCurrent] = useState("feed"); // Always defaulted to feed.
   return (
-    <ViewContext.Provider
-      value={{ viewFeed, setViewFeed, viewWorkouts, setViewWorkouts }}
-    >
+    <ViewContext.Provider value={{ current, setCurrent }}>
       {children}
     </ViewContext.Provider>
   );

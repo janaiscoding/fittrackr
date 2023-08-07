@@ -56,6 +56,7 @@ const PostFormMD = () => {
   };
   return (
     <div className="flex-col flex p-4 bg-blue rounded">
+
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}
@@ -66,7 +67,7 @@ const PostFormMD = () => {
               setError(" ");
             }
           }}
-          className="text-white w-full bg-black outline-none focus:ring-1 ring-yellow2 rounded py-2 pb-10 px-4 pr-12 mb-2"
+          className="text-white w-full bg-black/50 outline-none focus:ring-1 ring-yellow2 rounded py-2 pb-10 px-4 pr-12 mb-2"
         />
         <div className="self-end flex gap-4 text-sm items-center">
           <div className="font-open flex flex-col items-center gap-2">

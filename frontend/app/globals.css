@@ -20,7 +20,7 @@
   html {
     font-family: "OpenMedium", sans-serif;
     color: #f4fff3;
-    background: #111111;
+    background: #010101;
   }
 }
 
@@ -28,15 +28,27 @@
   color: #adadad !important;
 }
 
-.overlay {
-  background: linear-gradient(
-    90deg,
-    rgba(14, 13, 13, 1) 0%,
-    rgba(0, 0, 0, 0.9) 100%
+.gradient-post {
+  background-color: #010101;
+
+  /* background: radial-gradient(
+    circle at 10% 0%,
+    hsl(16.62deg 15.71% 10.33%) 0%,
+    hsl(30.98deg 40.55% 5.15%) 16%,
+    hsl(0deg 0% 0.47%) 100%
+  ) */
+}
+.gradient-home {
+  background: rgb(5, 5, 5);
+  background: radial-gradient(
+    circle at 10% 0%,
+    hsl(16.62deg 15.71% 10.33%) 0%,
+    hsl(30.98deg 40.55% 5.15%) 16%,
+    hsl(0deg 0% 0.47%) 100%
   );
 }
 .gradient-bg {
-  background: #161719;
+  background: #070808;
   background: -moz-radial-gradient(
     center,
     #161719 0%,
@@ -56,6 +68,7 @@
     #000000 100%
   );
 }
+
 .gradient-form {
   background: #080b11;
   background: -moz-linear-gradient(

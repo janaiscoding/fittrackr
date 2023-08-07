@@ -1,6 +1,5 @@
 "use client";
 
-import { ModalProps } from "@/app/__types__/reactTypes";
 import { removeJwtToken } from "@/app/api/auth/auth_handler";
 import Community from "@/app/assets/svgs/Community";
 import Dumbbell from "@/app/assets/svgs/Dumbbell";
