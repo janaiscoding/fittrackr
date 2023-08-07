@@ -85,7 +85,7 @@ const post_create = [
       next();
     });
   },
-  body("text", "Text is requires")
+  body("text", "Text is required")
     .trim()
     .isLength({ min: 1 })
     .withMessage("Post is too short.")
@@ -96,14 +96,12 @@ const post_create = [
   async (req: Request, res: Response) => {
     const { text, userID } = req.body;
     const errors = validationResult(req);
-    console.log(req.body);
     if (!errors.isEmpty()) {
-      res.json({
+      return res.status(400).json({
         errors: errors.array(),
         text: validator.unescape(text),
       });
     }
-
     try {
       const user = await User.findById(userID);
       if (user) {
@@ -131,14 +129,14 @@ const post_create = [
           message: "No user was not found to make this post.",
         });
       }
-    } catch {
-      res.status(404).json({
-        message: "No user was not found to make this post.",
+    } catch (err: any) {
+      res.status(500).json({
+        message: "Invalid user. Please sign in to a valid account.",
+        err: err,
       });
     }
   },
 ];
-
 const post_update = [
   body("uText")
     .trim()

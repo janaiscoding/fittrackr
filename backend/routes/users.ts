@@ -1,6 +1,8 @@
 import express from "express";
 import UC from "../controllers/userControllers";
 import passport from "passport";
+import { rulesUpdateAcc } from "../middleware/rules";
+import { valUpdateAcc } from "../middleware/validators";
 
 const router = express.Router();
 const auth = passport.authenticate("jwt", { session: false });
@@ -11,7 +13,7 @@ router.post("/:userID/upload", auth, UC.update_pfp);
 router.get("/:userID", auth, UC.get_profile);
 router.get("/:userID/username", auth, UC.get_username);
 router.get("/:userID/posts", auth, UC.get_user_posts);
-router.put("/:userID", auth, UC.update_account);
+router.put("/:userID", auth, rulesUpdateAcc(), valUpdateAcc, UC.update_account);
 router.delete("/:userID", auth, UC.delete_account);
 
 router.get("/:userID/friends", auth, UC.get_friends_list);

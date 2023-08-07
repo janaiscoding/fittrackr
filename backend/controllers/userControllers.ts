@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User from "../models/user";
 import asyncHandler from "express-async-handler";
-import { body, validationResult } from "express-validator";
 import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
@@ -11,9 +10,7 @@ import uploadPicture from "../middleware/multerConfig";
 
 const get_users = async (req: Request, res: Response) => {
   try {
-    const users = await User.find().select(
-      "first_name last_name avatar posts workouts friends requestsReceived"
-    );
+    const users = await User.find().select("-email -password");
     if (users) {
       users.map((user) => {
         user.first_name = validator.unescape(user.first_name);
@@ -28,21 +25,7 @@ const get_users = async (req: Request, res: Response) => {
     res.status(500).json({ message: err.message });
   }
 };
-const get_username = async (req: Request, res: Response) => {
-  const { userID } = req.params;
-  try {
-    const user = await User.findById(userID).select("first_name last_name");
-    if (user) {
-      res.status(200).json({
-        username: user.first_name + " " + user.last_name,
-      });
-    } else {
-      res.status(404).json({ msg: "User not found." });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+
 // I need user's: default data + friends + posts(populated) + workouts
 const get_profile = async (req: Request, res: Response) => {
   const { userID } = req.params;
@@ -65,7 +48,22 @@ const get_profile = async (req: Request, res: Response) => {
     }
   }
 };
-
+const get_username = async (req: Request, res: Response) => {
+  const { userID } = req.params;
+  try {
+    const user = await User.findById(userID).select("first_name last_name");
+    if (user) {
+      res.status(200).json({
+        username: user.first_name + " " + user.last_name,
+      });
+    } else {
+      res.status(404).json({ msg: "User not found." });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+// The other way would be to filter through all posts for userID created posts, and then perform deep populating for the comments (which would perform way more operations)
 const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
@@ -98,83 +96,42 @@ const get_user_posts = async (req: Request, res: Response) => {
   }
 };
 
-const update_account = [
-  // body("ubirthday").optional().isDate().withMessage("Must be a valid date."),
-  body("ubio")
-    .optional()
-    .isLength({ min: 1 })
-    .withMessage("Bio is too short,")
-    .isLength({ max: 140 })
-    .withMessage("Bio is too long.")
-    .escape(),
-  body("ucurrent_weight")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 3 })
-    .withMessage("Weight must be above 3 kilo."),
-  body("ugoal_weight")
-    .optional()
-    .trim()
-    .toInt()
-    .isInt({ min: 3 })
-    .withMessage("Weight must be above 3 kilo."),
-  body("ufirst_name")
-    .trim()
-    .optional()
-    .isLength({ min: 1 })
-    .withMessage("First name must be above 1 characters long.")
-    .isLength({ max: 30 })
-    .withMessage("First name must be 30 characters maximum.")
-    .escape(),
-  body("ulast_name")
-    .trim()
-    .optional()
-    .isLength({ min: 1 })
-    .withMessage("Last name must be above 1 characters long.")
-    .isLength({ max: 30 })
-    .withMessage("Last name must be 30 characters maximum.")
-    .escape(),
-  async (req: Request, res: Response) => {
-    const { userID } = req.params;
+const update_account = async (req: Request, res: Response) => {
+  const { userID } = req.params;
 
-    const updateFields = {
-      // birthday: req.body.ubirthday,
-      first_name: req.body.ufirst_name,
-      last_name: req.body.ulast_name,
-      bio: req.body.ubio,
-      current_weight: req.body.ucurrent_weight,
-      goal_weight: req.body.ugoal_weight,
-    };
+  const updateFields = {
+    // birthday: req.body.ubirthday,
+    first_name: req.body.ufirst_name,
+    last_name: req.body.ulast_name,
+    bio: req.body.ubio,
+    current_weight: req.body.ucurrent_weight,
+    goal_weight: req.body.ugoal_weight,
+  };
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(400).json({ errors: errors.array() });
-    try {
-      const user = await User.findById(userID);
-      if (user) {
-        const updateObject = {};
-        for (const field in updateFields) {
+  try {
+    const user = await User.findById(userID);
+    if (user) {
+      const updateObject = {};
+      for (const field in updateFields) {
+        //@ts-ignore
+        if (updateFields[field]) {
           //@ts-ignore
-          if (updateFields[field]) {
-            //@ts-ignore
-            updateObject[field] = updateFields[field];
-          }
+          updateObject[field] = updateFields[field];
         }
-        await user.updateOne(updateObject);
-        const uUser = await User.findById(userID).select("-email -password");
-        uUser!.first_name = validator.unescape(user.first_name);
-        uUser!.last_name = validator.unescape(user.last_name);
-        uUser!.bio = validator.unescape(user.bio);
-        res.json({ message: "Updated user successfully.", uUser });
-      } else {
-        res.status(404).json({ message: "This user doesn't exist." });
       }
-    } catch (err) {
-      res.status(500).json(err);
+      await user.updateOne(updateObject);
+      const uUser = await User.findById(userID).select("-email -password");
+      uUser!.first_name = validator.unescape(user.first_name);
+      uUser!.last_name = validator.unescape(user.last_name);
+      uUser!.bio = validator.unescape(user.bio);
+      res.json({ message: "Updated user successfully.", uUser });
+    } else {
+      res.status(404).json({ message: "This user doesn't exist." });
     }
-  },
-];
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 const update_pfp = [
   (req: Request, res: Response, next: NextFunction) => {

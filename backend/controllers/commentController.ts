@@ -2,60 +2,39 @@ import { Request, Response } from "express";
 import User from "../models/user";
 import Post from "../models/post";
 import Comment from "../models/comment";
-import { body, validationResult } from "express-validator";
-import validator from "validator";
 
-const post_comment = [
-  body("comment")
-    .trim()
-    .notEmpty()
-    .withMessage("Comment is too short.")
-    .isLength({ min: 1 })
-    .isLength({ max: 140 })
-    .withMessage("Comment is too long.")
-    .escape(),
-  async (req: Request, res: Response) => {
-    const { comment, userID } = req.body;
-    const { postID } = req.params;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-        comment: validator.unescape(comment),
+const post_comment = async (req: Request, res: Response) => {
+  const { comment, userID } = req.body;
+  const { postID } = req.params;
+  try {
+    const post = await Post.findById(postID);
+    if (post) {
+      const newComment = new Comment({
+        user: userID,
+        comment,
+        likes: [],
       });
-    }
-    try {
-      const post = await Post.findById(postID);
-      if (post) {
-        const newComment = new Comment({
-          user: userID,
-          comment,
-          likes: [],
-        });
-        Promise.all([
-          newComment.save(),
-          post.updateOne({ $push: { comments: newComment } }),
-        ])
-          .then(() => {
-            return res.status(200).json({
-              message: "Comment was successfully sent.",
-            });
-          })
-          .catch((err) => {
-            return res.status(500).json({
-              message: err.message,
-            });
+      Promise.all([
+        newComment.save(),
+        post.updateOne({ $push: { comments: newComment } }),
+      ])
+        .then(() => {
+          return res.status(200).json({
+            message: "Comment was successfully sent.",
           });
-      } else {
-        return res
-          .status(404)
-          .json({ message: "The user could not be found." });
-      }
-    } catch {
-      return res.status(500).json({ message: "Internal server error." });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            message: err.message,
+          });
+        });
+    } else {
+      return res.status(404).json({ message: "The user could not be found." });
     }
-  },
-];
+  } catch {
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 const comment_like = async (req: Request, res: Response) => {
   const { postID, commentID }: any = req.params;

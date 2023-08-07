@@ -3,12 +3,8 @@ const router = express.Router();
 import postControllers from "../controllers/postControllers";
 import authControllers from "../controllers/authControllers";
 import passport from "passport";
-import {
-  loginRules,
-  signupRules,
-  valLogin,
-  valSignup,
-} from "../middleware/validators";
+import { valLogin, valSignup } from "../middleware/validators";
+import { loginRules, signupRules } from "../middleware/rules";
 const auth = passport.authenticate("jwt", { session: false });
 
 router.get("/", auth, postControllers.posts_get);
