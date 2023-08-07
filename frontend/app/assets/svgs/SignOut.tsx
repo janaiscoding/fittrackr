@@ -6,7 +6,7 @@ const SignOut = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="#F0CC80"
-      className="w-5 h-5"
+      className="w-6 h-6"
     >
       <path
         strokeLinecap="round"

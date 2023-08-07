@@ -13,25 +13,28 @@ const CommentForm = ({ postID }: { postID: string }) => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    sendComment(
-      postID,
-      comment,
-      userContext.user?._id,
-      handleSuccessPOST,
-      handleErrorPOST
-    );
+    if (comment.length === 0) {
+      setCommentError("Comment is too short");
+    } else {
+      sendComment(
+        postID,
+        comment,
+        userContext.user?._id,
+        handleSuccessPOST,
+        handleErrorPOST
+      );
+    }
   };
 
   const handleErrorPOST = (msg: string) => {
     setCommentError(msg);
-    console.log(commentError, "display error popup");
   };
 
   const handleSuccessPOST = () => {
     getPosts(postsContext.setPosts);
     setComment("");
-    //success popup/notif??
   };
+
   return (
     <>
       <form

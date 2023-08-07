@@ -1,6 +1,4 @@
-import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-//postID, comment, userContext.user?._id, handleSuccess, handleError
 const sendComment = async (
   postID: string,
   comment: string,
@@ -8,7 +6,6 @@ const sendComment = async (
   handleSuccess: () => void,
   handleError: (msg: string) => void
 ) => {
-  console.log("sending comment", postID, comment, userID);
   await fetch(`https://fiturself.fly.dev/posts/${postID}/`, {
     method: "POST",
     headers: {

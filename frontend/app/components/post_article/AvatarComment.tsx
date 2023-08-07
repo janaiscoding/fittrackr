@@ -17,13 +17,13 @@ const AvatarComment = ({
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="rounded-full object-cover border-2 border-solid border-grey comment-image"
+          className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image"
           alt="user-profile-picture"
         />
       ) : (
         <Image
           src={defaultPic}
-          className="rounded-full object-cover border-2 border-solid border-grey comment-image"
+          className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image"
           alt="user-default-profile-picture"
         />
       )}

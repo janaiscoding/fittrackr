@@ -4,12 +4,12 @@ import BotNav from "../components/bottom_navbar/BotNav";
 import TopNav from "../components/top_navbar/TopNav";
 import useTokenVerification from "../hooks/useTokenVerification";
 import Loader from "../assets/Loader";
-import useCommunity from "../hooks/useCommunity";
 import UserComponent from "../components/users/User";
+import useCommunityGetter from "../hooks/useCommunityGetter";
 
 const Users = () => {
   useTokenVerification();
-  const { isLoading, community } = useCommunity();
+  const { isLoading, community } = useCommunityGetter();
   return (
     <div className="bg-black">
       <TopNav />
@@ -24,7 +24,6 @@ const Users = () => {
           ))}
         </div>
       </div>
-
       <BotNav />
     </div>
   );

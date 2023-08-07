@@ -18,8 +18,8 @@ const deleteComment = (
       if (data.message.includes("success")) {
         handleSuccess();
       }
-      console.log(data);
     })
     .catch((err) => console.log(err));
 };
+
 export default deleteComment;

@@ -3,7 +3,7 @@ import { CommunityUser } from "../__types__/types";
 import useCurrentUser from "./useCurrentUser";
 import getCommunity from "../api/users/get_community";
 
-const useCommunity = () => {
+const useCommunityGetter = () => {
   const [community, setCommunity] = useState<CommunityUser[]>([]);
   const [isLoading, setLoading] = useState(true);
   const currentUser = useCurrentUser();
@@ -23,4 +23,4 @@ const useCommunity = () => {
   }, [community]);
   return { isLoading, community };
 };
-export default useCommunity;
+export default useCommunityGetter;

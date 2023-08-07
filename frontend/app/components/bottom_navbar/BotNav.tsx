@@ -3,11 +3,13 @@
 import { removeJwtToken } from "@/app/api/auth/auth_handler";
 import Community from "@/app/assets/svgs/Community";
 import Dumbbell from "@/app/assets/svgs/Dumbbell";
+import HomeSVG from "@/app/assets/svgs/Home";
 import Plus from "@/app/assets/svgs/Plus";
 import SignOut from "@/app/assets/svgs/SignOut";
 import User from "@/app/assets/svgs/User";
 import { ModalContext } from "@/app/context/modalContext";
 import { UserContext } from "@/app/context/userContext";
+import { ViewContext } from "@/app/context/viewContext";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
@@ -15,7 +17,17 @@ const BotNav = () => {
   const userContext = useContext(UserContext);
   const modalContext = useContext(ModalContext);
   const router = useRouter();
+  const viewContext = useContext(ViewContext);
 
+  const showFeed = () => {
+    window.scrollTo(0, 0);
+    viewContext.setCurrent("feed");
+  };
+
+  const showWorkouts = () => {
+    window.scrollTo(0, 0);
+    viewContext.setCurrent("workouts");
+  };
   const handleSignout = () => {
     userContext.setUser(null);
     removeJwtToken();
@@ -27,17 +39,13 @@ const BotNav = () => {
 
   return (
     <div className="sticky bottom-0 flex justify-between items-center px-8 py-2 bg-blue border-solid border-t border-yellow2 md:hidden">
-      <a
-        href={`/users/${userContext.user?._id}`}
-        className="flex flex-col gap-1 items-center"
-      >
-        <User />
-        {/* <p className="text-xs text-white2">Profile</p> */}
-      </a>
-      <a href={`/workouts`} className="flex flex-col gap-1 items-center">
+      <div onClick={showFeed} className="flex flex-col gap-1 items-center">
+        <HomeSVG />
+      </div>
+      <div onClick={showWorkouts} className="flex flex-col gap-1 items-center">
         <Dumbbell />
         {/* <p className="text-xs text-white2">Workouts</p> */}
-      </a>
+      </div>
 
       <button
         className="gap-1 items-center relative scale-150 -translate-y-1/2"
