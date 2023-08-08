@@ -38,6 +38,7 @@ type CommunityUser = {
   // community, friends, friend req sent/received
   //all users - only displays name, pic and numbered stats of posts workouts and friends
   _id: string;
+  bio: string;
   first_name: string;
   last_name: string;
   avatar: Avatar;
