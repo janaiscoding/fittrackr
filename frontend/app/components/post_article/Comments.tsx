@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Comment, Post } from "@/app/__types__/types";
+import { Comment } from "@/app/__types__/types";
 import { useContext, useEffect, useState } from "react";
 import CommentContainer from "./CommentContainer";
 import CommentForm from "./CommentForm";
@@ -15,7 +15,7 @@ const Comments = ({ postID, postComments }: CommentsProps) => {
   const postsContext = useContext(PostsContext);
 
   useEffect(() => {
-    setComments(postComments);
+    setComments(postComments); // state re-setter
   }, [postsContext.posts]);
 
   return (

@@ -8,6 +8,7 @@ import { SyntheticEvent, useContext, useState } from "react";
 const CommentForm = ({ postID }: { postID: string }) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
+  
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 

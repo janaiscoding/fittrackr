@@ -1,10 +1,6 @@
-import { Avatar, Comment, Post, ShortUser } from "@/app/__types__/types";
-import { getJwtToken } from "@/app/api/auth/auth_handler";
-import { UserContext } from "@/app/context/userContext";
-import { SetStateAction, useContext } from "react";
+import { Post } from "@/app/__types__/types";
 import PostImage from "./PostImage";
 import PostStats from "./PostStats";
-import likePost from "@/app/api/posts/like_post";
 
 type PostContentProps = {
   post: Post;

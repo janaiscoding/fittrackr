@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Comment, Post } from "@/app/__types__/types";
-import { getJwtToken } from "@/app/api/auth/auth_handler";
+import { Post } from "@/app/__types__/types";
 import likePost from "@/app/api/posts/like_post";
 import getUsername from "@/app/api/users/get_username";
 import CommentSVG from "@/app/assets/svgs/CommentSVG";
@@ -8,34 +7,37 @@ import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
-import React, { SetStateAction, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-type PostStatsProps = {
-  post: Post;
-};
-const PostStats = ({ post }: PostStatsProps) => {
+const PostStats = ({ post }: { post: Post }) => {
   const { _id, comments } = post;
+  const [likes, setLikes] = useState(post.likes);
+
   const [isLiked, setIsLiked] = useState<boolean>();
   const [likenames, setLikenames] = useState<string[]>([] as string[]);
-  const [showNames, setShowNames] = useState(false);
+  const [showNames, setShowNames] = useState(false); //Only show on hover
+
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 
   const handleLike = () => {
     likePost(_id, userContext.user?._id, handleSuccess);
   };
+
   const handleSuccess = (data: { likes: string[] }) => {
-    post.likes = data.likes;
+    setLikes(data.likes);
     setIsLiked(!isLiked);
   };
+
   const getLikeNames = () => {
     setLikenames([]);
-    post.likes.forEach((userID) => getUsername(userID, setLikenames));
+    //setter((prevState) => [...prevState, data.username]);
+    likes.forEach((userID) => getUsername(userID, setLikenames));
   };
 
   useEffect(() => {
     getLikeNames();
-  }, [post.likes]);
+  }, [likes]);
 
   useEffect(() => {
     if (userContext.user) {
@@ -65,7 +67,7 @@ const PostStats = ({ post }: PostStatsProps) => {
           onMouseEnter={() => setShowNames(true)}
           onMouseLeave={() => setShowNames(false)}
         >
-          {post.likes.length} {post.likes.length === 1 ? "like" : "likes"}
+          {likes.length} {likes.length === 1 ? "like" : "likes"}
         </div>
       </div>
       <div aria-label="Comment icon and comment count">

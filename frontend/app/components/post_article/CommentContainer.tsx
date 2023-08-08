@@ -23,6 +23,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 
+  const [likes, setLikes] = useState(comm.likes);
   const [likenames, setLikenames] = useState<string[]>([] as string[]);
   const [showNames, setShowNames] = useState(false);
 
@@ -45,7 +46,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
 
   const handleSuccessLike = (data: { likes: string[] }) => {
     //Set the new like counter(maybe add "onHover: displayLikes()") and UI state.
-    comm.likes = data.likes;
+    setLikes(data.likes);
     setIsLiked(!isLiked);
   };
 
@@ -55,17 +56,17 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   };
   const getLikeNames = () => {
     setLikenames([]);
-    comm.likes.forEach((userID) => getUsername(userID, setLikenames));
+    likes.forEach((userID) => getUsername(userID, setLikenames));
   };
 
   useEffect(() => {
     getLikeNames();
-  }, [comm.likes]);
+  }, [likes]);
 
   useEffect(() => {
     // When a new comment gets rendered, establish the initial status.
     if (comment && userContext.user) {
-      setIsLiked(comm.likes.includes(userContext.user!._id));
+      setIsLiked(likes.includes(userContext.user!._id));
       setIsAuthor(userContext.user._id === user._id);
     }
   }, [userContext.user]);
@@ -113,7 +114,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
             onMouseLeave={() => setShowNames(false)}
           >
             <p className="text-white text-xs absolute left-[90%] top-[-20%]">
-              {comm.likes.length > 0 && comm.likes.length}
+              {likes.length > 0 && likes.length}
             </p>
             {isLiked ? <LikeFilled /> : <Like />}
           </button>

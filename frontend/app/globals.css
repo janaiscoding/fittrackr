@@ -86,10 +86,8 @@
   background: linear-gradient(45deg, #080b11 0%, #0f0f11 50%, #141416 100%);
 }
 .comment-image {
-  min-height: 2rem;
-  min-width: 2rem;
-  max-height: 2rem;
-  max-width: 2rem;
+  height: 2rem;
+  width: 2rem;
 }
 .post-avatar-image {
   min-height: 3rem;
@@ -97,6 +95,11 @@
   max-height: 3rem;
   max-width: 3rem;
 }
+.post-avatar-image:hover {
+  outline: 1px solid #89764bd0;
+  transition: all 100ms ease-in-out;
+}
+
 .avatar-circle,
 .name-circle {
   display: inline-block;
