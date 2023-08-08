@@ -6,9 +6,9 @@ import useTokenVerification from "./hooks/useTokenVerification";
 import AppData from "./main_page/AppData";
 import Sidebar from "./main_page/Sidebar";
 import Social from "./main_page/Social";
-
 const Home = () => {
   useTokenVerification();
+
   return (
     <div className="bg-black">
       <TopNav />

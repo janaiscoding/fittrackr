@@ -2,7 +2,7 @@
 import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
 import AvatarComment from "./AvatarComment";
-import { Date } from "../Date";
+import { RelativeDate } from "../Date";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import { Comment } from "@/app/__types__/types";
@@ -84,7 +84,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
               >
                 {user.first_name} {user.last_name}
               </a>
-              <Date date={createdAt} />
+              <RelativeDate date={createdAt} />
             </div>
             <p className="text-white2 break-all ml-8"> {comment}</p>
           </div>

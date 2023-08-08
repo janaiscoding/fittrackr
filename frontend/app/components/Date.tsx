@@ -1,26 +1,16 @@
-const { DateTime } = require("luxon");
+import useDateFormatter from "../hooks/useDateFormatter";
 
-const Date = ({ date }: { date: string }) => {
+const RelativeDate = ({ date }: { date: string }) => {
+  const dateForm = useDateFormatter(date);
   return (
-    <p className="text-white2 text-xs tracking-wider align-baseline">
-      {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}{" "}
-      - {" "}
-      {DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE)}
-    </p>
+    <div className="text-white2 text-xs tracking-wider align-baseline">
+      {dateForm} ago
+    </div>
   );
 };
 
 const JoinedDate = ({ date }: { date: string }) => {
-  return (
-    <p className="text-grey text-xs tracking-wider">
-      Joined on{" "}
-      {DateTime.fromISO(date).toLocaleString({
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })}
-    </p>
-  );
+  return <p className="text-grey text-xs tracking-wider"></p>;
 };
 
-export { Date, JoinedDate };
+export { RelativeDate, JoinedDate };

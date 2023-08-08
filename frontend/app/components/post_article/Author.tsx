@@ -3,11 +3,11 @@ import deletePost from "@/app/api/posts/delete_post";
 import getPosts from "@/app/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
-import { Date } from "../Date";
 import AvatarPost from "../images/AvatarPost";
 import { ShortUser } from "@/app/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/assets/svgs/Close";
+import { RelativeDate } from "../Date";
 
 type AuthorProps = {
   postID: string;
@@ -48,7 +48,7 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
         </a>
       </div>
       <div className="flex gap-1 items-center">
-        <Date date={createdAt} />
+        <RelativeDate date={createdAt} />
         <button
           aria-label="Delete current post button"
           onClick={openModal}
