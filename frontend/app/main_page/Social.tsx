@@ -6,6 +6,7 @@ import Title from "../components/Title";
 import useCurrentUser from "../hooks/useCurrentUser";
 import useFriendRequests from "../hooks/useFriendRequests";
 import { UserContext } from "../context/userContext";
+import CommunityList from "./CommunityList";
 
 const Social = () => {
   // Fetching incoming friend requests
@@ -38,8 +39,9 @@ const Social = () => {
           <button onClick={() => handleDecline(user._id)}>Decline</button>
         </div>
       ))}
-      <Title title="Community" />
-      {/* <Title title="JanaIsCoding" /> */}
+      <Title title="Our Active Users" />
+      <CommunityList />
+      <Title title="JanaIsCoding" />
     </div>
   );
 };

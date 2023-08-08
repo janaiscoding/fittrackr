@@ -4,7 +4,7 @@ import BotNav from "../components/bottom_navbar/BotNav";
 import TopNav from "../components/top_navbar/TopNav";
 import useTokenVerification from "../hooks/useTokenVerification";
 import Loader from "../assets/Loader";
-import UserComponent from "../components/users/User";
+// import UserComponent from "../components/users/User";
 import useCommunityGetter from "../hooks/useCommunityGetter";
 
 const Users = () => {
@@ -19,9 +19,9 @@ const Users = () => {
         </div>
         <div className=" grid auto-cols-fr auto-rows-min md:grid-cols-3 place-items-center">
           {isLoading && <Loader />}
-          {community.map((user, i) => (
+          {/* {community.map((user, i) => (
             <UserComponent user={user} key={i} />
-          ))}
+          ))} */}
         </div>
       </div>
       <BotNav />
