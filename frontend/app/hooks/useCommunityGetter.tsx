@@ -7,7 +7,7 @@ const useCommunityGetter = () => {
   const [community, setCommunity] = useState<CommunityUser[]>([]);
   const [isLoading, setLoading] = useState(true);
   const currentUser = useCurrentUser();
-
+  console.log(community)
   useEffect(() => {
     // Filter out the currently logged in user from the community list
     if (currentUser._id) {

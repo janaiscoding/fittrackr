@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { User } from "../__types__/types";
+import { CommunityUser, User } from "../__types__/types";
 import useCurrentUser from "./useCurrentUser";
 import getFriendRequests from "../api/users/get_friend_requests";
 
 const useFriendRequests = () => {
   const currentUser = useCurrentUser();
 
-  const [friendRequests, setFriendRequests] = useState<User[]>([] as User[]);
+  const [friendRequests, setFriendRequests] = useState<CommunityUser[]>([] as CommunityUser[]);
 
   const fetchFriendRequests = () => {
     setFriendRequests([]);

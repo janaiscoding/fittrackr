@@ -1,10 +1,10 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-import { User } from "@/app/__types__/types";
+import { CommunityUser, User } from "@/app/__types__/types";
 
 const getFriendRequests = (
   userID: string,
-  setter: React.Dispatch<SetStateAction<User[]>>
+  setter: React.Dispatch<SetStateAction<CommunityUser[]>>
 ) => {
   fetch(`https://fiturself.fly.dev/users/${userID}`, {
     method: "GET",

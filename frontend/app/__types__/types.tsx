@@ -46,6 +46,7 @@ type CommunityUser = {
   workouts: string[];
   friends: string[];
   requestsReceived: string[];
+  requestsSent: string[]
 };
 type ShortUser = {
   //on any post!
