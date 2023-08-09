@@ -3,7 +3,6 @@ import passportJWT from "passport-jwt";
 import "dotenv/config";
 import User from "./models/user";
 
-
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 
@@ -13,6 +12,7 @@ opts.secretOrKey = process.env.secret;
 
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   const user = await User.findById({ _id: payload.userID });
+  console.log(payload);
   if (user) {
     return done(null, user);
   }
