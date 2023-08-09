@@ -11,15 +11,14 @@ const useCurrentUser = () => {
 
   const userContext = useContext(UserContext);
 
-  useEffect(() => {
-    if (userContext.user) {
-      setLoadingUser(Object.keys(userContext.user).length === 0); //O(n) complexity
-    }
-  }, [userContext]);
+  const handleCurrent = (current: User) => {
+    setCurrentUser(current);
+    setLoadingUser(Object.keys(current).length === 0); // O(n) complexity
+  };
 
   useEffect(() => {
     if (userContext.user) {
-      setCurrentUser(userContext.user);
+      handleCurrent(userContext.user);
     }
   }, [userContext]);
   return { currentUser, isLoadingUser };

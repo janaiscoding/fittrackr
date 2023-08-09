@@ -1,10 +1,11 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-import { ShortUser } from "@/app/__types__/types";
+import { User } from "@/app/__types__/types";
 
 const getFriendRequests = (
   userID: string,
-  setter: React.Dispatch<SetStateAction<ShortUser[]>>
+  setter: React.Dispatch<SetStateAction<User[]>>,
+  handleSuccess: () => void
 ) => {
   fetch(`https://fiturself.fly.dev/users/${userID}/received`, {
     method: "GET",
@@ -14,7 +15,8 @@ const getFriendRequests = (
   })
     .then((res) => res.json())
     .then((data) => {
-      setter(data.received)
+      setter(data.received);
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

@@ -1,4 +1,6 @@
 "use client";
+
+// MODAL FOR POSTS on mobile view.
 import React, { useState, createContext } from "react";
 
 type ModalContextProviderProps = {
@@ -6,8 +8,10 @@ type ModalContextProviderProps = {
 };
 
 type ModalContextType = {
-  modal: boolean;
-  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalPost: boolean;
+  setModalPost: React.Dispatch<React.SetStateAction<boolean>>;
+  modalBell: boolean;
+  setModalBell: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ModalContext = createContext<ModalContextType>(
@@ -17,10 +21,12 @@ export const ModalContext = createContext<ModalContextType>(
 export const ModalContextProvider = ({
   children,
 }: ModalContextProviderProps) => {
-  const [modal, setModal] = useState<boolean>(false);
-
+  const [modalPost, setModalPost] = useState<boolean>(false);
+  const [modalBell, setModalBell] = useState(false);
   return (
-    <ModalContext.Provider value={{ modal, setModal }}>
+    <ModalContext.Provider
+      value={{ modalPost, setModalPost, modalBell, setModalBell }}
+    >
       {children}
     </ModalContext.Provider>
   );

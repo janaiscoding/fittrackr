@@ -1,8 +1,8 @@
-import { User } from "../__types__/types";
-import Loader from "../assets/Loader";
-import Title from "../components/Title";
-import AvatarPost from "../components/images/AvatarPost";
-import useCurrentUser from "../hooks/useCurrentUser";
+import { User } from "../../__types__/types";
+import Loader from "../../assets/Loader";
+import Title from "../../components/Title";
+import AvatarPost from "../../components/images/AvatarPost";
+import useCurrentUser from "../../hooks/useCurrentUser";
 import NavigationList from "./Navigation";
 import SettingsList from "./Settings";
 

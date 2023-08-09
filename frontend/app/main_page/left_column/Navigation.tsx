@@ -1,15 +1,15 @@
 import { useContext } from "react";
-import { ViewContext } from "../context/viewContext";
-import Dumbbell from "../assets/svgs/Dumbbell";
-import Community from "../assets/svgs/Community";
-import HomeSVG from "../assets/svgs/Home";
-import FriendsSVG from "../assets/svgs/Friends";
-import useCurrentUser from "../hooks/useCurrentUser";
-import User from "../assets/svgs/User";
+import { ViewContext } from "../../context/viewContext";
+import Dumbbell from "../../assets/svgs/Dumbbell";
+import Community from "../../assets/svgs/Community";
+import HomeSVG from "../../assets/svgs/Home";
+import FriendsSVG from "../../assets/svgs/Friends";
+import User from "../../assets/svgs/User";
+import { UserContext } from "@/app/context/userContext";
 
 const NavigationList = () => {
   const viewContext = useContext(ViewContext);
-  const { currentUser } = useCurrentUser();
+  const currentUser = useContext(UserContext)
 
   const showFeed = () => {
     console.log(viewContext.current);
@@ -37,14 +37,14 @@ const NavigationList = () => {
         <p>Workouts</p>
       </div>
       <a
-        href={`/users/${currentUser._id}`}
+        href={`/users/${currentUser.user?._id}`}
         className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
       >
         <User />
         <p>Profile</p>
       </a>
       <a
-        href={`/users/${currentUser._id}/friends`}
+        href={`/users/${currentUser.user?._id}/friends`}
         className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
       >
         <FriendsSVG />

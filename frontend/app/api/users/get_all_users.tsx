@@ -5,8 +5,8 @@ import { usersAPI } from "../endpoints";
 import { User } from "@/app/__types__/types";
 
 const getAllUsers = (
-  setter: React.Dispatch<SetStateAction<User[]>>,
-  currentID: string
+  currentID: string,
+  handleSuccess: (data: User[]) => void
 ) => {
   axios
     .get(usersAPI, {
@@ -18,7 +18,7 @@ const getAllUsers = (
       const community = res.data.users.filter(
         (user: User) => user._id !== currentID
       );
-      setter(community);
+      handleSuccess(community);
     })
     .catch((err) => {
       console.log(err);

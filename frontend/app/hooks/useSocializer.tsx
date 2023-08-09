@@ -52,11 +52,9 @@ const useSocializer = (targetUser: User) => {
   useEffect(() => {
     // Establish the friendship status between currentUser and each target community user.
     if (currentUser._id) {
-      console.log(targetUser.friends);
       setIsFriends(targetUser.friends.includes(currentUser._id));
       setIsReceived(currentUser.requestsReceived?.includes(targetUser._id));
       setIsPending(targetUser.requestsReceived.includes(currentUser._id));
-      setIsFriends(targetUser.friends.includes(currentUser._id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);

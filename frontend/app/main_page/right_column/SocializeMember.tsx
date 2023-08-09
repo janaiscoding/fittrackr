@@ -1,7 +1,10 @@
-import { User } from "../__types__/types";
-import AvatarComment from "../components/post_article/AvatarComment";
-import useSocializer from "../hooks/useSocializer";
+import { User } from "../../__types__/types";
+import AvatarComment from "../../components/post_article/AvatarComment";
+import useSocializer from "../../hooks/useSocializer";
 
+// This is the default container for interacting with different users on the platform
+// Handling all social operations and states with the Custom Hook useSocializer
+// TODO: ADD ARIA LABLES TO BUTTONS
 const SocializeMember = ({ user }: { user: User }) => {
   const {
     isFriends,

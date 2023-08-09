@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ViewContext } from "../context/viewContext";
+import { ViewContext } from "../../context/viewContext";
 
 const TabToggle = () => {
   // Checks which tab is open on the homepage: Feet or Workouts.
