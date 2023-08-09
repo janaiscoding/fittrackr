@@ -9,8 +9,7 @@ import multer from "multer";
 import uploadPicture from "../middleware/multerConfig";
 
 //SELECT CRITERIAS
-const shortUser = "first_name last_name avatar";
-const fullUser = "-email -password"; // get_users | get_profile | update_account
+const fullUser = "-email -password";
 
 const get_users = async (req: Request, res: Response) => {
   try {
@@ -54,7 +53,7 @@ const get_profile = async (req: Request, res: Response) => {
 const get_username = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    const user = await User.findById(userID).select(shortUser);
+    const user = await User.findById(userID).select(fullUser);
     if (user) {
       res.status(200).json({
         username: user.first_name + " " + user.last_name,
@@ -76,11 +75,11 @@ const get_user_posts = async (req: Request, res: Response) => {
         path: "comments",
         populate: {
           path: "user",
-          select: shortUser,
+          select: fullUser,
         },
         options: { sort: { createdAt: "desc" } },
       })
-      .populate({ path: "user", select: shortUser });
+      .populate({ path: "user", select: fullUser });
     const posts = userPosts.map((post) => {
       post.text = validator.unescape(post.text);
       post.comments.map((comment) => {
@@ -224,7 +223,7 @@ const get_friends_list = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const friendsList = await User.findById(userID).select("friends").populate({
     path: "friends",
-    select: shortUser,
+    select: fullUser,
   });
   if (friendsList) {
     res.json(friendsList);
@@ -240,7 +239,7 @@ const get_fr_received = async (req: Request, res: Response) => {
       .select("requestsReceived")
       .populate({
         path: "requestsReceived",
-        select: shortUser,
+        select: fullUser,
       });
 
     if (user) return res.status(200).json({ received: user.requestsReceived });
@@ -259,7 +258,7 @@ const get_fr_sent = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(userID).select("requestsSent").populate({
       path: "requestsSent",
-      select: shortUser,
+      select: fullUser,
     });
     if (user) return res.status(200).json({ sent: user.requestsSent });
     return res.status(404).json({ message: "User was not found." });
