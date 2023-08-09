@@ -13,12 +13,13 @@ const useCurrentUser = () => {
 
   const handleCurrent = (current: User) => {
     setCurrentUser(current);
-    setLoadingUser(Object.keys(current).length === 0); // O(n) complexity
+    setLoadingUser(Object.keys(current).length === 0); // O(n) complexity.
   };
 
   useEffect(() => {
     if (userContext.user) {
       handleCurrent(userContext.user);
+      console.log("setting current user - it will NOT do a fetch req.");
     }
   }, [userContext]);
   return { currentUser, isLoadingUser };

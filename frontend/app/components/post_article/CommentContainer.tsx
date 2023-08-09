@@ -24,8 +24,8 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const postsContext = useContext(PostsContext);
 
   const [likes, setLikes] = useState(comm.likes);
-  const [likenames, setLikenames] = useState<string[]>([] as string[]);
-  const [showNames, setShowNames] = useState(false);
+  // const [likenames, setLikenames] = useState<string[]>([] as string[]);
+  // const [showNames, setShowNames] = useState(false);
 
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isAuthor, setIsAuthor] = useState<boolean>();
@@ -54,20 +54,21 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
     console.log("On delete success, re-fetch the new comments:");
     getPosts(postsContext.setPosts);
   };
-  const getLikeNames = () => {
-    setLikenames([]);
-    likes.forEach((userID) => getUsername(userID, setLikenames));
-  };
+  // const getLikeNames = () => {
+  //   setLikenames([]);
+  //   likes.forEach((userID) => getUsername(userID, setLikenames));
+  // };
 
-  useEffect(() => {
-    getLikeNames();
-  }, [likes]);
+  // useEffect(() => {
+  //   getLikeNames();
+  // }, [likes]);
 
   useEffect(() => {
     // When a new comment gets rendered, establish the initial status.
-    if (comment && userContext.user) {
+    if (comm && userContext.user) {
       setIsLiked(likes.includes(userContext.user!._id));
       setIsAuthor(userContext.user._id === user._id);
+      setLikes(comm.likes);
     }
   }, [userContext.user]);
 
@@ -90,13 +91,13 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
           </div>
         </div>
         <div className="flex flex-row-reverse gap-1 items-start">
-          {showNames && likenames.length > 0 && (
+          {/* {showNames && likenames.length > 0 && (
             <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-blue border border-solid border-slate-900 text-yellow">
               {likenames.map((name, i) => (
                 <p key={i}>{name}</p>
               ))}
             </div>
-          )}
+          )} */}
           {isAuthor && (
             <button
               onClick={openModal}
@@ -110,8 +111,8 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
             onClick={handleLike}
             className="relative"
             aria-label="Like comment toggle icon"
-            onMouseEnter={() => setShowNames(true)}
-            onMouseLeave={() => setShowNames(false)}
+            // onMouseEnter={() => setShowNames(true)}
+            // onMouseLeave={() => setShowNames(false)}
           >
             <p className="text-white text-xs absolute left-[90%] top-[-20%]">
               {likes.length > 0 && likes.length}
