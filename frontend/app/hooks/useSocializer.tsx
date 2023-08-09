@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
-import { CommunityUser } from "../__types__/types";
+
 import { UserContext } from "../context/userContext";
 import getUser from "../api/users/get_user";
 import cancelRequest from "../api/friends/cancel_request";
@@ -8,9 +8,10 @@ import sendRequest from "../api/friends/send_request";
 import acceptRequest from "../api/friends/accept_request";
 import declineRequest from "../api/friends/decline_request";
 import removeFriend from "../api/friends/remove_friend";
+import { User } from "../__types__/types";
 
-const useSocializer = (targetUser: CommunityUser) => {
-  const currentUser = useCurrentUser();
+const useSocializer = (targetUser: User) => {
+  const { currentUser } = useCurrentUser();
   const userContext = useContext(UserContext);
 
   const [isFriends, setIsFriends] = useState<boolean>();
@@ -19,14 +20,15 @@ const useSocializer = (targetUser: CommunityUser) => {
 
   const handleAdd = () => {
     // Toggle On/Off outcoming friend request
-    if (isPending) {
-      cancelRequest(targetUser._id, currentUser._id).then(() =>
-        setIsPending(false)
-      );
-    } else {
-      sendRequest(targetUser._id, currentUser._id).then(() =>
-        setIsPending(true)
-      );
+    isPending
+      ? cancelRequest(targetUser._id, currentUser._id, handlePending)
+      : sendRequest(targetUser._id, currentUser._id, handlePending);
+  };
+  const handlePending = (status: string) => {
+    if (status === "sent") {
+      setIsPending(true);
+    } else if (status === "canceled") {
+      setIsPending(false);
     }
   };
 
@@ -50,6 +52,7 @@ const useSocializer = (targetUser: CommunityUser) => {
   useEffect(() => {
     // Establish the friendship status between currentUser and each target community user.
     if (currentUser._id) {
+      console.log(targetUser.friends);
       setIsFriends(targetUser.friends.includes(currentUser._id));
       setIsReceived(currentUser.requestsReceived?.includes(targetUser._id));
       setIsPending(targetUser.requestsReceived.includes(currentUser._id));

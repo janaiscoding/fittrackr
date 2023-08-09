@@ -9,7 +9,7 @@ import User from "../assets/svgs/User";
 
 const NavigationList = () => {
   const viewContext = useContext(ViewContext);
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   const showFeed = () => {
     console.log(viewContext.current);
@@ -19,7 +19,7 @@ const NavigationList = () => {
   const showWorkouts = () => {
     viewContext.setCurrent("workouts");
   };
-  
+
   return (
     <div className="flex text-lg flex-col bg-blue">
       <div

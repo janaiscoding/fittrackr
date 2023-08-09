@@ -1,12 +1,12 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-import { CommunityUser, User } from "@/app/__types__/types";
+import { ShortUser } from "@/app/__types__/types";
 
 const getFriendRequests = (
   userID: string,
-  setter: React.Dispatch<SetStateAction<CommunityUser[]>>
+  setter: React.Dispatch<SetStateAction<ShortUser[]>>
 ) => {
-  fetch(`https://fiturself.fly.dev/users/${userID}`, {
+  fetch(`https://fiturself.fly.dev/users/${userID}/received`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
@@ -14,9 +14,7 @@ const getFriendRequests = (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.user !== undefined) {
-        setter((prevState) => [...prevState, data.user]);
-      }
+      setter(data.received)
     })
     .catch((err) => console.log(err));
 };

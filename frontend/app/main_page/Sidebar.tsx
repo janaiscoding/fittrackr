@@ -3,13 +3,11 @@ import Loader from "../assets/Loader";
 import Title from "../components/Title";
 import AvatarPost from "../components/images/AvatarPost";
 import useCurrentUser from "../hooks/useCurrentUser";
-import useLoadingUser from "../hooks/useLoadingUser";
 import NavigationList from "./Navigation";
 import SettingsList from "./Settings";
 
 const Sidebar = () => {
-  const isLoadingUser = useLoadingUser();
-  const currentUser = useCurrentUser();
+  const { currentUser, isLoadingUser } = useCurrentUser();
 
   return (
     <div className="hidden md:flex flex-col w-1/2 gap-4">

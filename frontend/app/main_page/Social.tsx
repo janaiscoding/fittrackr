@@ -1,6 +1,5 @@
 import Title from "../components/Title";
 import FriendRequests from "./FriendRequests";
-
 import NonFriendsUsers from "./NonFriendsUsers";
 
 const Social = () => {

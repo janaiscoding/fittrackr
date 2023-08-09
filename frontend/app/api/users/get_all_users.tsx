@@ -1,11 +1,11 @@
 import axios from "axios";
 import { SetStateAction } from "react";
-import { CommunityUser } from "../../__types__/types";
 import { getJwtToken } from "../auth/auth_handler";
 import { usersAPI } from "../endpoints";
+import { User } from "@/app/__types__/types";
 
-const getCommunity = (
-  setter: React.Dispatch<SetStateAction<CommunityUser[]>>,
+const getAllUsers = (
+  setter: React.Dispatch<SetStateAction<User[]>>,
   currentID: string
 ) => {
   axios
@@ -16,7 +16,7 @@ const getCommunity = (
     })
     .then((res) => {
       const community = res.data.users.filter(
-        (user: CommunityUser) => user._id !== currentID
+        (user: User) => user._id !== currentID
       );
       setter(community);
     })
@@ -25,4 +25,4 @@ const getCommunity = (
     });
 };
 
-export default getCommunity;
+export default getAllUsers;

@@ -1,8 +1,8 @@
-import { CommunityUser, User } from "../__types__/types";
+import { User } from "../__types__/types";
 import AvatarComment from "../components/post_article/AvatarComment";
 import useSocializer from "../hooks/useSocializer";
 
-const SocializeMember = ({ user }: { user: CommunityUser }) => {
+const SocializeMember = ({ user }: { user: User }) => {
   const {
     isFriends,
     isPending,

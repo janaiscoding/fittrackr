@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
-import { CommunityUser, User } from "../__types__/types";
 import useCurrentUser from "./useCurrentUser";
 import getFriendRequests from "../api/users/get_friend_requests";
+import { User } from "../__types__/types";
 
 const useFriendRequests = () => {
   const currentUser = useCurrentUser();
 
-  const [friendRequests, setFriendRequests] = useState<CommunityUser[]>([] as CommunityUser[]);
-
-  const fetchFriendRequests = () => {
-    setFriendRequests([]);
-    currentUser.requestsReceived.forEach((userID) =>
-      getFriendRequests(userID, setFriendRequests)
-    );
-  };
+  const [friendRequests, setFriendRequests] = useState<User[]>(
+    [] as User[]
+  );
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     if (currentUser.requestsReceived) {
-      fetchFriendRequests();
+      getFriendRequests(currentUser._id, setFriendRequests);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
