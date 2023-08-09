@@ -8,8 +8,7 @@ import { User } from "@/app/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/assets/svgs/Close";
 import { RelativeDate } from "../Date";
-import { ModalContext } from "@/app/context/modalContext";
-import DeletePostModal from "./DeletePostModal";
+import DeleteModal from "./DeleteModal";
 
 type AuthorProps = {
   postID: string;
@@ -25,10 +24,11 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
-  //TODO MODAL
+
   const handleDelete = () => {
     deletePost(postID, handleSuccess);
   };
+  
   const handleSuccess = () => {
     getPosts(postsContext.setPosts);
     setShowModal(false);
@@ -42,10 +42,7 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   return (
     <div className="flex items-center justify-between px-4">
       {showModal && (
-        <DeletePostModal
-          handleDelete={handleDelete}
-          setShowModal={setShowModal}
-        />
+        <DeleteModal handleDelete={handleDelete} setShowModal={setShowModal} />
       )}
       <div className="flex items-center gap-2">
         <AvatarPost avatar={avatar} userID={_id} />

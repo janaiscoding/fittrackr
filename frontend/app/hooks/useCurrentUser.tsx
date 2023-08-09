@@ -4,7 +4,7 @@ import { UserContext } from "../context/userContext";
 
 // Will extract and return the user from the userContext.
 // Will determine if the userContext has loaded or not. Sets isLoading = false when user object is filled.
-// This is helpful for avoiding code repetition in scenarios where a user should not be null.
+// This is helpful for avoiding code repetition in scenarios where a user should NOT be null.
 const useCurrentUser = () => {
   const [currentUser, setCurrentUser] = useState<User>({} as User);
   const [isLoadingUser, setLoadingUser] = useState<boolean>(true);
@@ -19,7 +19,7 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (userContext.user) {
       handleCurrent(userContext.user);
-      console.log("setting current user - it will NOT do a fetch req.");
+      // Not a fetch request.
     }
   }, [userContext]);
   return { currentUser, isLoadingUser };

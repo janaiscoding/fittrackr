@@ -1,7 +1,6 @@
-import { ModalContext } from "@/app/context/modalContext";
-import { SetStateAction, useContext } from "react";
+import { SetStateAction } from "react";
 
-const DeletePostModal = ({
+const DeleteModal = ({
   handleDelete,
   setShowModal,
 }: {
@@ -11,8 +10,7 @@ const DeletePostModal = ({
   return (
     <div className="bg-black p-6 fixed z-[100] top-1/2 left-1/2 shadow-md -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu rounded md:max-w-md">
       <p className="text-xl font-ubuntu-500 text-white2 mb-6 text-center">
-        {" "}
-        Are you sure you want to delete this post?
+        Are you sure you want to delete this?
       </p>
       <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-evenly">
         <button
@@ -32,4 +30,4 @@ const DeletePostModal = ({
   );
 };
 
-export default DeletePostModal;
+export default DeleteModal;

@@ -13,7 +13,7 @@ const FormModal = () => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [file, setFile] = useState<any>(undefined);
+  const [file, setFile] = useState<any>(undefined); // ERROR HERE.
 
   const router = useRouter();
   const path = usePathname();
@@ -24,7 +24,7 @@ const FormModal = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    // always needs text and userID, the file image is optional
+    // Always needs text and userID, the file image is optional
     const formData = new FormData();
     formData.append("text", text);
     if (userContext.user) formData.append("userID", userContext.user._id);
@@ -32,7 +32,7 @@ const FormModal = () => {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
-    //Handle length error here rather than calling the API.
+    // Handle length error here, rather than calling the API.
     if (text.length === 0) {
       setError("Post is too short");
     } else {
@@ -88,7 +88,6 @@ const FormModal = () => {
       <form
         className="flex items-center justify-between gap-2"
         onSubmit={(e) => handleSubmit(e)}
-        encType="multipart/form-data"
       >
         <label className="w-full basis-full">
           <input
@@ -103,13 +102,17 @@ const FormModal = () => {
           />
         </label>
         <div className="flex gap-2">
-          <label htmlFor="upload-image" aria-label="Upload a new picture">
+          <label
+            htmlFor="upload-image-mobile"
+            onClick={() => console.log("clicked")}
+            aria-label="Upload a new picture"
+          >
             <UploadSVG />
             <input
               type="file"
               name="myImage"
               accept="image/*"
-              id="upload-image"
+              id="upload-image-mobile"
               className="hidden"
               onChange={(e) => {
                 setFile(e.target.files![0]);
@@ -122,7 +125,11 @@ const FormModal = () => {
           </button>
         </div>
       </form>
-      {file !== undefined && <p className="text-green">{file.name}</p>}
+      {file && (
+        <p className="font-ubuntu text-xs text-white">
+          File ready for upload: {file.name}
+        </p>
+      )}
       {error && <p className="text-error">{error}</p>}
       {success && <p className="text-valid">Post sent</p>}
     </div>
