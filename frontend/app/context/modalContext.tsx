@@ -21,11 +21,17 @@ export const ModalContext = createContext<ModalContextType>(
 export const ModalContextProvider = ({
   children,
 }: ModalContextProviderProps) => {
-  const [modalPost, setModalPost] = useState<boolean>(false);
+  const [modalPost, setModalPost] = useState(false);
   const [modalBell, setModalBell] = useState(false);
+
   return (
     <ModalContext.Provider
-      value={{ modalPost, setModalPost, modalBell, setModalBell }}
+      value={{
+        modalPost,
+        setModalPost,
+        modalBell,
+        setModalBell,
+      }}
     >
       {children}
     </ModalContext.Provider>

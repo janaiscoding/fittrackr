@@ -4,10 +4,12 @@ import getPosts from "@/app/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
 import AvatarPost from "../images/AvatarPost";
-import {  User } from "@/app/__types__/types";
+import { User } from "@/app/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/assets/svgs/Close";
 import { RelativeDate } from "../Date";
+import { ModalContext } from "@/app/context/modalContext";
+import DeletePostModal from "./DeletePostModal";
 
 type AuthorProps = {
   postID: string;
@@ -22,13 +24,14 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
 
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
   //TODO MODAL
-  const openModal = () => {
-    console.log("open delete modal");
+  const handleDelete = () => {
     deletePost(postID, handleSuccess);
   };
   const handleSuccess = () => {
     getPosts(postsContext.setPosts);
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -38,6 +41,12 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   }, [userContext.user, postsContext.posts]);
   return (
     <div className="flex items-center justify-between px-4">
+      {showModal && (
+        <DeletePostModal
+          handleDelete={handleDelete}
+          setShowModal={setShowModal}
+        />
+      )}
       <div className="flex items-center gap-2">
         <AvatarPost avatar={avatar} userID={_id} />
         <div>
@@ -53,8 +62,7 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
       <div className="flex gap-1 items-center">
         <button
           aria-label="Delete current post button"
-          onClick={openModal}
-          title="Delete"
+          onClick={() => setShowModal(true)}
         >
           {isAuthor && <Close />}
         </button>

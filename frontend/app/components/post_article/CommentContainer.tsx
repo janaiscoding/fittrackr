@@ -45,13 +45,13 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   };
 
   const handleSuccessLike = (data: { likes: string[] }) => {
-    //Set the new like counter(maybe add "onHover: displayLikes()") and UI state.
+    // Set the new like counter(maybe add "onHover: displayLikes()?") and UI state.
     setLikes(data.likes);
     setIsLiked(!isLiked);
   };
 
   const handleSuccessDelete = () => {
-    console.log("On delete success, re-fetch the new comments:");
+    // On delete success, reset the post context
     getPosts(postsContext.setPosts);
   };
   // const getLikeNames = () => {

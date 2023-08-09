@@ -40,7 +40,7 @@ const BotNav = () => {
     router.push("/login");
   };
   const handleModal = () => {
-    modalContext.setModal(!modalContext.modal);
+    modalContext.setModalPost(!modalContext.modalPost);
   };
 
   return (
