@@ -17,6 +17,7 @@ const verifyToken = (
       data.user ? handleAuthorized(data.user) : handleUnauthorized()
     )
     .catch((err) => {
+      handleUnauthorized()
       console.log(err);
     });
 };

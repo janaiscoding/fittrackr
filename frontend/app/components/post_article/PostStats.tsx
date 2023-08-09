@@ -10,6 +10,7 @@ import { UserContext } from "@/app/context/userContext";
 import React, { useContext, useEffect, useState } from "react";
 
 const PostStats = ({ post }: { post: Post }) => {
+  console.log(post);
   const { _id, comments } = post;
   const [likes, setLikes] = useState(post.likes);
 

@@ -12,6 +12,7 @@ const getPosts = (setter: React.Dispatch<SetStateAction<Post[] | null>>) => {
     })
     .then((res) => {
       setter(res.data.posts);
+      console.log("posts:", res.data.posts, 'how many times am I calling this?');
     })
     .catch((err) => {
       console.log(err);

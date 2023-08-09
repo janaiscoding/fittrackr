@@ -10,6 +10,7 @@ const FeedView = () => {
   const isLoadingPosts = useLoadingPosts();
   
   const postsContext = useContext(PostsContext);
+  
   return (
     <>
       <PostFormMD />

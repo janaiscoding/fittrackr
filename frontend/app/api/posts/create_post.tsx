@@ -24,7 +24,8 @@ const createPost = async (
         handleError(data.errors[0].msg);
       } else if (data === "Error: Please select an image.") {
         handleError(data);
-      } else {
+      }
+      else {
         handleSuccess();
       }
     })
