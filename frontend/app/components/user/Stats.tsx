@@ -1,14 +1,24 @@
 import { Post, User, Workout } from "@/app/__types__/types";
+import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
-type StatsProps = {
-  posts: Post[];
-  workouts: Workout[];
-  friends: string[];
-};
 const Stats = ({ profile }: { profile: User }) => {
+  const [pLength, setPLength] = useState(profile.posts.length);
+  const [wLength, setWLength] = useState(profile.workouts.length);
+  const [fLength, setFLength] = useState(profile.friends.length);
+
+  const userContext = useContext(UserContext);
   const viewContext = useContext(ViewContext);
+  
+  useEffect(() => {
+    if (userContext.user?._id === profile._id) {
+      setPLength(userContext.user.posts.length);
+      setWLength(userContext.user.workouts.length);
+      setFLength(userContext.user.friends.length);
+    }
+  }, [userContext]);
+
   return (
     <div className="flex text-sm font-ubuntu-500 text-white2 justify-between m-2">
       <p
@@ -16,7 +26,7 @@ const Stats = ({ profile }: { profile: User }) => {
         onClick={() => viewContext.setCurrent("feed")}
       >
         <span className="text-yellow2 text-lg hover:text-yellow">
-          {profile.posts.length}
+          {pLength}
         </span>
         Posts
       </p>
@@ -26,14 +36,17 @@ const Stats = ({ profile }: { profile: User }) => {
         onClick={() => viewContext.setCurrent("workouts")}
       >
         <span className="text-yellow2 text-lg hover:text-yellow">
-          {profile.workouts.length}
+          {wLength}
         </span>
         Workouts
       </p>
       <div className="border-r border-white2/30"></div>
-      <p className="flex flex-col items-center justify-center px-2 hover:cursor-pointer">
+      <p
+        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        onClick={() => viewContext.setCurrent("friends")}
+      >
         <span className="text-yellow2 text-lg hover:text-yellow">
-          {profile.friends.length}
+          {fLength}
         </span>
         Friends
       </p>

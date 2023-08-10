@@ -5,9 +5,8 @@ import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
 import Close from "@/app/assets/svgs/Close";
-import useFriendRequests from "@/app/hooks/useFriendRequests";
-import FriendRequests from "@/app/main_page/right_column/FriendRequests";
 import Title from "../Title";
+import FriendRequests from "../user/FriendRequests";
 
 const TopNav = () => {
   const { currentUser } = useCurrentUser();

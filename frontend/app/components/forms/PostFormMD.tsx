@@ -1,5 +1,6 @@
 import createPost from "@/app/api/posts/create_post";
 import getPosts from "@/app/api/posts/get_posts";
+import getProfile from "@/app/api/users/get_profile";
 import SendSVG from "@/app/assets/svgs/SendSVG";
 import UploadSVG from "@/app/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
@@ -44,6 +45,9 @@ const PostFormMD = () => {
     clearData();
     //Update postsContext
     getPosts(postsContext.setPosts);
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser);
+
     setTimeout(() => {
       setSuccess(false);
     }, 1000);

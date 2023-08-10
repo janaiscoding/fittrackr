@@ -1,6 +1,6 @@
 import Title from "../../components/Title";
-import FriendRequests from "./FriendRequests";
-import NonFriendsUsers from "./NonFriendsUsers";
+import FriendRequests from "../../components/user/FriendRequests";
+import NonFriendsUsers from "../../components/user/NonFriendsUsers";
 
 const Social = () => {
   return (

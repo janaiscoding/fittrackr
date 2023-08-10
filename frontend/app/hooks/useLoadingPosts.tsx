@@ -10,7 +10,8 @@ const useLoadingPosts = () => {
     if (postsContext.posts) {
       setLoadingPosts(Object.keys(postsContext.posts).length === 0); //O(n) complexity
     }
-  }, [postsContext.posts]);
+  }, [postsContext]);
+
   return isLoadingPosts;
 };
 

@@ -6,23 +6,33 @@ import useTokenVerification from "../hooks/useTokenVerification";
 import Loader from "../assets/Loader";
 // import UserComponent from "../components/users/User";
 import useCommunityGetter from "../hooks/useCommunityGetter";
+import UserWrapper from "../components/user/UserWrapper";
+import Sidebar from "../main_page/left_column/Sidebar";
+import Social from "../main_page/right_column/Social";
+import SocializeButtons from "../components/user/SocializeButtons";
 
 const Users = () => {
   useTokenVerification();
   const { isLoading, community } = useCommunityGetter();
+  
   return (
-    <div className="bg-black">
+    <div className="bg-black margin-auto">
       <TopNav />
-      <div className="min-h-[85vh] flex flex-col gap-2 p-4">
-        <div className="text-2xl font-ubuntu-500 border-b-2 border-yellow2 mb-4 self-center">
-          Our community
-        </div>
-        <div className=" grid auto-cols-fr auto-rows-min md:grid-cols-3 place-items-center">
+      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
+        <Sidebar />
+        <div className="flex flex-col font-ubuntu mb-10 w-full gap-1">
+          <div className="text-2xl font-ubuntu-500 border-b-2 border-yellow2 mb-4 self-center">
+            Our community
+          </div>
           {isLoading && <Loader />}
-          {/* {community.map((user, i) => (
-            <UserComponent user={user} key={i} />
-          ))} */}
+          {community.map((user, i) => (
+            <div key={i} >
+              <UserWrapper user={user}  />
+              <SocializeButtons user={user}/>
+            </div>
+          ))}
         </div>
+        <Social />
       </div>
       <BotNav />
     </div>

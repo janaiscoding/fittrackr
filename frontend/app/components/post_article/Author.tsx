@@ -9,6 +9,7 @@ import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/assets/svgs/Close";
 import { RelativeDate } from "../Date";
 import DeleteModal from "./DeleteModal";
+import getProfile from "@/app/api/users/get_profile";
 
 type AuthorProps = {
   postID: string;
@@ -28,10 +29,12 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   const handleDelete = () => {
     deletePost(postID, handleSuccess);
   };
-  
+
   const handleSuccess = () => {
     getPosts(postsContext.setPosts);
     setShowModal(false);
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser);
   };
 
   useEffect(() => {

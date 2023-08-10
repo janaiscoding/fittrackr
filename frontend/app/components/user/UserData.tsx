@@ -2,10 +2,12 @@ import { User } from "@/app/__types__/types";
 import getProfile from "@/app/api/users/get_profile";
 import uploadAvatar from "@/app/api/users/upload_avatar";
 import UploadSVG from "@/app/assets/svgs/Upload";
-import AvatarPost from "@/app/components/images/AvatarPost";
+import ProfilePicture from "@/app/components/images/ProfilePicture";
 import { UserContext } from "@/app/context/userContext";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import { useContext, useEffect, useState } from "react";
+import Stats from "./Stats";
+import SocializeButtons from "./SocializeButtons";
 
 const UserData = ({
   profile,
@@ -21,6 +23,7 @@ const UserData = ({
   const [avatar, setAvatar] = useState(profile.avatar);
 
   const userContext = useContext(UserContext);
+
   const { currentUser } = useCurrentUser();
 
   useEffect(() => {
@@ -52,15 +55,17 @@ const UserData = ({
   }, [uploadError]);
 
   useEffect(() => {
-    if (userContext.user) setAvatar(userContext.user.avatar);
-  }, [userContext]);
+    if (userContext.user?._id === profile._id) {
+      setAvatar(userContext.user.avatar);
+    }
+  }, [userContext, profile]);
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <div className="flex gap-2 items-center">
           {showError && <p className="text-error">{uploadError}</p>}
-          <AvatarPost avatar={avatar} userID={profile._id} />
+          <ProfilePicture avatar={avatar} />
           <div className="text-xl font-ubuntu-500 flex gap-1">
             {profile.first_name} {profile.last_name}
             {isSame && (
@@ -84,8 +89,12 @@ const UserData = ({
             Edit Profile
           </button>
         )}
+        {!isSame && <SocializeButtons user={profile} />}
       </div>
-      <p className="text-white2 text-center">{profile.bio} </p>
+      <div className="flex justify-between items-center">
+        <p className="text-white2 text-center">{profile.bio} </p>
+        <Stats profile={profile} />
+      </div>
     </div>
   );
 };

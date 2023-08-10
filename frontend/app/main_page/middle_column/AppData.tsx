@@ -18,7 +18,7 @@ const AppData = () => {
   const postsContext = useContext(PostsContext);
   useEffect(() => {
     getPosts(postsContext.setPosts);
-    // Don't need to fetch all over again, that happens on the mapping process. This is just initial setter for the context.
+    // Don't need to fetch all over again, that happens on the mapping process. This is just initial setter for the context. Happens on every page.
   }, []);
 
   return (

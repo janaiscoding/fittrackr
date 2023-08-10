@@ -10,11 +10,15 @@ import useCurrentUser from "@/app/hooks/useCurrentUser";
 import getProfile from "@/app/api/users/get_profile";
 import { User } from "@/app/__types__/types";
 import Loader from "@/app/assets/Loader";
-import TabToggle from "@/app/main_page/middle_column/TabToggle";
 import PostFormMD from "@/app/components/forms/PostFormMD";
-import Stats from "./Stats";
 import { ViewContext } from "@/app/context/viewContext";
-import UserData from "./UserData";
+import UserData from "../../components/user/UserData";
+import UserTabToggle from "../../components/user/UserTabToggle";
+import UserFriends from "../../components/user/UserFriends";
+import { PostsContext } from "@/app/context/postsContext";
+import useLoadingPosts from "@/app/hooks/useLoadingPosts";
+import PostArticle from "@/app/components/post_article/PostArticle";
+import UserPosts from "./UserPosts";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
@@ -30,7 +34,6 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
 
   useEffect(() => {
     getProfile(id, setProfile);
-    console.log("get profile");
   }, []);
 
   useEffect(() => {
@@ -39,7 +42,11 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
       setIsSame(currentUser._id === profile._id);
     }
   }, [profile]);
-  console.log(isLoading)
+  // Toggles a loader CSS effect while the posts are being fetched.
+  const isLoadingPosts = useLoadingPosts();
+
+  const postsContext = useContext(PostsContext);
+
   return (
     <div className="min-h-screen flex flex-col justify-between w-full">
       <TopNav />
@@ -47,18 +54,26 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="flex flex-col font-ubuntu w-full">
-            <UserData profile={profile} isSame={isSame} />
-            <Stats profile={profile} />
-          </div>
-        )}
-        {!isLoading && (
-          <div>
-            <TabToggle />
-            {viewContext.current === "feed" && isSame && <PostFormMD />}
-            {viewContext.current === "workouts" && isSame && <PostFormMD />}
-            {modalContext.modalPost && <FormModal />}
-          </div>
+          <>
+            <div className="flex flex-col font-ubuntu w-full">
+              <UserData profile={profile} isSame={isSame} />
+            </div>
+            <div>
+              <UserTabToggle />
+              {viewContext.current === "feed" && (
+                <UserPosts userID={profile._id} isSame={isSame}/>
+              )}
+
+              {isSame && viewContext.current === "workouts" && (
+                <p>post a new workout</p>
+              )}
+              {viewContext.current === "workouts" && <p>Work in progress</p>}
+              {viewContext.current === "friends" && (
+                <UserFriends userID={profile._id} />
+              )}
+              {modalContext.modalPost && <FormModal />}
+            </div>
+          </>
         )}
       </div>
 

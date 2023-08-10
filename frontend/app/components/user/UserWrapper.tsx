@@ -21,6 +21,9 @@ const UserWrapper = ({ user }: { user: User }) => {
         <p className="text-white2">
           <span className="text-white">{user.workouts.length}</span> Workouts
         </p>
+        <p className="text-white2">
+          <span className="text-white">{user.friends.length}</span> Friends
+        </p>
       </div>
     </div>
   );

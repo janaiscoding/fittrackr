@@ -19,7 +19,6 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (userContext.user) {
       handleCurrent(userContext.user);
-      console.log(userContext.user)
     }
   }, [userContext]);
   return { currentUser, isLoadingUser };
