@@ -41,11 +41,7 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
       setIsLoading(Object.keys(profile).length === 0);
       setIsSame(currentUser._id === profile._id);
     }
-  }, [profile]);
-  // Toggles a loader CSS effect while the posts are being fetched.
-  const isLoadingPosts = useLoadingPosts();
-
-  const postsContext = useContext(PostsContext);
+  }, [profile, currentUser]);
 
   return (
     <div className="min-h-screen flex flex-col justify-between w-full">

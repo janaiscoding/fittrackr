@@ -17,6 +17,7 @@ const Stats = ({ profile }: { profile: User }) => {
       setWLength(userContext.user.workouts.length);
       setFLength(userContext.user.friends.length);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext]);
 
   return (
