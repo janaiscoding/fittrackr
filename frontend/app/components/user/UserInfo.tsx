@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import Stats from "./Stats";
 import SocializeButtons from "./SocializeButtons";
 
-const UserData = ({
+const UserInfo = ({
   profile,
   isSame,
 }: {
@@ -98,4 +98,4 @@ const UserData = ({
     </div>
   );
 };
-export default UserData;
+export default UserInfo;

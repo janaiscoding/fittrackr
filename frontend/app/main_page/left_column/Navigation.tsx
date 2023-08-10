@@ -6,11 +6,13 @@ import HomeSVG from "../../assets/svgs/Home";
 import FriendsSVG from "../../assets/svgs/Friends";
 import User from "../../assets/svgs/User";
 import { UserContext } from "@/app/context/userContext";
+import { useRouter } from "next/navigation";
 
 const NavigationList = () => {
   const viewContext = useContext(ViewContext);
-  const currentUser = useContext(UserContext)
+  const currentUser = useContext(UserContext);
 
+  const router = useRouter();
   const showFeed = () => {
     console.log(viewContext.current);
     viewContext.setCurrent("feed");
@@ -18,6 +20,11 @@ const NavigationList = () => {
 
   const showWorkouts = () => {
     viewContext.setCurrent("workouts");
+  };
+
+  const handleFriendsRedirect = () => {
+    viewContext.setCurrent("friends");
+    router.push(`/users/${currentUser.user?._id}`);
   };
 
   return (
@@ -43,13 +50,13 @@ const NavigationList = () => {
         <User />
         <p>Profile</p>
       </a>
-      <a
-        href={`/users/${currentUser.user?._id}/friends`}
+      <div
+        onClick={handleFriendsRedirect}
         className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
       >
         <FriendsSVG />
         <p>Friends</p>
-      </a>
+      </div>
       <a
         href="/users"
         className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow "
