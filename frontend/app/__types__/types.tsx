@@ -10,23 +10,12 @@ type User = {
   bio: string;
   avatar: Avatar;
   workouts: Workout[];
-  posts: ProfilePost[];
+  posts: Post[];
   friends: string[];
   requestsSent: string[];
   requestsReceived: string[];
   createdAt: string;
   updatedAt: string;
-};
-
-type ProfilePost = {
-  comments: any[];
-  createdAt: string;
-  image: Avatar;
-  likes: string[];
-  text: string;
-  updatedAt: string;
-  user: string;
-  _id: string;
 };
 
 //todo
@@ -52,4 +41,4 @@ type Comment = {
   createdAt: string;
   likes: string[];
 };
-export type { User, ProfilePost, Post, Avatar, Comment, Workout };
+export type { User, Post, Avatar, Comment, Workout };

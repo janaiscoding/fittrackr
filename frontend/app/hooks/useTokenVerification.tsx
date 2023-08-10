@@ -29,6 +29,7 @@ const useTokenVerification = () => {
   useEffect(() => {
     const token = getJwtToken();
     if (token) {
+      console.log('verifyin')
       verifyToken(token, handleAuthorized, handleUnauthorized);
     }
   }, []);

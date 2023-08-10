@@ -104,7 +104,6 @@ const FormModal = () => {
         <div className="flex gap-2">
           <label
             htmlFor="upload-image-mobile"
-            onClick={() => console.log("clicked")}
             aria-label="Upload a new picture"
           >
             <UploadSVG />

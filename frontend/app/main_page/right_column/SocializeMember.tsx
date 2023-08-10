@@ -1,5 +1,5 @@
 import { User } from "../../__types__/types";
-import AvatarComment from "../../components/post_article/AvatarComment";
+import AvatarComment from "../../components/images/AvatarComment";
 import useSocializer from "../../hooks/useSocializer";
 
 // This is the default container for interacting with different users on the platform

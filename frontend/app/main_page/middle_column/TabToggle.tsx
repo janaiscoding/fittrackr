@@ -13,19 +13,22 @@ const TabToggle = () => {
     viewContext.setCurrent("workouts");
   };
   return (
-    <div className="flex justify-evenly text-xl font-ubuntu-500 bg-blue">
+    <div className="flex justify-evenly font-ubuntu-500 bg-blue">
       <button
-        className={`py-2 basis-full text-center hover:bg-black/30 ${
-          viewContext.current === "feed" && "border-b border-yellow2 bg-black/30"
+        className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
+          viewContext.current === "feed"
+            ? "border-yellow2 bg-black/30 text-white text-xl"
+            : "border-white/30 text-white2 text-lg"
         }`}
         onClick={showFeed}
       >
         Feed
       </button>
       <button
-        className={`py-2 basis-full text-center hover:bg-black/30 ${
-          viewContext.current === "workouts" &&
-          "border-b border-yellow2 bg-black/30"
+        className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
+          viewContext.current === "workouts"
+            ? "border-yellow2 bg-black/30 text-white text-xl"
+            : "border-white/30 text-white2 text-lg"
         }`}
         onClick={showWorkouts}
       >

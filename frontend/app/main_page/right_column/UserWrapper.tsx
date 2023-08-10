@@ -1,5 +1,6 @@
 import { User } from "@/app/__types__/types";
-import AvatarComment from "@/app/components/post_article/AvatarComment";
+import AvatarComment from "@/app/components/images/AvatarComment";
+import { workerData } from "worker_threads";
 
 const UserWrapper = ({ user }: { user: User }) => {
   return (
@@ -13,7 +14,14 @@ const UserWrapper = ({ user }: { user: User }) => {
           {user.first_name} {user.last_name}
         </a>
       </div>
-      <p className="text-white2">{user.bio}</p>
+      <div className="flex gap-1 font-ubuntu-500 text-xs">
+        <p className="text-white2">
+          <span className="text-white">{user.posts.length}</span> Posts
+        </p>
+        <p className="text-white2">
+          <span className="text-white">{user.workouts.length}</span> Workouts
+        </p>
+      </div>
     </div>
   );
 };

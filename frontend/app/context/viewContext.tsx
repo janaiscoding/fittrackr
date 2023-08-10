@@ -4,7 +4,10 @@ import React, { useState, createContext } from "react";
 type ViewContextProviderProps = {
   children: React.ReactNode;
 };
-
+enum ViewTabs {
+  feed = "feed",
+  workouts = "workouts",
+}
 type ViewContextType = {
   current: string;
   setCurrent: React.Dispatch<React.SetStateAction<string>>;

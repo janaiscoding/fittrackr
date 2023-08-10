@@ -13,8 +13,15 @@ import Stats from "./Stats";
 import UploadSVG from "@/app/assets/svgs/Upload";
 import getProfile from "@/app/api/users/get_profile";
 import { getJwtToken } from "@/app/api/auth/auth_handler";
+import useSocializer from "@/app/hooks/useSocializer";
 
-const Info = ({ profile }: { profile: User }) => {
+const Info = ({
+  profile,
+  isSame,
+}: {
+  profile: User;
+  isSame: boolean | undefined;
+}) => {
   const {
     _id,
     first_name,
@@ -27,85 +34,27 @@ const Info = ({ profile }: { profile: User }) => {
   } = profile;
 
   const userContext = useContext(UserContext);
-  // Determines if the user page is the currently signed in user
-  const [isSame, setIsSame] = useState<boolean>();
+
   // If on user signed in page, we need to be able to observe the state changes for userContext
   const [avatar, setAvatar] = useState(profile.avatar);
   const [posts, setPosts] = useState(profile.posts);
 
-  const [isFriends, setIsFriends] = useState<boolean>();
-  const [isPending, setIsPending] = useState<boolean>();
-  const [isReceived, setIsReceived] = useState<boolean>();
-
   const [file, setFile] = useState<any>();
   const [uploadError, setUploadError] = useState(" ");
 
-  const handleAdd = () => {
-    if (isPending) {
-      cancelRequest(_id, userContext.user?._id).then(() => setIsPending(false));
-    } else {
-      sendRequest(_id, userContext.user?._id).then(() => setIsPending(true));
-    }
-  };
+  const {
+    isFriends,
+    isPending,
+    isReceived,
+    handleAccept,
+    handleDecline,
+    handleAdd,
+    handleRemove,
+  } = useSocializer(profile);
 
-  const handleAccept = () => {
-    acceptRequest(_id, userContext.user?._id).then(() => {
-      setIsReceived(false);
-      setIsPending(false);
-      setIsFriends(true);
-    });
-  };
-
-  const handleDecline = () => {
-    declineRequest(_id, userContext.user?._id).then(() => {
-      setIsReceived(false);
-      setIsPending(false);
-      setIsFriends(false);
-    });
-  };
-
-  const handleRemove = () => {
-    removeFriend(_id, userContext.user?._id).then(() => setIsFriends(false));
-  };
-
-  useEffect(() => {
-    const formData = new FormData();
-    if (file) {
-      formData.append("myImage", file);
-      formData.append("mimeType", file.type);
-      fetch(`https://fiturself.fly.dev/users/${userContext.user?._id}/upload`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${getJwtToken()}`,
-        },
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          data.message
-            ? getProfile(userContext.user?._id, userContext.setUser)
-            : setUploadError(data);
-        })
-        .then(() => {
-          setFile(undefined);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [file]);
   const handleEdit = () => {
     console.log("swapping to edit view");
   };
-  useEffect(() => {
-    if (userContext.user && profile) {
-      //Determines the relation between userContext and fetched profile
-      setIsFriends(friends.includes(userContext.user._id));
-      setIsReceived(userContext.user?.requestsReceived?.includes(_id));
-      setIsPending(requestsReceived.includes(userContext.user._id));
-      setIsFriends(friends.includes(userContext.user!._id));
-      // Or if the logged in user is the one on the page
-      setIsSame(_id === userContext.user._id);
-    }
-  }, [userContext, profile]);
 
   useEffect(() => {
     // When profile changes occur(uploaded avatar or deleted posts), re-render the relevant components

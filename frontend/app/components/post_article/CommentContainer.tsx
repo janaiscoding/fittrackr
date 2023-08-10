@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
-import AvatarComment from "./AvatarComment";
+import AvatarComment from "../images/AvatarComment";
 import { RelativeDate } from "../Date";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";

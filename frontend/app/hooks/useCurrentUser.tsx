@@ -19,7 +19,7 @@ const useCurrentUser = () => {
   useEffect(() => {
     if (userContext.user) {
       handleCurrent(userContext.user);
-      // Not a fetch request.
+      console.log(userContext.user)
     }
   }, [userContext]);
   return { currentUser, isLoadingUser };

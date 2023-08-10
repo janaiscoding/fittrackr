@@ -1,7 +1,7 @@
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import Logo from "../../assets/Logo";
 import Notification from "../../assets/svgs/Notification";
-import AvatarComment from "../post_article/AvatarComment";
+import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
 import Close from "@/app/assets/svgs/Close";
@@ -12,6 +12,7 @@ import Title from "../Title";
 const TopNav = () => {
   const { currentUser } = useCurrentUser();
   const modalContext = useContext(ModalContext);
+
   return (
     <nav className="backdrop-blur-xl bg-black/80 sticky top-0 z-50 flex justify-between md:justify-center items-center py-2 border-solid border-b border-yellow2 md:px-20">
       <div className="px-4">
@@ -26,6 +27,7 @@ const TopNav = () => {
     </nav>
   );
 };
+
 const RequestModal = () => {
   const modalContext = useContext(ModalContext);
   return (
