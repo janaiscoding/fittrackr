@@ -1,7 +1,7 @@
-import { Avatar, ShortUser } from "@/app/utils/__types__/types";
+import { Avatar, User } from "@/app/utils/__types__/types";
 import Image from "next/image";
 
-const PostImage = ({ user, image }: { user: ShortUser; image: Avatar }) => {
+const PostImage = ({ user, image }: { user: User; image: Avatar }) => {
   return (
     image !== undefined && (
       <Image

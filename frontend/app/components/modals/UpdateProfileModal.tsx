@@ -68,7 +68,7 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
     return (
       <form
         onSubmit={(e) => handleUpdate(e)}
-        className="flex flex-col gap-2 justify-center bg-black p-6 fixed z-[100] w-full top-1/2 left-1/2 shadow-md -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu rounded"
+        className="bg-black p-6 fixed z-[100] top-1/2 left-1/2 shadow-md -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu rounded md:max-w-md"
       >
         <Title title="Update profile" />
         <label htmlFor="upload-avatar-edit-view" className="flex items-center">

@@ -35,12 +35,14 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <div className="min-h-screen flex flex-col justify-between w-full">
       <TopNav />
-      <div className="max-w-7xl m-auto min-h-[90vh] flex flex-col p-2 w-full">
+      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
+        <p>Left?</p>
         {isLoading ? (
           <Loader />
         ) : (
           <ProfileLayout profile={profile} isSame={isSame} />
         )}
+        <p>Right?</p>
       </div>
       {modalContext.modalPost && <FormModal />}
       <BotNav />

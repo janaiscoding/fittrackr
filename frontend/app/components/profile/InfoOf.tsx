@@ -34,7 +34,6 @@ const InfoOf = ({
           {profile.first_name} {profile.last_name}
         </div>
         {!editContext.showEdit && isSame && <UploadButtonToggle />}
-        {editContext.showEdit && <UpdateProfileModal profile={profile} />}
         {!isSame && <SocializeButtons user={profile} />}
       </div>
       <div className="flex justify-between items-center">
