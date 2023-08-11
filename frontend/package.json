@@ -10,6 +10,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/js-cookie": "^3.0.3",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",
@@ -26,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
+    "react-redux": "^8.1.2",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.6"
   },
