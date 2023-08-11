@@ -4,9 +4,8 @@ import Notification from "../../utils/assets/svgs/Notification";
 import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
-import Close from "@/app/utils/assets/svgs/Close";
-import Title from "../Title";
-import FriendRequests from "../user/FriendRequests";
+import RequestModal from "../modals/RequestModal";
+
 
 const TopNav = () => {
   const { currentUser } = useCurrentUser();
@@ -24,22 +23,6 @@ const TopNav = () => {
       </div>
       {modalContext.modalBell && <RequestModal />}
     </nav>
-  );
-};
-
-const RequestModal = () => {
-  const modalContext = useContext(ModalContext);
-  return (
-    <div className="md:hidden w-full absolute bg-black flex flex-col gap-1 p-2 rounded shadow-md top-[2.8rem]">
-      <div
-        onClick={() => modalContext.setModalBell(false)}
-        className="flex justify-between"
-      >
-        <Title title={"Friend requests"} />
-        <Close />
-      </div>
-      <FriendRequests />
-    </div>
   );
 };
 

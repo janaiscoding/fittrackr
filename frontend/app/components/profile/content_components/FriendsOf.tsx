@@ -1,6 +1,7 @@
 import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
-import UserWrapper from "../../user/UserWrapper";
+import UserWrapper from "../../socials_users/UserWrapper";
+
 
 const FriendsOf = ({ userID }: { userID: string }) => {
   const { friends, isLoading } = useFriendsList(userID);

@@ -1,7 +1,7 @@
-import SocializeButtons from "@/app/components/user/SocializeButtons";
+import SocializeButtons from "./SocializeButtons"
 import { User } from "../../utils/__types__/types";
 import AvatarComment from "../images/AvatarComment";
-import useSocializer from "../../hooks/useSocializer";
+
 
 // This is the default container for interacting with different users on the platform
 // Handling all social operations and states with the Custom Hook useSocializer
