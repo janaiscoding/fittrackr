@@ -1,4 +1,4 @@
-import { User } from "@/app/__types__/types";
+import { User } from "@/app/utils/__types__/types";
 import UserFriends from "@/app/components/user/UserFriends";
 import UserInfo from "@/app/components/user/UserInfo";
 import UserPosts from "@/app/components/user/UserPosts";

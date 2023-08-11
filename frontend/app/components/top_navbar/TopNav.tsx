@@ -1,10 +1,10 @@
 import useCurrentUser from "@/app/hooks/useCurrentUser";
-import Logo from "../../assets/Logo";
-import Notification from "../../assets/svgs/Notification";
+import Logo from "../../utils/assets/Logo";
+import Notification from "../../utils/assets/svgs/Notification";
 import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
-import Close from "@/app/assets/svgs/Close";
+import Close from "@/app/utils/assets/svgs/Close";
 import Title from "../Title";
 import FriendRequests from "../user/FriendRequests";
 

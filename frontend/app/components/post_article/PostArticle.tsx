@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Post } from "../../__types__/types";
+import { Post } from "../../utils/__types__/types";
 import Author from "./Author";
 import PostContent from "./PostContent";
 import Comments from "./Comments";

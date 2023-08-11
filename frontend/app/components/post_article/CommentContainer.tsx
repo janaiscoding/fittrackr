@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Like from "@/app/assets/svgs/Like";
-import LikeFilled from "@/app/assets/svgs/LikeFilled";
+import Like from "@/app/utils/assets/svgs/Like";
+import LikeFilled from "@/app/utils/assets/svgs/LikeFilled";
 import AvatarComment from "../images/AvatarComment";
 import { RelativeDate } from "../Date";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
-import { Comment } from "@/app/__types__/types";
-import likeComment from "@/app/api/posts/like_comment";
-import deleteComment from "@/app/api/posts/delete_comment";
+import { Comment } from "@/app/utils/__types__/types";
+import likeComment from "@/app/utils/api/posts/like_comment";
+import deleteComment from "@/app/utils/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
-import getPosts from "@/app/api/posts/get_posts";
-import getUsername from "@/app/api/users/get_username";
-import Close from "@/app/assets/svgs/Close";
+import getPosts from "@/app/utils/api/posts/get_posts";
+import getUsername from "@/app/utils/api/users/get_username";
+import Close from "@/app/utils/assets/svgs/Close";
 import DeleteModal from "./DeleteModal";
 
 type CommContainerProps = {

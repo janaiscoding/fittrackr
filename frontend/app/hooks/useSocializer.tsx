@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
 
 import { UserContext } from "../context/userContext";
-import getUser from "../api/users/get_user";
-import cancelRequest from "../api/friends/cancel_request";
-import sendRequest from "../api/friends/send_request";
-import acceptRequest from "../api/friends/accept_request";
-import declineRequest from "../api/friends/decline_request";
-import removeFriend from "../api/friends/remove_friend";
-import { User } from "../__types__/types";
+import getUser from "../utils/api/users/get_user";
+import cancelRequest from "../utils/api/friends/cancel_request";
+import sendRequest from "../utils/api/friends/send_request";
+import acceptRequest from "../utils/api/friends/accept_request";
+import declineRequest from "../utils/api/friends/decline_request";
+import removeFriend from "../utils/api/friends/remove_friend";
+import { User } from "../utils/__types__/types";
 
 const useSocializer = (targetUser: User) => {
   const { currentUser } = useCurrentUser();

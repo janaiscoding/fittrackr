@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { User } from "../__types__/types";
+import { User } from "../utils/__types__/types";
 import { UserContext } from "../context/userContext";
 
 // Will extract and return the user from the userContext.

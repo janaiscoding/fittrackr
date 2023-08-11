@@ -1,8 +1,8 @@
-import createPost from "@/app/api/posts/create_post";
-import getPosts from "@/app/api/posts/get_posts";
-import getProfile from "@/app/api/users/get_profile";
-import SendSVG from "@/app/assets/svgs/SendSVG";
-import UploadSVG from "@/app/assets/svgs/Upload";
+import createPost from "@/app/utils/api/posts/create_post";
+import getPosts from "@/app/utils/api/posts/get_posts";
+import getProfile from "@/app/utils/api/users/get_profile";
+import SendSVG from "@/app/utils/assets/svgs/SendSVG";
+import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
 import { SyntheticEvent, useContext, useState } from "react";

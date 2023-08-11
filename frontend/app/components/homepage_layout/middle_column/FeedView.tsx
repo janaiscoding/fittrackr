@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import PostFormMD from "../../components/forms/PostFormMD";
-import useLoadingPosts from "../../hooks/useLoadingPosts";
-import { PostsContext } from "../../context/postsContext";
-import PostArticle from "../../components/post_article/PostArticle";
-import Loader from "../../assets/Loader";
+import PostFormMD from "../../forms/PostFormMD";
+import useLoadingPosts from "../../../hooks/useLoadingPosts";
+import { PostsContext } from "../../../context/postsContext";
+import PostArticle from "../../posts/PostArticle";
+import Loader from "../../../utils/assets/Loader";
 
 const FeedView = () => {
   // Toggles a loader CSS effect while the posts are being fetched.

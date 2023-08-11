@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
-import { getJwtToken, removeJwtToken } from "../api/auth/auth_handler";
+import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
 import { UserContext } from "../context/userContext";
-import { User } from "../__types__/types";
+import { User } from "../utils/__types__/types";
 import { useRouter } from "next/navigation";
-import verifyToken from "../api/auth/verify_token";
+import verifyToken from "../utils/api/auth/verify_token";
 
 // Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid. Returns valid boolean.
 const useTokenVerification = () => {

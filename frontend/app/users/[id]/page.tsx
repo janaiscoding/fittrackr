@@ -7,9 +7,9 @@ import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { ModalContext } from "@/app/context/modalContext";
 import FormModal from "@/app/components/forms/FormModal";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
-import getProfile from "@/app/api/users/get_profile";
-import { User } from "@/app/__types__/types";
-import Loader from "@/app/assets/Loader";
+import getProfile from "@/app/utils/api/users/get_profile";
+import { User } from "@/app/utils/__types__/types";
+import Loader from "@/app/utils/assets/Loader";
 import UserPage from "./UserPage";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {

@@ -3,7 +3,7 @@
 import BotNav from "../components/bottom_navbar/BotNav";
 import TopNav from "../components/top_navbar/TopNav";
 import useTokenVerification from "../hooks/useTokenVerification";
-import Loader from "../assets/Loader";
+import Loader from "../utils/assets/Loader";
 // import UserComponent from "../components/users/User";
 import useCommunityGetter from "../hooks/useCommunityGetter";
 import UserWrapper from "../components/user/UserWrapper";

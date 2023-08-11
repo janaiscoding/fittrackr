@@ -1,4 +1,4 @@
-import { Avatar } from "@/app/__types__/types";
+import { Avatar } from "@/app/utils/__types__/types";
 import Image from "next/image";
 
 const PostImage = ({ image }: { image: Avatar }) => {

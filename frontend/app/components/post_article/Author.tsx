@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import deletePost from "@/app/api/posts/delete_post";
-import getPosts from "@/app/api/posts/get_posts";
+import deletePost from "@/app/utils/api/posts/delete_post";
+import getPosts from "@/app/utils/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
 import AvatarPost from "../images/AvatarPost";
-import { User } from "@/app/__types__/types";
+import { User } from "@/app/utils/__types__/types";
 import { UserContext } from "@/app/context/userContext";
-import Close from "@/app/assets/svgs/Close";
+import Close from "@/app/utils/assets/svgs/Close";
 import { RelativeDate } from "../Date";
 import DeleteModal from "./DeleteModal";
-import getProfile from "@/app/api/users/get_profile";
+import getProfile from "@/app/utils/api/users/get_profile";
 
 type AuthorProps = {
   postID: string;

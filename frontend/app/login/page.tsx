@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import loginRequest from "../api/auth/login_request";
+import loginRequest from "../utils/api/auth/login_request";
 import LoginForm from "../components/forms/LoginForm";
 import { useState } from "react";
-import { setJwtToken } from "../api/auth/auth_handler";
-import LogoFront from "../assets/LogoFront";
+import { setJwtToken } from "../utils/api/auth/auth_handler";
+import LogoFront from "../utils/assets/LogoFront";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(

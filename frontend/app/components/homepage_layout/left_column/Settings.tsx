@@ -1,10 +1,10 @@
 import { useRouter } from "next/navigation";
-import { removeJwtToken } from "../../api/auth/auth_handler";
-import SignOut from "../../assets/svgs/SignOut";
-import { UserContext } from "../../context/userContext";
+import { removeJwtToken } from "../../../utils/api/auth/auth_handler";
+import SignOut from "../../../utils/assets/svgs/SignOut";
+import { UserContext } from "../../../context/userContext";
 import { useContext } from "react";
-import WheelSVG from "../../assets/svgs/Settings";
-import ThemeSVG from "../../assets/svgs/Theme";
+import WheelSVG from "../../../utils/assets/svgs/Settings";
+import ThemeSVG from "../../../utils/assets/svgs/Theme";
 
 const SettingsList = () => {
   const currentUser = useContext(UserContext);

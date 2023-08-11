@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { getJwtToken, removeJwtToken } from "../api/auth/auth_handler";
+import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
 import SignUpForm from "../components/forms/SignupForm";
 
 const SignUp = () => {

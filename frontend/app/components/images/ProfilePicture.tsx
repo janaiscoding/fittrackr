@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Avatar } from "../../__types__/types";
+import { Avatar } from "../../utils/__types__/types";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
 
 const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {

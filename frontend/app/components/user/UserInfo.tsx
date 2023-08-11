@@ -1,7 +1,7 @@
-import { User } from "@/app/__types__/types";
-import getProfile from "@/app/api/users/get_profile";
-import uploadAvatar from "@/app/api/users/upload_avatar";
-import UploadSVG from "@/app/assets/svgs/Upload";
+import { User } from "@/app/utils/__types__/types";
+import getProfile from "@/app/utils/api/users/get_profile";
+import uploadAvatar from "@/app/utils/api/users/upload_avatar";
+import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { UserContext } from "@/app/context/userContext";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";

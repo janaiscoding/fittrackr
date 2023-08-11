@@ -1,4 +1,4 @@
-import Loader from "@/app/assets/Loader";
+import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
 import UserWrapper from "./UserWrapper";
 

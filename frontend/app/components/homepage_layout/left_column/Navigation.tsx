@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { ViewContext } from "../../context/viewContext";
-import Dumbbell from "../../assets/svgs/Dumbbell";
-import Community from "../../assets/svgs/Community";
-import HomeSVG from "../../assets/svgs/Home";
-import FriendsSVG from "../../assets/svgs/Friends";
-import User from "../../assets/svgs/User";
+import { ViewContext } from "../../../context/viewContext";
+import Dumbbell from "../../../utils/assets/svgs/Dumbbell";
+import Community from "../../../utils/assets/svgs/Community";
+import HomeSVG from "../../../utils/assets/svgs/Home";
+import FriendsSVG from "../../../utils/assets/svgs/Friends";
+import User from "../../../utils/assets/svgs/User";
 import { UserContext } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
 
