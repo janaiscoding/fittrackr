@@ -13,12 +13,10 @@ const StatsOf = ({ profile }: { profile: User }) => {
 
   useEffect(() => {
     if (userContext.user?._id === profile._id) {
-      console.log(true, userContext.user.posts.length)
       setPLength(userContext.user.posts.length);
       setWLength(userContext.user.workouts.length);
       setFLength(userContext.user.friends.length);
     }
-    console.log(userContext.user, 'STATSOF', userContext.user?._id === profile._id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext.user]);
 

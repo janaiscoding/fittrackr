@@ -5,7 +5,8 @@ import { getJwtToken } from "../auth/auth_handler";
 
 const getProfile = (
   id: string | undefined,
-  setter: React.Dispatch<SetStateAction<User>>
+  setter: React.Dispatch<SetStateAction<User>>,
+  handleError: () => void
 ) => {
   axios
     .get(`https://fiturself.fly.dev/users/${id}`, {
@@ -18,6 +19,7 @@ const getProfile = (
     })
     .catch((err) => {
       console.log(err);
+      handleError()
     });
 };
 
