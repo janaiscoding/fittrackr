@@ -4,7 +4,7 @@ import defaultPic from "../../../public/assets/default_avatar.jpg";
 
 const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
   return (
-    <div>
+    <div className="max-w-[5rem] max-h-[5rem]">
       {avatar === undefined ? (
         <Image
           src={defaultPic}

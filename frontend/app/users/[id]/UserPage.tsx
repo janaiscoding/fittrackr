@@ -14,6 +14,7 @@ const UserPage = ({
   isSame: boolean | undefined;
 }) => {
   const viewContext = useContext(ViewContext);
+  
   return (
     <>
       <div className="flex flex-col font-ubuntu w-full">

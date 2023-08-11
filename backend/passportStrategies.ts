@@ -12,7 +12,6 @@ opts.secretOrKey = process.env.secret;
 
 const jwtStrategy = new JwtStrategy(opts, async (payload: any, done: any) => {
   const user = await User.findById({ _id: payload.userID });
-  console.log(payload);
   if (user) {
     return done(null, user);
   }
