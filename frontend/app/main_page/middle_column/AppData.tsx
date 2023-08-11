@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import PostArticle from "../components/post_article/PostArticle";
-import PostFormMD from "../components/forms/PostFormMD";
-import useLoadingPosts from "../hooks/useLoadingPosts";
-import Loader from "../assets/Loader";
-import { PostsContext } from "../context/postsContext";
-import { useContext, useEffect, useState } from "react";
-import getPosts from "../api/posts/get_posts";
-import { ModalContext } from "../context/modalContext";
-import FormModal from "../components/forms/FormModal";
-import { ViewContext } from "../context/viewContext";
+import { PostsContext } from "../../context/postsContext";
+import { useContext, useEffect } from "react";
+import getPosts from "../../api/posts/get_posts";
+import { ModalContext } from "../../context/modalContext";
+import FormModal from "../../components/forms/FormModal";
+import { ViewContext } from "../../context/viewContext";
 import FeedView from "./FeedView";
 import TabToggle from "./TabToggle";
 
@@ -22,14 +18,15 @@ const AppData = () => {
   const postsContext = useContext(PostsContext);
   useEffect(() => {
     getPosts(postsContext.setPosts);
+    // Don't need to fetch all over again, that happens on the mapping process. This is just initial setter for the context. Happens on every page.
   }, []);
 
   return (
     <div className="flex flex-col font-ubuntu mb-10 w-full ">
       <TabToggle />
       {viewContext.current === "feed" && <FeedView />}
-      {viewContext.current === "workouts" && <p>workouts</p>}
-      {modalContext.modal && <FormModal />}
+      {viewContext.current === "workouts" && <p>Work in progress.</p>}
+      {modalContext.modalPost && <FormModal />}
     </div>
   );
 };

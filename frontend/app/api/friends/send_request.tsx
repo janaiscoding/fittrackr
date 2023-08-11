@@ -2,7 +2,8 @@ import { getJwtToken } from "../auth/auth_handler";
 
 const sendRequest = async (
   receiverID: string,
-  senderID: string | undefined
+  senderID: string | undefined,
+  handleSuccess: (status: string) => void
 ) => {
   await fetch(`https://fiturself.fly.dev/users/${receiverID}/send`, {
     method: "POST",
@@ -13,7 +14,11 @@ const sendRequest = async (
     body: JSON.stringify({ senderID }),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data))
+    .then((data) => {
+      if (data.message && data.message.includes("sent")) {
+        handleSuccess("sent");
+      }
+    })
     .catch((err) => console.log(err));
 };
 

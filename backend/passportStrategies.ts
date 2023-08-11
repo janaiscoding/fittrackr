@@ -3,7 +3,6 @@ import passportJWT from "passport-jwt";
 import "dotenv/config";
 import User from "./models/user";
 
-
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
 

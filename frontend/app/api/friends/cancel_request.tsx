@@ -1,6 +1,10 @@
 import { getJwtToken } from "../auth/auth_handler";
 
-const cancelRequest = async (receiverID: string, senderID: string | undefined) => {
+const cancelRequest = async (
+  receiverID: string,
+  senderID: string | undefined,
+  handleSuccess: (status: string) => void
+) => {
   await fetch(`https://fiturself.fly.dev/users/${receiverID}/cancel`, {
     method: "DELETE",
     headers: {
@@ -10,7 +14,11 @@ const cancelRequest = async (receiverID: string, senderID: string | undefined) =
     body: JSON.stringify({ senderID }),
   })
     .then((res) => res.json())
-    .then((data) => console.log(data))
+    .then((data) => {
+      if (data.message && data.message.includes("canceled")) {
+        handleSuccess("canceled");
+      }
+    })
     .catch((err) => console.log(err));
 };
 

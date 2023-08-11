@@ -1,22 +1,18 @@
 import { useRouter } from "next/navigation";
-import { removeJwtToken } from "../api/auth/auth_handler";
-import Community from "../assets/svgs/Community";
-import FriendsSVG from "../assets/svgs/Friends";
-import SignOut from "../assets/svgs/SignOut";
-import useCurrentUser from "../hooks/useCurrentUser";
-import { UserContext } from "../context/userContext";
+import { removeJwtToken } from "../../api/auth/auth_handler";
+import SignOut from "../../assets/svgs/SignOut";
+import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
-import WheelSVG from "../assets/svgs/Settings";
-import ThemeSVG from "../assets/svgs/Theme";
+import WheelSVG from "../../assets/svgs/Settings";
+import ThemeSVG from "../../assets/svgs/Theme";
 
 const SettingsList = () => {
-  const currentUser = useCurrentUser();
-  const userContext = useContext(UserContext);
+  const currentUser = useContext(UserContext);
 
   const router = useRouter();
 
   const handleSignout = () => {
-    userContext.setUser(null);
+    currentUser.setUser(null);
     removeJwtToken();
     router.push("/login");
   };

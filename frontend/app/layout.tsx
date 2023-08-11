@@ -1,3 +1,4 @@
+import { EditContextProvider } from "./context/editContext";
 import { ModalContextProvider } from "./context/modalContext";
 import { PostsContextProvider } from "./context/postsContext";
 import { UserContextProvider } from "./context/userContext";
@@ -20,7 +21,9 @@ export default function RootLayout({
         <UserContextProvider>
           <PostsContextProvider>
             <ViewContextProvider>
-              <ModalContextProvider>{children}</ModalContextProvider>
+              <ModalContextProvider>
+                <EditContextProvider>{children}</EditContextProvider>
+              </ModalContextProvider>
             </ViewContextProvider>
           </PostsContextProvider>
         </UserContextProvider>

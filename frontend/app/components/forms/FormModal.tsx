@@ -13,7 +13,7 @@ const FormModal = () => {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [file, setFile] = useState<any>(undefined);
+  const [file, setFile] = useState<any>(undefined); // ERROR HERE.
 
   const router = useRouter();
   const path = usePathname();
@@ -24,7 +24,7 @@ const FormModal = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    // always needs text and userID, the file image is optional
+    // Always needs text and userID, the file image is optional
     const formData = new FormData();
     formData.append("text", text);
     if (userContext.user) formData.append("userID", userContext.user._id);
@@ -32,7 +32,7 @@ const FormModal = () => {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
-    //Handle length error here rather than calling the API.
+    // Handle length error here, rather than calling the API.
     if (text.length === 0) {
       setError("Post is too short");
     } else {
@@ -74,11 +74,11 @@ const FormModal = () => {
 
   const handleClose = () => {
     clearData();
-    modalContext.setModal(false);
+    modalContext.setModalPost(false);
   };
 
   return (
-    <div className="bg-black2 p-6 fixed z-[100] top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden rounded">
+    <div className="bg-black p-6 fixed z-[100] w-full top-1/2 left-1/2 shadow-md -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden rounded">
       <div className="flex justify-between items-center">
         <h1 className="text-xl my-2 text-yellow">Create a new post!</h1>
         <button onClick={handleClose} aria-label="Close create new post form">
@@ -88,7 +88,6 @@ const FormModal = () => {
       <form
         className="flex items-center justify-between gap-2"
         onSubmit={(e) => handleSubmit(e)}
-        encType="multipart/form-data"
       >
         <label className="w-full basis-full">
           <input
@@ -96,17 +95,23 @@ const FormModal = () => {
             className="text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded "
             onChange={(e) => {
               setText(e.target.value);
+              if (e.target.value.length > 1) {
+                setError(" ");
+              }
             }}
           />
         </label>
         <div className="flex gap-2">
-          <label htmlFor="upload-image" aria-label="Upload a new picture">
+          <label
+            htmlFor="upload-image-mobile"
+            aria-label="Upload a new picture"
+          >
             <UploadSVG />
             <input
               type="file"
               name="myImage"
               accept="image/*"
-              id="upload-image"
+              id="upload-image-mobile"
               className="hidden"
               onChange={(e) => {
                 setFile(e.target.files![0]);
@@ -119,9 +124,13 @@ const FormModal = () => {
           </button>
         </div>
       </form>
-      {file !== undefined && <p className="text-green">{file.name}</p>}
-      <p className="text-red">{error}</p>
-      {success && <p className="text-green">Post sent</p>}
+      {file && (
+        <p className="font-ubuntu text-xs text-white">
+          File ready for upload: {file.name}
+        </p>
+      )}
+      {error && <p className="text-error">{error}</p>}
+      {success && <p className="text-valid">Post sent</p>}
     </div>
   );
 };

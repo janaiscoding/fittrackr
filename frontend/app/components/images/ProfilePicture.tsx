@@ -4,11 +4,11 @@ import defaultPic from "../../../public/assets/default_avatar.jpg";
 
 const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
   return (
-    <div>
+    <div className="max-w-[5rem] max-h-[5rem]">
       {avatar === undefined ? (
         <Image
           src={defaultPic}
-          className="w-16 h-16 rounded-full object-cover border-2 border-solid border-mid-green"
+          className="w-16 h-16 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-yellow2"
           alt="user-default-profile-picture"
         />
       ) : (
@@ -17,7 +17,7 @@ const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
           src={`data:${avatar?.contentType};base64,${Buffer.from(
             avatar?.data
           ).toString("base64")}`}
-          className="w-20 h-20 rounded-full object-cover border-2 border-solid border-mid-green"
+          className="w-20 h-20 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-yellow2"
           alt="user-profile-picture"
         />
       )}

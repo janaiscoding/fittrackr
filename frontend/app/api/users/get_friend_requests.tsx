@@ -4,9 +4,10 @@ import { User } from "@/app/__types__/types";
 
 const getFriendRequests = (
   userID: string,
-  setter: React.Dispatch<SetStateAction<User[]>>
+  setter: React.Dispatch<SetStateAction<User[]>>,
+  handleSuccess: () => void
 ) => {
-  fetch(`https://fiturself.fly.dev/users/${userID}`, {
+  fetch(`https://fiturself.fly.dev/users/${userID}/received`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
@@ -14,9 +15,8 @@ const getFriendRequests = (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.user !== undefined) {
-        setter((prevState) => [...prevState, data.user]);
-      }
+      setter(data.received);
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

@@ -19,11 +19,14 @@ const AvatarCommunity = ({ avatar, userID }: AvatarProps) => {
           alt="user-profile-picture"
         />
       ) : (
-        <Image
-          src={defaultPic}
-          className="w-24 h-24 rounded-full object-cover"
-          alt="user-default-profile-picture"
-        />
+        // <Image
+        //   src={defaultPic}
+        //   className="w-24 h-24 rounded-full object-cover"
+        //   alt="user-default-profile-picture"
+        // />
+        <div className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image text-center bg-blue">
+        ?
+      </div>
       )}
     </a>
   );

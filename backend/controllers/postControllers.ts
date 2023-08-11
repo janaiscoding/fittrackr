@@ -7,6 +7,9 @@ import User from "../models/user";
 import multer from "multer";
 import uploadPicture from "../middleware/multerConfig";
 
+//SELECT CRITERIAS
+const fullUser = "-email -password";
+
 const posts_get = async (req: Request, res: Response) => {
   try {
     const postsData = await Post.find({})

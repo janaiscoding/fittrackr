@@ -8,9 +8,10 @@ const useLoadingPosts = () => {
 
   useEffect(() => {
     if (postsContext.posts) {
-      setLoadingPosts(Object.keys(postsContext.posts).length === 0); //O(n) complexity
+      setLoadingPosts(false);
     }
-  }, [postsContext.posts]);
+  }, [postsContext]);
+
   return isLoadingPosts;
 };
 

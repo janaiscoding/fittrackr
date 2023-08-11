@@ -3,15 +3,17 @@ import deletePost from "@/app/api/posts/delete_post";
 import getPosts from "@/app/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
-import { Date } from "../Date";
 import AvatarPost from "../images/AvatarPost";
-import { ShortUser } from "@/app/__types__/types";
+import { User } from "@/app/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/assets/svgs/Close";
+import { RelativeDate } from "../Date";
+import DeleteModal from "./DeleteModal";
+import getProfile from "@/app/api/users/get_profile";
 
 type AuthorProps = {
   postID: string;
-  author: ShortUser;
+  author: User;
   createdAt: string;
 };
 
@@ -22,13 +24,17 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
 
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
-  //TODO MODAL
-  const openModal = () => {
-    console.log("open delete modal");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDelete = () => {
     deletePost(postID, handleSuccess);
   };
+
   const handleSuccess = () => {
     getPosts(postsContext.setPosts);
+    setShowModal(false);
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser);
   };
 
   useEffect(() => {
@@ -38,21 +44,25 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
   }, [userContext.user, postsContext.posts]);
   return (
     <div className="flex items-center justify-between px-4">
+      {showModal && (
+        <DeleteModal handleDelete={handleDelete} setShowModal={setShowModal} />
+      )}
       <div className="flex items-center gap-2">
         <AvatarPost avatar={avatar} userID={_id} />
-        <a
-          href={`/users/${_id}`}
-          className="font-ubuntu-500 text-white hover:text-yellow"
-        >
-          {first_name} {last_name}
-        </a>
+        <div>
+          <a
+            href={`/users/${_id}`}
+            className="font-ubuntu-500 text-white hover:text-yellow"
+          >
+            {first_name} {last_name}
+          </a>
+          <RelativeDate date={createdAt} />
+        </div>
       </div>
       <div className="flex gap-1 items-center">
-        <Date date={createdAt} />
         <button
           aria-label="Delete current post button"
-          onClick={openModal}
-          title="Delete"
+          onClick={() => setShowModal(true)}
         >
           {isAuthor && <Close />}
         </button>

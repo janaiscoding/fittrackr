@@ -6,25 +6,31 @@ import Dumbbell from "@/app/assets/svgs/Dumbbell";
 import HomeSVG from "@/app/assets/svgs/Home";
 import Plus from "@/app/assets/svgs/Plus";
 import SignOut from "@/app/assets/svgs/SignOut";
-import User from "@/app/assets/svgs/User";
 import { ModalContext } from "@/app/context/modalContext";
 import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 
 const BotNav = () => {
   const userContext = useContext(UserContext);
   const modalContext = useContext(ModalContext);
   const router = useRouter();
+  const path = usePathname();
   const viewContext = useContext(ViewContext);
 
   const showFeed = () => {
+    if (path !== "/") {
+      router.push("/");
+    }
     window.scrollTo(0, 0);
     viewContext.setCurrent("feed");
   };
 
   const showWorkouts = () => {
+    if (path !== "/") {
+      router.push("/");
+    }
     window.scrollTo(0, 0);
     viewContext.setCurrent("workouts");
   };
@@ -34,7 +40,7 @@ const BotNav = () => {
     router.push("/login");
   };
   const handleModal = () => {
-    modalContext.setModal(!modalContext.modal);
+    modalContext.setModalPost(!modalContext.modalPost);
   };
 
   return (

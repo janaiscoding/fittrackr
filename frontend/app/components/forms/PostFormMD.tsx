@@ -1,5 +1,6 @@
 import createPost from "@/app/api/posts/create_post";
 import getPosts from "@/app/api/posts/get_posts";
+import getProfile from "@/app/api/users/get_profile";
 import SendSVG from "@/app/assets/svgs/SendSVG";
 import UploadSVG from "@/app/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
@@ -44,6 +45,9 @@ const PostFormMD = () => {
     clearData();
     //Update postsContext
     getPosts(postsContext.setPosts);
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser);
+
     setTimeout(() => {
       setSuccess(false);
     }, 1000);
@@ -56,7 +60,6 @@ const PostFormMD = () => {
   };
   return (
     <div className="flex-col flex p-4 bg-blue rounded">
-
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}
@@ -73,7 +76,6 @@ const PostFormMD = () => {
           <div className="font-open flex flex-col items-center gap-2">
             {success && <p className="text-xs text-valid">Post sent!</p>}
             {error.length > 1 && <p className="text-xs text-error">{error}</p>}
-            {file && <p className="text-xs text-white2">{file.name}</p>}
           </div>
           <label
             htmlFor="upload-image"
@@ -102,6 +104,11 @@ const PostFormMD = () => {
             <p>Create Post</p>
           </button>
         </div>
+        {file && (
+          <p className="font-ubuntu text-xs text-white">
+            File ready for upload: {file.name}
+          </p>
+        )}
       </form>
     </div>
   );

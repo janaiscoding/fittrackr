@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
-import { User } from "../__types__/types";
 import useCurrentUser from "./useCurrentUser";
 import getFriendRequests from "../api/users/get_friend_requests";
+import { User } from "../__types__/types";
 
+// This will retreive all friend requests. Used on Mobile view under notification bell, and on desktop on right_column
 const useFriendRequests = () => {
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   const [friendRequests, setFriendRequests] = useState<User[]>([] as User[]);
-
-  const fetchFriendRequests = () => {
-    setFriendRequests([]);
-    currentUser.requestsReceived.forEach((userID) =>
-      getFriendRequests(userID, setFriendRequests)
-    );
-  };
-
+  const [isLoading, setLoading] = useState(true);
+  const handleSuccess = () => {
+    setLoading(false)
+  }
   useEffect(() => {
     if (currentUser.requestsReceived) {
-      fetchFriendRequests();
+      getFriendRequests(currentUser._id, setFriendRequests, handleSuccess);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
-  return friendRequests;
+  return {friendRequests, isLoading};
 };
 export default useFriendRequests;

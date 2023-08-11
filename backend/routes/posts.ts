@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 const router = express.Router();
 import PC from "../controllers/postControllers";
 import CC from "../controllers/commentController";
@@ -19,4 +19,5 @@ router.delete("/:postID", auth, PC.post_delete);
 router.post("/:postID/like", auth, PC.post_like);
 router.post("/:postID/:commentID/like", auth, CC.comment_like);
 router.delete("/:postID/:commentID", auth, CC.comment_delete);
+
 export default router;

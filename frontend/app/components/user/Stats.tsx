@@ -1,24 +1,55 @@
-import { ProfilePost, Workout } from "../../__types__/types";
+import { Post, User, Workout } from "@/app/__types__/types";
+import { UserContext } from "@/app/context/userContext";
+import { ViewContext } from "@/app/context/viewContext";
+import { useContext, useEffect, useState } from "react";
 
-const Stats = ({
-  posts,
-  workouts,
-  friends,
-}: {
-  posts: ProfilePost[];
-  workouts: Workout[];
-  friends: string[];
-}) => {
+const Stats = ({ profile }: { profile: User }) => {
+  const [pLength, setPLength] = useState(profile.posts.length);
+  const [wLength, setWLength] = useState(profile.workouts.length);
+  const [fLength, setFLength] = useState(profile.friends.length);
+
+  const userContext = useContext(UserContext);
+  const viewContext = useContext(ViewContext);
+  
+  useEffect(() => {
+    if (userContext.user?._id === profile._id) {
+      setPLength(userContext.user.posts.length);
+      setWLength(userContext.user.workouts.length);
+      setFLength(userContext.user.friends.length);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userContext]);
+
   return (
-    <div className="flex gap-2 text-green">
-      <p className="flex flex-col items-center">
-        {posts.length} <span className="text-grey text-xs">Posts</span>
+    <div className="flex text-sm font-ubuntu-500 text-white2 justify-between m-2">
+      <p
+        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        onClick={() => viewContext.setCurrent("feed")}
+      >
+        <span className="text-yellow2 text-lg hover:text-yellow">
+          {pLength}
+        </span>
+        Posts
       </p>
-      <p className="flex flex-col items-center">
-        {workouts.length} <span className="text-grey text-xs">Workouts</span>
+      <div className="border-r border-white2/30"></div>
+      <p
+        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        onClick={() => viewContext.setCurrent("workouts")}
+      >
+        <span className="text-yellow2 text-lg hover:text-yellow">
+          {wLength}
+        </span>
+        Workouts
       </p>
-      <p className="flex flex-col items-center">
-        {friends.length} <span className="text-grey text-xs">Friends</span>
+      <div className="border-r border-white2/30"></div>
+      <p
+        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        onClick={() => viewContext.setCurrent("friends")}
+      >
+        <span className="text-yellow2 text-lg hover:text-yellow">
+          {fLength}
+        </span>
+        Friends
       </p>
     </div>
   );

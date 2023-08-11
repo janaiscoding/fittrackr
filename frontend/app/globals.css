@@ -86,8 +86,10 @@
   background: linear-gradient(45deg, #080b11 0%, #0f0f11 50%, #141416 100%);
 }
 .comment-image {
-  height: 2rem;
-  width: 2rem;
+  min-height: 1.7rem;
+  min-width: 1.7rem;
+  max-height: 1.7rem;
+  max-width: 1.7rem;
 }
 .post-avatar-image {
   min-height: 3rem;
@@ -100,26 +102,6 @@
   transition: all 100ms ease-in-out;
 }
 
-.avatar-circle,
-.name-circle {
-  display: inline-block;
-  background-color: #9ef5cf;
-  color: #010101;
-  border-radius: 50%;
-  text-align: center;
-}
-.name-circle {
-  font-size: 1.8rem;
-  line-height: 2.7rem; /* set to same size as width, height */
-  width: 2.7rem;
-  height: 2.7rem;
-}
-.avatar-circle {
-  font-size: 1rem;
-  line-height: 1.7rem; /* set to same size as width, height */
-  width: 1.7rem;
-  height: 1.7rem;
-}
 
 input.invalid,
 input:focus.invalid,

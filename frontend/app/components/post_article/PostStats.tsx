@@ -14,9 +14,6 @@ const PostStats = ({ post }: { post: Post }) => {
   const [likes, setLikes] = useState(post.likes);
 
   const [isLiked, setIsLiked] = useState<boolean>();
-  const [likenames, setLikenames] = useState<string[]>([] as string[]);
-  const [showNames, setShowNames] = useState(false); //Only show on hover
-
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 
@@ -29,32 +26,16 @@ const PostStats = ({ post }: { post: Post }) => {
     setIsLiked(!isLiked);
   };
 
-  const getLikeNames = () => {
-    setLikenames([]);
-    //setter((prevState) => [...prevState, data.username]);
-    likes.forEach((userID) => getUsername(userID, setLikenames));
-  };
-
-  useEffect(() => {
-    getLikeNames();
-  }, [likes]);
-
   useEffect(() => {
     if (userContext.user) {
       setIsLiked(post.likes.includes(userContext.user._id));
+      setLikes(post.likes);
     }
-  }, [userContext.user, postsContext.posts]);
+  }, [postsContext, userContext]);
 
   return (
     <div className="flex items-start mt-2 gap-2 relative">
       <div>
-        {showNames && likenames.length > 0 && (
-          <div className="hidden md:block absolute p-2 top-[100%] left-[7%] rounded bg-blue border border-solid border-slate-900 text-yellow">
-            {likenames.map((name, i) => (
-              <p key={i}>{name}</p>
-            ))}
-          </div>
-        )}
         <div
           onClick={handleLike}
           className="hover:cursor-pointer"
@@ -64,8 +45,8 @@ const PostStats = ({ post }: { post: Post }) => {
         </div>
         <div
           className="text-white2 font-ubuntu-500 text-sm hover:cursor-pointer"
-          onMouseEnter={() => setShowNames(true)}
-          onMouseLeave={() => setShowNames(false)}
+          // onMouseEnter={() => setShowNames(true)}
+          // onMouseLeave={() => setShowNames(false)}
         >
           {likes.length} {likes.length === 1 ? "like" : "likes"}
         </div>

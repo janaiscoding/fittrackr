@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-
+// DEPRECATED: THIS IS THE WRONG WAY TO DO THIS, IT CALLS THE API TOO MANY TIMES: STATUS 429, TOO MANY REQUESTS.
 const getUsername = (
   userID: string,
   setter: React.Dispatch<SetStateAction<string[]>>

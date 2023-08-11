@@ -4,6 +4,7 @@ import { getJwtToken } from "../auth/auth_handler";
 import axios from "axios";
 
 const getPosts = (setter: React.Dispatch<SetStateAction<Post[] | null>>) => {
+  console.log("calling get posts and updating context....");
   axios
     .get(`https://fiturself.fly.dev/posts`, {
       headers: {

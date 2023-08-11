@@ -3,12 +3,12 @@
 import BotNav from "./components/bottom_navbar/BotNav";
 import TopNav from "./components/top_navbar/TopNav";
 import useTokenVerification from "./hooks/useTokenVerification";
-import AppData from "./main_page/AppData";
-import Sidebar from "./main_page/Sidebar";
-import Social from "./main_page/Social";
-
+import AppData from "./main_page/middle_column/AppData";
+import Sidebar from "./main_page/left_column/Sidebar";
+import Social from "./main_page/right_column/Social";
 const Home = () => {
   useTokenVerification();
+
   return (
     <div className="bg-black">
       <TopNav />

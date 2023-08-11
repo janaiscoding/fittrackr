@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Like from "@/app/assets/svgs/Like";
 import LikeFilled from "@/app/assets/svgs/LikeFilled";
-import AvatarComment from "./AvatarComment";
-import { Date } from "../Date";
+import AvatarComment from "../images/AvatarComment";
+import { RelativeDate } from "../Date";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import { Comment } from "@/app/__types__/types";
@@ -12,6 +12,7 @@ import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/api/posts/get_posts";
 import getUsername from "@/app/api/users/get_username";
 import Close from "@/app/assets/svgs/Close";
+import DeleteModal from "./DeleteModal";
 
 type CommContainerProps = {
   postID: string;
@@ -24,8 +25,8 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const postsContext = useContext(PostsContext);
 
   const [likes, setLikes] = useState(comm.likes);
-  const [likenames, setLikenames] = useState<string[]>([] as string[]);
-  const [showNames, setShowNames] = useState(false);
+  // const [likenames, setLikenames] = useState<string[]>([] as string[]);
+  // const [showNames, setShowNames] = useState(false);
 
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isAuthor, setIsAuthor] = useState<boolean>();
@@ -34,91 +35,92 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
     likeComment(postID, _id, userContext.user?._id, handleSuccessLike);
     // handleError placeholder is just a console.log for now.
   };
+  const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    console.log("Open delete modal.", "And then on confirm:");
-    handleDeleteComment();
-  };
-
-  const handleDeleteComment = () => {
+  const handleDelete = () => {
     deleteComment(postID, _id, userContext.user?._id, handleSuccessDelete);
   };
 
   const handleSuccessLike = (data: { likes: string[] }) => {
-    //Set the new like counter(maybe add "onHover: displayLikes()") and UI state.
+    // Set the new like counter(maybe add "onHover: displayLikes()?") and UI state.
     setLikes(data.likes);
     setIsLiked(!isLiked);
   };
 
   const handleSuccessDelete = () => {
-    console.log("On delete success, re-fetch the new comments:");
+    // On delete success, reset the post context
     getPosts(postsContext.setPosts);
+    setShowModal(false);
   };
-  const getLikeNames = () => {
-    setLikenames([]);
-    likes.forEach((userID) => getUsername(userID, setLikenames));
-  };
+  // const getLikeNames = () => {
+  //   setLikenames([]);
+  //   likes.forEach((userID) => getUsername(userID, setLikenames));
+  // };
 
-  useEffect(() => {
-    getLikeNames();
-  }, [likes]);
+  // useEffect(() => {
+  //   getLikeNames();
+  // }, [likes]);
 
   useEffect(() => {
     // When a new comment gets rendered, establish the initial status.
-    if (comment && userContext.user) {
+    if (comm && userContext.user) {
       setIsLiked(likes.includes(userContext.user!._id));
       setIsAuthor(userContext.user._id === user._id);
+      setLikes(comm.likes);
     }
   }, [userContext.user]);
 
   return (
-    <div id={_id}>
-      <div className="flex justify-between">
-        <div className="flex gap-1 items-center">
-          <div className="flex flex-col">
-            <div className="flex gap-1 items-center">
-              <AvatarComment avatar={user.avatar} userID={user._id} />
-              <a
-                href={`/users/${user._id}`}
-                className="text-white text-sm hover:text-yellow"
-              >
-                {user.first_name} {user.last_name}
-              </a>
-              <Date date={createdAt} />
-            </div>
-            <p className="text-white2 break-all ml-8"> {comment}</p>
+    <div className="flex justify-between font-ubuntu">
+      <div className="flex gap-1 items-center">
+        <div className="flex flex-col">
+          <div className="flex gap-1 items-center">
+            <AvatarComment avatar={user.avatar} userID={user._id} />
+            <a
+              href={`/users/${user._id}`}
+              className="text-white text-sm hover:text-yellow font-ubuntu-500"
+            >
+              {user.first_name} {user.last_name}
+            </a>
+            <RelativeDate date={createdAt} />
           </div>
+          <p className="text-white2 break-all ml-8"> {comment}</p>
         </div>
-        <div className="flex flex-row-reverse gap-1 items-start">
-          {showNames && likenames.length > 0 && (
+      </div>
+      <div className="flex flex-row-reverse gap-1 items-start">
+        {/* {showNames && likenames.length > 0 && (
             <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-blue border border-solid border-slate-900 text-yellow">
               {likenames.map((name, i) => (
                 <p key={i}>{name}</p>
               ))}
             </div>
-          )}
-          {isAuthor && (
-            <button
-              onClick={openModal}
-              aria-label="Delete this comment"
-              title="Delete"
-            >
-              <Close />
-            </button>
-          )}
+          )} */}
+        {isAuthor && (
           <button
-            onClick={handleLike}
-            className="relative"
-            aria-label="Like comment toggle icon"
-            onMouseEnter={() => setShowNames(true)}
-            onMouseLeave={() => setShowNames(false)}
+            onClick={() => setShowModal(true)}
+            aria-label="Delete this comment"
           >
-            <p className="text-white text-xs absolute left-[90%] top-[-20%]">
-              {likes.length > 0 && likes.length}
-            </p>
-            {isLiked ? <LikeFilled /> : <Like />}
+            <Close />
           </button>
-        </div>
+        )}
+        {showModal && (
+          <DeleteModal
+            handleDelete={handleDelete}
+            setShowModal={setShowModal}
+          />
+        )}
+        <button
+          onClick={handleLike}
+          className="relative"
+          aria-label="Like comment toggle icon"
+          // onMouseEnter={() => setShowNames(true)}
+          // onMouseLeave={() => setShowNames(false)}
+        >
+          <p className="text-white2 font-ubuntu-500 text-sm absolute left-[95%] top-[-20%]">
+            {likes.length > 0 && likes.length}
+          </p>
+          {isLiked ? <LikeFilled /> : <Like />}
+        </button>
       </div>
     </div>
   );

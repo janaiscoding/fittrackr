@@ -21,11 +21,14 @@ const AvatarComment = ({
           alt="user-profile-picture"
         />
       ) : (
-        <Image
-          src={defaultPic}
-          className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image"
-          alt="user-default-profile-picture"
-        />
+        // <Image
+        //   src={defaultPic}
+        //   className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image"
+        //   alt="user-default-profile-picture"
+        // />
+        <div className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image text-center bg-blue">
+          ?
+        </div>
       )}
     </a>
   );
