@@ -4,17 +4,16 @@ import BotNav from "../components/bottom_navbar/BotNav";
 import TopNav from "../components/top_navbar/TopNav";
 import useTokenVerification from "../hooks/useTokenVerification";
 import Loader from "../utils/assets/Loader";
-// import UserComponent from "../components/users/User";
 import useCommunityGetter from "../hooks/useCommunityGetter";
-import UserWrapper from "../components/user/UserWrapper";
-import Sidebar from "../main_page/left_column/Sidebar";
-import Social from "../main_page/right_column/Social";
-import SocializeButtons from "../components/user/SocializeButtons";
+import Social from "../components/homepage_layout/right_column/Social";
+import Sidebar from "../components/homepage_layout/left_column/Sidebar";
+import UserWrapper from "../components/socials_users/UserWrapper";
+import SocializeButtons from "../components/socials_users/SocializeButtons";
 
 const Users = () => {
   useTokenVerification();
   const { isLoading, community } = useCommunityGetter();
-  
+
   return (
     <div className="bg-black margin-auto">
       <TopNav />
@@ -25,11 +24,15 @@ const Users = () => {
             Users ;3
           </div>
           {isLoading && <Loader />}
-          {!isLoading && community.length === 0 && <p className="w-full self-center text-white2 bg-blue p-2 rounded">You are alone for now...</p>}
+          {!isLoading && community.length === 0 && (
+            <p className="w-full self-center text-white2 bg-blue p-2 rounded">
+              You are alone for now...
+            </p>
+          )}
           {community.map((user, i) => (
-            <div key={i} >
-              <UserWrapper user={user}  />
-              <SocializeButtons user={user}/>
+            <div key={i}>
+              <UserWrapper user={user} />
+              <SocializeButtons user={user} />
             </div>
           ))}
         </div>

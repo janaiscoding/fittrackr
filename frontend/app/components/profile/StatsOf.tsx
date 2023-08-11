@@ -1,24 +1,26 @@
-import { Post, User, Workout } from "@/app/utils/__types__/types";
+import { User } from "@/app/utils/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
 import { useContext, useEffect, useState } from "react";
 
-const Stats = ({ profile }: { profile: User }) => {
+const StatsOf = ({ profile }: { profile: User }) => {
   const [pLength, setPLength] = useState(profile.posts.length);
   const [wLength, setWLength] = useState(profile.workouts.length);
   const [fLength, setFLength] = useState(profile.friends.length);
 
   const userContext = useContext(UserContext);
   const viewContext = useContext(ViewContext);
-  
+
   useEffect(() => {
     if (userContext.user?._id === profile._id) {
+      console.log(true, userContext.user.posts.length)
       setPLength(userContext.user.posts.length);
       setWLength(userContext.user.workouts.length);
       setFLength(userContext.user.friends.length);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userContext]);
+    console.log(userContext.user, 'STATSOF', userContext.user?._id === profile._id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userContext.user]);
 
   return (
     <div className="flex text-sm font-ubuntu-500 text-white2 justify-between m-2">
@@ -55,4 +57,4 @@ const Stats = ({ profile }: { profile: User }) => {
   );
 };
 
-export default Stats;
+export default StatsOf;

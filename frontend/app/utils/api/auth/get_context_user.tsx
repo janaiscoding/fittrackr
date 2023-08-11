@@ -1,10 +1,11 @@
 import axios from "axios";
 import { SetStateAction } from "react";
 import { User } from "../../__types__/types";
-import { getJwtToken } from "../auth/auth_handler";
+import { getJwtToken } from "./auth_handler";
 
-const getUser = (
-  id: string,
+// Usable when I need to deal with fetching/ updating the current context. To not be confused with getProfile. This is for making posts, workouts, etc.
+const getContextUser = (
+  id: string | undefined,
   setter: React.Dispatch<SetStateAction<User | null>>
 ) => {
   axios
@@ -21,4 +22,4 @@ const getUser = (
     });
 };
 
-export default getUser;
+export default getContextUser;

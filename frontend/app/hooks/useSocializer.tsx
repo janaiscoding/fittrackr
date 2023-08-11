@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
 
 import { UserContext } from "../context/userContext";
-import getUser from "../utils/api/users/get_user";
+import getContextUser from "../utils/api/auth/get_context_user";
 import cancelRequest from "../utils/api/friends/cancel_request";
 import sendRequest from "../utils/api/friends/send_request";
 import acceptRequest from "../utils/api/friends/accept_request";
@@ -46,7 +46,7 @@ const useSocializer = (targetUser: User) => {
 
   const handleSuccess = () => {
     //Refresh app context - the friendship statuses will get re-rendered
-    getUser(currentUser._id, userContext.setUser);
+    getContextUser(currentUser._id, userContext.setUser);
   };
 
   useEffect(() => {

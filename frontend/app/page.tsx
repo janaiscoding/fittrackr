@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import BotNav from "./components/bottom_navbar/BotNav";
+import Sidebar from "./components/homepage_layout/left_column/Sidebar";
+import AppData from "./components/homepage_layout/middle_column/AppData";
+import Social from "./components/homepage_layout/right_column/Social";
 import TopNav from "./components/top_navbar/TopNav";
 import useTokenVerification from "./hooks/useTokenVerification";
-import AppData from "./main_page/middle_column/AppData";
-import Sidebar from "./main_page/left_column/Sidebar";
-import Social from "./main_page/right_column/Social";
+
 const Home = () => {
   useTokenVerification();
 

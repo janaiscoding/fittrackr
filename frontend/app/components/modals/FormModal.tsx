@@ -8,6 +8,7 @@ import Close from "@/app/utils/assets/svgs/Close";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/utils/api/posts/get_posts";
 import { ModalContext } from "@/app/context/modalContext";
+import getContextUser from "@/app/utils/api/auth/get_context_user";
 
 const FormModal = () => {
   const [text, setText] = useState("");
@@ -51,6 +52,8 @@ const FormModal = () => {
     setSuccess(true);
     //Update postsContext
     getPosts(postsContext.setPosts);
+    // Refresh user context
+    getContextUser(userContext.user?._id, userContext.setUser)
 
     setTimeout(() => {
       //Close form

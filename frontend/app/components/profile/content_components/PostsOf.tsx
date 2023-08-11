@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import useLoadingPosts from "../../hooks/useLoadingPosts";
-import { PostsContext } from "../../context/postsContext";
-import PostArticle from "../posts/PostArticle";
-import Loader from "../../utils/assets/Loader";
+
 import getPosts from "@/app/utils/api/posts/get_posts";
 import { Post } from "@/app/utils/__types__/types";
+import useLoadingPosts from "@/app/hooks/useLoadingPosts";
+import { useContext, useEffect, useState } from "react";
+import { PostsContext } from "@/app/context/postsContext";
+import Loader from "@/app/utils/assets/Loader";
+import PostArticle from "../../posts/PostArticle";
 
-const PostsLayout = ({ userID }: { userID: string }) => {
+const PostsOf = ({ userID }: { userID: string }) => {
   const isLoadingPosts = useLoadingPosts();
   const postsContext = useContext(PostsContext);
   const [userPosts, setUserPosts] = useState<Post[]>([] as Post[]);
@@ -43,4 +44,4 @@ const PostsLayout = ({ userID }: { userID: string }) => {
   );
 };
 
-export default PostsLayout;
+export default PostsOf;
