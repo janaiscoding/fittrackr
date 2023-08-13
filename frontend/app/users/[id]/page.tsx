@@ -1,49 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import TopNav from "@/app/components/top_navbar/TopNav";
-import BotNav from "@/app/components/bottom_navbar/BotNav";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { ModalContext } from "@/app/context/modalContext";
-import FormModal from "@/app/components/forms/FormModal";
-import useCurrentUser from "@/app/hooks/useCurrentUser";
-import getProfile from "@/app/api/users/get_profile";
-import { User } from "@/app/__types__/types";
-import Loader from "@/app/assets/Loader";
-import UserPage from "./UserPage";
+import ProfileLayout from "../../components/profile/ProfileLayout";
+import FormModal from "@/app/components/modals/FormModal";
+import getPosts from "@/app/utils/api/posts/get_posts";
+import { PostsContext } from "@/app/context/postsContext";
+import TopNav from "@/app/components/navigation/TopNav";
+import BotNav from "@/app/components/navigation/BotNav";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
-
-  const [profile, setProfile] = useState<User>({} as User);
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSame, setIsSame] = useState<boolean>();
-
   const modalContext = useContext(ModalContext);
-
-  const { currentUser } = useCurrentUser();
+  const postsContext = useContext(PostsContext);
 
   useEffect(() => {
-    getProfile(id, setProfile);
+    //Initialize posts context.
+    // This is just initial setter for the context. Happens on every page initial load.
+    getPosts(postsContext.setPosts);
   }, []);
-
-  useEffect(() => {
-    if (profile) {
-      setIsLoading(Object.keys(profile).length === 0);
-      setIsSame(currentUser._id === profile._id);
-    }
-  }, [profile, currentUser]);
 
   return (
     <div className="min-h-screen flex flex-col justify-between w-full">
       <TopNav />
-      <div className="max-w-7xl m-auto min-h-[90vh] flex flex-col p-2 w-full">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <UserPage profile={profile} isSame={isSame} />
-        )}
+      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
+        <p>Left?</p>
+        <ProfileLayout id={id} />
+        <p>Right?</p>
       </div>
       {modalContext.modalPost && <FormModal />}
       <BotNav />

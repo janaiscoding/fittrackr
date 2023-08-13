@@ -1,4 +1,4 @@
-import { Avatar } from "@/app/__types__/types";
+import { Avatar } from "@/app/utils/__types__/types";
 import Image from "next/image";
 
 const PostImage = ({ image }: { image: Avatar }) => {
@@ -10,7 +10,7 @@ const PostImage = ({ image }: { image: Avatar }) => {
         ).toString("base64")}`}
         width={400}
         height={0}
-        className="w-full h-60 object-cover border-2 border-solid border-mid-green"
+        className="w-full h-60 object-cover border-2 border-solid border-outline"
         alt="Uploaded Post Picture"
       />
     </div>

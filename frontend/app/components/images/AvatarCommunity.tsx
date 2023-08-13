@@ -1,4 +1,4 @@
-import { Avatar } from "@/app/__types__/types";
+import { Avatar } from "@/app/utils/__types__/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
 type AvatarProps = {
@@ -24,7 +24,7 @@ const AvatarCommunity = ({ avatar, userID }: AvatarProps) => {
         //   className="w-24 h-24 rounded-full object-cover"
         //   alt="user-default-profile-picture"
         // />
-        <div className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image text-center bg-blue">
+        <div className="rounded-full object-cover border-2 border-solid border-outline comment-image text-center bg-bgContainers">
         ?
       </div>
       )}

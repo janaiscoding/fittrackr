@@ -9,15 +9,25 @@ module.exports = {
     extend: {
       colors: {
         white: "#F4FFF3",
-        white2: "#ADADAD",
-        yellow: "#F0CC80", // green 4E9F3D
-        green: "#1E5128", // dark green 1E5128
-        yellow2: "#89764B", // soft green 346751
+        // white2: "#ADADAD",
+        // yellow: "#F0CC80", // green 4E9F3D
+        // green: "#1E5128", // dark green 1E5128
+        // yellow2: "#89764B", // soft green 346751
+        // grey: "#262626", //separator
+        // blue: "#191A19", // 1D2226 - linkedIn color
+        // input: "#1D2226",
+        // black: "#040303", //121211 - softer black like on hover tabs
+        // error: "#FF4A4A",
+        // valid: "#2eb97c",
+        // theme2 - green:
+        softWhite:"#C6C5C5",
+        accent: "#76D08A",
+        secondary: "#AAFD9C",
+        bgContainers: "#1C1C1F",
+        outline: "#50504F",
         grey: "#262626", //separator
-        blue: "#191A19", // 1D2226 - linkedIn color
-        input: "#1D2226",
-        black: "#040303", //121211 - softer black like on hover tabs
-        error: "#df4444",
+        black: "#0D0D0F",
+        error: "#FF4A4A",
         valid: "#2eb97c",
       },
       fontFamily: {

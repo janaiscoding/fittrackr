@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, createContext } from "react";
-import { Post } from "../__types__/types";
+import { Post } from "../utils/__types__/types";
 
 type PostsContextProviderProps = {
   children: React.ReactNode;

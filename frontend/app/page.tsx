@@ -1,14 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import BotNav from "./components/bottom_navbar/BotNav";
-import TopNav from "./components/top_navbar/TopNav";
+
+import { useContext } from "react";
+import Sidebar from "./components/homepage_layout/left_column/Sidebar";
+import AppData from "./components/homepage_layout/middle_column/AppData";
+import Social from "./components/homepage_layout/right_column/Social";
+import BotNav from "./components/navigation/BotNav";
+import TopNav from "./components/navigation/TopNav";
 import useTokenVerification from "./hooks/useTokenVerification";
-import AppData from "./main_page/middle_column/AppData";
-import Sidebar from "./main_page/left_column/Sidebar";
-import Social from "./main_page/right_column/Social";
+import { ModalContext } from "./context/modalContext";
+import FormModal from "./components/modals/FormModal";
+
 const Home = () => {
   useTokenVerification();
-
+  const modalContext = useContext(ModalContext);
   return (
     <div className="bg-black">
       <TopNav />
@@ -16,6 +21,7 @@ const Home = () => {
         <Sidebar />
         <AppData />
         <Social />
+        {modalContext.modalPost && <FormModal />}
       </div>
       <BotNav />
     </div>

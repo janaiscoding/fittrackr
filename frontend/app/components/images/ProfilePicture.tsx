@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Avatar } from "../../__types__/types";
+import { Avatar } from "../../utils/__types__/types";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
 
 const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
@@ -8,7 +8,7 @@ const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
       {avatar === undefined ? (
         <Image
           src={defaultPic}
-          className="w-16 h-16 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-yellow2"
+          className="w-16 h-16 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-secondary"
           alt="user-default-profile-picture"
         />
       ) : (
@@ -17,7 +17,7 @@ const ProfilePicture = ({ avatar }: { avatar: Avatar }) => {
           src={`data:${avatar?.contentType};base64,${Buffer.from(
             avatar?.data
           ).toString("base64")}`}
-          className="w-20 h-20 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-yellow2"
+          className="w-20 h-20 min-w-full min-h-full rounded-full object-cover border-2 border-solid border-secondary"
           alt="user-profile-picture"
         />
       )}
