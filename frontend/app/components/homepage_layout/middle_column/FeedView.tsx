@@ -16,7 +16,7 @@ const FeedView = () => {
       <PostFormMD />
       {isLoadingPosts && <Loader />}
       {!isLoadingPosts && postsContext.posts?.length === 0 && (
-        <p className="w-full self-center text-white2 bg-blue p-2 rounded mt-2">
+        <p className="w-full self-center text-white2 bg-bgContainers p-2 rounded mt-2">
           This section is quiet...
         </p>
       )}

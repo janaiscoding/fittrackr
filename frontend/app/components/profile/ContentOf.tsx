@@ -12,7 +12,7 @@ const ContentOf = ({ profile }: { profile: User }) => {
       <UserTabToggle />
       {viewContext.current === "feed" && <PostsOf userID={profile._id} />}
       {viewContext.current === "workouts" && (
-        <p className="w-full self-center text-error bg-blue p-2 rounded mt-2">
+        <p className="w-full self-center text-error bg-bgContainers p-2 rounded mt-2">
           Work in progress
         </p>
       )}

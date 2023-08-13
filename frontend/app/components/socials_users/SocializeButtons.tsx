@@ -17,7 +17,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {isPending && (
         <button
           onClick={handleAdd}
-          className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+          className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
         >
           Cancel
         </button>
@@ -25,7 +25,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {isFriends && (
         <button
           onClick={handleRemove}
-          className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+          className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
         >
           Remove
         </button>
@@ -33,7 +33,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {!isFriends && !isReceived && !isPending && (
         <button
           onClick={handleAdd}
-          className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+          className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
         >
           Add
         </button>
@@ -42,13 +42,13 @@ const SocializeButtons = ({ user }: { user: User }) => {
         <div className="flex gap-2">
           <button
             onClick={handleAccept}
-            className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+            className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
           >
             Accept
           </button>
           <button
             onClick={handleDecline}
-            className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+            className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
           >
             {" "}
             Decline

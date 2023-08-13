@@ -3,7 +3,7 @@ const WheelSVG = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="#F0CC80"
+      fill="#C6C5C5"
       className="w-6 h-6"
     >
       <path

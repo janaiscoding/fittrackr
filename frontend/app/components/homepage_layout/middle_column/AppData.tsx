@@ -19,7 +19,7 @@ const AppData = () => {
   }, []);
 
   return (
-    <div className="flex flex-col font-ubuntu mb-10 w-full ">
+    <div className="flex flex-col font-ubuntu mb-10 w-full text-softWhite">
       <TabToggle />
       {viewContext.current === "feed" && <FeedView />}
       {viewContext.current === "workouts" && <p>Work in progress.</p>}

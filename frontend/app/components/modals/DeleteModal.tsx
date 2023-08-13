@@ -15,13 +15,13 @@ const DeleteModal = ({
       <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-evenly">
         <button
           onClick={handleDelete}
-          className="text-valid border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+          className="text-accent border border-outline hover:bg-accent hover:text-black border-solid py-1 px-3 rounded"
         >
           Delete
         </button>
         <button
           onClick={() => setShowModal(false)}
-          className="text-error border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+          className="text-error border border-outline hover:text-black hover:bg-error border-solid py-1 px-3 rounded"
         >
           Cancel
         </button>

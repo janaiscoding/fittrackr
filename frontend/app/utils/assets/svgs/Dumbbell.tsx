@@ -2,7 +2,7 @@ const Dumbbell = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="#F0CC80"
+      fill="#C6C5C5"
       //height="1.5em"
       className="h-6 w-6"
       viewBox="0 0 640 512"

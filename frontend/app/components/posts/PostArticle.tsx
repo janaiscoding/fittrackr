@@ -8,7 +8,7 @@ const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
 
   return (
-    <article className="bg-blue rounded py-2 w-full">
+    <article className="bg-bgContainers rounded py-2 w-full">
       <Author postID={_id} author={user} createdAt={createdAt} />
       <PostContent post={post} />
       <Comments postID={_id} postComments={comments} />

@@ -10,7 +10,7 @@ const RelativeDate = ({ date }: { date: string }) => {
 };
 
 const JoinedDate = ({ date }: { date: string }) => {
-  return <p className="text-grey text-xs tracking-wider"></p>;
+  return <p className="text-bgContainers text-xs tracking-wider"></p>;
 };
 
 export { RelativeDate, JoinedDate };

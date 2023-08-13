@@ -25,7 +25,7 @@ const PostsOf = ({ userID }: { userID: string }) => {
     <>
       {isLoadingPosts && <Loader />}
       {!isLoadingPosts && userPosts?.length === 0 && (
-        <p className="w-full self-center text-white2 bg-blue p-2 rounded mt-2">
+        <p className="w-full self-center text-white2 bg-bgContainers p-2 rounded mt-2">
           This user doesn&apos;t have any posts yet.
         </p>
       )}

@@ -11,7 +11,7 @@ const TopNav = () => {
   const modalContext = useContext(ModalContext);
 
   return (
-    <nav className="backdrop-blur-xl bg-black/80 sticky top-0 z-50 flex justify-between md:justify-center items-center py-2 border-solid border-b border-yellow2 md:px-20">
+    <nav className="backdrop-blur-xl bg-black/80 sticky top-0 z-50 flex justify-between md:justify-center items-center py-2 border-solid border-b border-secondary md:px-20">
       <div className="px-4">
         <Logo />
       </div>

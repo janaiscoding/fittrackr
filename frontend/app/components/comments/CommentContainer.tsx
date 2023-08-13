@@ -89,7 +89,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
       </div>
       <div className="flex flex-row-reverse gap-1 items-start">
         {/* {showNames && likenames.length > 0 && (
-            <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-blue border border-solid border-slate-900 text-yellow">
+            <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-bgContainers border border-solid border-slate-900 text-yellow">
               {likenames.map((name, i) => (
                 <p key={i}>{name}</p>
               ))}

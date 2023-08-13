@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import BotNav from "../components/bottom_navbar/BotNav";
-import TopNav from "../components/top_navbar/TopNav";
+
 import useTokenVerification from "../hooks/useTokenVerification";
 import Social from "../components/homepage_layout/right_column/Social";
 import Sidebar from "../components/homepage_layout/left_column/Sidebar";
 import CommunityLayout from "../components/community_layout/CommunityLayout";
+import TopNav from "../components/navigation/TopNav";
+import BotNav from "../components/navigation/BotNav";
 
 const Users = () => {
   useTokenVerification();

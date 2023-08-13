@@ -3,9 +3,10 @@ import { UserContext } from "@/app/context/userContext";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import uploadAvatar from "@/app/utils/api/users/upload_avatar";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
-import Title from "../Title";
+
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { User } from "@/app/utils/__types__/types";
+import Title from "../ui_elements/Title";
 
 const UpdateProfileModal = ({ profile }: { profile: User }) => {
     const [showError, setShowError] = useState(false);
@@ -72,7 +73,7 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
       >
         <Title title="Update profile" />
         <label htmlFor="upload-avatar-edit-view" className="flex items-center">
-          <p className="font-open text-yellow mr-2">Change avatar</p>
+          <p className="font-open text-accent mr-2">Change avatar</p>
           <UploadSVG />
           <input
             type="file"
@@ -84,9 +85,9 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
           />
         </label>
         <label className="">
-          <p className="text-sm font-open text-yellow"> First name</p>
+          <p className="text-sm font-open text-accent"> First name</p>
           <input
-            className="bg-blue/80 p-2 rounded"
+            className="bg-bgContainers/80 p-2 rounded"
             value={firstName}
             onChange={(e) => {
               setFirstName(e.target.value);
@@ -94,9 +95,9 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
           />
         </label>
         <label className="">
-          <p className="text-sm font-open text-yellow"> Last name</p>
+          <p className="text-sm font-open text-accent"> Last name</p>
           <input
-            className="bg-blue/80 p-2 rounded"
+            className="bg-bgContainers/80 p-2 rounded"
             value={lastName}
             onChange={(e) => {
               setLastName(e.target.value);
@@ -104,9 +105,9 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
           />
         </label>
         <label className="">
-          <p className="text-sm font-open text-yellow"> Bio</p>
+          <p className="text-sm font-open text-accent"> Bio</p>
           <input
-            className="bg-blue/80 p-2 rounded"
+            className="bg-bgContainers/80 p-2 rounded"
             value={bio}
             onChange={(e) => {
               setBio(e.target.value);
@@ -119,13 +120,13 @@ const UpdateProfileModal = ({ profile }: { profile: User }) => {
         <div className="flex gap-2 items-center justify-center">
           <button
             type="submit"
-            className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+            className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
           >
             Save
           </button>
           <button
             onClick={() => editContext.setShowEdit(false)}
-            className="border border-yellow2 hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+            className="border border-secondary hover:border-accent hover:bg-black border-solid py-1 px-3 rounded"
           >
             Cancel
           </button>

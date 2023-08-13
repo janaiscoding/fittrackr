@@ -52,7 +52,7 @@ const Author = ({ postID, author, createdAt }: AuthorProps) => {
         <div>
           <a
             href={`/users/${_id}`}
-            className="font-ubuntu-500 text-white hover:text-yellow"
+            className="font-ubuntu-500 text-white hover:text-accent"
           >
             {first_name} {last_name}
           </a>

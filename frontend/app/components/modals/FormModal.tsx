@@ -81,9 +81,9 @@ const FormModal = () => {
   };
 
   return (
-    <div className="bg-black p-6 fixed z-[100] w-full top-1/2 left-1/2 shadow-md -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden rounded">
+    <div className="bg-black p-6 fixed z-[100] w-full top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden rounded">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl my-2 text-yellow">Create a new post!</h1>
+        <h1 className="text-xl my-2 text-accent">Create a new post!</h1>
         <button onClick={handleClose} aria-label="Close create new post form">
           <Close />
         </button>
@@ -95,7 +95,7 @@ const FormModal = () => {
         <label className="w-full basis-full">
           <input
             type="text"
-            className="text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded "
+            className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
             onChange={(e) => {
               setText(e.target.value);
               if (e.target.value.length > 1) {

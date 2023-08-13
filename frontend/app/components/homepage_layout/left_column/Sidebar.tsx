@@ -26,11 +26,11 @@ export default Sidebar;
 
 const UserPreview = ({ currentUser }: { currentUser: User }) => {
   return (
-    <div className="flex flex-col items-center bg-blue p-4 rounded gap-1 basis-full">
+    <div className="flex flex-col items-center bg-bgContainers p-4 rounded gap-1 basis-full">
       <AvatarPost avatar={currentUser.avatar} userID={currentUser._id} />
       <a
         href={`/users/${currentUser._id}`}
-        className="text-yellow font-ubuntu-500 text-2xl"
+        className="text-accent font-ubuntu-500 text-2xl"
       >
         {currentUser.first_name} {currentUser.last_name}
       </a>

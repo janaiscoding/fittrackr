@@ -37,7 +37,7 @@ const LoginForm = () => {
       <label className="flex flex-col">
         <span className="self-start text-white2">Email</span>
         <input
-          className="text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded"
+          className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
@@ -45,7 +45,7 @@ const LoginForm = () => {
       <label className="flex flex-col">
         <span className="self-start text-white2">Password</span>
         <input
-          className="text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded "
+          className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />

@@ -24,7 +24,7 @@ const AvatarPost = ({ avatar, userID }: AvatarProps) => {
         //   className="w-12 h-12 rounded-full object-cover post-avatar-image"
         //   alt="user-default-profile-picture"
         // />
-        <div className="rounded-full object-cover border-2 border-solid border-yellow2 comment-image text-center bg-blue">
+        <div className="rounded-full object-cover border-2 border-solid border-outline comment-image text-center bg-bgContainers">
         ?
       </div>
       )}

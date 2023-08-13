@@ -5,7 +5,7 @@ const SendSVG = () => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="#F0CC80"
+      stroke="#76D08A"
       className="w-6 h-6"
     >
       <path

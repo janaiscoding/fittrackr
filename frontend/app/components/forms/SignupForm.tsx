@@ -71,7 +71,7 @@ const SignUpForm = () => {
         <input
           required
           type="text"
-          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 
+          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary 
           ${validFirst && "valid"}`}
           onChange={(e) => {
             setFirst(e.target.value);
@@ -84,7 +84,7 @@ const SignUpForm = () => {
         <input
           required
           type="text"
-          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2
+          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary
           ${validLast && "valid"}`}
           onChange={(e) => {
             setLast(e.target.value);
@@ -102,7 +102,7 @@ const SignUpForm = () => {
         <input
           required
           type="email"
-          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded ${
+          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded ${
             validEmail !== null && validEmail
               ? "valid"
               : validEmail !== null && !validEmail && "invalid"
@@ -123,7 +123,7 @@ const SignUpForm = () => {
         <input
           required
           type="password"
-          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 ${
+          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary ${
             validPW !== null && validPW
               ? "valid"
               : validPW !== null && !validPW && "invalid"
@@ -148,7 +148,7 @@ const SignUpForm = () => {
           required
           type="password"
           autoComplete="new-password"
-          className={`text-white w-full !bg-blue outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-yellow2 ${
+          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary ${
             validConf !== null && validConf
               ? "valid"
               : validConf !== null && !validConf && "invalid"

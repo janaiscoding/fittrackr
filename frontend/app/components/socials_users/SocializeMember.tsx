@@ -11,11 +11,11 @@ const SocializeMember = ({ user }: { user: User }) => {
   return (
     <div
       key={user._id}
-      className="bg-blue text-white p-2 flex flex-col items-center justify-between gap-1 rounded text-sm"
+      className="bg-bgContainers text-white p-2 flex flex-col items-center justify-between gap-1 rounded text-sm"
     >
       <div className="flex items-center gap-1">
         <AvatarComment avatar={user.avatar} userID={user._id} />
-        <a href={`/users/${user._id}`} className="hover:text-yellow text-xl">
+        <a href={`/users/${user._id}`} className="hover:text-accent text-xl">
           {user.first_name} {user.last_name}
         </a>
       </div>

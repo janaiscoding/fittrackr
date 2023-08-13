@@ -2,10 +2,9 @@ const Close = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="#F0CC80"
+      stroke="#C6C5C5" // white-grey
       className="w-6 h-6"
     >
       <path

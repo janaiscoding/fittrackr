@@ -26,7 +26,7 @@ const StatsOf = ({ profile }: { profile: User }) => {
         className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
         onClick={() => viewContext.setCurrent("feed")}
       >
-        <span className="text-yellow2 text-lg hover:text-yellow">
+        <span className="text-secondary text-lg hover:text-yellow">
           {pLength}
         </span>
         Posts
@@ -36,7 +36,7 @@ const StatsOf = ({ profile }: { profile: User }) => {
         className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
         onClick={() => viewContext.setCurrent("workouts")}
       >
-        <span className="text-yellow2 text-lg hover:text-yellow">
+        <span className="text-secondary text-lg hover:text-yellow">
           {wLength}
         </span>
         Workouts
@@ -46,7 +46,7 @@ const StatsOf = ({ profile }: { profile: User }) => {
         className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
         onClick={() => viewContext.setCurrent("friends")}
       >
-        <span className="text-yellow2 text-lg hover:text-yellow">
+        <span className="text-secondary text-lg hover:text-yellow">
           {fLength}
         </span>
         Friends

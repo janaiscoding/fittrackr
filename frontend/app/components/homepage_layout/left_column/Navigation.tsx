@@ -28,38 +28,38 @@ const NavigationList = () => {
   };
 
   return (
-    <div className="flex text-lg flex-col bg-blue">
+    <div className="flex text-lg flex-col bg-bgContainers text-softWhite">
       <div
         onClick={showFeed}
-        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <HomeSVG />
         <p>Feed</p>
       </div>
       <div
         onClick={showWorkouts}
-        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <Dumbbell />
         <p>Workouts</p>
       </div>
       <a
         href={`/users/${currentUser.user?._id}`}
-        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <User />
         <p>Profile</p>
       </a>
       <div
         onClick={handleFriendsRedirect}
-        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <FriendsSVG />
         <p>Friends</p>
       </div>
       <a
         href="/users"
-        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow "
+        className="flex gap-2 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent "
       >
         <Community />
         <p>Community</p>

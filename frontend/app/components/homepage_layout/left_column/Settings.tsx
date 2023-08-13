@@ -21,24 +21,24 @@ const SettingsList = () => {
   };
 
   return (
-    <div className="flex text-lg flex-col bg-blue">
+    <div className="flex text-lg flex-col bg-bgContainers">
       <a
         href={`/settings`}
-        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow "
+        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <WheelSVG />
         <p>Edit Profile</p>
       </a>
       <div
         onClick={handleTheme}
-        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <ThemeSVG />
         <p>Change Theme</p>
       </div>
       <div
         onClick={handleSignout}
-        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-yellow border-b border-grey"
+        className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <SignOut />
         <p>Sign out</p>
