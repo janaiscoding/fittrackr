@@ -36,7 +36,7 @@ const Login = () => {
     <div className="min-h-screen gradient-bg flex flex-col justify-center ">
       <div className=" flex flex-col items-center justify-between gap-10 py-10">
         <LogoFront />
-        <div className="flex flex-col items-center justify-between gap-1 p-10 rounded border border-neutral-900 gradient-form ">
+        <div className="flex flex-col items-center justify-between gap-1 p-10 rounded border border-neutral-900 gradient-form">
           <div className="text-center text-accent text-2xl font-ubuntu underline">
             Sign in to your account
           </div>

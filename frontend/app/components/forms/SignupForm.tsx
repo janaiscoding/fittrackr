@@ -171,7 +171,7 @@ const SignUpForm = () => {
         ))}
       <button
         type="submit"
-        className="text-2xl text-center text-black bg-yellow rounded-2xl font-medium py-2 mt-6 w-full"
+        className="text-2xl text-center text-black bg-accent rounded-2xl font-medium py-2 mt-6 w-full"
       >
         Sign up
       </button>

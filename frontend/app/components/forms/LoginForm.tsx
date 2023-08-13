@@ -58,7 +58,7 @@ const LoginForm = () => {
         ))}
       <button
         type="submit"
-        className="text-2xl text-center text-black bg-yellow rounded-2xl font-medium py-2 w-full md:self-center mt-3"
+        className="text-2xl text-center text-black bg-accent rounded-2xl font-medium py-2 w-full md:self-center mt-3"
         aria-label="Sign in button"
       >
         Log in

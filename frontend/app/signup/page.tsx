@@ -20,7 +20,7 @@ const SignUp = () => {
           <SignUpForm />
           <p className="text-center text-white2 mt-2">
             Already have an account?{" "}
-            <span className="text-yellow font-bold">
+            <span className="text-accent font-bold">
               <a href="/login">Sign in</a>
             </span>
           </p>
