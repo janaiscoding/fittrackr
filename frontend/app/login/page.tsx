@@ -31,7 +31,7 @@ const Login = () => {
       setErrors([{ msg: data.message }]);
     }
   };
- 
+
   return (
     <div className="min-h-screen gradient-bg flex flex-col justify-center ">
       <div className=" flex flex-col items-center justify-between gap-10 py-10">
@@ -48,7 +48,7 @@ const Login = () => {
               </p>
             ))}
           <p className="text-center text-white2 mt-2">
-            Dont have an account?{" "}
+            Don&apos;t have an account?{" "}
             <button
               className="text-accent font-bold"
               aria-label="Click button to navigate to sign up page"

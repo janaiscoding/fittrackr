@@ -32,6 +32,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean>();
 
   const handleLike = () => {
+    console.log('like comment')
     likeComment(postID, _id, userContext.user?._id, handleSuccessLike);
     // handleError placeholder is just a console.log for now.
   };
