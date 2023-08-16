@@ -5,7 +5,7 @@ const getUsername = (
   userID: string,
   setter: React.Dispatch<SetStateAction<string[]>>
 ) => {
-  fetch(`https://fiturself.fly.dev/users/${userID}/username`, {
+  fetch(`https://fittrackr.fly.dev/users/${userID}/username`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

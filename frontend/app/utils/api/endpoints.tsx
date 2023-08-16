@@ -1,10 +1,10 @@
-const loginAPI = "https://fiturself.fly.dev/login";
-const signupAPI = "https://fiturself.fly.dev/signup";
-const verifyAPI = "https://fiturself.fly.dev/verify";
+const loginAPI = "https://fittrackr.fly.dev/login";
+const signupAPI = "https://fittrackr.fly.dev/signup";
+const verifyAPI = "https://fittrackr.fly.dev/verify";
 
 
-const postsAPI = "https://fiturself.fly.dev/posts";
-const usersAPI = "https://fiturself.fly.dev/users";
+const postsAPI = "https://fittrackr.fly.dev/posts";
+const usersAPI = "https://fittrackr.fly.dev/users";
 
 
 export { loginAPI, signupAPI, verifyAPI, postsAPI, usersAPI };

@@ -5,7 +5,7 @@ const sendRequest = async (
   senderID: string | undefined,
   handleSuccess: (status: string) => void
 ) => {
-  await fetch(`https://fiturself.fly.dev/users/${receiverID}/send`, {
+  await fetch(`https://fittrackr.fly.dev/users/${receiverID}/send`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

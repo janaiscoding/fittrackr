@@ -1,10 +1,12 @@
-# fly.toml app configuration file generated for fiturself on 2023-07-17T17:15:40+03:00
+# fly.toml app configuration file generated for fittrackr on 2023-08-16T20:01:51+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "fiturself"
-primary_region = "ams"
+app = "fittrackr"
+primary_region = "otp"
+
+[build]
 
 [http_service]
   internal_port = 3000

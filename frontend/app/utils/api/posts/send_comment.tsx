@@ -6,7 +6,7 @@ const sendComment = async (
   handleSuccess: () => void,
   handleError: (msg: string) => void
 ) => {
-  await fetch(`https://fiturself.fly.dev/posts/${postID}/`, {
+  await fetch(`https://fittrackr.fly.dev/posts/${postID}/`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

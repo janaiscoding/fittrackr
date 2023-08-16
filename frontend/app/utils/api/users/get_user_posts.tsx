@@ -8,7 +8,7 @@ const getUserPosts = (
   setter: React.Dispatch<SetStateAction<Post[]>>
 ) => {
   axios
-    .get(`https://fiturself.fly.dev/users/${userID}/posts`, {
+    .get(`https://fittrackr.fly.dev/users/${userID}/posts`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },

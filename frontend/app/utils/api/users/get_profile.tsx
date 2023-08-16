@@ -9,7 +9,7 @@ const getProfile = (
   handleError: () => void
 ) => {
   axios
-    .get(`https://fiturself.fly.dev/users/${id}`, {
+    .get(`https://fittrackr.fly.dev/users/${id}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },

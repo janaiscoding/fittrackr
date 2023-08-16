@@ -5,7 +5,7 @@ const cancelRequest = async (
   senderID: string | undefined,
   handleSuccess: (status: string) => void
 ) => {
-  await fetch(`https://fiturself.fly.dev/users/${receiverID}/cancel`, {
+  await fetch(`https://fittrackr.fly.dev/users/${receiverID}/cancel`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",

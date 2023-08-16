@@ -7,7 +7,7 @@ const getFriendRequests = (
   setter: React.Dispatch<SetStateAction<User[]>>,
   handleSuccess: () => void
 ) => {
-  fetch(`https://fiturself.fly.dev/users/${userID}/received`, {
+  fetch(`https://fittrackr.fly.dev/users/${userID}/received`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

@@ -26,4 +26,5 @@ const uploadPicture = multer({
   fileFilter: fileFilter,
 });
 
+
 export default uploadPicture;

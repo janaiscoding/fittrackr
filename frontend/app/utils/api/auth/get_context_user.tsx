@@ -9,7 +9,7 @@ const getContextUser = (
   setter: React.Dispatch<SetStateAction<User | null>>
 ) => {
   axios
-    .get(`https://fiturself.fly.dev/users/${id}`, {
+    .get(`https://fittrackr.fly.dev/users/${id}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },

@@ -5,7 +5,7 @@ const likePost = (
   userID: string | undefined,
   handleSuccess: (data: { likes: string[] }) => void
 ) => {
-  fetch(`https://fiturself.fly.dev/posts/${postID}/like`, {
+  fetch(`https://fittrackr.fly.dev/posts/${postID}/like`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

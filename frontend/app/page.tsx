@@ -14,6 +14,7 @@ import FormModal from "./components/modals/FormModal";
 const Home = () => {
   useTokenVerification();
   const modalContext = useContext(ModalContext);
+  
   return (
     <div className="bg-black">
       <TopNav />

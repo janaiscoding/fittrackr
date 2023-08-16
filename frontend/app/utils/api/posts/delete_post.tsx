@@ -1,7 +1,7 @@
 import { getJwtToken } from "../auth/auth_handler";
 
 const deletePost = async (id: string, handleSuccess: () => void) => {
-  await fetch(`https://fiturself.fly.dev/posts/${id}`, {
+  await fetch(`https://fittrackr.fly.dev/posts/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
