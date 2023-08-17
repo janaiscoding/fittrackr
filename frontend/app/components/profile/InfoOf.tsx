@@ -1,4 +1,4 @@
-import { User } from "@/app/utils/__types__/types";
+import { User } from "@/app/utils/types";
 import { UserContext } from "@/app/context/userContext";
 import { useContext, useEffect, useState } from "react";
 
@@ -8,6 +8,7 @@ import UploadButtonToggle from "../toggles/UploadButtonToggle";
 import UpdateProfileModal from "../modals/UpdateProfileModal";
 import StatsOf from "./StatsOf";
 import SocializeButtons from "../socials_users/SocializeButtons";
+import AvatarProfile from "../images/AvatarProfile";
 
 const InfoOf = ({
   profile,
@@ -28,17 +29,19 @@ const InfoOf = ({
 
   return (
     <div>
-      <div className="flex items-center justify-start gap-3">
-        <AvatarPost avatar={avatar} userID={profile._id} />
-        <div className="text-xl font-ubuntu-500 flex gap-1">
-          {profile.first_name} {profile.last_name}
+      <div className="flex items-start gap-8 my-2 p-4">
+        <AvatarProfile avatar={avatar} userID={profile._id} />
+        <div className="font-ubuntu-500 flex flex-col gap-3">
+          <div className="flex gap-3 items-center">
+            <p className="text-white text-2xl">
+              {profile.first_name} {profile.last_name}
+            </p>
+            {!isSame && <SocializeButtons user={profile} />}
+            {!editContext.showEdit && isSame && <UploadButtonToggle />}
+          </div>
+          <StatsOf profile={profile} />
+          <p className="text-white font-open">{profile.bio} </p>
         </div>
-        {!editContext.showEdit && isSame && <UploadButtonToggle />}
-        {!isSame && <SocializeButtons user={profile} />}
-      </div>
-      <div className="flex justify-between items-center">
-        <p className="text-white2 text-center">{profile.bio} </p>
-        <StatsOf profile={profile} />
       </div>
     </div>
   );

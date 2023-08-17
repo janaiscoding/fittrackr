@@ -1,4 +1,4 @@
-import { User } from "@/app/utils/__types__/types";
+import { User } from "@/app/utils/types";
 import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
 import { useContext, useEffect, useState } from "react";
@@ -21,35 +21,25 @@ const StatsOf = ({ profile }: { profile: User }) => {
   }, [userContext.user]);
 
   return (
-    <div className="flex text-sm font-ubuntu-500 text-white2 justify-between m-2">
+    <div className="flex text-sm font-ubuntu-500 text-softWhite justify-between">
       <p
-        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        className="pr-2 text-softWhite hover:cursor-pointer hover:text-accent"
         onClick={() => viewContext.setCurrent("feed")}
       >
-        <span className="text-secondary text-lg hover:text-yellow">
-          {pLength}
-        </span>
-        Posts
+        {pLength} Posts
       </p>
-      <div className="border-r border-white2/30"></div>
+
       <p
-        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        className="pr-2 text-softWhite hover:cursor-pointer hover:text-accent"
         onClick={() => viewContext.setCurrent("workouts")}
       >
-        <span className="text-secondary text-lg hover:text-yellow">
-          {wLength}
-        </span>
-        Workouts
+        {wLength} Workouts
       </p>
-      <div className="border-r border-white2/30"></div>
       <p
-        className="flex flex-col items-center justify-center px-2 hover:cursor-pointer"
+        className="pr-2 text-softWhite hover:cursor-pointer hover:text-accent"
         onClick={() => viewContext.setCurrent("friends")}
       >
-        <span className="text-secondary text-lg hover:text-yellow">
-          {fLength}
-        </span>
-        Friends
+        {fLength} Friends
       </p>
     </div>
   );

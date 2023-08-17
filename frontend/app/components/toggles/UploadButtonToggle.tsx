@@ -10,7 +10,7 @@ const UploadButtonToggle = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="#F0CC80"
+      fill="#76D08A"
       className="w-5 h-5 hover:cursor-pointer"
       aria-label="Icon opens update profile"
       onClick={() => editContext.setShowEdit(true)}

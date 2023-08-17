@@ -1,11 +1,13 @@
-import { Avatar } from "@/app/utils/types";
 import Image from "next/image";
-import defaultPic from "../../../public/assets/default_avatar.jpg";
-type AvatarProps = {
+import { Avatar } from "@/app/utils/types";
+
+const AvatarProfile = ({
+  avatar,
+  userID,
+}: {
   avatar: Avatar;
   userID: string;
-};
-const AvatarPost = ({ avatar, userID }: AvatarProps) => {
+}) => {
   return (
     <a href={`/users/${userID}`}>
       {avatar !== undefined ? (
@@ -15,7 +17,7 @@ const AvatarPost = ({ avatar, userID }: AvatarProps) => {
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="w-12 h-12 rounded-full object-cover post-avatar-image"
+          className="w-12 h-12 rounded-full object-cover profile-image"
           alt="user-profile-picture"
         />
       ) : (
@@ -25,11 +27,11 @@ const AvatarPost = ({ avatar, userID }: AvatarProps) => {
         //   alt="user-default-profile-picture"
         // />
         <div className="rounded-full object-cover border-2 border-solid border-outline comment-image text-center bg-bgContainers">
-        ?
-      </div>
+          ?
+        </div>
       )}
     </a>
   );
 };
 
-export default AvatarPost;
+export default AvatarProfile;

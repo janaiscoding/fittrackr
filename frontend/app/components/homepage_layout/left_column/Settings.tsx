@@ -27,14 +27,14 @@ const SettingsList = () => {
         className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <WheelSVG />
-        <p>Edit Profile</p>
+        <p>Settings</p>
       </a>
       <div
         onClick={handleTheme}
         className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <ThemeSVG />
-        <p>Change Theme</p>
+        <p>Theme</p>
       </div>
       <div
         onClick={handleSignout}
