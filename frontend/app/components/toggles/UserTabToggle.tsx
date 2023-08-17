@@ -4,7 +4,7 @@ import { ViewContext } from "../../context/viewContext";
 const UserTabToggle = () => {
   // Checks which tab is open on the homepage: Feet or Workouts.
   const viewContext = useContext(ViewContext);
-
+  
   const showFeed = () => {
     viewContext.setCurrent("feed");
   };
@@ -25,7 +25,7 @@ const UserTabToggle = () => {
         }`}
         onClick={showFeed}
       >
-        Feed
+        Posts
       </button>
       <button
         className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
