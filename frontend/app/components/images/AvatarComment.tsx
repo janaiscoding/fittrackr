@@ -1,4 +1,4 @@
-import { Avatar } from "@/app/utils/__types__/types";
+import { Avatar } from "@/app/utils/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
 const AvatarComment = ({
