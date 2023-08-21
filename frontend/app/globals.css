@@ -109,10 +109,9 @@
   max-width: 6.5rem;
 }
 .post-avatar-image:hover,
-.comment-image:hover,
-.profile-image:hover {
+.comment-image:hover {
   outline: 1px solid #76d08a;
-  transition: all 150ms ease-in-out;
+  transition: all 250ms ease-in-out;
 }
 
 input.invalid,

@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import UserTabToggle from "../toggles/UserTabToggle";
 
 const ProfileLayout = ({ id }: { id: string }) => {
-  const editContext = useContext(EditContext);
   const { currentUser } = useCurrentUser();
   const router = useRouter();
 
@@ -45,7 +44,6 @@ const ProfileLayout = ({ id }: { id: string }) => {
         {!isLoading && <InfoOf profile={profile} isSame={isSame} />}
         <UserTabToggle />
         {!isLoading && <ContentOf profile={profile} />}
-        {editContext.showEdit && <UpdateProfileModal profile={profile} />}
       </>
     </div>
   );

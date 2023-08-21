@@ -5,7 +5,7 @@ import uploadAvatar from "@/app/utils/api/users/upload_avatar";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
-import { User } from "@/app/utils/__types__/types";
+import { User } from "@/app/utils/types";
 import Title from "../ui_elements/Title";
 
 const UpdateProfileModal = ({ profile }: { profile: User }) => {

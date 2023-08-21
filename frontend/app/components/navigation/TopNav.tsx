@@ -5,6 +5,7 @@ import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
 import RequestModal from "../modals/RequestModal";
+import WheelSVG from "@/app/utils/assets/svgs/Settings";
 
 const TopNav = () => {
   const { currentUser } = useCurrentUser();
@@ -19,11 +20,11 @@ const TopNav = () => {
       <div className="md:hidden gap-2 items-center flex px-4 ">
         <Notification />
         <AvatarComment avatar={currentUser.avatar} userID={currentUser._id} />
+        <WheelSVG />
       </div>
       {modalContext.modalBell && <RequestModal />}
     </nav>
   );
 };
-
 
 export default TopNav;

@@ -1,10 +1,17 @@
+import { useRouter } from "next/navigation";
+
 const WheelSVG = () => {
+  const router = useRouter();
+  const redirectSettings = () => {
+    router.push("/settings");
+  };
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="#C6C5C5"
       className="w-6 h-6"
+      onClick={redirectSettings}
     >
       <path
         fillRule="evenodd"
