@@ -44,6 +44,7 @@ const comment_like = async (req: Request, res: Response) => {
     const comment = await Comment.findById(commentID);
     const user = await User.findById(userID);
     if (post && comment && user) {
+      //@ts-ignore ?? = maybe check this.
       if (comment.likes.includes(userID)) {
         await comment.updateOne({ $pull: { likes: userID } });
         const updatedLikes = await Comment.findById(commentID)

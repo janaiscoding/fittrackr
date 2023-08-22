@@ -1,102 +1,64 @@
-import express, { Express, NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import User from "../models/user";
 import Workout from "../models/workout";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
-import passport from "passport";
 import validator from "validator";
-import jwt from "jsonwebtoken";
+
 import "dotenv/config";
 const hiddenFields =
   "-password -email -requestsSent -requestsReceived -friendRequests";
 
-// TO DO: ADD UNESCAPING // DONE: ERROR HANDLING
-const get_workouts = asyncHandler(async (req, res, next) => {
-  // looking for specific user's workouts
-  console.log(req.query);
-  if (Object.keys(req.query).length > 0) {
-    const userId = req.query.user;
-    res.json({ userId });
-  } else {
-    res.json({ message: "getting all workouts" });
+const get_workouts = async (req: Request, res: Response) => {
+  try {
+    const allWorkouts = await Workout.find();
+    res.json({ allWorkouts });
+  } catch (err) {
+    res.status(500).json({ errors: err });
   }
-  // try {
-  //   const user = await User.findById(req.params.id).populate("workouts");
-  //   // user exists, and has workouts
-  //   if (user && user.workouts.length > 0) {
-  //     user.workouts.map((workout) => {
-  //       // @ts-ignore
-  //       workout.name = validator.unescape(workout.name);
-  //       return workout;
-  //     });
-  //     res.json({
-  //       message: `${user.first_name}'s workouts`,
-  //       workouts: user.workouts,
-  //     });
-  //   } else {
-  //     // no workouts
-  //     res.status(404).json({ message: "User has no workouts yet!" });
-  //   }
-  // } catch (err: any) {
-  //   // user issue
-  //   res.status(404).json({ message: "User does not exist!", err: err.message });
-  // }
-});
+};
 
 const create_workout = [
-  body("name", "Name is required, must be 2-100 characters long")
+  body("description")
     .exists()
-    .withMessage("Workout name is required.")
+    .withMessage("Workout description is required.")
     .trim()
     .isLength({ min: 2 })
-    .withMessage("Workout title needs to be at least 2 characters long.")
+    .withMessage("Workout description is too short.")
     .isLength({ max: 100 })
-    .withMessage("Workout title cannot be more than 100 characters long.")
+    .withMessage("Workout description is too long.")
     .escape(),
-  body("duration")
-    .trim()
-    .exists()
-    .withMessage("Workout duration is required.")
-    .toInt()
-    .isInt({ min: 1 })
-    .withMessage("Workout duration needs to be at least 1 minute long.")
-    .isInt({ max: 600 })
-    .withMessage("Workout duration cannot be more than 600 minute long.")
-    .escape(),
-  asyncHandler(async (req, res, next) => {
-    const { name, duration } = req.body;
+  body("userID").exists().withMessage("User id is required"),
+  body("duration").optional().isInt({ min: 1 }),
+  async (req: Request, res: Response) => {
+    const { userID, description, duration } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
-        name: validator.unescape(name),
-        errs: errors.array(),
+        errors: errors.array(),
+        description: validator.unescape(description),
       });
-      return;
     }
+    //find user associated with the workout
     try {
-      const user = await User.findById(req.params.id);
-      if (!user) {
-        res.status(404).json({ message: "User does not exist!" });
-      }
-      if (user) {
-        const userWorkouts = user.workouts;
-        const workout = new Workout({
-          name,
+      const user = await User.findById(userID);
+      if (!user) res.status(404).json({ message: "This user doesn't exist." });
+      else {
+        const newWorkout = new Workout({
+          description,
+          user: userID,
           duration,
         });
-        // @ts-ignore
-        userWorkouts.push(workout);
-        await workout.save();
-        await User.findByIdAndUpdate(req.params.id, {
-          workouts: userWorkouts,
-        });
-        res.json({ message: "CREATED NEW WORKOUT", workout });
+        await Promise.all([
+          newWorkout.save(),
+          user.updateOne({ $push: { workouts: newWorkout } }),
+        ]);
+        res.status(201).json({ newWorkout });
       }
-    } catch (err: any) {
-      res.status(400).json({ err: err.message });
+    } catch {
+      res.status(500).json({ message: "An unexpected error occured." });
     }
-  }),
+  },
 ];
 
 // TO DO:
