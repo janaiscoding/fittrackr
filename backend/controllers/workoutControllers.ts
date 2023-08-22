@@ -11,7 +11,9 @@ const hiddenFields =
 
 const get_workouts = async (req: Request, res: Response) => {
   try {
-    const allWorkouts = await Workout.find();
+    const allWorkouts = await Workout.find()
+      .sort({ createdAt: "desc" })
+      .populate({ path: "user", select: "first_name last_name avatar" });
     res.json({ allWorkouts });
   } catch (err) {
     res.status(500).json({ errors: err });
