@@ -1,15 +1,14 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 const router = express.Router();
-import authControllers from "../controllers/authControllers";
-import postControllers from "../controllers/postControllers";
-import workoutControllers from "../controllers/workoutControllers";
-import userController from "../controllers/userControllers";
+import wC from "../controllers/workoutControllers";
 import passport from "passport";
+import { rulesWorkout } from "../middleware/rules";
+import { valWorkout } from "../middleware/validators";
 const auth = passport.authenticate("jwt", { session: false });
 
-router.get("/", auth, workoutControllers.get_workouts); //
-router.post("/", auth, workoutControllers.create_workout); //
-router.delete('/:id',auth, workoutControllers.delete_workout)
-
+router.get("/", auth, wC.get_workouts);
+router.post("/", auth, rulesWorkout(), valWorkout, wC.create_workout);
+router.get("/users/:userID", auth, wC.get_user_workout);
+router.delete("/:id", auth, wC.delete_workout);
 
 export default router;
