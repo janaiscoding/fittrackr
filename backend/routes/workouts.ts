@@ -9,6 +9,6 @@ const auth = passport.authenticate("jwt", { session: false });
 router.get("/", auth, wC.get_workouts);
 router.post("/", auth, rulesWorkout(), valWorkout, wC.create_workout);
 router.get("/users/:userID", auth, wC.get_user_workout);
-router.delete("/:id", auth, wC.delete_workout);
+router.delete("/:workoutID", auth, wC.delete_workout);
 
 export default router;

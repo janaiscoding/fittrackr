@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import User from "../models/user";
 import Workout from "../models/workout";
 import asyncHandler from "express-async-handler";
@@ -75,10 +75,24 @@ const get_user_workout = async (req: Request, res: Response) => {
 // EDIT WORKOUT
 
 // DELETE WORKOUT
-const delete_workout = asyncHandler(async (req, res, next) => {
-  console.log(req.params);
-  res.json({ id: req.params.workoutID });
-});
+const delete_workout = async (req: Request, res: Response) => {
+  const { workoutID } = req.params;
+  try {
+    const workout = await Workout.findById(workoutID);
+    if (workout) {
+      await workout.deleteOne();
+      res.status(200).json({ message: "Workout was deleted successfully." });
+    } else {
+      res.status(404).json({
+        message: "This workout can't be deleted because it does not exist.",
+      });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "An unexpected error occured.", errors: err });
+  }
+};
 
 export default {
   create_workout,
