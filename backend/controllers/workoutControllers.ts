@@ -73,6 +73,22 @@ const get_user_workout = async (req: Request, res: Response) => {
 };
 // TO DO:
 // EDIT WORKOUT
+const update_workout = async(req:Request, res: Response) =>{
+  const {uDescription, uDuration} = req.body;
+  try {
+    const workout = await Workout.findById(req.params.workoutID);
+    if(workout){
+      //new workout
+      
+    }else {
+      res.status(404).json({message: "This workout can't be updataed: It doesn't exist."})
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "An unexpected error occured.", errors: err });
+  }
+}
 
 // DELETE WORKOUT
 const delete_workout = async (req: Request, res: Response) => {
@@ -99,4 +115,5 @@ export default {
   get_workouts,
   get_user_workout,
   delete_workout,
+  update_workout
 };
