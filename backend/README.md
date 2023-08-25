@@ -41,6 +41,12 @@ Token expires in 24hr.
 | /posts/:postID/:commentID/like | POST    | Like/dislike a comment.                                       | True      | True           | userID          |
 | /posts/:postID/:commentID      | DELETE  | Delete a comment from a post.                                 | True      | True           | userID          |
 
+| Workouts             | Request | Description                | Protected | Postman Tested | Body Content                  |
+| -------------------- | ------- | -------------------------- | --------- | -------------- | ----------------------------- |
+| /workouts            | GET     | Fetch all workouts         | True      | True           | -                             |
+| /workouts            | POST    | Create a new workout       | True      | True           | userID, description, duration |
+| /workouts/:workoutID | DELETE  | Delete an existing workout | True      | True           | userID                        |
+
 ### Installation and running
 
 ```

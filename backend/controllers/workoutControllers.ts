@@ -73,30 +73,56 @@ const get_user_workout = async (req: Request, res: Response) => {
 };
 // TO DO:
 // EDIT WORKOUT
-const update_workout = async(req:Request, res: Response) =>{
-  const {uDescription, uDuration} = req.body;
+const update_workout = async (req: Request, res: Response) => {
+  const { uDescription, uDuration } = req.body;
+  const { workoutID } = req.params;
   try {
     const workout = await Workout.findById(req.params.workoutID);
-    if(workout){
+    if (workout) {
       //new workout
-      
-    }else {
-      res.status(404).json({message: "This workout can't be updataed: It doesn't exist."})
+      const workout = await Workout.findById(workoutID);
+      if (workout) {
+        // optional fields?
+        await workout
+          .updateOne({
+            description: uDescription,
+            duration: uDuration, //make this optional like on user.
+          })
+          .then(() => {
+            res.status(200).json({
+              message: "Workout was successfully updated!",
+            });
+          });
+      } else {
+        res.status(403).json({ message: "You cannot edit this post." });
+      }
+    } else {
+      res
+        .status(404)
+        .json({ message: "This workout can't be updataed: It doesn't exist." });
     }
   } catch (err) {
     res
       .status(500)
       .json({ message: "An unexpected error occured.", errors: err });
   }
-}
+};
 
 // DELETE WORKOUT
 const delete_workout = async (req: Request, res: Response) => {
   const { workoutID } = req.params;
+  const { userID } = req.body;
   try {
     const workout = await Workout.findById(workoutID);
-    if (workout) {
+    const user = await User.findById(userID);
+    if (workout && user) {
+      // user!.updateOne({ $pull: { posts: postID } }),
+      Promise.all([
+        workout.deleteOne(),
+        user.updateOne({ $pull: { workouts: workoutID } }),
+      ]);
       await workout.deleteOne();
+      // also update user.
       res.status(200).json({ message: "Workout was deleted successfully." });
     } else {
       res.status(404).json({
@@ -115,5 +141,5 @@ export default {
   get_workouts,
   get_user_workout,
   delete_workout,
-  update_workout
+  update_workout,
 };
