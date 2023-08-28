@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { Avatar } from "@/app/utils/types";
 import uploadAvatar from "@/app/utils/api/users/upload_avatar";
-import { SyntheticEvent, useContext, useEffect, useState } from "react";
-import { EditContext } from "@/app/context/editContext";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import getProfile from "@/app/utils/api/users/get_profile";
+import ErrorPopup from "../popups/ErrorPopup";
 
 const AvatarProfile = ({
   avatar,
@@ -17,19 +17,20 @@ const AvatarProfile = ({
   userID: string;
   isSame: boolean | undefined;
 }) => {
-  const [uploadErrors, setUploadErrors] = useState("");
+  const [uploadErrors, setUploadErrors] = useState(" ");
   const [file, setFile] = useState<any>();
 
   const userContext = useContext(UserContext);
   const { currentUser } = useCurrentUser();
 
-  const handleSuccessAvatar = () => {
+  const handleSuccess = () => {
     //@ts-ignore
     getProfile(currentUser._id, userContext.setUser);
     setFile(undefined);
+    setUploadErrors(" ");
   };
 
-  const handleErrorAvatar = (data: string) => {
+  const handleError = (data: string) => {
     setUploadErrors(data);
     // todo: pop-up for error
   };
@@ -40,12 +41,7 @@ const AvatarProfile = ({
     if (file) {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
-      uploadAvatar(
-        currentUser._id,
-        formData,
-        handleSuccessAvatar,
-        handleErrorAvatar
-      );
+      uploadAvatar(currentUser._id, formData, handleSuccess, handleError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
@@ -91,6 +87,7 @@ const AvatarProfile = ({
           ?
         </div>
       )}
+      {uploadErrors.length > 0 && <ErrorPopup message={uploadErrors} />}
     </>
   );
 };
