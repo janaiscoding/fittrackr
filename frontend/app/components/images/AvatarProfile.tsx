@@ -18,6 +18,7 @@ const AvatarProfile = ({
   isSame: boolean | undefined;
 }) => {
   const [uploadErrors, setUploadErrors] = useState(" ");
+  const [showError, setShowError] = useState(false);
   const [file, setFile] = useState<any>();
 
   const userContext = useContext(UserContext);
@@ -32,7 +33,13 @@ const AvatarProfile = ({
 
   const handleError = (data: string) => {
     setUploadErrors(data);
-    // todo: pop-up for error
+    // todo: pop-up for error - change the transition
+    setShowError(true);
+    setTimeout(() => {
+      // Clear error after it was displayed to the user.
+      setShowError(false);
+      setUploadErrors(" ");
+    }, 1000);
   };
 
   useEffect(() => {
@@ -87,7 +94,7 @@ const AvatarProfile = ({
           ?
         </div>
       )}
-      {uploadErrors.length > 0 && <ErrorPopup message={uploadErrors} />}
+      {showError && <ErrorPopup message={uploadErrors} />}
     </>
   );
 };

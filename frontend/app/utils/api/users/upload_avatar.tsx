@@ -20,8 +20,8 @@ const uploadAvatar = (
       } else {
         handleError(data);
       }
-      console.log(data)
+      // console.log(data)
     })
     .catch((err) => console.log(err));
 };
-export default uploadAvatar
+export default uploadAvatar;
