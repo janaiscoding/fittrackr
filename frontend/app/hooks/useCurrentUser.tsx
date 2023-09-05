@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { User } from "../utils/__types__/types";
 import { UserContext } from "../context/userContext";
+import { User } from "../utils/types";
 
 // Will extract and return the user from the userContext.
 // Will determine if the userContext has loaded or not. Sets isLoading = false when user object is filled.

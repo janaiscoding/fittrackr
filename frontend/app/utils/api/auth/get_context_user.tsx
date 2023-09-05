@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SetStateAction } from "react";
-import { User } from "../../__types__/types";
 import { getJwtToken } from "./auth_handler";
+import { User } from "../../types";
 
 // Usable when I need to deal with fetching/ updating the current context. To not be confused with getProfile. This is for making posts, workouts, etc.
 const getContextUser = (
