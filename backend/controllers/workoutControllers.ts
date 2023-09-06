@@ -1,13 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user";
 import Workout from "../models/workout";
-import asyncHandler from "express-async-handler";
-import { body, validationResult } from "express-validator";
-import validator from "validator";
 import "dotenv/config";
-
-const hiddenFields =
-  "-password -email -requestsSent -requestsReceived -friendRequests";
 
 const get_workouts = async (req: Request, res: Response) => {
   try {
