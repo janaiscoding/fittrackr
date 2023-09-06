@@ -7,28 +7,28 @@ import BotNav from "../components/navigation/BotNav";
 import FormModal from "../components/modals/FormModal";
 import Title from "../components/ui_elements/Title";
 import useCurrentUser from "../hooks/useCurrentUser";
-import { getJwtToken } from "../utils/api/auth/auth_handler";
+import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
+import { UserContext } from "../context/userContext";
+import { useRouter } from "next/navigation";
+import deleteAccount from "../utils/api/auth/delete_account";
 
 const Settings = () => {
   useTokenVerification();
   const modalContext = useContext(ModalContext);
   const { currentUser, isLoadingUser } = useCurrentUser();
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
   const handleDelete = () => {
-    fetch(`https://fittrackr.fly.dev/users/${currentUser._id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getJwtToken()}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        //handle signout
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    deleteAccount(currentUser._id, handleSuccess);
+  }
+
+  const handleSuccess = () => {
+    userContext.setUser(null);
+    removeJwtToken();
+    router.push("/login");
   };
+
   return (
     <div className="bg-black">
       <TopNav />
