@@ -6,8 +6,7 @@ import TopNav from "../components/navigation/TopNav";
 import BotNav from "../components/navigation/BotNav";
 import FormModal from "../components/modals/FormModal";
 import Title from "../components/ui_elements/Title";
-import useCurrentUser from "../hooks/useCurrentUser";
-import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
+import { removeJwtToken } from "../utils/api/auth/auth_handler";
 import { UserContext } from "../context/userContext";
 import { useRouter } from "next/navigation";
 import deleteAccount from "../utils/api/auth/delete_account";
@@ -15,13 +14,12 @@ import deleteAccount from "../utils/api/auth/delete_account";
 const Settings = () => {
   useTokenVerification();
   const modalContext = useContext(ModalContext);
-  const { currentUser, isLoadingUser } = useCurrentUser();
   const userContext = useContext(UserContext);
   const router = useRouter();
 
   const handleDelete = () => {
-    deleteAccount(currentUser._id, handleSuccess);
-  }
+    deleteAccount(userContext.user._id, handleSuccess);
+  };
 
   const handleSuccess = () => {
     userContext.setUser(null);
