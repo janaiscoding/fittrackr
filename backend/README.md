@@ -47,6 +47,7 @@ Token expires in 24hr.
 | /workouts            | POST    | Create a new workout       | True      | True           | userID, description, duration |
 | /workouts/:workoutID | DELETE  | Delete an existing workout | True      | True           | userID                        |
 
+
 ### Installation and running
 
 ```
