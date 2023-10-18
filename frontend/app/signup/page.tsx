@@ -29,6 +29,7 @@ const SignUp = () => {
     </div>
   );
 };
+
 const WelcomeElement = () => {
   return (
     <div className="font-ubuntu-500 flex flex-col gap-6 md:w-1/2">

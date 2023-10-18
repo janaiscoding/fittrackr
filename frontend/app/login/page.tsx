@@ -5,22 +5,24 @@ import LoginForm from "../components/forms/LoginForm";
 import { useState } from "react";
 import { setJwtToken } from "../utils/api/auth/auth_handler";
 import LogoFront from "../utils/assets/LogoFront";
+import loginDemo from "../demo/loginDemo";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(
     [] as { msg: string }[]
   );
 
-  const demoEmail = "";
-  const demoPassword = "";
   const router = useRouter();
+  
   const handleDemo = () => {
-    loginRequest(demoEmail, demoPassword, handleSuccess, handleError);
+    loginDemo(handleSuccess, handleError);
   };
+
   const handleSuccess = (data: { token: string }) => {
     setJwtToken(data.token);
     router.push("/");
   };
+
   const handleError = (data: {
     errors: { msg: string }[];
     message: string;

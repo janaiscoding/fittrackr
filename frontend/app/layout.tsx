@@ -6,7 +6,7 @@ import { ViewContextProvider } from "./context/viewContext";
 import "./globals.css";
 
 export const metadata = {
-  title: "fitTrakr • Socially sweating",
+  title: "fitTrakr • Track your journey!",
   description: "Track your milestones, Inspire the world!",
 };
 
