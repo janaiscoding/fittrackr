@@ -1,10 +1,10 @@
-import getPosts from "@/app/utils/api/posts/get_posts";
-import { Post } from "@/app/utils/__types__/types";
+
 import useLoadingPosts from "@/app/hooks/useLoadingPosts";
 import { useContext, useEffect, useState } from "react";
 import { PostsContext } from "@/app/context/postsContext";
 import Loader from "@/app/utils/assets/Loader";
 import PostArticle from "../../posts/PostArticle";
+import { Post } from "@/app/utils/types";
 
 const PostsOf = ({ userID }: { userID: string }) => {
   const isLoadingPosts = useLoadingPosts();

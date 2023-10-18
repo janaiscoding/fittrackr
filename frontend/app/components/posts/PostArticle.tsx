@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Post } from "../../utils/__types__/types";
 import Author from "./Author";
 import PostContent from "./PostContent";
 import Comments from "../comments/Comments";
+import { Post } from "@/app/utils/types";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
