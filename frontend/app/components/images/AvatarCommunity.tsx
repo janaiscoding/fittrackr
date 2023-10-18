@@ -1,6 +1,6 @@
-import { Avatar } from "@/app/utils/__types__/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
+import { Avatar } from "@/app/utils/types";
 type AvatarProps = {
   avatar: Avatar;
   userID: string;
@@ -19,14 +19,11 @@ const AvatarCommunity = ({ avatar, userID }: AvatarProps) => {
           alt="user-profile-picture"
         />
       ) : (
-        // <Image
-        //   src={defaultPic}
-        //   className="w-24 h-24 rounded-full object-cover"
-        //   alt="user-default-profile-picture"
-        // />
-        <div className="rounded-full object-cover border-2 border-solid border-outline comment-image text-center bg-bgContainers">
-        ?
-      </div>
+        <Image
+          src={defaultPic}
+          className="w-24 h-24 rounded-full object-cover"
+          alt="user-default-profile-picture"
+        />
       )}
     </a>
   );

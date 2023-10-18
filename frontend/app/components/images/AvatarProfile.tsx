@@ -7,6 +7,7 @@ import useCurrentUser from "@/app/hooks/useCurrentUser";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import getProfile from "@/app/utils/api/users/get_profile";
 import ErrorPopup from "../popups/ErrorPopup";
+import defaultPic from "../../../public/assets/default_avatar.jpg";
 
 const AvatarProfile = ({
   avatar,
@@ -84,15 +85,11 @@ const AvatarProfile = ({
           )}
         </div>
       ) : (
-        // <Image
-        //   src={defaultPic}
-        //   className="w-12 h-12 rounded-full object-cover post-avatar-image"
-        //   alt="user-default-profile-picture"
-        // />
-        // TODO: ADD HERE AS WELL
-        <div className="rounded-full object-cover border-2 border-solid border-outline comment-image text-center bg-bgContainers">
-          ?
-        </div>
+        <Image
+          src={defaultPic}
+          className="w-12 h-12 rounded-full object-cover post-avatar-image"
+          alt="user-default-profile-picture"
+        />
       )}
       {showError && <ErrorPopup message={uploadErrors} />}
     </>

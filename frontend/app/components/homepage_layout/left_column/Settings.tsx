@@ -29,13 +29,13 @@ const SettingsList = () => {
         <WheelSVG />
         <p>Settings</p>
       </a>
-      <div
+      {/* <div
         onClick={handleTheme}
         className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
       >
         <ThemeSVG />
         <p>Theme</p>
-      </div>
+      </div> */}
       <div
         onClick={handleSignout}
         className="flex gap-4 items-center p-2 hover:bg-black/30 hover:cursor-pointer hover:text-accent border-b border-grey"
