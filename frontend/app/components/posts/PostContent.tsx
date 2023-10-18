@@ -1,4 +1,5 @@
-import { Post } from "@/app/utils/__types__/types";
+
+import { Post } from "@/app/utils/types";
 import PostImage from "./PostImage";
 import PostStats from "./PostStats";
 

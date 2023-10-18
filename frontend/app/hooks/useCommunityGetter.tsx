@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
 
-import { User } from "../utils/__types__/types";
+
 import getAllUsers from "../utils/api/users/get_all_users";
+import { User } from "../utils/types";
 
 const useCommunityGetter = () => {
   const [community, setCommunity] = useState<User[]>([]);

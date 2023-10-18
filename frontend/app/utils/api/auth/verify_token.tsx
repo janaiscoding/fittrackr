@@ -1,4 +1,5 @@
-import { User } from "../../__types__/types";
+
+import { User } from "../../types";
 import { verifyAPI } from "../endpoints";
 
 const verifyToken = (

@@ -1,4 +1,4 @@
-import { Avatar, User } from "@/app/utils/__types__/types";
+import { Avatar, User } from "@/app/utils/types";
 import Image from "next/image";
 
 const PostImage = ({ user, image }: { user: User; image: Avatar }) => {

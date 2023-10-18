@@ -1,6 +1,6 @@
 import SocializeButtons from "./SocializeButtons"
-import { User } from "../../utils/__types__/types";
 import AvatarComment from "../images/AvatarComment";
+import { User } from "@/app/utils/types";
 
 
 // This is the default container for interacting with different users on the platform

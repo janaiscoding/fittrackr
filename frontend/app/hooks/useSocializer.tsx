@@ -8,7 +8,7 @@ import sendRequest from "../utils/api/friends/send_request";
 import acceptRequest from "../utils/api/friends/accept_request";
 import declineRequest from "../utils/api/friends/decline_request";
 import removeFriend from "../utils/api/friends/remove_friend";
-import { User } from "../utils/__types__/types";
+import { User } from "../utils/types";
 
 const useSocializer = (targetUser: User) => {
   const { currentUser } = useCurrentUser();

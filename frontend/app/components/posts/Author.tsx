@@ -4,12 +4,12 @@ import getPosts from "@/app/utils/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
 import AvatarPost from "../images/AvatarPost";
-import { User } from "@/app/utils/__types__/types";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/utils/assets/svgs/Close";
 import { RelativeDate } from "../ui_elements/Date";
 import DeleteModal from "../modals/DeleteModal";
 import getProfile from "@/app/utils/api/users/get_profile";
+import { User } from "@/app/utils/types";
 
 type AuthorProps = {
   postID: string;

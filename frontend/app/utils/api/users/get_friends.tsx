@@ -1,4 +1,5 @@
-import { User } from "@/app/utils/__types__/types";
+
+import { User } from "../../types";
 import { getJwtToken } from "../auth/auth_handler";
 
 const getFriends = (userID: string, handleSuccess: (friends: User[]) => void) => {

@@ -5,14 +5,14 @@ import AvatarComment from "../images/AvatarComment";
 import { RelativeDate } from "../ui_elements/Date";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
-import { Comment } from "@/app/utils/__types__/types";
+
 import likeComment from "@/app/utils/api/posts/like_comment";
 import deleteComment from "@/app/utils/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/utils/api/posts/get_posts";
-import getUsername from "@/app/utils/api/users/get_username";
 import Close from "@/app/utils/assets/svgs/Close";
 import DeleteModal from "../modals/DeleteModal";
+import { Comment } from "@/app/utils/types";
 
 type CommContainerProps = {
   postID: string;

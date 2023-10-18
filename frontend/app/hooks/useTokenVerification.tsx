@@ -2,9 +2,9 @@
 import { useContext, useEffect, useState } from "react";
 import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
 import { UserContext } from "../context/userContext";
-import { User } from "../utils/__types__/types";
 import { useRouter } from "next/navigation";
 import verifyToken from "../utils/api/auth/verify_token";
+import { User } from "../utils/types";
 
 // Handles the logic for verifying token. Will set the user for valid, and clean-up if invalid. Returns valid boolean.
 const useTokenVerification = () => {

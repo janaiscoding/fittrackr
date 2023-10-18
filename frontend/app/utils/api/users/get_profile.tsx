@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SetStateAction } from "react";
-import { User } from "../../__types__/types";
 import { getJwtToken } from "../auth/auth_handler";
+import { User } from "../../types";
 
 const getProfile = (
   id: string | undefined,

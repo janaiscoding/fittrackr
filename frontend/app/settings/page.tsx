@@ -18,6 +18,7 @@ const Settings = () => {
   const router = useRouter();
 
   const handleDelete = () => {
+    //@ts-ignore
     deleteAccount(userContext.user._id, handleSuccess);
   };
 

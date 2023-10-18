@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Comment } from "@/app/utils/__types__/types";
 import { useEffect, useState } from "react";
 import CommentContainer from "./CommentContainer";
 import CommentForm from "./CommentForm";
+import { Comment } from "@/app/utils/types";
 
 type CommentsProps = {
   postID: string;

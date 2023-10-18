@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
 import getFriendRequests from "../utils/api/users/get_friend_requests";
-import { User } from "../utils/__types__/types";
+import { User } from "../utils/types";
+
 
 // This will retreive all friend requests. Used on Mobile view under notification bell, and on desktop on right_column
 const useFriendRequests = () => {

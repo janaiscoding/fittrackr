@@ -1,6 +1,6 @@
-import { User } from "@/app/utils/__types__/types";
+
 import AvatarComment from "@/app/components/images/AvatarComment";
-import { workerData } from "worker_threads";
+import { User } from "@/app/utils/types";
 
 const UserWrapper = ({ user }: { user: User }) => {
   return (

@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Post } from "@/app/utils/__types__/types";
 import likePost from "@/app/utils/api/posts/like_post";
-import getUsername from "@/app/utils/api/users/get_username";
 import CommentSVG from "@/app/utils/assets/svgs/CommentSVG";
 import Like from "@/app/utils/assets/svgs/Like";
 import LikeFilled from "@/app/utils/assets/svgs/LikeFilled";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
 import React, { useContext, useEffect, useState } from "react";
+import { Post } from "@/app/utils/types";
 
 const PostStats = ({ post }: { post: Post }) => {
   const { _id, comments } = post;

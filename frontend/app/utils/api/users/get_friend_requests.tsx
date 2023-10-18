@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-import { User } from "@/app/utils/__types__/types";
+import { User } from "../../types";
 
 const getFriendRequests = (
   userID: string,

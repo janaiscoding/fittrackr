@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, createContext } from "react";
-import { User } from "../utils/__types__/types";
+import { User } from "../utils/types";
 
 type UserContextProviderProps = {
   children: React.ReactNode;

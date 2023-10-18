@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
-import { Post } from "../../__types__/types";
 import { getJwtToken } from "../auth/auth_handler";
 import axios from "axios";
+import { Post } from "../../types";
 
 const getUserPosts = (
   userID: string,
