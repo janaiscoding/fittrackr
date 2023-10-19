@@ -21,14 +21,7 @@
   html {
     font-family: "OpenMedium", sans-serif;
     color: #f4fff3;
-    background-image: linear-gradient(
-      to right top,
-      #000000,
-      #060606,
-      #0c0b0b,
-      #11100f,
-      #141413
-    );
+    background-color: #F4FFF3;
     text-underline-offset: 3px;
   }
 }
@@ -39,7 +32,7 @@
   color: #c6c5c5;
 }
 ::placeholder {
-  color: #adadad !important;
+  color: #1b1f3ca5 !important;
 }
 
 .gradient-post {
@@ -120,6 +113,12 @@
   max-height: 3rem;
   max-width: 3rem;
 }
+.sidebar-avatar-image{
+  min-height: 4.5rem;
+  min-width: 4.5rem;
+  max-height: 4.5rem;
+  max-width: 4.5rem;
+}
 .profile-image {
   min-height: 6.5rem;
   min-width: 6.5rem;
@@ -128,21 +127,19 @@
 }
 .post-avatar-image:hover,
 .comment-image:hover {
-  outline: 1px solid #76d08a;
-  transition: all 250ms ease-in-out;
+  outline: 1px solid #3F72AF;
+  transition: all 50ms ease-in-out;
 }
 
 input.invalid,
 input:focus.invalid,
 input:-webkit-autofill:focus.invalid {
-  color: #f3f3f3;
   border-bottom: 1px solid #df4444 !important;
 }
 
 input.valid,
 input:focus.valid,
 input:-webkit-autofill:focus.valid {
-  color: #f3f3f3;
   border-bottom: 1px solid #2eb97c !important;
 }
 

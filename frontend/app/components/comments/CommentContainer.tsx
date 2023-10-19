@@ -32,7 +32,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean>();
 
   const handleLike = () => {
-    console.log('like comment')
+    console.log("like comment");
     likeComment(postID, _id, userContext.user?._id, handleSuccessLike);
     // handleError placeholder is just a console.log for now.
   };
@@ -79,7 +79,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
             <AvatarComment avatar={user.avatar} userID={user._id} />
             <a
               href={`/users/${user._id}`}
-              className="text-white text-sm hover:text-yellow font-ubuntu-500"
+              className="text-secondary text-sm hover:text-accent font-ubuntu-500"
             >
               {user.first_name} {user.last_name}
             </a>
@@ -89,13 +89,6 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
         </div>
       </div>
       <div className="flex flex-row-reverse gap-1 items-start">
-        {/* {showNames && likenames.length > 0 && (
-            <div className="hidden md:block absolute translate-x-[30%] translate-y-[65%] p-2 rounded bg-bgContainers border border-solid border-slate-900 text-yellow">
-              {likenames.map((name, i) => (
-                <p key={i}>{name}</p>
-              ))}
-            </div>
-          )} */}
         {isAuthor && (
           <button
             onClick={() => setShowModal(true)}

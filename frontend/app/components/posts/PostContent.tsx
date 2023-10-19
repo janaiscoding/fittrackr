@@ -12,11 +12,11 @@ const PostContent = ({ post }: PostContentProps) => {
 
   return (
     <div>
-      <p className="font-ubuntu px-4 my-2 text-white break-all max-w-sm">
+      <p className="font-ubuntu px-4 my-2 text-secondary break-all max-w-sm">
         {text}
       </p>
       <PostImage user={user} image={image} />
-      <div className="px-4 border-solid border-b border-grey pb-2">
+      <div className="px-4 border-solid border-b border-black/10 pb-2">
         <PostStats post={post} />
       </div>
     </div>

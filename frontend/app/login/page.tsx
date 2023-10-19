@@ -6,6 +6,7 @@ import { useState } from "react";
 import { setJwtToken } from "../utils/api/auth/auth_handler";
 import LogoFront from "../utils/assets/LogoFront";
 import loginDemo from "../demo/loginDemo";
+import Footer from "../components/navigation/Footer";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(
@@ -13,7 +14,7 @@ const Login = () => {
   );
 
   const router = useRouter();
-  
+
   const handleDemo = () => {
     loginDemo(handleSuccess, handleError);
   };
@@ -35,56 +36,43 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex flex-col justify-center ">
-      <div className=" flex flex-col items-center justify-between gap-10 py-10">
+    <div className="m-auto max-w-5xl h-screen flex flex-col justify-between pt-10">
+      <div className="h-screen flex flex-col justify-start md:justify-evenly items-center md:flex-row bg-white">
         <LogoFront />
-        <div className="flex flex-col items-center justify-between gap-1 p-10 rounded border border-neutral-900 gradient-form">
-          <div className="text-center text-accent text-2xl font-ubuntu underline">
-            Sign in to your account
-          </div>
-          <LoginForm />
-          {errors.length > 0 &&
-            errors.map((err, i) => (
-              <p className="text-error" key={i}>
-                {err.msg}
-              </p>
-            ))}
-          <p className="text-center text-white2 mt-2">
-            Don&apos;t have an account?{" "}
+        <div className="flex flex-col items-center justify-between gap-10 py-10 md:border-l md:order-gray-300">
+          <div className="flex flex-col items-center justify-between md:p-10">
+            <div className="text-center text-accent text-3xl font-ubuntu-500">
+              Log in
+            </div>
+            <LoginForm />
+            {errors.length > 0 &&
+              errors.map((err, i) => (
+                <p className="text-error" key={i}>
+                  {err.msg}
+                </p>
+              ))}
+            <p className="text-center text-black py-2 w-full">
+              Don&apos;t have an account?{" "}
+              <button
+                className="text-accent font-ubuntu-500"
+                aria-label="Click button to navigate to sign up page"
+              >
+                <a href="/signup">Sign up</a>
+              </button>{" "}
+            </p>
             <button
-              className="text-accent font-bold"
-              aria-label="Click button to navigate to sign up page"
-            >
-              <a href="/signup">Sign up</a>
-            </button>{" "}
-          </p>
-
-          <p className="text-center text-white2">
-            or try the{" "}
-            <button
-              className="text-accent font-bold"
+              className="text-accent text-center font-ubuntu-500"
               aria-label="Click button to try the demo account"
               onClick={handleDemo}
             >
-              Demo account
+              Try on Demo Account
             </button>
-          </p>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
-const ErrorPopup = ({ errors }: { errors: { msg: string }[] }) => {
-  return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 bg-bgContainers p-20 rounded-xl">
-      {errors.length > 0 &&
-        errors.map((err, i) => (
-          <p className="text-error" key={i}>
-            {err.msg}
-          </p>
-        ))}
-    </div>
-  );
-};
 export default Login;

@@ -63,15 +63,15 @@ const SignUpForm = () => {
 
   return (
     <form
-      className="text-white flex flex-col gap-2"
+      className="text-secondary flex flex-col gap-2"
       onSubmit={(e) => handleSignup(e)}
     >
       <label className="flex flex-col">
-        <span className="self-start text-white2">First Name</span>
+        <span className="self-start text-secondary">First Name</span>
         <input
           required
           type="text"
-          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary 
+          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b 
           ${validFirst && "valid"}`}
           onChange={(e) => {
             setFirst(e.target.value);
@@ -80,11 +80,11 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-white2">Last Name</span>
+        <span className="self-start text-secondary">Last Name</span>
         <input
           required
           type="text"
-          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary
+          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b
           ${validLast && "valid"}`}
           onChange={(e) => {
             setLast(e.target.value);
@@ -93,7 +93,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-white2">
+        <span className="self-start text-secondary">
           Email{" "}
           {validEmail !== null && !validEmail && (
             <span className="text-xs text-error">Must be a valid email.</span>
@@ -102,7 +102,7 @@ const SignUpForm = () => {
         <input
           required
           type="email"
-          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded ${
+          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded ${
             validEmail !== null && validEmail
               ? "valid"
               : validEmail !== null && !validEmail && "invalid"
@@ -114,7 +114,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-white2">
+        <span className="self-start text-secondary">
           Password{" "}
           {validPW !== null && !validPW && (
             <span className="text-xs text-error">Minimum 8 characters.</span>
@@ -123,7 +123,7 @@ const SignUpForm = () => {
         <input
           required
           type="password"
-          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary ${
+          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b ${
             validPW !== null && validPW
               ? "valid"
               : validPW !== null && !validPW && "invalid"
@@ -135,7 +135,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-white2">
+        <span className="self-start text-secondary">
           Confirm Password{" "}
           {password === confPassword ? (
             " "
@@ -148,7 +148,7 @@ const SignUpForm = () => {
           required
           type="password"
           autoComplete="new-password"
-          className={`text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded border-solid border-b border-secondary ${
+          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b ${
             validConf !== null && validConf
               ? "valid"
               : validConf !== null && !validConf && "invalid"
@@ -171,9 +171,9 @@ const SignUpForm = () => {
         ))}
       <button
         type="submit"
-        className="text-2xl text-center text-black bg-accent rounded-2xl font-medium py-2 mt-6 w-full"
+        className="text-2xl text-center text-white bg-accent rounded font-medium py-2 w-full md:self-center mt-3 hover:bg-accent/90"
       >
-        Sign up
+        Create Account
       </button>
     </form>
   );

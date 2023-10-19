@@ -59,7 +59,7 @@ const PostFormMD = () => {
     setError(" ");
   };
   return (
-    <div className="flex-col flex p-4 bg-bgContainers rounded">
+    <div className="flex-col flex p-4 bg-bgContainers drop-shadow">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}
@@ -70,7 +70,7 @@ const PostFormMD = () => {
               setError(" ");
             }
           }}
-          className="text-white w-full bg-black/50 outline-none focus:ring-1 ring-outline rounded py-2 pb-10 px-4 pr-12 mb-2"
+          className="text-secondary w-full bg-accent/10 outline-none focus:ring-1 ring-outline rounded py-2 pb-10 px-4 pr-12 mb-2"
         />
         <div className="self-end flex gap-4 text-sm items-center">
           <div className="font-open flex flex-col items-center gap-2">
@@ -79,7 +79,7 @@ const PostFormMD = () => {
           </div>
           <label
             htmlFor="upload-image"
-            className="border border-outline hover:cursor-pointer hover:bg-black border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
+            className="border border-outline hover:cursor-pointer hover:bg-accent/30 border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
             aria-label="Upload a new picture"
           >
             <UploadSVG />
@@ -98,16 +98,16 @@ const PostFormMD = () => {
           <button
             aria-label="Send a new post"
             type="submit"
-            className="flex gap-1 items-center text-white justify-between border border-outline hover:border-yellow hover:bg-black border-solid py-1 px-3 rounded"
+            className="flex gap-1 items-center text-secondary justify-between border border-outline hover:bg-accent/30 border-solid py-1 px-3 rounded"
           >
             <SendSVG />
             <p>Create Post</p>
           </button>
         </div>
         {file && (
-          <p className="font-ubuntu text-xs text-softWhite">
+          <p className="font-ubuntu text-xs text-secondary">
             File ready for upload:{" "}
-            <span className="text-white">{file.name}</span>
+            <span className="text-accent">{file.name}</span>
           </p>
         )}
       </form>

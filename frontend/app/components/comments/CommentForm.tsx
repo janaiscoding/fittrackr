@@ -8,7 +8,7 @@ import { SyntheticEvent, useContext, useState } from "react";
 const CommentForm = ({ postID }: { postID: string }) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
-  
+
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 
@@ -43,7 +43,7 @@ const CommentForm = ({ postID }: { postID: string }) => {
         className="text-ubuntu flex items-center justify-between px-4"
       >
         <input
-          className="text-white w-full bg-transparent outline-none pt-2 pr-12"
+          className="text-secondary w-full bg-transparent outline-none pt-2 pr-12"
           placeholder={"Add a comment..."}
           value={comment}
           onChange={(e) => {

@@ -6,8 +6,8 @@ import { ViewContextProvider } from "./context/viewContext";
 import "./globals.css";
 
 export const metadata = {
-  title: "fitTrakr • Track your journey!",
-  description: "Track your milestones, Inspire the world!",
+  title: "socializer • Connect with the world!",
+  description: "Connect with the world!",
 };
 
 export default function RootLayout({

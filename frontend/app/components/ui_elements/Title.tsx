@@ -1,6 +1,6 @@
 const Title = ({ title }: { title: string }) => {
   return (
-    <div className="text-xl font-ubuntu-500 self-start title my-1">
+    <div className="text-xl font-ubuntu-500 self-start text-accent my-1">
       {title}
     </div>
   );

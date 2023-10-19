@@ -10,7 +10,7 @@ const NonFriendsUsers = () => {
     <div className="flex flex-col gap-1">
       {isLoading && <Loader />}
       {!isLoading && community.length === 0 && (
-        <p className="w-full self-center text-white2 bg-bgContainers p-2 rounded">
+        <p className="w-full self-center text-secondary bg-bgContainers p-2 drop-shadow">
           You are alone for now...
         </p>
       )}

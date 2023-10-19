@@ -1,46 +1,39 @@
 "use client";
-
 import { useEffect } from "react";
 import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
 import SignUpForm from "../components/forms/SignupForm";
+import LogoFront from "../utils/assets/LogoFront";
+import Footer from "../components/navigation/Footer";
 
 const SignUp = () => {
   useEffect(() => {
     const token = getJwtToken();
-    // When manually pathing to /signup
-    // Cleanup token so /login redirect is successful
-    token && removeJwtToken();
+    // When manually pathing to /signup -  Cleanup token so /login redirect is successful
+    if (token) {
+      removeJwtToken();
+    }
   }, []);
 
   return (
-    <div className="gradient-bg font-open min-h-screen gap-6 flex justify-center items-center">
-      <div className="flex flex-col md:flex-row justify-center gap-6 px-6">
-        <WelcomeElement />
-        <div className="p-10 rounded border border-neutral-900 gradient-form">
-          <SignUpForm />
-          <p className="text-center text-white2 mt-2">
-            Already have an account?{" "}
-            <span className="text-accent font-bold">
-              <a href="/login">Sign in</a>
-            </span>
-          </p>
+    <div className="m-auto max-w-5xl h-screen flex flex-col justify-between pt-10">
+      <div className="h-screen flex flex-col justify-start md:justify-evenly items-center md:flex-row bg-white">
+        <LogoFront />
+        <div className="flex flex-col items-center justify-between gap-10 py-10 md:border-l md:border-gray-300">
+          <div className="flex flex-col items-center justify-between md:p-10">
+            <div className="text-center text-accent text-3xl font-ubuntu-500">
+              Sign up
+            </div>
+            <SignUpForm />
+            <p className="text-center text-black mt-2">
+              Already have an account?{" "}
+              <span className="text-accent font-bold">
+                <a href="/login">Sign in</a>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const WelcomeElement = () => {
-  return (
-    <div className="font-ubuntu-500 flex flex-col gap-6 md:w-1/2">
-      <div data-testid="welcome-element" className="text-4xl text-center md:text-left md:text-6xl ">
-        <h1>Welcome to</h1>
-        <p className="text-yellow">urjourney.</p>
-      </div>
-      <div className="hidden md:block text-xl font-open w-2/3">
-        Join our community of passionate athletes and inspire the world with
-        your personal fitness journey!
-      </div>
+      <Footer />
     </div>
   );
 };

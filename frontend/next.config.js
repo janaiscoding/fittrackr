@@ -2,17 +2,17 @@
 const nextConfig = {
   redirects: async () => {
     return [
-      // {
-      //   source: "/",
-      //   missing: [
-      //     {
-      //       type: "cookie",
-      //       key: "token",
-      //     },
-      //   ],
-      //   destination: "/login",
-      //   permanent: false,
-      // },
+      {
+        source: "/",
+        missing: [
+          {
+            type: "cookie",
+            key: "token",
+          },
+        ],
+        destination: "/login",
+        permanent: false,
+      },
       {
         source: "/users",
         missing: [

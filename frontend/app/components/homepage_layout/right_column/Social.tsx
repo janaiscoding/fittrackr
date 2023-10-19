@@ -9,9 +9,16 @@ const Social = () => {
       <FriendRequests />
       <Title title="Community" />
       <NonFriendsUsers />
-      <a href="https://github.com/JanaIsCoding" className="text-xl font-ubuntu-500 self-start title my-1">
-        JanaIsCoding
-      </a>
+      <p className="text-center text-black">
+        Made with <span>💙</span> by{" "}
+        <a
+          href="https://github.com/JanaIsCoding"
+          className="text-secondary hover:text-accent"
+        >
+          JanaIsCoding
+        </a>
+        .
+      </p>
     </div>
   );
 };

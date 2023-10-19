@@ -16,6 +16,7 @@ const LoginForm = () => {
 
   const handleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
+   // console.log(email, password);
     loginRequest(email, password, handleSuccess, handleError);
   };
   const handleSuccess = (data: { token: string }) => {
@@ -35,17 +36,17 @@ const LoginForm = () => {
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
       <label className="flex flex-col">
-        <span className="self-start text-white2">Email</span>
+        <span className="self-start text-secondary">Email</span>
         <input
-          className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded"
+          className="text-secondary bg-accent/10 w-full outline-none py-2 pl-4 pr-12 rounded"
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
 
       <label className="flex flex-col">
-        <span className="self-start text-white2">Password</span>
+        <span className="self-start text-secondary">Password</span>
         <input
-          className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
+          className="text-secondary bg-accent/10 w-full outline-none py-2 pl-4 pr-12 rounded "
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -58,7 +59,7 @@ const LoginForm = () => {
         ))}
       <button
         type="submit"
-        className="text-2xl text-center text-black bg-accent rounded-2xl font-medium py-2 w-full md:self-center mt-3"
+        className="text-2xl text-center text-white bg-accent rounded font-medium py-2 w-full md:self-center mt-3 hover:bg-accent/90"
         aria-label="Sign in button"
       >
         Log in
