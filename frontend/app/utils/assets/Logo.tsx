@@ -2,7 +2,7 @@ const Logo = () => {
   return (
     <a href="/">
       <svg
-        className="h-6 md:h-10"
+        className="h-4 md:h-8"
         viewBox="0 0 370.32876712328766 65.79105518463294"
       >
         <defs>

@@ -16,14 +16,23 @@
   font-family: "UbuntuThin";
   src: url("../public/Ubuntu/Ubuntu-Light.ttf");
 }
+
 @layer base {
   html {
     font-family: "OpenMedium", sans-serif;
     color: #f4fff3;
-    background: #010101;
+    background-image: linear-gradient(
+      to right top,
+      #000000,
+      #060606,
+      #0c0b0b,
+      #11100f,
+      #141413
+    );
     text-underline-offset: 3px;
   }
 }
+
 .title {
   text-decoration: underline;
   text-decoration-color: #76d08a !important;
@@ -73,7 +82,16 @@
     #000000 100%
   );
 }
-
+.gradient-bg-home {
+  background-image: linear-gradient(
+    to right top,
+    #000000,
+    #060606,
+    #0c0b0b,
+    #11100f,
+    #141413
+  );
+}
 .gradient-form {
   background: #080b11;
   background: -moz-linear-gradient(
