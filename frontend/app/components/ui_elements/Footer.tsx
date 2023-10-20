@@ -6,6 +6,7 @@ const Footer = () => {
         <a
           href="https://github.com/JanaIsCoding"
           className="text-secondary hover:text-accent"
+          target="_blank"
         >
           JanaIsCoding
         </a>

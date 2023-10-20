@@ -6,7 +6,7 @@ import { useState } from "react";
 import { setJwtToken } from "../utils/api/auth/auth_handler";
 import LogoFront from "../utils/assets/LogoFront";
 import loginDemo from "../demo/loginDemo";
-import Footer from "../components/navigation/Footer";
+import Footer from "../components/ui_elements/Footer";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(

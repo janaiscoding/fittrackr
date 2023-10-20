@@ -20,9 +20,11 @@ export default function RootLayout({
       <body>
         <UserContextProvider>
           <PostsContextProvider>
-            <ModalContextProvider>
-              <EditContextProvider>{children}</EditContextProvider>
-            </ModalContextProvider>
+            <ViewContextProvider>
+              <ModalContextProvider>
+                <EditContextProvider>{children}</EditContextProvider>
+              </ModalContextProvider>
+            </ViewContextProvider>
           </PostsContextProvider>
         </UserContextProvider>
       </body>

@@ -42,13 +42,13 @@ const PostStats = ({ post }: { post: Post }) => {
         >
           {isLiked ? <LikeFilled /> : <Like />}
         </div>
-        <div className="text-white2 font-ubuntu-500 text-sm">
+        <div className="text-white2 font-ubuntu-500">
           {likes.length} {likes.length === 1 ? "like" : "likes"}
         </div>
       </div>
       <div aria-label="Comment icon and comment count">
         <CommentSVG />
-        <div className="text-white2 font-ubuntu-500 text-sm">
+        <div className="text-white2 font-ubuntu-500">
           {comments.length} {comments.length === 1 ? "comment" : "comments"}
         </div>
       </div>

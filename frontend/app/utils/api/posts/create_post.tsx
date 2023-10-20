@@ -19,7 +19,7 @@ const createPost = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      //console.log(data);
       if (data.errors) {
         handleError(data.errors[0].msg);
       } else if (data === "Error: Please select an image.") {

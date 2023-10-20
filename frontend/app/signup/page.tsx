@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getJwtToken, removeJwtToken } from "../utils/api/auth/auth_handler";
 import SignUpForm from "../components/forms/SignupForm";
 import LogoFront from "../utils/assets/LogoFront";
-import Footer from "../components/navigation/Footer";
+import Footer from "../components/ui_elements/Footer";
 
 const SignUp = () => {
   useEffect(() => {

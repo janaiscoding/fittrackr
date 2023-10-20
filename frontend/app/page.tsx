@@ -9,7 +9,7 @@ import FormModal from "./components/modals/FormModal";
 import useTokenVerification from "./hooks/useTokenVerification";
 import { ModalContext } from "./context/modalContext";
 import BotNav from "./components/navigation/BotNav";
-import Footer from "./components/navigation/Footer";
+import Footer from "./components/ui_elements/Footer";
 import DeleteModal from "./components/modals/DeleteModal";
 
 const Home = () => {

@@ -3,7 +3,7 @@ import useDateFormatter from "../../hooks/useDateFormatter";
 const RelativeDate = ({ date }: { date: string }) => {
   const dateForm = useDateFormatter(date);
   return (
-    <div className="text-white2 text-xs tracking-wider align-baseline">
+    <div className="text-white2 text-sm tracking-wider align-baseline">
       {dateForm} ago
     </div>
   );
