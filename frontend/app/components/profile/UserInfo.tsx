@@ -33,13 +33,15 @@ const UserInfo = ({
           <p className="flex items-center gap-2 text-black text-xl md:text-3xl">
             {profile.first_name} {profile.last_name}
           </p>
-          <p className="text-secondary font-open">{profile.bio} </p>
+          <p className="text-secondary font-open hidden md:block break-words max-w-md">{profile.bio} </p>
         </div>
         <div>
           {!isSame && <SocializeButtons user={profile} />}
           {!editContext.showEdit && isSame && <EditButton />}
         </div>
+        
       </div>
+      
       {editContext.showEdit && <EditModal />}
     </div>
   );

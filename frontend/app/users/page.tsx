@@ -10,14 +10,13 @@ import BotNav from "../components/navigation/BotNav";
 
 const Users = () => {
   useTokenVerification();
-  
+
   return (
-    <div className="bg-black margin-auto">
+    <div className="m-auto">
       <TopNav />
       <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
         <Sidebar />
         <CommunityLayout />
-        <Social />
       </div>
       <BotNav />
     </div>

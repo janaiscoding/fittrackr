@@ -44,6 +44,7 @@ const ProfileLayout = ({ id }: { id: string }) => {
       {!isLoading && (
         <div>
           <UserInfo profile={profile} isSame={isSame} />
+          <p className="text-secondary font-open md:hidden block px-4 break-words">{profile.bio} </p>
           <UserTabToggle />
           <UserContent isSame={isSame} profile={profile} />
         </div>
