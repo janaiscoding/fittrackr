@@ -10,6 +10,7 @@ import useTokenVerification from "./hooks/useTokenVerification";
 import { ModalContext } from "./context/modalContext";
 import BotNav from "./components/navigation/BotNav";
 import Footer from "./components/navigation/Footer";
+import DeleteModal from "./components/modals/DeleteModal";
 
 const Home = () => {
   useTokenVerification();

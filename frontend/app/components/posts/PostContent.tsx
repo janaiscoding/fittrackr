@@ -11,7 +11,7 @@ const PostContent = ({ post }: PostContentProps) => {
   const { text, user, image } = post;
 
   return (
-    <div>
+    <div aria-label="post-content-section">
       <p className="font-ubuntu px-4 my-2 text-secondary break-all max-w-sm">
         {text}
       </p>

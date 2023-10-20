@@ -11,28 +11,26 @@ import { UserContext } from "@/app/context/userContext";
 import { ViewContext } from "@/app/context/viewContext";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
+import User from "@/app/utils/assets/svgs/User";
 
 const BotNav = () => {
   const userContext = useContext(UserContext);
   const modalContext = useContext(ModalContext);
   const router = useRouter();
   const path = usePathname();
-  const viewContext = useContext(ViewContext);
 
   const showFeed = () => {
     if (path !== "/") {
       router.push("/");
     }
     window.scrollTo(0, 0);
-    viewContext.setCurrent("feed");
   };
 
-  const showWorkouts = () => {
-    if (path !== "/") {
-      router.push("/");
+  const showProfile = () => {
+    if (path !== `/users/${userContext.user?._id}`) {
+      router.push(`/users/${userContext.user?._id}`);
     }
     window.scrollTo(0, 0);
-    viewContext.setCurrent("workouts");
   };
   const handleSignout = () => {
     userContext.setUser(null);
@@ -44,12 +42,12 @@ const BotNav = () => {
   };
 
   return (
-    <div className="sticky bottom-0 flex justify-between items-center px-8 py-2 bg-bgContainers border-solid border-t border-secondary md:hidden">
+    <div className="sticky bottom-0 flex justify-between items-center px-8 py-2 bg-bgContainers drop-shadow md:hidden">
       <div onClick={showFeed} className="flex flex-col gap-1 items-center">
         <HomeSVG />
       </div>
-      <div onClick={showWorkouts} className="flex flex-col gap-1 items-center">
-        <Dumbbell />
+      <div onClick={showProfile} className="flex flex-col gap-1 items-center">
+        <User />
         {/* <p className="text-xs text-white2">Workouts</p> */}
       </div>
 
@@ -59,7 +57,7 @@ const BotNav = () => {
       >
         <Plus />
         {/* <p className="text-xs text-white2">New Post</p> */}
-        {/* gotta fix svg background here */}
+        {/* gotta fix svg background here --- fixed.*/}
       </button>
       <a href={`/users`} className="flex flex-col gap-1 items-center">
         <Community />

@@ -8,7 +8,7 @@ const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
 
   return (
-    <div className="hidden md:block w-1/2">
+    <div className="hidden md:block sticky top-20 w-1/2">
       <div className={`${isLoadingUser && "self-center"} flex`}>
         {isLoadingUser ? <Loader /> : <UserPreview currentUser={currentUser} />}
       </div>

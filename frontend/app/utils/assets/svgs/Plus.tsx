@@ -3,8 +3,7 @@ const Plus = () => {
     <div className="block relative">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        // fill="#F0CC80" yellow
-        fill="#76D08A"
+        fill="#3F72AF"
         height="3em"
         viewBox="0 0 512 512"
         className="py-0  z-50"

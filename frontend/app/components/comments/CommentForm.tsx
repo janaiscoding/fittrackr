@@ -37,7 +37,7 @@ const CommentForm = ({ postID }: { postID: string }) => {
   };
 
   return (
-    <>
+    <div aria-label="new-comment-form-section">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="text-ubuntu flex items-center justify-between px-4"
@@ -60,7 +60,7 @@ const CommentForm = ({ postID }: { postID: string }) => {
       <div className="px-4">
         <p className="text-error">{commentError}</p>
       </div>
-    </>
+    </div>
   );
 };
 

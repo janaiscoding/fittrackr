@@ -9,6 +9,7 @@ import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/utils/api/posts/get_posts";
 import { ModalContext } from "@/app/context/modalContext";
 import getContextUser from "@/app/utils/api/auth/get_context_user";
+import AvatarPost from "../images/AvatarPost";
 
 const FormModal = () => {
   const [text, setText] = useState("");
@@ -53,7 +54,7 @@ const FormModal = () => {
     //Update postsContext
     getPosts(postsContext.setPosts);
     // Refresh user context
-    getContextUser(userContext.user?._id, userContext.setUser)
+    getContextUser(userContext.user?._id, userContext.setUser);
 
     setTimeout(() => {
       //Close form
@@ -81,59 +82,78 @@ const FormModal = () => {
   };
 
   return (
-    <div className="bg-black p-6 fixed z-[100] w-full top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden rounded">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl my-2 text-accent">Create a new post!</h1>
-        <button onClick={handleClose} aria-label="Close create new post form">
-          <Close />
-        </button>
-      </div>
-      <form
-        className="flex items-center justify-between gap-2"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <label className="w-full basis-full">
-          <input
-            type="text"
-            className="text-white w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
-            onChange={(e) => {
-              setText(e.target.value);
-              if (e.target.value.length > 1) {
-                setError(" ");
-              }
-            }}
+    <div className="w-full h-full left-0 top-0 overflow-auto bg-gray-700/70 flex fixed z-[1000] justify-center items-center">
+      <div className="bg-white p-6 fixed z-[100] w-full top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu md:hidden">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl my-2 text-secondary">Create a post</h1>
+          <button onClick={handleClose} aria-label="Close create new post form">
+            <Close />
+          </button>
+        </div>
+        <div className="flex gap-2 items-center my-2">
+          <AvatarPost
+            avatar={userContext.user!.avatar}
+            userID={userContext.user!._id}
           />
-        </label>
-        <div className="flex gap-2">
-          <label
-            htmlFor="upload-image-mobile"
-            aria-label="Upload a new picture"
-          >
-            <UploadSVG />
+          <p className="text-secondary text-xl">
+            {userContext.user?.first_name} {userContext.user?.last_name}
+          </p>
+        </div>
+        <form
+          className="flex flex-col items-center justify-between gap-2"
+          onSubmit={(e) => handleSubmit(e)}
+        >
+          <label className="w-full basis-full">
             <input
-              type="file"
-              name="myImage"
-              accept="image/*"
-              id="upload-image-mobile"
-              className="hidden"
+              type="text"
+              placeholder="What's on your mind?"
+              className="text-secondary w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
               onChange={(e) => {
-                setFile(e.target.files![0]);
+                setText(e.target.value);
+                if (e.target.value.length > 1) {
+                  setError(" ");
+                }
               }}
             />
           </label>
+          <div className="flex justify-between w-full gap-2">
+            <label
+              htmlFor="upload-image-mobile"
+              aria-label="Upload a new picture"
+              className="flex text-accent gap-2 items-center"
+            >
+              <UploadSVG />
+              <p>Add Image</p>
+              <input
+                type="file"
+                name="myImage"
+                accept="image/*"
+                id="upload-image-mobile"
+                className="hidden"
+                onChange={(e) => {
+                  setFile(e.target.files![0]);
+                }}
+              />
+            </label>
 
-          <button type="submit" aria-label="Submit your new post">
-            <SendSVG />
-          </button>
-        </div>
-      </form>
-      {file && (
-        <p className="font-ubuntu text-xs text-white">
-          File ready for upload: {file.name}
-        </p>
-      )}
-      {error && <p className="text-error">{error}</p>}
-      {success && <p className="text-valid">Post sent</p>}
+            <button
+              type="submit"
+              aria-label="Submit your new post"
+              className="flex gap-2 items-center text-accent"
+            >
+              <SendSVG />
+              <p>Post</p>
+            </button>
+          </div>
+        </form>
+        {file && (
+          <p className="font-ubuntu text-xs text-secondary">
+            File ready for upload: {file.name}
+          </p>
+        )}
+        {error && <p className="text-error">{error}</p>}
+        {success && <p className="text-valid">Post sent</p>}
+      </div>
     </div>
   );
 };
