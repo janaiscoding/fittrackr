@@ -15,9 +15,7 @@ const removeFriend = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data) {
-        handleSuccess();
-      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

@@ -1,6 +1,7 @@
 import Title from "../../ui_elements/Title";
 import FriendRequests from "../../socials_users/FriendRequests";
-import NonFriendsUsers from "../../socials_users/NonFriendsUsers";
+import CommunityUsers from "../../socials_users/CommunityUsers";
+
 
 const Social = () => {
   return (
@@ -8,7 +9,7 @@ const Social = () => {
       <Title title="Friend Requests" />
       <FriendRequests />
       <Title title="Community" />
-      <NonFriendsUsers />
+      <CommunityUsers />
       <p className="text-center text-black">
         Made with <span>💙</span> by{" "}
         <a

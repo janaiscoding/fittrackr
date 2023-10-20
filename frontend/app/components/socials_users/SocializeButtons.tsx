@@ -8,6 +8,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
     isReceived,
     handleAccept,
     handleAdd,
+    handleCancel,
     handleDecline,
     handleRemove,
   } = useSocializer(user);
@@ -16,12 +17,13 @@ const SocializeButtons = ({ user }: { user: User }) => {
     <div className="text-sm text-white">
       {isPending && (
         <button
-          onClick={handleAdd}
+          onClick={handleCancel}
           className="md:text-xl text-white bg-red-700/90 hover:bg-red-700 px-2 border border-slate-700/10"
         >
           Cancel
         </button>
       )}
+
       {isFriends && (
         <button
           onClick={handleRemove}

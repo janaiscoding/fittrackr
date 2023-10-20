@@ -2,16 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import useCurrentUser from "./useCurrentUser";
 
 import { UserContext } from "../context/userContext";
-import getContextUser from "../utils/api/auth/get_context_user";
 import cancelRequest from "../utils/api/friends/cancel_request";
 import sendRequest from "../utils/api/friends/send_request";
 import acceptRequest from "../utils/api/friends/accept_request";
 import declineRequest from "../utils/api/friends/decline_request";
 import removeFriend from "../utils/api/friends/remove_friend";
 import { User } from "../utils/types";
+import getProfile from "../utils/api/users/get_profile";
 
 const useSocializer = (targetUser: User) => {
-  const { currentUser } = useCurrentUser();
   const userContext = useContext(UserContext);
 
   const [isFriends, setIsFriends] = useState<boolean>();
@@ -19,45 +18,41 @@ const useSocializer = (targetUser: User) => {
   const [isReceived, setIsReceived] = useState<boolean>();
 
   const handleAdd = () => {
-    // Toggle On/Off outcoming friend request
-    isPending
-      ? cancelRequest(targetUser._id, currentUser._id, handlePending)
-      : sendRequest(targetUser._id, currentUser._id, handlePending);
+    sendRequest(targetUser._id, userContext.user?._id, handleSuccess);
   };
-  const handlePending = (status: string) => {
-    if (status === "sent") {
-      setIsPending(true);
-    } else if (status === "canceled") {
-      setIsPending(false);
-    }
+  const handleCancel = () => {
+    cancelRequest(targetUser._id, userContext.user?._id, handleSuccess);
   };
-
   const handleAccept = () => {
-    acceptRequest(targetUser._id, currentUser._id, handleSuccess);
+    acceptRequest(targetUser._id, userContext.user?._id, handleSuccess);
   };
 
   const handleDecline = () => {
-    declineRequest(targetUser._id, currentUser._id, handleSuccess);
+    declineRequest(targetUser._id, userContext.user?._id, handleSuccess);
   };
 
   const handleRemove = () => {
-    removeFriend(targetUser._id, currentUser._id, handleSuccess);
+    removeFriend(targetUser._id, userContext.user?._id, handleSuccess);
   };
 
   const handleSuccess = () => {
-    //Refresh app context - the friendship statuses will get re-rendered
-    getContextUser(currentUser._id, userContext.setUser);
+    //Refresh app context - the friendship statuses will get re-rendered - necessary for UI refreshes
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser, () => {});
   };
 
   useEffect(() => {
     // Establish the friendship status between currentUser and each target community user.
-    if (currentUser._id) {
-      setIsFriends(targetUser.friends.includes(currentUser._id));
-      setIsReceived(currentUser.requestsReceived?.includes(targetUser._id));
-      setIsPending(targetUser.requestsReceived.includes(currentUser._id));
+    if (userContext.user) {
+      setIsFriends(userContext.user.friends.includes(targetUser._id));
+      setIsReceived(
+        userContext.user.requestsReceived?.includes(targetUser._id)
+      );
+      setIsPending(userContext.user.requestsSent?.includes(targetUser._id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
+  }, [userContext]);
+
   // Only fetch the statuses for button states and handlers for button onClicks
   return {
     isFriends,
@@ -65,6 +60,7 @@ const useSocializer = (targetUser: User) => {
     isReceived,
     handleAccept,
     handleAdd,
+    handleCancel,
     handleDecline,
     handleRemove,
   };

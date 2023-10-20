@@ -15,9 +15,7 @@ const acceptRequest = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.message && data.message.includes("")) {
-        handleSuccess();
-      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

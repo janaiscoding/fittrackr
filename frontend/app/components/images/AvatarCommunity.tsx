@@ -15,13 +15,13 @@ const AvatarCommunity = ({ avatar, userID }: AvatarProps) => {
           ).toString("base64")}`}
           width={40}
           height={0}
-          className="w-24 h-24 rounded-full object-cover"
+          className="w-12 h-12 rounded-full object-cover"
           alt="user-profile-picture"
         />
       ) : (
         <Image
           src={defaultPic}
-          className="w-24 h-24 rounded-full object-cover"
+          className="w-12 h-12 rounded-full object-cover"
           alt="user-default-profile-picture"
         />
       )}
