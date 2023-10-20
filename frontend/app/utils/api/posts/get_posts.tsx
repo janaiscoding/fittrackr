@@ -1,6 +1,5 @@
 import { SetStateAction } from "react";
 import { getJwtToken } from "../auth/auth_handler";
-import axios from "axios";
 import { postsAPI } from "../endpoints";
 import { Post } from "../../types";
 
@@ -11,6 +10,7 @@ const getPosts = async (
   fetch(postsAPI, {
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
+      // "Access-Control-Allow-Credentials": "true",
     },
   })
     .then((res) => res.json())
@@ -21,19 +21,6 @@ const getPosts = async (
     .catch((err) => {
       console.log(err);
     });
-  // axios
-  //   .get(postsAPI, {
-  //     headers: {
-  //       Authorization: `Bearer ${getJwtToken()}`,
-  //     },
-  //   })
-  //   .then((res) => {
-  //     setter(res.data.posts);
-  //     handleLoad();
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
 };
 
 export default getPosts;
