@@ -1,7 +1,7 @@
-# FitTrakr
-Full-stack Fitness Tracking Platform 💪 
+# Socializer
+Full-stack Social Media Platform 🫶
 
-Record and share your milestones with other fitness enthusiasts. Keep getting stronger everyday. 💪
+Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected. 🌎
 
 Built with MERN Stack.
 
