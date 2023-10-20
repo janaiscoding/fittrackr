@@ -4,7 +4,10 @@ import axios from "axios";
 import { postsAPI } from "../endpoints";
 import { Post } from "../../types";
 
-const getPosts = (setter: React.Dispatch<SetStateAction<Post[] | null>>) => {
+const getPosts = async (
+  setter: React.Dispatch<SetStateAction<Post[] | null>>,
+  handleLoad: () => void
+) => {
   axios
     .get(postsAPI, {
       headers: {
@@ -13,6 +16,7 @@ const getPosts = (setter: React.Dispatch<SetStateAction<Post[] | null>>) => {
     })
     .then((res) => {
       setter(res.data.posts);
+      handleLoad();
     })
     .catch((err) => {
       console.log(err);

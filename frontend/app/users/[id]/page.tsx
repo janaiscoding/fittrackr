@@ -9,8 +9,6 @@ import getPosts from "@/app/utils/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import TopNav from "@/app/components/navigation/TopNav";
 import BotNav from "@/app/components/navigation/BotNav";
-import Sidebar from "@/app/components/homepage_layout/left_column/Sidebar";
-import Social from "@/app/components/homepage_layout/right_column/Social";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
@@ -24,14 +22,10 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   }, []);
 
   return (
-    <div className="bg-black">
+    <div>
       <TopNav />
-      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
-        <Sidebar />
-        <ProfileLayout id={id} />
-        <Social />
-        {modalContext.modalPost && <FormModal />}
-      </div>
+      <ProfileLayout id={id} />
+      {modalContext.modalPost && <FormModal />}
       <BotNav />
     </div>
   );

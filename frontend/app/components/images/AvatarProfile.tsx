@@ -64,7 +64,7 @@ const AvatarProfile = ({
             ).toString("base64")}`}
             width={40}
             height={0}
-            className="w-12 h-12 rounded-full object-cover profile-image border-white/30 border border-solid"
+            className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover profile-image border-white/30 border border-solid"
             alt="user-profile-picture"
           />
           {isSame && (
@@ -87,7 +87,7 @@ const AvatarProfile = ({
       ) : (
         <Image
           src={defaultPic}
-          className="w-12 h-12 rounded-full object-cover post-avatar-image"
+          className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover"
           alt="user-default-profile-picture"
         />
       )}

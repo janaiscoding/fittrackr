@@ -42,11 +42,7 @@ const PostStats = ({ post }: { post: Post }) => {
         >
           {isLiked ? <LikeFilled /> : <Like />}
         </div>
-        <div
-          className="text-white2 font-ubuntu-500 text-sm hover:cursor-pointer"
-          // onMouseEnter={() => setShowNames(true)}
-          // onMouseLeave={() => setShowNames(false)}
-        >
+        <div className="text-white2 font-ubuntu-500 text-sm">
           {likes.length} {likes.length === 1 ? "like" : "likes"}
         </div>
       </div>
