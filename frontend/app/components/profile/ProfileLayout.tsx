@@ -1,16 +1,13 @@
 import { User } from "@/app/utils/types";
-import ContentOf from "./ContentOf";
+import UserContent from "./UserContent";
 
 import { useContext, useEffect, useState } from "react";
-import { EditContext } from "@/app/context/editContext";
-import UpdateProfileModal from "../modals/UpdateProfileModal";
 import useCurrentUser from "@/app/hooks/useCurrentUser";
 import getProfile from "@/app/utils/api/users/get_profile";
 import Loader from "@/app/utils/assets/Loader";
 import { useRouter } from "next/navigation";
 import UserTabToggle from "../toggles/UserTabToggle";
 import UserInfo from "./UserInfo";
-import PostFormMD from "../forms/PostFormMD";
 import { UserContext } from "@/app/context/userContext";
 
 const ProfileLayout = ({ id }: { id: string }) => {
@@ -44,12 +41,13 @@ const ProfileLayout = ({ id }: { id: string }) => {
   return (
     <div className="flex flex-col font-ubuntu mb-10 w-full text-softWhite max-w-4xl m-auto h-screen">
       {isLoading && <Loader />}
-      <>
-        {!isLoading && <UserInfo profile={profile} isSame={isSame} />}
-        <UserTabToggle />
-
-        {!isLoading && <ContentOf isSame={isSame} profile={profile} />}
-      </>
+      {!isLoading && (
+        <>
+          <UserInfo profile={profile} isSame={isSame} />
+          <UserTabToggle />
+          <UserContent isSame={isSame} profile={profile} />
+        </>
+      )}
     </div>
   );
 };

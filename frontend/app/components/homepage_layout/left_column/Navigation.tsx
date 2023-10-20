@@ -51,13 +51,6 @@ const NavigationList = () => {
         <Community />
         <p>Community</p>
       </a>
-      <a
-        href={`/settings`}
-        className="flex gap-4 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
-      >
-        <WheelSVG />
-        <p>Settings</p>
-      </a>
       <div
         onClick={handleSignout}
         className="flex gap-4 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"

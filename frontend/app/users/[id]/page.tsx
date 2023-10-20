@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import useTokenVerification from "@/app/hooks/useTokenVerification";
 import { ModalContext } from "@/app/context/modalContext";
 import ProfileLayout from "../../components/profile/ProfileLayout";
@@ -14,11 +14,15 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
   const modalContext = useContext(ModalContext);
   const postsContext = useContext(PostsContext);
+  
+  const [isLoadingPosts, setIsLoading] = useState(true);
 
   useEffect(() => {
     //Initialize posts context.
     // This is just initial setter for the context. Happens on every page initial load.
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setIsLoading(false);
+    });
   }, []);
 
   return (
