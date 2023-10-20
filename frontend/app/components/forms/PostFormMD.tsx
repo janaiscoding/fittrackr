@@ -44,7 +44,7 @@ const PostFormMD = () => {
     setSuccess(true);
     clearData();
     //Update postsContext
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {});
     //@ts-ignore
     getProfile(userContext.user?._id, userContext.setUser);
 
@@ -59,7 +59,7 @@ const PostFormMD = () => {
     setError(" ");
   };
   return (
-    <div className="flex-col flex p-4 bg-bgContainers drop-shadow">
+    <div className="flex-col flex p-4 bg-bgContainers">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={text}

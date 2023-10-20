@@ -12,9 +12,9 @@ import DeleteModal from "../modals/DeleteModal";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
-  
-  const [showModal, setShowModal] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
+  const [isLoadingPosts, setIsLoading] = useState(true);
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
   const handleDelete = () => {
@@ -22,7 +22,9 @@ const PostArticle = ({ post }: { post: Post }) => {
   };
 
   const handleSuccess = () => {
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setIsLoading(false);
+    });
     setShowModal(false);
     //@ts-ignore
     getProfile(userContext.user?._id, userContext.setUser);

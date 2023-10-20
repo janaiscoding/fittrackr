@@ -6,7 +6,7 @@ const EditButton = () => {
   return (
     <button
       onClick={() => editContext.setShowEdit(true)}
-      className="text-xl text-secondary hover:text-accent hover:bg-slate-700/10 px-2"
+      className="md:text-xl text-secondary hover:text-accent hover:bg-slate-700/10 px-2"
     >
       Edit profile
     </button>
