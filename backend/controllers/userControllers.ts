@@ -102,7 +102,6 @@ const update_account = async (req: Request, res: Response) => {
   const { userID } = req.params;
 
   const updateFields = {
-    // birthday: req.body.ubirthday,
     first_name: req.body.ufirst_name,
     last_name: req.body.ulast_name,
     bio: req.body.ubio,
@@ -121,12 +120,19 @@ const update_account = async (req: Request, res: Response) => {
           updateObject[field] = updateFields[field];
         }
       }
-      await user.updateOne(updateObject);
-      const uUser = await User.findById(userID).select(fullUser);
-      uUser!.first_name = validator.unescape(user.first_name);
-      uUser!.last_name = validator.unescape(user.last_name);
-      uUser!.bio = validator.unescape(user.bio);
-      res.json({ message: "Updated user successfully.", uUser });
+      await user.updateOne(updateObject).then(async () => {
+        const uUser = await User.findById(userID);
+        if (uUser) {
+          uUser.first_name = validator.unescape(uUser.first_name);
+          uUser.last_name = validator.unescape(uUser.last_name);
+          uUser.bio = validator.unescape(uUser.bio);
+          res
+            .status(200)
+            .json({ message: "Updated user successfully.", uUser });
+        } else {
+          res.status(404).json({ message: "Updated user cannot be found." });
+        }
+      });
     } else {
       res.status(404).json({ message: "This user doesn't exist." });
     }
