@@ -1,5 +1,4 @@
 import Loader from "@/app/utils/assets/Loader";
-import useCommunityGetter from "@/app/hooks/useCommunityGetter";
 import UserWrapper from "./UserWrapper";
 import { useContext, useEffect, useState } from "react";
 

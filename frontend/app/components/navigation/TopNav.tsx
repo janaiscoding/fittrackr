@@ -5,9 +5,6 @@ import AvatarComment from "../images/AvatarComment";
 import { useContext } from "react";
 import { ModalContext } from "@/app/context/modalContext";
 import RequestModal from "../modals/RequestModal";
-import WheelSVG from "@/app/utils/assets/svgs/Settings";
-import LogoFront from "@/app/utils/assets/LogoFront";
-
 const TopNav = () => {
   const { currentUser } = useCurrentUser();
   const modalContext = useContext(ModalContext);

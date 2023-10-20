@@ -2,10 +2,8 @@
 import { PostsContext } from "../../../context/postsContext";
 import { useContext, useEffect, useState } from "react";
 import getPosts from "../../../utils/api/posts/get_posts";
-import FeedView from "./FeedView";
 import PostFormMD from "../../forms/PostFormMD";
 import Loader from "@/app/utils/assets/Loader";
-import useLoadingPosts from "@/app/hooks/useLoadingPosts";
 import PostArticle from "../../posts/PostArticle";
 
 const AppData = () => {

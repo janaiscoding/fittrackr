@@ -8,6 +8,7 @@ import { SyntheticEvent, useContext, useState } from "react";
 const CommentForm = ({ postID }: { postID: string }) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
@@ -32,7 +33,9 @@ const CommentForm = ({ postID }: { postID: string }) => {
   };
 
   const handleSuccessPOST = () => {
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setLoading(false);
+    });
     setComment("");
   };
 

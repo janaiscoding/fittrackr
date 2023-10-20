@@ -25,9 +25,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const postsContext = useContext(PostsContext);
 
   const [likes, setLikes] = useState(comm.likes);
-  // const [likenames, setLikenames] = useState<string[]>([] as string[]);
-  // const [showNames, setShowNames] = useState(false);
-
+  const [isLoading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isAuthor, setIsAuthor] = useState<boolean>();
 
@@ -50,7 +48,9 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
 
   const handleSuccessDelete = () => {
     // On delete success, reset the post context
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setLoading(false);
+    });
     setShowModal(false);
   };
   // const getLikeNames = () => {

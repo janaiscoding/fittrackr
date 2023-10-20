@@ -1,4 +1,3 @@
-import AvatarComment from "@/app/components/images/AvatarComment";
 import { User } from "@/app/utils/types";
 import SocializeButtons from "./SocializeButtons";
 import AvatarCommunity from "../images/AvatarCommunity";

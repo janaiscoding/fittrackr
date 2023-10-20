@@ -15,23 +15,9 @@ type AuthorProps = {
 
 const Author = ({ setShowModal, author, createdAt }: AuthorProps) => {
   const { avatar, _id, first_name, last_name } = author;
-
   const [isAuthor, setIsAuthor] = useState<boolean>();
-
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
-  // const [showModal, setShowModal] = useState(false);
-
-  // const handleDelete = () => {
-  //   deletePost(postID, handleSuccess);
-  // };
-
-  // const handleSuccess = () => {
-  //   getPosts(postsContext.setPosts);
-  //   setShowModal(false);
-  //   //@ts-ignore
-  //   getProfile(userContext.user?._id, userContext.setUser);
-  // };
 
   useEffect(() => {
     if (userContext.user) {

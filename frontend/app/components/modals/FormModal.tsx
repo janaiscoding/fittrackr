@@ -16,6 +16,7 @@ const FormModal = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [file, setFile] = useState<any>(undefined); // ERROR HERE.
+  const [isLoading, setLoading] = useState(true); // loading posts while fetching
 
   const router = useRouter();
   const path = usePathname();
@@ -52,7 +53,9 @@ const FormModal = () => {
     //Display success message
     setSuccess(true);
     //Update postsContext
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setLoading(false);
+    });
     // Refresh user context
     getContextUser(userContext.user?._id, userContext.setUser);
 
