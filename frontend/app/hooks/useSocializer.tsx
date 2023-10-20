@@ -44,7 +44,7 @@ const useSocializer = (targetUser: User) => {
   useEffect(() => {
     // Establish the friendship status between currentUser and each target community user.
     if (userContext.user) {
-      setIsFriends(userContext.user.friends.includes(targetUser._id));
+      setIsFriends(userContext.user.friends?.includes(targetUser._id));
       setIsReceived(
         userContext.user.requestsReceived?.includes(targetUser._id)
       );

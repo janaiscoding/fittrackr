@@ -13,7 +13,7 @@ const UserContent = ({
 }) => {
   const viewContext = useContext(ViewContext);
   return (
-    <div className="w-3/4 m-auto py-2">
+    <div className="md:w-3/4 m-auto py-2">
       {viewContext.current === "feed" && (
         <UserPosts userID={profile._id} isSame={isSame} />
       )}

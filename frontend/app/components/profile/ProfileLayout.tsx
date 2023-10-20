@@ -39,7 +39,7 @@ const ProfileLayout = ({ id }: { id: string }) => {
   }, [profile, currentUser]);
 
   return (
-    <div className="flex flex-col font-ubuntu mb-10 w-full text-softWhite max-w-4xl m-auto h-screen">
+    <div className="flex flex-col font-ubuntu mb-10 w-full h-full min-h-screen text-softWhite max-w-4xl m-auto">
       {isLoading && <Loader />}
       {!isLoading && (
         <div>

@@ -14,7 +14,7 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
   const modalContext = useContext(ModalContext);
   const postsContext = useContext(PostsContext);
-  
+
   const [isLoadingPosts, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +28,9 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <div>
       <TopNav />
-      <ProfileLayout id={id} />
+      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
+        <ProfileLayout id={id} />
+      </div>
       {modalContext.modalPost && <FormModal />}
       <BotNav />
     </div>
