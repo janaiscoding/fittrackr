@@ -20,6 +20,7 @@ const AppData = () => {
     // Don't need to fetch all over again, that happens on the mapping process.
     // This is just initial setter for the context. Happens on every page.
   }, []);
+  console.log(postsContext)
   return (
     <div className="flex flex-col font-ubuntu mb-10 w-full text-secondary">
       <PostFormMD />
