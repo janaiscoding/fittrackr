@@ -1,10 +1,9 @@
-import useDateFormatter from "../../hooks/useDateFormatter";
+import { formatDistanceToNow } from "date-fns";
 
 const RelativeDate = ({ date }: { date: string }) => {
-  const dateForm = useDateFormatter(date);
   return (
     <div className="text-white2 text-sm tracking-wider align-baseline">
-      {dateForm} ago
+      {formatDistanceToNow(new Date(date))} ago
     </div>
   );
 };

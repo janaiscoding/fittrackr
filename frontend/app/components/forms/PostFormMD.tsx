@@ -44,7 +44,9 @@ const PostFormMD = () => {
     setSuccess(true);
     clearData();
     //Update postsContext
-    getPosts(postsContext.setPosts, () => {});
+    getPosts(postsContext.setPosts, () => {
+      //console.log("fresh batch");
+    });
     //@ts-ignore
     getProfile(userContext.user?._id, userContext.setUser);
 

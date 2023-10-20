@@ -53,6 +53,7 @@ const FormModal = () => {
     //Display success message
     setSuccess(true);
     //Update postsContext
+    console.log("posts context is now fixed");
     getPosts(postsContext.setPosts, () => {
       setLoading(false);
     });

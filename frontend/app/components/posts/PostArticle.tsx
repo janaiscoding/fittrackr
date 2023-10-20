@@ -26,7 +26,7 @@ const PostArticle = ({ post }: { post: Post }) => {
 
   const handleSuccess = () => {
     getPosts(postsContext.setPosts, () => {
-      setIsLoading(false);
+      console.log("fresh batch");
     });
     setShowModal(false);
     //@ts-ignore
