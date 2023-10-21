@@ -70,7 +70,7 @@ const AvatarProfile = ({
           {isSame && (
             <label
               htmlFor="upload-avatar-edit-view"
-              className="flex items-center absolute top-[60%] left-[60%] bg-black/50 border-white/30 border border-solid p-2 rounded-full hover:bg-black hover:cursor-pointer"
+              className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
             >
               <UploadSVG />
               <input
@@ -85,12 +85,31 @@ const AvatarProfile = ({
           )}
         </div>
       ) : (
-        <Image
-          src={defaultPic}
-          className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover"
-          alt="user-default-profile-picture"
-        />
+        <div className="relative">
+          <Image
+            src={defaultPic}
+            className="md:w-28 w-12 md:h-28 h-12 md:max-w-[7rem] md:max-h-[7rem] md:min-h-[7rem] md:min-w-[7rem] rounded-full object-cover"
+            alt="user-default-profile-picture"
+          />
+          {isSame && (
+            <label
+              htmlFor="upload-avatar-edit-view"
+              className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
+            >
+              <UploadSVG />
+              <input
+                type="file"
+                name="myImage"
+                id="upload-avatar-edit-view"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => setFile(e.target.files![0])}
+              />
+            </label>
+          )}
+        </div>
       )}
+
       {showError && <ErrorPopup message={uploadErrors} />}
     </>
   );

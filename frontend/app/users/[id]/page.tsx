@@ -9,6 +9,7 @@ import getPosts from "@/app/utils/api/posts/get_posts";
 import { PostsContext } from "@/app/context/postsContext";
 import TopNav from "@/app/components/navigation/TopNav";
 import BotNav from "@/app/components/navigation/BotNav";
+import Footer from "@/app/components/ui_elements/Footer";
 
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   useTokenVerification();
@@ -32,7 +33,9 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
         <ProfileLayout id={id} />
       </div>
       {modalContext.modalPost && <FormModal />}
+      <Footer />
       <BotNav />
+
     </div>
   );
 };

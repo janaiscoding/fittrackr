@@ -6,7 +6,7 @@ const UserFriends = ({ userID }: { userID: string }) => {
   const { friends, isLoading } = useFriendsList(userID);
 
   return (
-    <div className="flex flex-col gap-1 mt-2">
+    <div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col gap-1 mt-2">
       {isLoading && <Loader />}
       {!isLoading && friends.length === 0 && (
         <p className="w-full self-center text-secondary bg-bgContainers p-2 rounded">

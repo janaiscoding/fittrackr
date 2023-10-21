@@ -42,14 +42,14 @@ const NavigationList = () => {
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
       >
         <FriendsSVG />
-        <p>Friends</p>
+        <p>My Friends</p>
       </div>
       <a
         href="/users"
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
       >
         <Community />
-        <p>Community</p>
+        <p>All Users</p>
       </a>
       <div
         onClick={handleSignout}
