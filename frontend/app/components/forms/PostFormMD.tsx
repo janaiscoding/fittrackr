@@ -26,7 +26,7 @@ const PostFormMD = () => {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
-    if (text.length === 0) {
+    if (text.length < 1) {
       //Rather than waiting for the server response, this is pre-handled here instead
       setError("Post is too short.");
     } else {
@@ -37,7 +37,7 @@ const PostFormMD = () => {
   const handleError = (data: string) => {
     setError(data);
     setSuccess(false);
-    // setFile(undefined);
+    setFile(undefined);
   };
 
   const handleSuccess = () => {
@@ -107,8 +107,7 @@ const PostFormMD = () => {
         </div>
         {file && (
           <p className="font-ubuntu text-xs text-secondary">
-            File ready for upload:{" "}
-            <span className="text-accent">{file.name}</span>
+            File selected: <span className="text-accent">{file.name}</span>
           </p>
         )}
       </form>

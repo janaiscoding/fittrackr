@@ -40,7 +40,8 @@ const AvatarProfile = ({
       // Clear error after it was displayed to the user.
       setShowError(false);
       setUploadErrors(" ");
-    }, 1000);
+      setFile(undefined)
+    }, 1500);
   };
 
   useEffect(() => {
@@ -109,7 +110,6 @@ const AvatarProfile = ({
           )}
         </div>
       )}
-
       {showError && <ErrorPopup message={uploadErrors} />}
     </>
   );

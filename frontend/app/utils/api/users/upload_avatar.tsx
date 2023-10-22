@@ -15,8 +15,11 @@ const uploadAvatar = (
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       if (data.message) {
         handleSuccess();
+      } else if (data.error) {
+        handleError(data.error);
       } else {
         handleError(data);
       }
