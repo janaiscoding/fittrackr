@@ -148,7 +148,7 @@ const update_pfp = [
         if (err.code === "LIMIT_FILE_SIZE") {
           return res
             .status(400)
-            .json({ error: "File size exceeds the limit of 4MB." });
+            .json({ error: "File size exceeds the limit of 2MB." });
         }
         return res.status(500).json({ error: "File upload error." });
       } else if (err) {

@@ -79,7 +79,7 @@ const post_create = [
         if (err.code === "LIMIT_FILE_SIZE") {
           return res
             .status(400)
-            .json({ error: "File size exceeds the limit of 4MB." });
+            .json({ error: "File size exceeds the limit of 2MB." });
         }
         return res.status(500).json({ error: "File upload error." });
       } else if (err) {
@@ -91,7 +91,7 @@ const post_create = [
   body("text", "Text is required")
     .trim()
     .isLength({ min: 1 })
-    .withMessage("Post is too short.")
+    .withMessage("Your post is too short.")
     .isLength({ max: 140 })
     .withMessage("Post can be maximum 140 characters.")
     .escape(),
