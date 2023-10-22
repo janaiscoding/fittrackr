@@ -9,10 +9,11 @@ const deletePost = async (id: string, handleSuccess: () => void) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      //console.log(data)
+     // console.log(data)
       if (data.message && data.message.includes("succes")) {
         handleSuccess();
       }
+      
     })
     .catch((err) => console.log(err));
 };

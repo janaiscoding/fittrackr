@@ -1,21 +1,19 @@
 import { SetStateAction } from "react";
-import { getJwtToken } from "../auth/auth_handler";
-import { postsAPI } from "../endpoints";
 import { Post } from "../../types";
+import { postsAPI } from "../endpoints";
+import { getJwtToken } from "../auth/auth_handler";
 
-const getPosts = (
-  setter: React.Dispatch<SetStateAction<Post[] | null>>,
-  handleLoad: () => void
+const getPostsSetter = (
+  setter: React.Dispatch<SetStateAction<Post[] | null>>
 ) => {
   fetch(postsAPI, {
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
-      // "Access-Control-Allow-Credentials": "true",
     },
   })
     .then((res) => res.json())
     .then((data) => {
-      handleLoad();
+      //console.log("fetched");
       setter(data.posts);
     })
     .catch((err) => {
@@ -23,4 +21,4 @@ const getPosts = (
     });
 };
 
-export default getPosts;
+export default getPostsSetter;

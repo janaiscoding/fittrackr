@@ -41,7 +41,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
         </button>
       )}
       {isReceived && (
-        <div className="flex gap-2">
+        <div className="flex justify-evenly gap-2">
           <button
             onClick={handleAccept}
             className="md:text-xl text-white bg-green-700/90 hover:bg-green-700 px-2 border border-slate-700/10"

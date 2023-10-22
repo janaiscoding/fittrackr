@@ -15,13 +15,15 @@ const CommunityUsers = () => {
     setLoading(false);
     setCommunity(data);
   };
-  useEffect(() => {
-    // Filter out the currently logged in user from the community list
-    if (userContext.user) {
-      getAllUsers(userContext.user._id, handleSuccess);
-    }
-  }, [userContext.user]);
-
+  // useEffect(() => {
+  //   // Filter out the currently logged in user from the community list
+  //   if (userContext.user) {
+  //     getAllUsers(userContext.user._id, handleSuccess);
+  //   }
+  // }, [userContext.user]);
+  useEffect(() =>{
+    getAllUsers(handleSuccess)
+  },[])
   return (
     <div className="flex flex-col gap-1">
       {isLoading && <Loader />}

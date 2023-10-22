@@ -10,6 +10,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import DeleteModal from "../modals/DeleteModal";
 import getProfile from "@/app/utils/api/users/get_profile";
+import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
@@ -25,12 +26,13 @@ const PostArticle = ({ post }: { post: Post }) => {
   };
 
   const handleSuccess = () => {
-    getPosts(postsContext.setPosts, () => {
-      console.log("fresh batch");
-    });
+    // getPosts(postsContext.setPosts, () => {
+    //   //console.log("fresh batch");
+    // });
     setShowModal(false);
-    //@ts-ignore
-    getProfile(userContext.user?._id, userContext.setUser);
+    // //@ts-ignore
+    // getProfile(userContext.user?._id, userContext.setUser);
+    getPostsSetter(postsContext.setPosts);
   };
 
   return (

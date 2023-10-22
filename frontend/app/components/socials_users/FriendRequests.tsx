@@ -1,6 +1,7 @@
 import Loader from "../../utils/assets/Loader";
 import useFriendRequests from "../../hooks/useFriendRequests";
 import UserWrapper from "./UserWrapper";
+import FriedRequestWrapper from "./FriedRequestWrapper";
 
 const FriendRequests = () => {
   const { friendRequests, isLoading } = useFriendRequests();
@@ -15,7 +16,7 @@ const FriendRequests = () => {
       ) : (
         <div className="w-full flex flex-col gap-1">
           {friendRequests.map((user) => (
-            <UserWrapper key={user._id} user={user} />
+            <FriedRequestWrapper key={user._id} user={user} />
           ))}
         </div>
       )}

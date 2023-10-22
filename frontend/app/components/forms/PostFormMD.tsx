@@ -6,6 +6,7 @@ import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
 import { SyntheticEvent, useContext, useState } from "react";
+import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 const PostFormMD = () => {
   const [text, setText] = useState("");
@@ -44,11 +45,9 @@ const PostFormMD = () => {
     setSuccess(true);
     clearData();
     //Update postsContext
-    getPosts(postsContext.setPosts, () => {
-      //console.log("fresh batch");
-    });
+    getPostsSetter(postsContext.setPosts);
     //@ts-ignore
-    getProfile(userContext.user?._id, userContext.setUser);
+    // getProfile(userContext.user?._id, userContext.setUser);
 
     setTimeout(() => {
       setSuccess(false);

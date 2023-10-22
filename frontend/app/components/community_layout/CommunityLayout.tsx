@@ -1,9 +1,27 @@
 import useCommunityGetter from "@/app/hooks/useCommunityGetter";
 import Loader from "@/app/utils/assets/Loader";
 import UserWrapper from "../socials_users/UserWrapper";
+import getAllUsers from "@/app/utils/api/users/get_all_users";
+import { useEffect, useState } from "react";
+import { User } from "@/app/utils/types";
 
 const CommunityLayout = () => {
-  const { isLoading, community } = useCommunityGetter();
+  const [community, setCommunity] = useState<User[]>([]);
+  const [isLoading, setLoading] = useState(true);
+
+  const handleSuccess = (data: User[]) => {
+    setLoading(false);
+    setCommunity(data);
+  };
+  // useEffect(() => {
+  //   // Filter out the currently logged in user from the community list
+  //   if (userContext.user) {
+  //     getAllUsers(userContext.user._id, handleSuccess);
+  //   }
+  // }, [userContext.user]);
+  useEffect(() =>{
+    getAllUsers(handleSuccess)
+  },[])
 
   return (
     <div className="w-full">
