@@ -1,4 +1,3 @@
-import useCommunityGetter from "@/app/hooks/useCommunityGetter";
 import Loader from "@/app/utils/assets/Loader";
 import UserWrapper from "../socials_users/UserWrapper";
 import getAllUsers from "@/app/utils/api/users/get_all_users";
