@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    form(method='POST' action='/posts')
+        label(for='text')= 'post test'
+        input(type='text' name='text')
+        label(for='myImage')= 'my image'
+        input(type='file' name='myImage')
+        button(type='submit')= 'SEND'

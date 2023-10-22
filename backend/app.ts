@@ -55,6 +55,9 @@ app.use("/workouts", workoutsRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 // error handler
 app.use(function (error: any, req: Request, res: Response, next: any) {
