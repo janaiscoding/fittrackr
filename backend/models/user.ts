@@ -12,7 +12,7 @@ const userSchema = new Schema(
       type: String,
       minLength: 1,
       maxLength: 140,
-      default: "Default user bio"
+      default: "",
     },
     current_weight: { type: Number, min: 3 },
     goal_weight: { type: Number, min: 3 },

@@ -21,7 +21,7 @@ const fileFilter = (
   }
 };
 const uploadPicture = multer({
-  limits: { fileSize: 1024 * 1024 * 4 },
+  limits: { fileSize: 1024 * 1024 * 2 },
   storage: storage,
   fileFilter: fileFilter,
 });
