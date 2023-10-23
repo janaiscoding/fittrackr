@@ -8,7 +8,11 @@ Record and share your amazing life moments, beautiful pictures or random thought
 
 ![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme_preview.gif)
 
+<details>
+<summary> See preview on mobile 📱 </summary>
+<br>
 ![Live socializerme mobile preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme_mobile.gif)
+</details>
 
 ### Project details:
 
