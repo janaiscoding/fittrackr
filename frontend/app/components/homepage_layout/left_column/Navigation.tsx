@@ -27,16 +27,22 @@ const NavigationList = () => {
     viewContext.setCurrent("friends");
     router.push(`/users/${currentUser.user?._id}`);
   };
-
   return (
     <div className="flex text-lg flex-col gap-1 bg-bgContainers">
-      <a
-        href={`/users/${currentUser.user?._id}`}
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
-      >
-        <User />
-        <p>Profile</p>
-      </a>
+      {currentUser.user?._id ? (
+        <a
+          href={`/users/${currentUser.user._id}`}
+          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        >
+          <User />
+          <p>My Profile</p>
+        </a>
+      ) : (
+        <div className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers">
+          <User />
+          <p>Loading...</p>
+        </div>
+      )}
       <div
         onClick={handleFriendsRedirect}
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
@@ -53,10 +59,10 @@ const NavigationList = () => {
       </a>
       <div
         onClick={handleSignout}
-        className="flex gap-4 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <SignOut />
-        <p>Sign out</p>
+        <p>Sign Out</p>
       </div>
     </div>
   );
