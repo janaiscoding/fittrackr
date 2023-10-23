@@ -51,10 +51,10 @@ Token expires in 24hr.
 ### Installation and running
 
 ```
-git clone git@github.com:janaiscoding/fiturself.git
-cd fiturself/backend
+git clone git@github.com:janaiscoding/socializer.git
+cd socializer/backend
 npm install
-create .env file with `MONGODB_URI` and `secret` variables
+create .env file with your `MONGODB_URI` and `secret` variables
 npm run dev
 Server is listening on localhost:3000
 ```
