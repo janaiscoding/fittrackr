@@ -2,7 +2,13 @@ import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
 import UserWrapper from "../../socials_users/UserWrapper";
 
-const UserFriends = ({ userID }: { userID: string }) => {
+const UserFriends = ({
+  userID,
+  isSame,
+}: {
+  userID: string;
+  isSame: boolean | undefined;
+}) => {
   const { friends, isLoading } = useFriendsList(userID);
 
   return (
@@ -10,7 +16,7 @@ const UserFriends = ({ userID }: { userID: string }) => {
       {isLoading && <Loader />}
       {!isLoading && friends.length === 0 && (
         <p className="w-full self-center text-secondary bg-bgContainers p-2 shadow-md">
-          This user doesn&apos;t have any friends yet.
+          {isSame ? `You don't` : `This user doesn't`} have any friends yet.
         </p>
       )}
       <div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col gap-1 mt-2">

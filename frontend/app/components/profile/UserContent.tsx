@@ -17,7 +17,7 @@ const UserContent = ({
       {viewContext.current === "feed" && (
         <UserPosts userID={profile._id} isSame={isSame} />
       )}
-      {viewContext.current === "friends" && <UserFriends userID={profile._id} />}
+      {viewContext.current === "friends" && <UserFriends userID={profile._id} isSame={isSame} />}
     </div>
   );
 };
