@@ -29,31 +29,31 @@ const NavigationList = () => {
   };
 
   return (
-    <div className="flex text-lg flex-col">
+    <div className="flex text-lg flex-col gap-1 bg-bgContainers">
       <a
         href={`/users/${currentUser.user?._id}`}
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
+        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <User />
         <p>Profile</p>
       </a>
       <div
         onClick={handleFriendsRedirect}
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
+        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <FriendsSVG />
         <p>My Friends</p>
       </div>
       <a
         href="/users"
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
+        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <Community />
         <p>All Users</p>
       </a>
       <div
         onClick={handleSignout}
-        className="flex gap-4 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent drop-shadow my-2 bg-bgContainers"
+        className="flex gap-4 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <SignOut />
         <p>Sign out</p>
