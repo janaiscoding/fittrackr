@@ -59,7 +59,7 @@ const login_post = async (req: Request, res: Response, next: NextFunction) => {
           }
         );
         user.password = ""; //Instead of performing a query again and using select("-email -password") - Preventing sending passwords to client.
-        return res.status(200).json({ token, user });
+        return res.status(200).json({ token });
       } else {
         return res.status(400).json({ message: "Your password is incorrect." });
       }
