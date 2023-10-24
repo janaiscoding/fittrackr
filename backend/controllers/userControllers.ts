@@ -4,7 +4,6 @@ import asyncHandler from "express-async-handler";
 import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
-import Workout from "../models/workout";
 import multer from "multer";
 import uploadPicture from "../middleware/multerConfig";
 
@@ -205,7 +204,6 @@ const delete_account = asyncHandler(async (req, res) => {
       ),
       Post.deleteMany({ user: userID }),
       Comment.deleteMany({ user: userID }),
-      Workout.deleteMany({ user: userID }),
       user.deleteOne(),
     ])
       .then(() => {
