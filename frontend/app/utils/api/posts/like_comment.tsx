@@ -6,7 +6,7 @@ const likeComment = (
   userID: string | undefined,
   handleSuccess: (data: { likes: string[] }) => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/posts/${postID}/${commentID}/like`, {
+  fetch(`https://socializer.fly.dev/posts/${postID}/${commentID}/like`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

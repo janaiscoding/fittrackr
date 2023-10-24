@@ -10,7 +10,6 @@ const getPosts = (
   fetch(postsAPI, {
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
-      // "Access-Control-Allow-Credentials": "true",
     },
   })
     .then((res) => res.json())

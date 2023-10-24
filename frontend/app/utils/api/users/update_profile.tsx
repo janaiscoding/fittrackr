@@ -9,7 +9,7 @@ const updateProfile = (
   handleSucces: (uUser: User) => void,
   handleError: () => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/users/${userID}`, {
+  fetch(`https://socializer.fly.dev/users/${userID}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,6 @@ const updateProfile = (
     .then((res) => res.json())
     .then((data) => {
       if (data.message.includes("success")) {
-        //console.log('meow', data)
         handleSucces(data.uUser);
       } else {
         handleError()

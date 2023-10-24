@@ -5,7 +5,7 @@ const cancelRequest = async (
   senderID: string | undefined,
   handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${receiverID}/cancel`, {
+  await fetch(`https://socializer.fly.dev/users/${receiverID}/cancel`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",

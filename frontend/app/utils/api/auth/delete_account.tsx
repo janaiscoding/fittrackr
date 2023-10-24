@@ -1,7 +1,7 @@
 import { getJwtToken } from "./auth_handler";
 
 const deleteAccount = (userID: string, handleSuccess: () => void) => {
-  fetch(`https://fittrackr.fly.dev/users/${userID}`, {
+  fetch(`https://socializer.fly.dev/users/${userID}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

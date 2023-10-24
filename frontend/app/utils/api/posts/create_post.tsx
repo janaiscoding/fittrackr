@@ -6,10 +6,6 @@ const createPost = async (
   handleError: (data: string) => void,
   handleSuccess: () => void
 ) => {
-  //https://stackoverflow.com/questions/17066875/how-to-inspect-formdata
-//   for (var pair of formData.entries()) {
-//     console.log(pair[0]+ ', ' + pair[1]); 
-// }
   await fetch(postsAPI, {
     method: "POST",
     headers: {
@@ -19,7 +15,6 @@ const createPost = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
       if (data.errors) {
         handleError(data.errors[0].msg);
       } else if (data === "Error: Please select an image.") {

@@ -5,7 +5,7 @@ const removeFriend = async (
   removerID: string | undefined,
   handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${removedID}/remove`, {
+  await fetch(`https://socializer.fly.dev/users/${removedID}/remove`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",

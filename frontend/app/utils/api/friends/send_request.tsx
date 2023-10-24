@@ -5,7 +5,7 @@ const sendRequest = async (
   senderID: string | undefined,
   handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${receiverID}/send`, {
+  await fetch(`https://socializer.fly.dev/users/${receiverID}/send`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

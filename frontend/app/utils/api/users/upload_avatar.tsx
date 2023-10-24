@@ -6,7 +6,7 @@ const uploadAvatar = (
   handleSuccess: () => void,
   handleError: (data: string) => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/users/${userID}/upload`, {
+  fetch(`https://socializer.fly.dev/users/${userID}/upload`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

@@ -1,10 +1,10 @@
-const loginAPI = "https://fittrackr.fly.dev/login";
-const signupAPI = "https://fittrackr.fly.dev/signup";
-const verifyAPI = "https://fittrackr.fly.dev/verify";
+const loginAPI = "https://socializer.fly.dev/login";
+const signupAPI = "https://socializer.fly.dev/signup";
+const verifyAPI = "https://socializer.fly.dev/verify";
 
 
-const postsAPI = "https://fittrackr.fly.dev/posts";
-const usersAPI = "https://fittrackr.fly.dev/users";
+const postsAPI = "https://socializer.fly.dev/posts";
+const usersAPI = "https://socializer.fly.dev/users";
 
 
 export { loginAPI, signupAPI, verifyAPI, postsAPI, usersAPI };
