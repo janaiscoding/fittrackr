@@ -1,15 +1,12 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
-import multer from "multer";
-import uploadPicture from "../middleware/multerConfig";
 import unescapePost from "../utils/unescapePost";
 import upload from "../middleware/multerConfig";
 
-const fullUser = "-email -password";
 const shortUser = "first_name last_name avatar";
 
 // @route GET /posts
@@ -35,7 +32,7 @@ const posts_get = async (req: Request, res: Response) => {
       });
       res.json({ posts });
     } else {
-      // This only happens when posts is null.
+      // This only happens when posts is null - as in a DB error 
       res.status(404).json({ message: "No posts yet." });
     }
   } catch {

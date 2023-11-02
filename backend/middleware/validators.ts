@@ -35,9 +35,5 @@ const valUpdateAcc = (req: Request, res: Response, next: NextFunction) => {
   if (errors.isEmpty()) return next();
   return res.status(400).json({ errors: errors.array() });
 };
-const valWorkout = (req: Request, res: Response, next: NextFunction) => {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) return next();
-  return res.status(400).json({ errors: errors.array() });
-};
-export { valSignup, valLogin, valComment, valUpdateAcc, valWorkout };
+
+export { valSignup, valLogin, valComment, valUpdateAcc };

@@ -99,20 +99,4 @@ const rulesUpdateAcc = () => {
   ];
 };
 
-const rulesWorkout = () => {
-  return [
-    body("description")
-      .exists()
-      .withMessage("Workout description is required.")
-      .trim()
-      .isLength({ min: 2 })
-      .withMessage("Workout description is too short.")
-      .isLength({ max: 100 })
-      .withMessage("Workout description is too long.")
-      .escape(),
-    body("userID").exists().withMessage("User id is required"),
-    body("duration").optional().isInt({ min: 1 }),
-  ];
-};
-
-export { signupRules, loginRules, rulesComment, rulesUpdateAcc, rulesWorkout };
+export { signupRules, loginRules, rulesComment, rulesUpdateAcc };
