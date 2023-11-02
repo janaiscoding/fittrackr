@@ -14,15 +14,14 @@ const Social = () => {
       </div>
       <CommunityUsers />
       <p className="text-center text-black">
-        Made with <span>💙</span> by{" "}
+        Made with <span>🧡</span> by{" "}
         <a
           href="https://github.com/JanaIsCoding"
+          className="text-orange-700 hover:text-accent underline"
           target="_blank"
-          className="text-secondary hover:text-accent"
         >
           JanaIsCoding
         </a>
-        .
       </p>
     </div>
   );
