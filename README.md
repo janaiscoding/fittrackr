@@ -1,9 +1,8 @@
 # Socializer. Full-stack Social Media Platform 🫶
 
 Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected.
-[Live Deploy 🌎](https://socializerme.vercel.app/) - Also with **demo** account!
 
-### Relevant Project Details:
+[Live Deploy 🌎](https://socializerme.vercel.app/) - Also with **demo** account!
 
 - Enhanced the user and developer experience by integrating the **React Context API** and **React Custom Hooks**, in order to follow DRY principles.
 - Implemented a stable solution for dealing with image manipulation by relying on Cloudinary SaaS CDN, **improving performance on fetching by 90%**.
