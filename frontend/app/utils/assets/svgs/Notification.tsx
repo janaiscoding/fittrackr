@@ -13,9 +13,10 @@ const Notification = () => {
       aria-label="Notification bell, click to see friend requests"
       onClick={() => modalContext.setModalBell(!modalContext.modalBell)}
     >
-      <label className="hidden">
-        Notification bell, click to see friend requests
-      </label>
+      <span className="hidden">
+        Notification bell icon, click to see friend requests
+      </span>
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6"

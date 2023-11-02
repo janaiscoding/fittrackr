@@ -7,6 +7,7 @@ const SendSVG = () => {
       strokeWidth={1.5}
       stroke="#3F72AF"
       className="w-6 h-6"
+      aria-label="Send icon"
     >
       <path
         strokeLinecap="round"

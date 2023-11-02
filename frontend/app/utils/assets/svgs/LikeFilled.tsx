@@ -1,6 +1,7 @@
 const LikeFilled = () => {
   return (
     <svg
+      aria-label="Comment was liked by you - Click icon to un-like"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="#FF4A4A"

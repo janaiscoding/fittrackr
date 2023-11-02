@@ -60,8 +60,9 @@ const CommentForm = ({ postID }: { postID: string }) => {
         <button
           type="submit"
           className="left-[90%] md:left-[94%]"
-          aria-label="Send a new comment to post"
+          aria-label="Send a new comment to this post"
         >
+          <span className="hidden"></span>
           <SendSVG />
         </button>
       </form>

@@ -7,6 +7,7 @@ const Like = () => {
       strokeWidth="1.5"
       stroke="#C6C5C5"
       className="w-6 h-6"
+      aria-label="Comment was not liked by you - Click icon to like"
     >
       <path
         strokeLinecap="round"

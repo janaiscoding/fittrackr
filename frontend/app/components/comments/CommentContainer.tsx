@@ -98,9 +98,11 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
         <button
           onClick={handleLike}
           className="relative"
-          aria-label="Toggle like comment icon"
+          aria-label="Click to toggle like comment icon and see comment likes count"
         >
-          <label className="hidden">Toggle like comment icon</label>
+          <span className="hidden">
+            Toggle like comment icon and see comment likes count
+          </span>
           <p className="text-white2 font-ubuntu-500 text-sm absolute left-[95%] top-[-20%]">
             {likes.length > 0 && likes.length}
           </p>
