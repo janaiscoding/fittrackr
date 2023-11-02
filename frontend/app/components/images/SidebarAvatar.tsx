@@ -2,6 +2,8 @@ import { ImageType } from "@/app/utils/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
 import { CldImage } from "next-cloudinary";
+import { useState } from "react";
+
 type AvatarProps = {
   avatar: ImageType;
   userID: string;
@@ -16,6 +18,7 @@ const SidebarAvatar = ({ avatar, userID }: AvatarProps) => {
           height={200}
           className="w-12 h-12 rounded-full object-cover sidebar-avatar-image"
           alt={avatar.alt}
+          id="currentUserAvatar"
         />
       ) : (
         <Image

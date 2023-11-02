@@ -3,6 +3,7 @@ import Loader from "../../../utils/assets/Loader";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import NavigationList from "./Navigation";
 import SidebarAvatar from "../../images/SidebarAvatar";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
@@ -26,8 +27,20 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+//@ts-ignore
+// import ColorThief from "../../../../node_modules/colorthief/dist/color-thief.mjs";
 
 const UserPreview = ({ currentUser }: { currentUser: User }) => {
+  // const [dominant, setDominant] = useState(undefined);
+  // const currentUserAvatar = document.querySelector("#currentUserAvatar");
+  // const colorThief = new ColorThief();
+  // useEffect(() => {
+  //   if (currentUserAvatar) {
+  //     const dominant = colorThief.getColor(currentUserAvatar);
+  //     console.log(currentUserAvatar, dominant);
+  //   }
+  // }, [currentUserAvatar]);
+
   return (
     <div className="bg-bgContainers shadow-md">
       <div className="bg-secondary/10 flex items-center flex-col gap-1 basis-full p-2">
