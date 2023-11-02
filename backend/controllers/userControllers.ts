@@ -6,18 +6,24 @@ import Post from "../models/post";
 import Comment from "../models/comment";
 import multer from "multer";
 import uploadPicture from "../middleware/multerConfig";
+import unescapeUser from "../utils/unescapeUser";
+import upload from "../middleware/multerConfig";
 
 //SELECT CRITERIAS
 const fullUser = "-email -password";
-const shortUser = "avatar first_name last_name"
+const shortUser = "avatar first_name last_name";
 
+// @route GET /users
+// @access Private
+// @description Gets all user profiles
 const get_users = async (req: Request, res: Response) => {
   try {
+    // Always omit email and password when sending users' info to the client
     const users = await User.find().select(fullUser);
     if (users) {
+      // Unescape all users' input data which is always santized.
       users.map((user) => {
-        user.first_name = validator.unescape(user.first_name);
-        user.last_name = validator.unescape(user.last_name);
+        unescapeUser(user);
         return user;
       });
       res.json({ message: "List of all users.", users });
@@ -29,16 +35,17 @@ const get_users = async (req: Request, res: Response) => {
   }
 };
 
+// @route GET /users/:userID
+// @access Private
+// @description Gets one singular profile
 const get_profile = async (req: Request, res: Response) => {
-  const { userID } = req.params;
   try {
-    const user = await User.findById(userID).select(fullUser);
+    const user = await User.findById(req.params.userID).select(fullUser);
     if (user) {
-      user.first_name = validator.unescape(user.first_name);
-      user.last_name = validator.unescape(user.last_name);
-      user.bio = validator.unescape(user.bio);
-      return res.json({ message: "User profile data", user });
+      unescapeUser(user);
+      return res.status(200).json({ message: "User profile data", user });
     }
+
     return res.status(404).json({ message: "User was not found!" });
   } catch (err: any) {
     if (err.kind === "ObjectId") {
@@ -51,7 +58,9 @@ const get_profile = async (req: Request, res: Response) => {
   }
 };
 
-// The other way would be to filter through all posts for userID created posts, and then perform deep populating for the comments (which would perform way more operations)
+// @route GET /users/:userID/posts
+// @access Private
+// @description Gets the user's existing posts
 const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
@@ -84,19 +93,18 @@ const get_user_posts = async (req: Request, res: Response) => {
   }
 };
 
+// @route PUT /users/:userID
+// @access Private
+// @description Update the current user's existing profile, and sends back the updated User object.
 const update_account = async (req: Request, res: Response) => {
-  const { userID } = req.params;
-
   const updateFields = {
     first_name: req.body.ufirst_name,
     last_name: req.body.ulast_name,
     bio: req.body.ubio,
-    current_weight: req.body.ucurrent_weight,
-    goal_weight: req.body.ugoal_weight,
   };
 
   try {
-    const user = await User.findById(userID);
+    const user = await User.findById(req.params.userID);
     if (user) {
       const updateObject = {};
       for (const field in updateFields) {
@@ -107,14 +115,10 @@ const update_account = async (req: Request, res: Response) => {
         }
       }
       await user.updateOne(updateObject).then(async () => {
-        const uUser = await User.findById(userID);
+        const uUser = await User.findById(req.params.userID); // Get the fresh user.
         if (uUser) {
-          uUser.first_name = validator.unescape(uUser.first_name);
-          uUser.last_name = validator.unescape(uUser.last_name);
-          uUser.bio = validator.unescape(uUser.bio);
-          res
-            .status(200)
-            .json({ message: "Updated user successfully.", uUser });
+          unescapeUser(uUser);
+          res.status(200).json({ message: "Update success.", uUser });
         } else {
           res.status(404).json({ message: "Updated user cannot be found." });
         }
@@ -127,51 +131,26 @@ const update_account = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /users/:userID/upload
+// @access Private
+// @description Update the current user's avatar, and sends back the updated User object.
 const update_pfp = [
-  (req: Request, res: Response, next: NextFunction) => {
-    uploadPicture.single("myImage")(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-        if (err.code === "LIMIT_FILE_SIZE") {
-          return res
-            .status(400)
-            .json({ error: "File size exceeds the limit of 2MB." });
-        }
-        return res.status(500).json({ error: "File upload error." });
-      } else if (err) {
-        return res.status(400).json(err);
-      }
-      next();
-    });
-  },
+  upload.single("myImage"),
   async (req: Request, res: Response) => {
-    if (!req.file)
-      return res
-        .status(500)
-        .json({ message: "No profile picture upload found" });
-    else {
-      try {
-        const user = await User.findById(req.params.userID);
-        if (user && user.avatar) {
-          user.avatar.data = req.file.buffer;
-          user.avatar.contentType = req.file.mimetype;
-          await user.save();
-          res.status(201).json({
-            message: "Profile picture updated successfully!",
-          });
+    const user = await User.findById(req.params.userID);
+    if (user && req.file) {
+      await user.updateOne({
+        avatar: {
+          url: req.file.path,
+          alt: req.file.originalname,
         }
-        if (!user) {
-          return res.status(404).json({ error: "This user doesn't exist." });
-        }
-      } catch (err: any) {
-        if (err.kind === "ObjectId") {
-          return res.status(404).json({ error: "This user doesn't exist." });
-        }
-        return res.status(500).json({
-          message: "There was an error updating the user's profile picture.",
-          err,
-        });
-      }
+      });
+
+      const updatedUser = await User.findById(req.params.userID);
+      if (updatedUser) res.status(202).json({ updatedUser });
     }
+    if (!user) res.status(404).json({ message: "User was not found" });
+    if (!req.file) res.status(404).json({ message: "No image found." });
   },
 ];
 

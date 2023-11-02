@@ -1,7 +1,16 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import multer, { FileFilterCallback } from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
-const storage = multer.memoryStorage();
+import cloudinary from "./cloudinaryConfig";
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    //@ts-ignore
+    folder: "DEV",
+  },
+});
 
 const fileFilter = (
   request: Request,
@@ -19,11 +28,10 @@ const fileFilter = (
     callback("Invalid file type. Please upload png/jpeg/jpg/webp only.", false);
   }
 };
-const uploadPicture = multer({
-  limits: { fileSize: 1024 * 1024 * 2 },
+const upload = multer({
+  limits: { fileSize: 1024 * 1024 * 4 },
   storage: storage,
   fileFilter: fileFilter,
 });
 
-
-export default uploadPicture;
+export default upload;

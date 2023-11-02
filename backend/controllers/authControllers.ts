@@ -9,14 +9,13 @@ const create_user = async (req: Request, res: Response) => {
   try {
     bcrypt.hash(password, 10, async (err, hashed) => {
       if (err) {
-        res.status(500).json({ message: err.message }); // hashing error
+        res.status(500).json({ message: err.message }); // A hashing error has occured.
       } else {
         await User.create({
           first_name,
           last_name,
-          email, // unique in db
+          email,
           password: hashed,
-          // birthday,
         })
           .then(() => {
             res.status(201).json({

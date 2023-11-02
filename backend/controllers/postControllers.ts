@@ -111,10 +111,7 @@ const post_create = [
         const newPost = new Post({
           user: userID,
           text,
-          image: {
-            data: req.file?.buffer,
-            contentType: req.file?.mimetype,
-          },
+          imageURL: req.file && req.file.path,
           comments: [],
           likes: [],
         });
