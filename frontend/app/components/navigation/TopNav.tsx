@@ -2,11 +2,13 @@ import useCurrentUser from "@/app/hooks/useCurrentUser";
 import Logo from "../../utils/assets/Logo";
 import Notification from "../../utils/assets/svgs/Notification";
 import AvatarComment from "../images/AvatarComment";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/app/context/modalContext";
 import RequestModal from "../modals/RequestModal";
+import { UserContext } from "@/app/context/userContext";
+import { User } from "@/app/utils/types";
 const TopNav = () => {
-  const { currentUser } = useCurrentUser();
+  const userContext = useContext(UserContext);
   const modalContext = useContext(ModalContext);
 
   return (
@@ -16,7 +18,12 @@ const TopNav = () => {
       </div>
       <div className="md:hidden gap-2 items-center flex px-4 ">
         <Notification />
-        <AvatarComment avatar={currentUser.avatar} userID={currentUser._id} />
+        {userContext.user && (
+          <AvatarComment
+            avatar={userContext.user.avatar}
+            userID={userContext.user._id}
+          />
+        )}
       </div>
       {modalContext.modalBell && <RequestModal />}
     </nav>

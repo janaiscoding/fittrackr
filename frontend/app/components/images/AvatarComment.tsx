@@ -16,7 +16,7 @@ const AvatarComment = ({
           src={avatar.url}
           width={200}
           height={200}
-          className="rounded-full object-cover border-2 border-solid border-outline comment-image"
+          className="rounded-full object-cover comment-image"
           alt={avatar.alt}
         />
       ) : (

@@ -54,11 +54,6 @@
   max-height: 6.5rem;
   max-width: 6.5rem;
 }
-.post-avatar-image:hover,
-.comment-image:hover {
-  outline: 1px solid #3f72af;
-  transition: all 50ms ease-in-out;
-}
 
 input.invalid,
 input:focus.invalid,

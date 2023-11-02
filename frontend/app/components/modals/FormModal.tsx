@@ -96,6 +96,7 @@ const FormModal = () => {
         </div>
         <div className="flex gap-2 items-center my-2">
           <AvatarPost
+            isAuthor={true}
             avatar={userContext.user!.avatar}
             userID={userContext.user!._id}
           />
