@@ -32,22 +32,32 @@ const PostStats = ({ post }: { post: Post }) => {
     }
   }, [postsContext, userContext]);
 
+  const focusInput = () => {
+    const commentFormInput = document.getElementById(`comment-form-${_id}`);
+    commentFormInput?.focus();
+    console.log(commentFormInput)
+  };
   return (
     <div className="flex items-start mt-2 gap-2 relative">
       <div>
-        <div
+        <button
+          aria-label="Toggle on/off like for this post"
           onClick={handleLike}
-          className="hover:cursor-pointer"
-          aria-label="Toggle like button"
         >
           {isLiked ? <LikeFilled /> : <Like />}
-        </div>
+        </button>
+
         <div className="text-white2 font-ubuntu-500">
           {likes.length} {likes.length === 1 ? "like" : "likes"}
         </div>
       </div>
       <div aria-label="Comment icon and comment count">
-        <CommentSVG />
+        <button
+          aria-label="Focus comment input for writing a new comment"
+          onClick={focusInput}
+        >
+          <CommentSVG />
+        </button>
         <div className="text-white2 font-ubuntu-500">
           {comments.length} {comments.length === 1 ? "comment" : "comments"}
         </div>

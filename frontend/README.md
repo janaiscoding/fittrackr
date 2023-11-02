@@ -8,6 +8,7 @@ See [live preview here](https://socializerme.vercel.app/)
 
 ### Main Tasks:
 
+- [ ] Integrate update post functionality;
 - [ ] Integrate delete account functionality;
 - [ ] Integrate escape keys from modals;
 - [ ] Integrate clicking outside of a modal to close certain things;

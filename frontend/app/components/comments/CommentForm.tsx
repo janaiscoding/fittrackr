@@ -46,6 +46,7 @@ const CommentForm = ({ postID }: { postID: string }) => {
         className="text-ubuntu flex items-center justify-between px-4"
       >
         <input
+          id={`comment-form-${postID}`}
           className="text-secondary w-full bg-transparent outline-none pt-2 pr-12"
           placeholder={"Add a comment..."}
           value={comment}
@@ -56,7 +57,11 @@ const CommentForm = ({ postID }: { postID: string }) => {
             }
           }}
         />
-        <button type="submit" className="left-[90%] md:left-[94%]">
+        <button
+          type="submit"
+          className="left-[90%] md:left-[94%]"
+          aria-label="Send a new comment to post"
+        >
           <SendSVG />
         </button>
       </form>

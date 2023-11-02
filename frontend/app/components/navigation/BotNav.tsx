@@ -53,6 +53,7 @@ const BotNav = () => {
 
       <button
         className="gap-1 items-center relative scale-150 -translate-y-1/2"
+        aria-label="Open modal to create a new post"
         onClick={handleModal}
       >
         <Plus />
