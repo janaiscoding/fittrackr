@@ -73,7 +73,7 @@ const post_get = async (req: Request, res: Response) => {
 // @description Creates one individual post - File upload is optional.
 const post_create = [
   upload.single("myImage"),
-  body("text", "Post description is required")
+  body("description", "Post description is required")
     .trim()
     .isLength({ min: 1 })
     .withMessage("Your post description is too short.")
@@ -82,12 +82,12 @@ const post_create = [
     .escape(),
   body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
-    const { text, userID } = req.body;
+    const { description, userID } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        text: validator.unescape(text),
+        description: validator.unescape(description),
       });
     }
     try {
@@ -95,7 +95,7 @@ const post_create = [
       if (user) {
         const newPost = new Post({
           user: userID,
-          text,
+          description,
           image: req.file && {
             url: req.file.path,
             alt: req.file.originalname,
@@ -126,9 +126,9 @@ const post_create = [
 
 // @route PUT /posts/:postID
 // @access Private
-// @description Updates one individual post's text description.
+// @description Updates one individual post's description.
 const post_update = [
-  body("uText")
+  body("uDescription")
     .trim()
     .exists()
     .withMessage("Description must be present")
@@ -139,13 +139,13 @@ const post_update = [
     .escape(),
   async (req: Request, res: Response) => {
     const { postID } = req.params;
-    const { uText, userID } = req.body;
+    const { uDescription, userID } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
-        text: validator.unescape(uText),
+        description: validator.unescape(uDescription),
       });
     }
     try {
@@ -154,7 +154,7 @@ const post_update = [
       if (post && user && post.user?.equals(userID)) {
         await post
           .updateOne({
-            text: uText,
+            description: uDescription,
           })
           .then(() => {
             res.status(202).json({

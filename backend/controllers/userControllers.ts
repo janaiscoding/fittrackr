@@ -6,6 +6,7 @@ import Post from "../models/post";
 import Comment from "../models/comment";
 import unescapeUser from "../utils/unescapeUser";
 import upload from "../middleware/multerConfig";
+import unescapePost from "../utils/unescapePost";
 
 const fullUser = "-email -password";
 const shortUser = "avatar first_name last_name";
@@ -62,7 +63,7 @@ const get_profile = async (req: Request, res: Response) => {
 const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
-    // This is called a query with deep population 
+    // This is called a query with deep population
     const userPosts = await Post.find({ user: userID })
       .sort({ createdAt: "desc" })
       .populate({
@@ -76,12 +77,7 @@ const get_user_posts = async (req: Request, res: Response) => {
       .populate({ path: "user", select: shortUser });
 
     const posts = userPosts.map((post) => {
-      post.text = validator.unescape(post.text);
-      post.comments.map((comment) => {
-        //@ts-ignore
-        comment.comment = validator.unescape(comment.comment);
-        return comment;
-      });
+      unescapePost(post);
       return post;
     });
 
