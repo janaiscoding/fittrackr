@@ -1,7 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import useCurrentUser from "./useCurrentUser";
-import { User } from "../utils/types";
-import UserContent from "../components/profile/UserContent";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 
 // This will retreive all friend requests. Used on Mobile view under notification bell, and on desktop on right_column

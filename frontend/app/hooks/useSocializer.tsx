@@ -1,6 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import useCurrentUser from "./useCurrentUser";
-
 import { UserContext } from "../context/userContext";
 import cancelRequest from "../utils/api/friends/cancel_request";
 import sendRequest from "../utils/api/friends/send_request";
