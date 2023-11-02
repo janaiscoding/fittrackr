@@ -43,13 +43,21 @@ const BotNav = () => {
 
   return (
     <div className="sticky bottom-0 flex justify-between items-center px-8 py-2 bg-bgContainers shadow-md md:hidden">
-      <div onClick={showFeed} className="flex flex-col gap-1 items-center">
+      <button
+        onClick={showFeed}
+        className="flex flex-col gap-1 items-center"
+        aria-label="Home icon to go back on homepage"
+      >
         <HomeSVG />
-      </div>
-      <div onClick={showProfile} className="flex flex-col gap-1 items-center">
+      </button>
+      <button
+        onClick={showProfile}
+        className="flex flex-col gap-1 items-center"
+        aria-label="Go to your profile icon"
+      >
         <User />
         {/* <p className="text-xs text-white2">Workouts</p> */}
-      </div>
+      </button>
 
       <button
         className="gap-1 items-center relative scale-150 -translate-y-1/2"
@@ -60,17 +68,22 @@ const BotNav = () => {
         {/* <p className="text-xs text-white2">New Post</p> */}
         {/* gotta fix svg background here --- fixed.*/}
       </button>
-      <a href={`/users`} className="flex flex-col gap-1 items-center">
+      <a
+        href={`/users`}
+        className="flex flex-col gap-1 items-center"
+        aria-label="Go to community page to see all users"
+      >
         <Community />
         {/* <p className="text-xs text-white2">Community</p> */}
       </a>
-      <div
+      <button
         className="flex flex-col gap-1 items-center hover:cursor-pointer"
         onClick={handleSignout}
+        aria-label="Sign out button"
       >
         <SignOut />
         {/* <p className="text-xs text-white2">Sign Out</p> */}
-      </div>
+      </button>
     </div>
   );
 };

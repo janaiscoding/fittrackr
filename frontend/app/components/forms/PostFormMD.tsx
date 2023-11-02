@@ -97,7 +97,7 @@ const PostFormMD = () => {
           </label>
 
           <button
-            aria-label="Send a new post"
+            aria-label="Create post send a new post"
             type="submit"
             className="flex gap-1 items-center text-secondary justify-between border border-outline hover:bg-accent/30 border-solid py-1 px-3 rounded"
           >

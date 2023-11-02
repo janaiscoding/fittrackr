@@ -8,10 +8,14 @@ const Notification = () => {
   const modalContext = useContext(ModalContext);
 
   return (
-    <div
+    <button
       className="md:hidden relative px-2"
+      aria-label="Notification bell, click to see friend requests"
       onClick={() => modalContext.setModalBell(!modalContext.modalBell)}
     >
+      <label className="hidden">
+        Notification bell, click to see friend requests
+      </label>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6"
@@ -25,7 +29,7 @@ const Notification = () => {
           {currentUser.requestsReceived?.length}
         </p>
       )}
-    </div>
+    </button>
   );
 };
 export default Notification;

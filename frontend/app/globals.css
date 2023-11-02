@@ -5,16 +5,19 @@
 @font-face {
   font-family: "OpenMedium";
   src: url("../public/Open_Sans/static/OpenSans-Medium.ttf");
+  font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "UbuntuMedium";
   src: url("../public/Ubuntu/Ubuntu-Medium.ttf");
+  font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "UbuntuThin";
   src: url("../public/Ubuntu/Ubuntu-Light.ttf");
+  font-weight: 400;
 }
 
 @layer base {

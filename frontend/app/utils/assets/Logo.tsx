@@ -1,6 +1,6 @@
 const LogoFront = () => {
   return (
-    <a href="/">
+    <a href="/" aria-label="Socializer Logo">
       <svg className="h-10" viewBox="0 0 425.6666666666667 115.625">
         <defs id="SvgjsDefs1665"></defs>
         <g
