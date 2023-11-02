@@ -18,7 +18,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {isPending && (
         <button
           onClick={handleCancel}
-          className="md:text-xl text-white bg-red-700/90 hover:bg-red-700 px-2 border border-slate-700/10"
+          className="md:text-xl text-white bg-red-700 hover:bg-red-700 px-2 border border-slate-700/10"
         >
           Cancel
         </button>
@@ -27,7 +27,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {isFriends && (
         <button
           onClick={handleRemove}
-          className="md:text-xl  text-white bg-red-700/90 hover:bg-red-700 px-2 border border-slate-700/10"
+          className="md:text-xl  text-white bg-red-700 hover:bg-red-700 px-2 border border-slate-700/10"
         >
           Remove
         </button>
@@ -35,7 +35,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
       {!isFriends && !isReceived && !isPending && (
         <button
           onClick={handleAdd}
-          className="md:text-xl text-white bg-green-700/90 hover:bg-green-700 px-2 border border-slate-700/10"
+          className="md:text-xl text-white bg-green-900 hover:bg-green-700 px-2 border border-slate-700/10"
         >
           Add friend
         </button>
@@ -44,13 +44,13 @@ const SocializeButtons = ({ user }: { user: User }) => {
         <div className="flex justify-evenly gap-2">
           <button
             onClick={handleAccept}
-            className="md:text-xl text-white bg-green-700/90 hover:bg-green-700 px-2 border border-slate-700/10"
+            className="md:text-xl text-pureWhite bg-green-900 hover:bg-green-700 px-2 border border-slate-700/10"
           >
             Accept
           </button>
           <button
             onClick={handleDecline}
-            className="md:text-xl text-white bg-red-700/90 hover:bg-red-700 px-2 border border-slate-700/10"
+            className="md:text-xl text-white bg-red-700 hover:bg-red-700 px-2 border border-slate-700/10"
           >
             {" "}
             Decline

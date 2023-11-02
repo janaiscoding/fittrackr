@@ -15,11 +15,14 @@ const DeleteModal = ({
           <p className="text-xl font-ubuntu-500 text-secondary text-center">
             Delete post
           </p>
-          <div onClick={() => setShowModal(false)} className="hover:bg-gray-700/10 rounded-full p-1 hover:cursor-pointer">
+          <div
+            onClick={() => setShowModal(false)}
+            className="hover:bg-gray-700/10 rounded-full p-1 hover:cursor-pointer"
+          >
             <Close />
           </div>
         </div>
-        <p className="bg-error/10 text-error font-ubuntu-500 text-center py-2 my-2">
+        <p className="text-red-900 font-ubuntu-500 text-center py-2 my-2">
           Once deleted, this content cannot be recovered!
         </p>
         <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-between">
@@ -31,7 +34,7 @@ const DeleteModal = ({
           </button>
           <button
             onClick={handleDelete}
-            className="bg-error/90 text-white  py-1 px-3 hover:bg-error hover:text-white"
+            className="bg-red-900 text-white  py-1 px-3 hover:bg-error hover:text-white"
           >
             Delete
           </button>
