@@ -16,7 +16,7 @@ const getFriendRequests = (
     .then((res) => res.json())
     .then((data) => {
       setter(data.received);
-      console.log(data.received)
+      //console.log(data.received)
       stopLoader();
     })
     .catch((err) => console.log(err));
