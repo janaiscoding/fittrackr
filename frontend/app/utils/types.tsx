@@ -1,6 +1,6 @@
-type Avatar = {
-  contentType: string;
-  data: Buffer;
+type ImageType = {
+  url: string;
+  alt: string;
 };
 
 type User = {
@@ -8,8 +8,7 @@ type User = {
   first_name: string;
   last_name: string;
   bio: string;
-  avatar: Avatar;
-  workouts: Workout[];
+  avatar: ImageType;
   posts: Post[];
   friends: string[];
   requestsSent: string[];
@@ -18,20 +17,15 @@ type User = {
   updatedAt: string;
 };
 
-//todo
-type Workout = {
-  _id: string;
-};
-
 type Post = {
   _id: string;
-  text: string;
+  description: string;
   comments: Comment[];
   likes: string[];
   user: User;
   createdAt: string;
   updatedAt: string;
-  image: Avatar;
+  image: ImageType;
 };
 
 type Comment = {
@@ -41,4 +35,4 @@ type Comment = {
   createdAt: string;
   likes: string[];
 };
-export type { User, Post, Avatar, Comment, Workout };
+export type { User, Post, ImageType, Comment };

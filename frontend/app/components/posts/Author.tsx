@@ -16,6 +16,7 @@ type AuthorProps = {
 const Author = ({ setShowModal, author, createdAt }: AuthorProps) => {
   const { avatar, _id, first_name, last_name } = author;
   const [isAuthor, setIsAuthor] = useState<boolean>();
+  
   const postsContext = useContext(PostsContext);
   const userContext = useContext(UserContext);
 
@@ -27,7 +28,7 @@ const Author = ({ setShowModal, author, createdAt }: AuthorProps) => {
   return (
     <div aria-label="author-section" className="flex items-center justify-between px-4">
       <div className="flex items-center gap-2">
-        <AvatarPost avatar={avatar} userID={_id} />
+        <AvatarPost avatar={avatar} userID={_id} isAuthor={isAuthor}/>
         <div>
           <a
             href={`/users/${_id}`}

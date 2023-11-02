@@ -18,7 +18,6 @@ const getProfile = (
       setter(res.data.user);
     })
     .catch((err) => {
-      console.log(err);
       handleError()
     });
 };

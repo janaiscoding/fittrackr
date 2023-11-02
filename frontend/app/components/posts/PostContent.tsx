@@ -8,14 +8,14 @@ type PostContentProps = {
 };
 
 const PostContent = ({ post }: PostContentProps) => {
-  const { text, user, image } = post;
+  const { description, image } = post;
 
   return (
     <div aria-label="post-content-section">
       <p className="font-ubuntu px-4 my-2 text-lg text-secondary break-all max-w-sm">
-        {text}
+        {description}
       </p>
-      <PostImage user={user} image={image} />
+      <PostImage image={image} />
       <div className="px-4 border-solid border-b border-black/10 pb-2">
         <PostStats post={post} />
       </div>

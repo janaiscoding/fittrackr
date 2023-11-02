@@ -1,24 +1,23 @@
-import { Avatar } from "@/app/utils/types";
+import { ImageType } from "@/app/utils/types";
 import Image from "next/image";
 import defaultPic from "../../../public/assets/default_avatar.jpg";
+import { CldImage } from "next-cloudinary";
 const AvatarComment = ({
   avatar,
   userID,
 }: {
-  avatar: Avatar;
+  avatar: ImageType;
   userID: string;
 }) => {
   return (
     <a href={`/users/${userID}`}>
       {avatar !== undefined ? (
-        <Image
-          src={`data:${avatar.contentType};base64,${Buffer.from(
-            avatar.data
-          ).toString("base64")}`}
-          width={40}
-          height={0}
+        <CldImage
+          src={avatar.url}
+          width={200}
+          height={200}
           className="rounded-full object-cover border-2 border-solid border-outline comment-image"
-          alt="user-profile-picture"
+          alt={avatar.alt}
         />
       ) : (
         <Image

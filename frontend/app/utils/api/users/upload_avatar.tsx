@@ -1,9 +1,10 @@
+import { User } from "../../types";
 import { getJwtToken } from "../auth/auth_handler";
 
 const uploadAvatar = (
   userID: string,
   formData: any,
-  handleSuccess: () => void,
+  handleSuccess: (updatedUser: User) => void,
   handleError: (data: string) => void
 ) => {
   fetch(`https://socializer.fly.dev/users/${userID}/upload`, {
@@ -15,9 +16,8 @@ const uploadAvatar = (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-      if (data.message) {
-        handleSuccess();
+      if (data.updatedUser) {
+        handleSuccess(data.updatedUser);
       } else if (data.error) {
         handleError(data.error);
       } else {

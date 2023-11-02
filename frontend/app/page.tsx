@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import TopNav from "./components/navigation/TopNav";
 import Sidebar from "./components/homepage_layout/left_column/Sidebar";
 import AppData from "./components/homepage_layout/middle_column/AppData";
@@ -9,8 +9,6 @@ import FormModal from "./components/modals/FormModal";
 import useTokenVerification from "./hooks/useTokenVerification";
 import { ModalContext } from "./context/modalContext";
 import BotNav from "./components/navigation/BotNav";
-import Footer from "./components/ui_elements/Footer";
-import DeleteModal from "./components/modals/DeleteModal";
 
 const Home = () => {
   useTokenVerification();

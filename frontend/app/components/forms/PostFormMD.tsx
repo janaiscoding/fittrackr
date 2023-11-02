@@ -9,7 +9,7 @@ import { SyntheticEvent, useContext, useState } from "react";
 import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 const PostFormMD = () => {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [file, setFile] = useState<any>(undefined);
@@ -20,13 +20,13 @@ const PostFormMD = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("text", text);
+    formData.append("description", description);
     if (userContext.user) formData.append("userID", userContext.user._id);
     if (file) {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
-    if (text.length < 1) {
+    if (description.length < 1) {
       //Rather than waiting for the server response, this is pre-handled here instead
       setError("Post is too short.");
     } else {
@@ -55,7 +55,7 @@ const PostFormMD = () => {
   };
 
   const clearData = () => {
-    setText(" ");
+    setDescription(" ");
     setFile(undefined);
     setError(" ");
   };
@@ -63,10 +63,10 @@ const PostFormMD = () => {
     <div className="flex-col flex p-4 bg-bgContainers">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
-          value={text}
+          value={description}
           placeholder="What's on your mind?"
           onChange={(e) => {
-            setText(e.target.value);
+            setDescription(e.target.value);
             if (e.target.value.length > 1) {
               setError(" ");
             }

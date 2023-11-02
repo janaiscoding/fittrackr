@@ -1,19 +1,17 @@
-import { Avatar, User } from "@/app/utils/types";
-import Image from "next/image";
+import { ImageType } from "@/app/utils/types";
+import { CldImage } from "next-cloudinary";
 
-const PostImage = ({ user, image }: { user: User; image: Avatar }) => {
+const PostImage = ({ image }: { image: ImageType }) => {
   return (
-    image !== undefined && (
-      <Image
-        src={`data:${image.contentType};base64,${Buffer.from(
-          image.data!
-        ).toString("base64")}`}
-        width={400}
-        height={0}
-        className="w-full h-60 object-cover md:h-auto"
-        alt={`Post pic, uploaded by ${user.first_name} ${user.last_name}`}
+    <div>
+      <CldImage
+        src={image.url}
+        width={600}
+        height={600}
+        className="object-cover"
+        alt={image.alt}
       />
-    )
+    </div>
   );
 };
 
