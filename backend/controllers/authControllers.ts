@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
+// @route POST /signup
+// @access Public
+// @description Create a new user signup
 const create_user = async (req: Request, res: Response) => {
   const { first_name, last_name, email, password } = req.body;
   try {
@@ -38,6 +41,9 @@ const create_user = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /login
+// @access Public
+// @description Log in to user with credentials, receives auth token as valid response.
 const login_post = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
   try {
@@ -68,6 +74,9 @@ const login_post = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// @route POST /verify
+// @access Public
+// @description Verifies existing auth JWT token, returns user data on success.
 const verify_token = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {

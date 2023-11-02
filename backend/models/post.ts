@@ -5,7 +5,10 @@ const postSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     text: { type: String, required: true, minLength: 1, maxLength: 140 },
-    imageURL: { type: String },
+    image: {
+      url: { type: String },
+      alt: { type: String },
+    },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
