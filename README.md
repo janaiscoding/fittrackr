@@ -12,15 +12,23 @@ Record and share your amazing life moments, beautiful pictures or random thought
 - For UI I followed a mobile-first approach recommended by TailwindCSS best practices and opted for a clean design, temporarily for light-mode only.
 - Focused on creating an accessible-friendly experience, with a **95+ Accessibility score** on Lighthouse scans.
 
-# Live preview 👇🏻
+# Media and previews 👇🏻
 
-![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme_preview.gif)
+![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/preview_desktop.gif)
 
 <details>
 <summary> See preview on mobile 📱 </summary>
 <br>
 
-![Live socializerme mobile preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme_mobile.gif)
+![Live socializerme mobile preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/preview_mobile.gif)
+
+</details>
+
+<details>
+<summary> See Lighthouse Report 📊</summary>
+<br>
+
+![Lighthouse report](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/lighthouse_reports.png)
 
 </details>
 
