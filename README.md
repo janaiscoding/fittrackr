@@ -2,7 +2,7 @@
 
 Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected.
 
-[Live Deploy 🌎](https://socializerme.vercel.app/) - Also with **demo** account!
+[Live Deploy 🌎](https://socializerme.vercel.app/) *Also with **demo** account! - [API Documentation 🖨️](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
 
 - Enhanced the user and developer experience by integrating the **React Context API**, **Custom Hooks**.
 - Implemented debouncing on certain functions, in order to reduce the API calls and improve overall UX.
@@ -45,7 +45,7 @@ Listening on localhost:3000
 
 ### Tools Used
 
-- Postman for API routes testing - see more here: [/backend/README.md](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
+- Postman for API routes testing
 - Cloudinary CDN
 - Figma for UI/UX design
 - Visual Studio Code
