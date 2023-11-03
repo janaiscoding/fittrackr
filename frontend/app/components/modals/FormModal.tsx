@@ -12,7 +12,7 @@ import getContextUser from "@/app/utils/api/auth/get_context_user";
 import AvatarPost from "../images/AvatarPost";
 
 const FormModal = () => {
-  const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [file, setFile] = useState<any>(undefined); // ERROR HERE.
@@ -29,14 +29,14 @@ const FormModal = () => {
     e.preventDefault();
     // Always needs text and userID, the file image is optional
     const formData = new FormData();
-    formData.append("text", text);
+    formData.append("description", description);
     if (userContext.user) formData.append("userID", userContext.user._id);
     if (file) {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
     }
     // Handle length error here, rather than calling the API.
-    if (text.length === 0) {
+    if (description.length === 0) {
       setError("Post is too short");
     } else {
       createPost(formData, handleError, handleSuccess);
@@ -53,7 +53,7 @@ const FormModal = () => {
     //Display success message
     setSuccess(true);
     //Update postsContext
-    console.log("posts context is now fixed");
+    //console.log("posts context is now fixed");
     getPosts(postsContext.setPosts, () => {
       setLoading(false);
     });
@@ -114,7 +114,7 @@ const FormModal = () => {
               placeholder="What's on your mind?"
               className="text-secondary w-full !bg-bgContainers outline-none py-2 pl-4 pr-12 rounded "
               onChange={(e) => {
-                setText(e.target.value);
+                setDescription(e.target.value);
                 if (e.target.value.length > 1) {
                   setError(" ");
                 }
