@@ -2,7 +2,7 @@
 
 Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected.
 
-[Live Deploy 🌎](https://socializerme.vercel.app/) *Also with **demo** account! - [API Documentation 🖨️](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
+[Live Deploy 🌎](https://socializerme.vercel.app/) \*Also with **demo** account! - [API Documentation 🖨️](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
 
 - Enhanced the user and developer experience by integrating the **React Context API**, **Custom Hooks**.
 - Implemented debouncing on certain functions, in order to reduce the API calls and improve overall UX.
@@ -61,6 +61,8 @@ Listening on localhost:3000
 - Linux Terminal
 - Git and Github
 
-### Sources
+### Extras
 
-- This project was built as the final Full-Stack JavaScript Path in The Odin Project: NodeJS Course: [OdinBook](https://www.theodinproject.com/lessons/nodejs-odin-book)
+- This project was built as the final assignment on Full-Stack JavaScript path in The Odin Project: [OdinBook](https://www.theodinproject.com/lessons/nodejs-odin-book)
+- Check out more of my repos: [BlogAPI](https://github.com/janaiscoding/blog-client), [ClonnerboxD](https://github.com/janaiscoding/letterboxd-clone), [PhotoTaggingApp](https://github.com/janaiscoding/photo-tagging-app)
+- Please feel free to provide any feedback and leave a ⭐ if you liked my project! Thank you 🧡
