@@ -8,6 +8,7 @@ See [live preview here](https://socializerme.vercel.app/)
 
 ### Main Tasks:
 
+- [x] Add debounce request on likes (posts, comments) in order to reduce unsynchronized or abusive API calls.
 - [ ] Integrate update post functionality;
 - [ ] Integrate delete account functionality;
 - [ ] Integrate escape keys from modals;

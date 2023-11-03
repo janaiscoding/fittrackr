@@ -7,6 +7,7 @@ import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
 import React, { useContext, useEffect, useState } from "react";
 import { Post } from "@/app/utils/types";
+import debounce from "lodash.debounce";
 
 const PostStats = ({ post }: { post: Post }) => {
   const { _id, comments } = post;
@@ -35,14 +36,17 @@ const PostStats = ({ post }: { post: Post }) => {
   const focusInput = () => {
     const commentFormInput = document.getElementById(`comment-form-${_id}`);
     commentFormInput?.focus();
-    console.log(commentFormInput)
+    console.log(commentFormInput);
   };
+
+  const debounceRequest = debounce(() => handleLike(), 500);
+ 
   return (
     <div className="flex items-start mt-2 gap-2 relative">
       <div>
         <button
           aria-label="Toggle on/off like for this post"
-          onClick={handleLike}
+          onClick={debounceRequest}
         >
           {isLiked ? <LikeFilled /> : <Like />}
         </button>

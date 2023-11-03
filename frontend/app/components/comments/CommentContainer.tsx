@@ -13,6 +13,7 @@ import getPosts from "@/app/utils/api/posts/get_posts";
 import Close from "@/app/utils/assets/svgs/Close";
 import DeleteModal from "../modals/DeleteModal";
 import { Comment } from "@/app/utils/types";
+import debounce from "lodash.debounce";
 
 type CommContainerProps = {
   postID: string;
@@ -30,9 +31,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const [isAuthor, setIsAuthor] = useState<boolean>();
 
   const handleLike = () => {
-    //console.log("like comment");
-    likeComment(postID, _id, userContext.user?._id, handleSuccessLike);
-    // handleError placeholder is just a console.log for now.
+    likeComment(postID, _id, userContext.user?._id, handleSuccess);
   };
   const [showModal, setShowModal] = useState(false);
 
@@ -40,8 +39,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
     deleteComment(postID, _id, userContext.user?._id, handleSuccessDelete);
   };
 
-  const handleSuccessLike = (data: { likes: string[] }) => {
-    // Set the new like counter(maybe add "onHover: displayLikes()?") and UI state.
+  const handleSuccess = (data: { likes: string[] }) => {
     setLikes(data.likes);
     setIsLiked(!isLiked);
   };
@@ -62,6 +60,8 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
       setLikes(comm.likes);
     }
   }, [userContext.user]);
+
+  const debounceRequest = debounce(() => handleLike(), 500);
 
   return (
     <div className="flex justify-between font-ubuntu">
@@ -96,7 +96,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
           />
         )}
         <button
-          onClick={handleLike}
+          onClick={debounceRequest}
           className="relative"
           aria-label="Click to toggle like comment icon and see comment likes count"
         >
