@@ -1,12 +1,13 @@
+import { User } from "../../types";
 import { getJwtToken } from "../auth/auth_handler";
 
 const uploadAvatar = (
   userID: string,
   formData: any,
-  handleSuccess: () => void,
+  handleSuccess: (updatedUser: User) => void,
   handleError: (data: string) => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/users/${userID}/upload`, {
+  fetch(`https://socializer.fly.dev/users/${userID}/upload`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
@@ -15,8 +16,10 @@ const uploadAvatar = (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.message) {
-        handleSuccess();
+      if (data.updatedUser) {
+        handleSuccess(data.updatedUser);
+      } else if (data.error) {
+        handleError(data.error);
       } else {
         handleError(data);
       }

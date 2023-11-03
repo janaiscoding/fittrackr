@@ -9,7 +9,7 @@ const WheelSVG = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="#C6C5C5"
+      fill="#3F72AF"
       className="w-6 h-6"
       onClick={redirectSettings}
     >

@@ -3,9 +3,9 @@ import { getJwtToken } from "../auth/auth_handler";
 const cancelRequest = async (
   receiverID: string,
   senderID: string | undefined,
-  handleSuccess: (status: string) => void
+  handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${receiverID}/cancel`, {
+  await fetch(`https://socializer.fly.dev/users/${receiverID}/cancel`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -15,9 +15,7 @@ const cancelRequest = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.message && data.message.includes("canceled")) {
-        handleSuccess("canceled");
-      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

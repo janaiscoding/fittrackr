@@ -9,39 +9,27 @@ const UserTabToggle = () => {
     viewContext.setCurrent("feed");
   };
 
-  const showWorkouts = () => {
-    viewContext.setCurrent("workouts");
-  };
   const showFriends = () => {
     viewContext.setCurrent("friends");
   };
   return (
-    <div className="flex justify-evenly font-ubuntu-500 bg-bgContainers">
+    <div className="flex justify-start gap-6 px-4 font-ubuntu-500 border-b border-t">
       <button
-        className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
+        className={`py-2 text-center hover:text-accent ${
           viewContext.current === "feed"
-            ? "border-secondary bg-black/30 text-white text-xl"
-            : "border-white/30 text-white2 text-lg"
+            ? "border-secondary text-accent border-b"
+            : " text-secondary"
         }`}
         onClick={showFeed}
       >
-        Posts
+        Feed
       </button>
+
       <button
-        className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
-          viewContext.current === "workouts"
-            ? "border-secondary bg-black/30 text-white text-xl"
-            : "border-white/30 text-white2 text-lg"
-        }`}
-        onClick={showWorkouts}
-      >
-        Workouts
-      </button>
-      <button
-        className={`py-2 basis-full text-center hover:bg-black/30 border-b ${
+        className={`py-2 text-center hover:text-accent ${
           viewContext.current === "friends"
-            ? "border-secondary bg-black/30 text-white text-xl"
-            : "border-white/30 text-white2 text-lg"
+            ? "border-secondary text-accent border-b"
+            : "text-secondary"
         }`}
         onClick={showFriends}
       >

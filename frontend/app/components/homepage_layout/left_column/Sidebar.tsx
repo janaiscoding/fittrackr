@@ -1,40 +1,60 @@
 import { User } from "../../../utils/types";
 import Loader from "../../../utils/assets/Loader";
-import Title from "../../ui_elements/Title";
-import AvatarPost from "../../images/AvatarPost";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import NavigationList from "./Navigation";
-import SettingsList from "./Settings";
+import SidebarAvatar from "../../images/SidebarAvatar";
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
 
   return (
-    <div className="hidden gap-4 md:block w-1/2">
-      <div className={`${isLoadingUser && "self-center"} flex`}>
+    <div className="hidden md:block sticky top-20 w-1/2">
+      <div
+        className={`${
+          isLoadingUser && "self-center flex items-center justify-center"
+        }`}
+      >
         {isLoadingUser ? <Loader /> : <UserPreview currentUser={currentUser} />}
       </div>
-      <Title title={"Navigation"} />
+
+      <div className="text-xl font-ubuntu-500 self-start text-accent mt-10">
+        Navigation
+      </div>
       <NavigationList />
-      <Title title={"Preferences"} />
-      <SettingsList />
     </div>
   );
 };
 
 export default Sidebar;
+//@ts-ignore
+// import ColorThief from "../../../../node_modules/colorthief/dist/color-thief.mjs";
 
 const UserPreview = ({ currentUser }: { currentUser: User }) => {
+  // const [dominant, setDominant] = useState(undefined);
+  // const currentUserAvatar = document.querySelector("#currentUserAvatar");
+  // const colorThief = new ColorThief();
+  // useEffect(() => {
+  //   if (currentUserAvatar) {
+  //     const dominant = colorThief.getColor(currentUserAvatar);
+  //     console.log(currentUserAvatar, dominant);
+  //   }
+  // }, [currentUserAvatar]);
+
   return (
-    <div className="flex flex-col items-center justify-center bg-bgContainers p-4 rounded gap-1 basis-full">
-      <AvatarPost avatar={currentUser.avatar} userID={currentUser._id} />
-      <a
-        href={`/users/${currentUser._id}`}
-        className="text-accent font-ubuntu-500 text-xl text-center"
-      >
-        {currentUser.first_name} {currentUser.last_name}
-      </a>
-      <p className="text-softWhite text-sm text-center">{currentUser.bio}</p>
+    <div className="bg-bgContainers shadow-md">
+      <div className="bg-secondary/10 flex items-center flex-col gap-1 basis-full p-2">
+        <SidebarAvatar avatar={currentUser.avatar} userID={currentUser._id} />
+        <a
+          href={`/users/${currentUser._id}`}
+          className="text-secondary font-ubuntu-500 text-xl text-center hover:text-accent"
+        >
+          {currentUser.first_name} {currentUser.last_name}
+        </a>
+      </div>
+      <p className="text-secondary text-sm text-center p-4">
+        {currentUser.bio}
+      </p>
     </div>
   );
 };

@@ -5,7 +5,7 @@ const SignOut = () => {
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="#C6C5C5"
+      stroke="#3F72AF"
       className="w-6 h-6"
     >
       <path

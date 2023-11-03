@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 
 const StatsOf = ({ profile }: { profile: User }) => {
   const [pLength, setPLength] = useState(profile.posts.length);
-  const [wLength, setWLength] = useState(profile.workouts.length);
   const [fLength, setFLength] = useState(profile.friends.length);
 
   const userContext = useContext(UserContext);
@@ -14,7 +13,6 @@ const StatsOf = ({ profile }: { profile: User }) => {
   useEffect(() => {
     if (userContext.user?._id === profile._id) {
       setPLength(userContext.user.posts.length);
-      setWLength(userContext.user.workouts.length);
       setFLength(userContext.user.friends.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,13 +25,6 @@ const StatsOf = ({ profile }: { profile: User }) => {
         onClick={() => viewContext.setCurrent("feed")}
       >
         {pLength} Posts
-      </p>
-
-      <p
-        className="pr-2 text-softWhite hover:cursor-pointer hover:text-accent"
-        onClick={() => viewContext.setCurrent("workouts")}
-      >
-        {wLength} Workouts
       </p>
       <p
         className="pr-2 text-softWhite hover:cursor-pointer hover:text-accent"

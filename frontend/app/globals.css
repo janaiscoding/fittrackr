@@ -5,91 +5,34 @@
 @font-face {
   font-family: "OpenMedium";
   src: url("../public/Open_Sans/static/OpenSans-Medium.ttf");
+  font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "UbuntuMedium";
   src: url("../public/Ubuntu/Ubuntu-Medium.ttf");
+  font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "UbuntuThin";
   src: url("../public/Ubuntu/Ubuntu-Light.ttf");
+  font-weight: 400;
 }
+
 @layer base {
   html {
     font-family: "OpenMedium", sans-serif;
     color: #f4fff3;
-    background: #010101;
+    background-color: #f9fbfd;
     text-underline-offset: 3px;
   }
 }
-.title {
-  text-decoration: underline;
-  text-decoration-color: #76d08a !important;
-  color: #c6c5c5;
-}
+
 ::placeholder {
-  color: #adadad !important;
+  color: #1b1f3ca5 !important;
 }
 
-.gradient-post {
-  background-color: #010101;
-
-  /* background: radial-gradient(
-    circle at 10% 0%,
-    hsl(16.62deg 15.71% 10.33%) 0%,
-    hsl(30.98deg 40.55% 5.15%) 16%,
-    hsl(0deg 0% 0.47%) 100%
-  ) */
-}
-.gradient-home {
-  background: rgb(5, 5, 5);
-  background: radial-gradient(
-    circle at 10% 0%,
-    hsl(16.62deg 15.71% 10.33%) 0%,
-    hsl(30.98deg 40.55% 5.15%) 16%,
-    hsl(0deg 0% 0.47%) 100%
-  );
-}
-.gradient-bg {
-  background: #070808;
-  background: -moz-radial-gradient(
-    center,
-    #161719 0%,
-    #03090f 74%,
-    #000000 100%
-  );
-  background: -webkit-radial-gradient(
-    center,
-    #161719 0%,
-    #03090f 74%,
-    #000000 100%
-  );
-  background: radial-gradient(
-    ellipse at center,
-    #161719 0%,
-    #03090f 74%,
-    #000000 100%
-  );
-}
-
-.gradient-form {
-  background: #080b11;
-  background: -moz-linear-gradient(
-    45deg,
-    #080b11 0%,
-    #0f0f11 50%,
-    #141416 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg,
-    #080b11 0%,
-    #0f0f11 50%,
-    #141416 100%
-  );
-  background: linear-gradient(45deg, #080b11 0%, #0f0f11 50%, #141416 100%);
-}
 .comment-image {
   min-height: 1.7rem;
   min-width: 1.7rem;
@@ -102,32 +45,32 @@
   max-height: 3rem;
   max-width: 3rem;
 }
+.sidebar-avatar-image {
+  min-height: 4.5rem;
+  min-width: 4.5rem;
+  max-height: 4.5rem;
+  max-width: 4.5rem;
+}
 .profile-image {
   min-height: 6.5rem;
   min-width: 6.5rem;
   max-height: 6.5rem;
   max-width: 6.5rem;
 }
-.post-avatar-image:hover,
-.comment-image:hover {
-  outline: 1px solid #76d08a;
-  transition: all 250ms ease-in-out;
-}
 
 input.invalid,
 input:focus.invalid,
 input:-webkit-autofill:focus.invalid {
-  color: #f3f3f3;
   border-bottom: 1px solid #df4444 !important;
 }
 
 input.valid,
 input:focus.valid,
 input:-webkit-autofill:focus.valid {
-  color: #f3f3f3;
   border-bottom: 1px solid #2eb97c !important;
 }
 
+/* This is the pulsing loader animation */
 .loader {
   position: relative;
   width: 64px;
@@ -136,7 +79,7 @@ input:-webkit-autofill:focus.valid {
 
 .loader div {
   position: absolute;
-  border: 4px solid #c6c5c5;
+  border: 4px solid #3f72af;
   border-radius: 50%;
   animation: pulse 1s ease-out infinite;
 }
@@ -150,6 +93,7 @@ input:-webkit-autofill:focus.valid {
   direction: ltr;
   enable-background: accumulate;
 }
+
 @keyframes pulse {
   0% {
     top: 32px;

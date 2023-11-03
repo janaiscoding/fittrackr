@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for fittrackr on 2023-08-16T20:01:51+03:00
+# fly.toml app configuration file generated for socializer on 2023-10-24T15:57:53+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "fittrackr"
-primary_region = "otp"
+app = "socializer"
+primary_region = "ams"
 
 [build]
 

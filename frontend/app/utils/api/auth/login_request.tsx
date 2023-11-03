@@ -6,7 +6,6 @@ const loginRequest = (
   handleSuccess: (data: { token: string }) => void,
   handleError: (data: { errors: { msg: string }[]; message: string }) => void
 ) => {
- // console.log(loginAPI)
   fetch(loginAPI, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -14,7 +13,7 @@ const loginRequest = (
   })
     .then((res) => res.json())
     .then((data) => {
-     // console.log(data)
+      // console.log(data)
       if (data.token) {
         handleSuccess(data);
       }

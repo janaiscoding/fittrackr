@@ -5,7 +5,7 @@ const declineRequest = async (
   receiverID: string | undefined,
   handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${senderID}/decline`, {
+  await fetch(`https://socializer.fly.dev/users/${senderID}/decline`, {
     method: "DELETE",
     headers: {
       "Content-type": "application/json",
@@ -15,9 +15,7 @@ const declineRequest = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.message && data.message.includes("declined")) {
-        handleSuccess();
-      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

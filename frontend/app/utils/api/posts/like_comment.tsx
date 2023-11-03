@@ -6,7 +6,7 @@ const likeComment = (
   userID: string | undefined,
   handleSuccess: (data: { likes: string[] }) => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/posts/${postID}/${commentID}/like`, {
+  fetch(`https://socializer.fly.dev/posts/${postID}/${commentID}/like`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -16,7 +16,7 @@ const likeComment = (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       if (data.likes) {
         handleSuccess(data);
       } else {

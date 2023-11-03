@@ -5,7 +5,7 @@ const acceptRequest = async (
   receiverID: string | undefined,
   handleSuccess: () => void
 ) => {
-  await fetch(`https://fittrackr.fly.dev/users/${senderID}/accept`, {
+  await fetch(`https://socializer.fly.dev/users/${senderID}/accept`, {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
@@ -15,9 +15,7 @@ const acceptRequest = async (
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.message && data.message.includes("")) {
-        handleSuccess();
-      }
+      handleSuccess();
     })
     .catch((err) => console.log(err));
 };

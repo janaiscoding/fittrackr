@@ -4,20 +4,24 @@ import asyncHandler from "express-async-handler";
 import validator from "validator";
 import Post from "../models/post";
 import Comment from "../models/comment";
-import Workout from "../models/workout";
-import multer from "multer";
-import uploadPicture from "../middleware/multerConfig";
+import unescapeUser from "../utils/unescapeUser";
+import upload from "../middleware/multerConfig";
+import unescapePost from "../utils/unescapePost";
 
-//SELECT CRITERIAS
 const fullUser = "-email -password";
+const shortUser = "avatar first_name last_name";
 
+// @route GET /users
+// @access Private
+// @description Gets all user profiles
 const get_users = async (req: Request, res: Response) => {
   try {
+    // Always omit email and password when sending users' info to the client
     const users = await User.find().select(fullUser);
     if (users) {
+      // Unescape all users' input data which is always santized.
       users.map((user) => {
-        user.first_name = validator.unescape(user.first_name);
-        user.last_name = validator.unescape(user.last_name);
+        unescapeUser(user);
         return user;
       });
       res.json({ message: "List of all users.", users });
@@ -29,16 +33,18 @@ const get_users = async (req: Request, res: Response) => {
   }
 };
 
+// @route GET /users/:userID
+// @access Private
+// @description Gets one singular profile
 const get_profile = async (req: Request, res: Response) => {
-  const { userID } = req.params;
   try {
-    const user = await User.findById(userID).select(fullUser);
+    // Wait for the API to get the req. user, and display all info about it. (except pw and email)
+    const user = await User.findById(req.params.userID).select(fullUser);
     if (user) {
-      user.first_name = validator.unescape(user.first_name);
-      user.last_name = validator.unescape(user.last_name);
-      user.bio = validator.unescape(user.bio);
-      return res.json({ message: "User profile data", user });
+      unescapeUser(user);
+      return res.status(200).json({ message: "User profile data", user });
     }
+
     return res.status(404).json({ message: "User was not found!" });
   } catch (err: any) {
     if (err.kind === "ObjectId") {
@@ -50,45 +56,31 @@ const get_profile = async (req: Request, res: Response) => {
     }
   }
 };
-const get_username = async (req: Request, res: Response) => {
-  const { userID } = req.params;
-  try {
-    const user = await User.findById(userID).select(fullUser);
-    if (user) {
-      res.status(200).json({
-        username: user.first_name + " " + user.last_name,
-      });
-    } else {
-      res.status(404).json({ msg: "User not found." });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-// The other way would be to filter through all posts for userID created posts, and then perform deep populating for the comments (which would perform way more operations)
+
+// @route GET /users/:userID/posts
+// @access Private
+// @description Gets the user's existing posts
 const get_user_posts = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
+    // This is called a query with deep population
     const userPosts = await Post.find({ user: userID })
       .sort({ createdAt: "desc" })
       .populate({
         path: "comments",
         populate: {
           path: "user",
-          select: fullUser,
+          select: shortUser,
         },
         options: { sort: { createdAt: "desc" } },
       })
-      .populate({ path: "user", select: fullUser });
+      .populate({ path: "user", select: shortUser });
+
     const posts = userPosts.map((post) => {
-      post.text = validator.unescape(post.text);
-      post.comments.map((comment) => {
-        //@ts-ignore
-        comment.comment = validator.unescape(comment.comment);
-        return comment;
-      });
+      unescapePost(post);
       return post;
     });
+
     res.status(200).json({ posts });
   } catch (err) {
     res.status(500).json({
@@ -98,20 +90,18 @@ const get_user_posts = async (req: Request, res: Response) => {
   }
 };
 
+// @route PUT /users/:userID
+// @access Private
+// @description Update the current user's existing profile, and sends back the updated User object.
 const update_account = async (req: Request, res: Response) => {
-  const { userID } = req.params;
-
   const updateFields = {
-    // birthday: req.body.ubirthday,
     first_name: req.body.ufirst_name,
     last_name: req.body.ulast_name,
     bio: req.body.ubio,
-    current_weight: req.body.ucurrent_weight,
-    goal_weight: req.body.ugoal_weight,
   };
 
   try {
-    const user = await User.findById(userID);
+    const user = await User.findById(req.params.userID);
     if (user) {
       const updateObject = {};
       for (const field in updateFields) {
@@ -121,12 +111,15 @@ const update_account = async (req: Request, res: Response) => {
           updateObject[field] = updateFields[field];
         }
       }
-      await user.updateOne(updateObject);
-      const uUser = await User.findById(userID).select(fullUser);
-      uUser!.first_name = validator.unescape(user.first_name);
-      uUser!.last_name = validator.unescape(user.last_name);
-      uUser!.bio = validator.unescape(user.bio);
-      res.json({ message: "Updated user successfully.", uUser });
+      await user.updateOne(updateObject).then(async () => {
+        const uUser = await User.findById(req.params.userID); // Get the fresh user.
+        if (uUser) {
+          unescapeUser(uUser);
+          res.status(200).json({ message: "Update success.", uUser });
+        } else {
+          res.status(404).json({ message: "Updated user cannot be found." });
+        }
+      });
     } else {
       res.status(404).json({ message: "This user doesn't exist." });
     }
@@ -135,54 +128,33 @@ const update_account = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /users/:userID/upload
+// @access Private
+// @description Update the current user's avatar, and sends back the updated User object for context refresh.
 const update_pfp = [
-  (req: Request, res: Response, next: NextFunction) => {
-    uploadPicture.single("myImage")(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-        if (err.code === "LIMIT_FILE_SIZE") {
-          return res
-            .status(400)
-            .json({ error: "File size exceeds the limit of 4MB." });
-        }
-        return res.status(500).json({ error: "File upload error." });
-      } else if (err) {
-        return res.status(400).json(err);
-      }
-      next();
-    });
-  },
+  //File related error handling happens inside multerConfig.
+  upload.single("myImage"),
   async (req: Request, res: Response) => {
-    if (!req.file)
-      return res
-        .status(500)
-        .json({ message: "No profile picture upload found" });
-    else {
-      try {
-        const user = await User.findById(req.params.userID);
-        if (user && user.avatar) {
-          user.avatar.data = req.file.buffer;
-          user.avatar.contentType = req.file.mimetype;
-          await user.save();
-          res.status(201).json({
-            message: "Profile picture updated successfully!",
-          });
-        }
-        if (!user) {
-          return res.status(404).json({ error: "This user doesn't exist." });
-        }
-      } catch (err: any) {
-        if (err.kind === "ObjectId") {
-          return res.status(404).json({ error: "This user doesn't exist." });
-        }
-        return res.status(500).json({
-          message: "There was an error updating the user's profile picture.",
-          err,
-        });
-      }
+    const user = await User.findById(req.params.userID);
+    if (user && req.file) {
+      await user.updateOne({
+        avatar: {
+          url: req.file.path,
+          alt: req.file.originalname,
+        },
+      });
+
+      const updatedUser = await User.findById(req.params.userID);
+      if (updatedUser) res.status(202).json({ updatedUser });
     }
+    if (!user) res.status(404).json({ message: "User was not found" });
+    if (!req.file) res.status(404).json({ message: "No image found." });
   },
 ];
 
+// @route DELETE /users/:userID
+// @access Private
+// @description Delete the current user's data. - NOT IMPLEMENTED YET.
 const delete_account = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const user = await User.findById(userID);
@@ -199,7 +171,6 @@ const delete_account = asyncHandler(async (req, res) => {
       ),
       Post.deleteMany({ user: userID }),
       Comment.deleteMany({ user: userID }),
-      Workout.deleteMany({ user: userID }),
       user.deleteOne(),
     ])
       .then(() => {
@@ -219,6 +190,9 @@ const delete_account = asyncHandler(async (req, res) => {
   }
 });
 
+// @route GET /users/:userID/friends
+// @access Private
+// @description See the accessed user's friends list. - IMPLEMENTED in get_friends API request.
 const get_friends_list = asyncHandler(async (req, res) => {
   const { userID } = req.params;
   const friendsList = await User.findById(userID).select("friends").populate({
@@ -232,6 +206,9 @@ const get_friends_list = asyncHandler(async (req, res) => {
   }
 });
 
+// @route GET /users/:userID/received
+// @access Private
+// @description Get the user's pending received friend requests. - IMPLEMENTED in get_friends API request.
 const get_fr_received = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
@@ -239,9 +216,8 @@ const get_fr_received = async (req: Request, res: Response) => {
       .select("requestsReceived")
       .populate({
         path: "requestsReceived",
-        select: fullUser,
+        select: shortUser,
       });
-
     if (user) return res.status(200).json({ received: user.requestsReceived });
     return res.status(404).json({ message: "User was not found." });
   } catch (err: any) {
@@ -253,12 +229,15 @@ const get_fr_received = async (req: Request, res: Response) => {
   }
 };
 
+// @route GET /users/:userID/sent
+// @access Private
+// @description Get the user's pending sent friend requests.
 const get_fr_sent = async (req: Request, res: Response) => {
   const { userID } = req.params;
   try {
     const user = await User.findById(userID).select("requestsSent").populate({
       path: "requestsSent",
-      select: fullUser,
+      select: shortUser,
     });
     if (user) return res.status(200).json({ sent: user.requestsSent });
     return res.status(404).json({ message: "User was not found." });
@@ -271,6 +250,9 @@ const get_fr_sent = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /users/:receiverID/send
+// @access Private
+// @description Send a friend request to a different user.
 const send_request = asyncHandler(async (req, res) => {
   const { senderID } = req.body;
   const { receiverID }: any = req.params;
@@ -332,6 +314,9 @@ const send_request = asyncHandler(async (req, res) => {
   }
 });
 
+// @route PUT /users/:senderID/accept
+// @access Private
+// @description Accept a pending friend request and become friends with a different user.
 const accept_request = asyncHandler(async (req, res) => {
   const { senderID }: any = req.params;
   const { receiverID } = req.body;
@@ -370,6 +355,9 @@ const accept_request = asyncHandler(async (req, res) => {
   }
 });
 
+// @route DELETE /users/:receiverID/cancel
+// @access Private
+// @description Cancel a pending friend request.
 const cancel_request = asyncHandler(async (req, res) => {
   const { receiverID }: any = req.params;
   const { senderID } = req.body;
@@ -406,6 +394,9 @@ const cancel_request = asyncHandler(async (req, res) => {
   }
 });
 
+// @route DELETE /users/:senderID/cancel
+// @access Private
+// @description Decline a pending friend request.
 const decline_request = asyncHandler(async (req, res) => {
   const { senderID }: any = req.params;
   const { receiverID } = req.body;
@@ -442,6 +433,9 @@ const decline_request = asyncHandler(async (req, res) => {
   }
 });
 
+// @route DELETE /users/:senderID/cancel
+// @access Private
+// @description Remove an user from your friends list.
 const remove_friend = asyncHandler(async (req, res) => {
   const { removedID }: any = req.params;
   const { removerID } = req.body;
@@ -479,7 +473,6 @@ export default {
   get_users,
   get_profile,
   get_user_posts,
-  get_username,
   update_account,
   update_pfp,
   delete_account,

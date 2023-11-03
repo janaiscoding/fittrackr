@@ -9,7 +9,7 @@ const getProfile = (
   handleError: () => void
 ) => {
   axios
-    .get(`https://fittrackr.fly.dev/users/${id}`, {
+    .get(`https://socializer.fly.dev/users/${id}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },
@@ -18,7 +18,6 @@ const getProfile = (
       setter(res.data.user);
     })
     .catch((err) => {
-      console.log(err);
       handleError()
     });
 };

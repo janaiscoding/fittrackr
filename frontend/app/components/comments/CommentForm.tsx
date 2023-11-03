@@ -8,7 +8,8 @@ import { SyntheticEvent, useContext, useState } from "react";
 const CommentForm = ({ postID }: { postID: string }) => {
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState("");
-  
+  const [isLoading, setLoading] = useState(true);
+
   const userContext = useContext(UserContext);
   const postsContext = useContext(PostsContext);
 
@@ -32,18 +33,21 @@ const CommentForm = ({ postID }: { postID: string }) => {
   };
 
   const handleSuccessPOST = () => {
-    getPosts(postsContext.setPosts);
+    getPosts(postsContext.setPosts, () => {
+      setLoading(false);
+    });
     setComment("");
   };
 
   return (
-    <>
+    <div aria-label="new-comment-form-section">
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="text-ubuntu flex items-center justify-between px-4"
       >
         <input
-          className="text-white w-full bg-transparent outline-none pt-2 pr-12"
+          id={`comment-form-${postID}`}
+          className="text-secondary w-full bg-transparent outline-none pt-2 pr-12"
           placeholder={"Add a comment..."}
           value={comment}
           onChange={(e) => {
@@ -53,14 +57,19 @@ const CommentForm = ({ postID }: { postID: string }) => {
             }
           }}
         />
-        <button type="submit" className="left-[90%] md:left-[94%]">
+        <button
+          type="submit"
+          className="left-[90%] md:left-[94%]"
+          aria-label="Send a new comment to this post"
+        >
+          <span className="hidden"></span>
           <SendSVG />
         </button>
       </form>
       <div className="px-4">
         <p className="text-error">{commentError}</p>
       </div>
-    </>
+    </div>
   );
 };
 

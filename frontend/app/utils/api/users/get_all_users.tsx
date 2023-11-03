@@ -5,7 +5,7 @@ import { User } from "../../types";
 
 
 const getAllUsers = (
-  currentID: string,
+  // currentID: string,
   handleSuccess: (data: User[]) => void
 ) => {
   axios
@@ -15,10 +15,10 @@ const getAllUsers = (
       },
     })
     .then((res) => {
-      const community = res.data.users.filter(
-        (user: User) => user._id !== currentID
-      );
-      handleSuccess(community);
+      // const community = res.data.users.filter(
+      //   (user: User) => user._id !== currentID
+      // );
+      handleSuccess(res.data.users);
     })
     .catch((err) => {
       console.log(err);

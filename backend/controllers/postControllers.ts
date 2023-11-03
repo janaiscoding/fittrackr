@@ -1,40 +1,38 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import Post from "../models/post";
 import Comment from "../models/comment";
 import { body, validationResult } from "express-validator";
 import validator from "validator";
 import User from "../models/user";
-import multer from "multer";
-import uploadPicture from "../middleware/multerConfig";
+import unescapePost from "../utils/unescapePost";
+import upload from "../middleware/multerConfig";
 
-//SELECT CRITERIAS
-const fullUser = "-email -password";
+const shortUser = "first_name last_name avatar";
 
+// @route GET /posts
+// @access Private
+// @description Gets all posts.
 const posts_get = async (req: Request, res: Response) => {
   try {
     const postsData = await Post.find({})
       .sort({ createdAt: "desc" })
-      .populate({ path: "user", select: "first_name last_name avatar" })
+      .populate({ path: "user", select: shortUser })
       .populate({
         path: "comments",
         options: { sort: { createdAt: "desc" } },
         populate: {
           path: "user",
-          select: "first_name last_name avatar",
+          select: shortUser,
         },
       });
     if (postsData) {
       const posts = postsData.map((post) => {
-        post.text = validator.unescape(post.text);
-        post.comments.map((c) => {
-          //@ts-ignore
-          c.comment = validator.unescape(c.comment);
-          return c;
-        });
+        unescapePost(post);
         return post;
       });
       res.json({ posts });
     } else {
+      // This only happens when posts is null - as in a DB error 
       res.status(404).json({ message: "No posts yet." });
     }
   } catch {
@@ -42,6 +40,9 @@ const posts_get = async (req: Request, res: Response) => {
   }
 };
 
+// @route GET /posts/:postID
+// @access Private
+// @description Gets one individual post.
 const post_get = async (req: Request, res: Response) => {
   const { postID } = req.params;
   try {
@@ -52,17 +53,12 @@ const post_get = async (req: Request, res: Response) => {
         options: { sort: { createdAt: "desc" } },
         populate: {
           path: "user",
-          select: "first_name last_name avatar",
+          select: shortUser,
         },
       })
-      .populate({ path: "user", select: "first_name last_name avatar" });
+      .populate({ path: "user", select: shortUser });
     if (post) {
-      post.text = validator.unescape(post.text);
-      post.comments.map((c) => {
-        //@ts-ignore
-        c.comment = validator.unescape(c.comment);
-        return c;
-      });
+      unescapePost(post);
       res.json({ post });
     } else {
       res.status(404).json({ message: "This post doesn't exist" });
@@ -72,37 +68,26 @@ const post_get = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /posts
+// @access Private
+// @description Creates one individual post - File upload is optional.
 const post_create = [
-  (req: Request, res: Response, next: NextFunction) => {
-    uploadPicture.single("myImage")(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-        if (err.code === "LIMIT_FILE_SIZE") {
-          return res
-            .status(400)
-            .json({ error: "File size exceeds the limit of 4MB." });
-        }
-        return res.status(500).json({ error: "File upload error." });
-      } else if (err) {
-        return res.status(400).json(err);
-      }
-      next();
-    });
-  },
-  body("text", "Text is required")
+  upload.single("myImage"),
+  body("description", "Post description is required")
     .trim()
     .isLength({ min: 1 })
-    .withMessage("Post is too short.")
+    .withMessage("Your post description is too short.")
     .isLength({ max: 140 })
-    .withMessage("Post can be maximum 140 characters.")
+    .withMessage("Post description can be maximum 140 characters.")
     .escape(),
   body("userID").notEmpty().withMessage("UserID is required."),
   async (req: Request, res: Response) => {
-    const { text, userID } = req.body;
+    const { description, userID } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
-        text: validator.unescape(text),
+        description: validator.unescape(description),
       });
     }
     try {
@@ -110,22 +95,20 @@ const post_create = [
       if (user) {
         const newPost = new Post({
           user: userID,
-          text,
-          image: {
-            data: req.file?.buffer,
-            contentType: req.file?.mimetype,
+          description,
+          image: req.file && {
+            url: req.file.path,
+            alt: req.file.originalname,
           },
           comments: [],
           likes: [],
         });
+        await user.updateOne({ $push: { posts: newPost } });
+        await newPost.save();
 
-        Promise.all([
-          newPost.save(),
-          user.updateOne({ $push: { posts: newPost } }),
-        ]).then(() => {
-          res.status(200).json({
-            message: "Post was created successfully.",
-          });
+        res.status(201).json({
+          message: "Post was created successfully.",
+          newPost,
         });
       } else {
         res.status(404).json({
@@ -140,25 +123,29 @@ const post_create = [
     }
   },
 ];
+
+// @route PUT /posts/:postID
+// @access Private
+// @description Updates one individual post's description.
 const post_update = [
-  body("uText")
+  body("uDescription")
     .trim()
     .exists()
-    .withMessage("Post must be present")
+    .withMessage("Description must be present")
     .isLength({ min: 5 })
-    .withMessage("Post must be at least 5 characters long.")
+    .withMessage("Description must be at least 5 characters long.")
     .isLength({ max: 140 })
-    .withMessage("Post must be maximum 140 characters long.")
+    .withMessage("Description must be maximum 140 characters long.")
     .escape(),
   async (req: Request, res: Response) => {
     const { postID } = req.params;
-    const { uText, userID } = req.body;
+    const { uDescription, userID } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
         errors: errors.array(),
-        text: validator.unescape(uText),
+        description: validator.unescape(uDescription),
       });
     }
     try {
@@ -167,11 +154,11 @@ const post_update = [
       if (post && user && post.user?.equals(userID)) {
         await post
           .updateOne({
-            text: uText,
+            description: uDescription,
           })
           .then(() => {
-            res.status(200).json({
-              message: "Post was successfully updated!",
+            res.status(202).json({
+              message: "Post description was successfully updated!",
             });
           });
       } else {
@@ -183,31 +170,28 @@ const post_update = [
   },
 ];
 
+// @route DELETE /posts/:postID
+// @access Private
+// @description Deletes the specified post.
 const post_delete = async (req: Request, res: Response) => {
   const { postID } = req.params;
-
   try {
     const post = await Post.findById(postID);
     if (post) {
-      const userID = post.user?._id;
+      const userID = post.user!._id;
       const user = await User.findById(userID);
-      // Clean-up comments just for the sake of clean DB
+      // Clean-up DB - Remove all comments, clean user's records and the post.
       const comments = post.comments;
       for (const comment of comments) {
         await Comment.findByIdAndDelete(comment);
       }
-      Promise.all([
-        post.deleteOne(),
-        user!.updateOne({ $pull: { posts: postID } }),
-      ])
-        .then(() => {
-          res.status(200).json({
-            message: "Post was deleted successfully!",
-          });
-        })
-        .catch((err) => {
-          res.status(500).json({ message: err.message });
-        });
+      await user?.updateOne({ $pull: { posts: postID } });
+      await post.deleteOne();
+
+      res.status(200).json({
+        message: "Post was deleted successfully!",
+        deletedPost: post,
+      });
     } else {
       res.status(404).json({ message: "This post doesn't exist." });
     }
@@ -216,6 +200,9 @@ const post_delete = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /posts/:postID/like
+// @access Private
+// @description Toggles like status on the specified post - returns the like-list containing all userIDs of likes in that post.
 const post_like = async (req: Request, res: Response) => {
   const { postID }: any = req.params;
   const { userID } = req.body;
@@ -225,10 +212,12 @@ const post_like = async (req: Request, res: Response) => {
       if (post.likes.includes(userID)) {
         await post.updateOne({ $pull: { likes: userID } });
         const updatedLikes = await Post.findById(postID).select("likes").lean();
+
         res.status(200).json({ likes: updatedLikes?.likes });
       } else {
         await post.updateOne({ $push: { likes: userID } });
         const updatedLikes = await Post.findById(postID).select("likes").lean();
+
         res.status(200).json({ likes: updatedLikes?.likes });
       }
     } else {

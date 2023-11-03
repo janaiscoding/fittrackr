@@ -6,7 +6,7 @@ const deleteComment = (
   userID: string | undefined,
   handleSuccess: () => void
 ) => {
-  fetch(`https://fittrackr.fly.dev/posts/${postID}/${commentID}`, {
+  fetch(`https://socializer.fly.dev/posts/${postID}/${commentID}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

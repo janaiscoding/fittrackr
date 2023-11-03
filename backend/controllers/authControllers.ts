@@ -4,19 +4,21 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
+// @route POST /signup
+// @access Public
+// @description Create a new user signup
 const create_user = async (req: Request, res: Response) => {
   const { first_name, last_name, email, password } = req.body;
   try {
     bcrypt.hash(password, 10, async (err, hashed) => {
       if (err) {
-        res.status(500).json({ message: err.message }); // hashing error
+        res.status(500).json({ message: err.message }); // A hashing error has occured.
       } else {
         await User.create({
           first_name,
           last_name,
-          email, // unique in db
+          email,
           password: hashed,
-          // birthday,
         })
           .then(() => {
             res.status(201).json({
@@ -39,6 +41,9 @@ const create_user = async (req: Request, res: Response) => {
   }
 };
 
+// @route POST /login
+// @access Public
+// @description Log in to user with credentials, receives auth token as valid response.
 const login_post = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
   try {
@@ -59,7 +64,7 @@ const login_post = async (req: Request, res: Response, next: NextFunction) => {
           }
         );
         user.password = ""; //Instead of performing a query again and using select("-email -password") - Preventing sending passwords to client.
-        return res.status(200).json({ token, user });
+        return res.status(200).json({ token });
       } else {
         return res.status(400).json({ message: "Your password is incorrect." });
       }
@@ -69,6 +74,9 @@ const login_post = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+// @route POST /verify
+// @access Public
+// @description Verifies existing auth JWT token, returns user data on success.
 const verify_token = async (req: Request, res: Response) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {

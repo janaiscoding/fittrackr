@@ -3,7 +3,7 @@ import { User } from "../../types";
 import { getJwtToken } from "../auth/auth_handler";
 
 const getFriends = (userID: string, handleSuccess: (friends: User[]) => void) => {
-  fetch(`https://fittrackr.fly.dev/users/${userID}/friends`, {
+  fetch(`https://socializer.fly.dev/users/${userID}/friends`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,

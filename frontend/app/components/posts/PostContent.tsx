@@ -8,15 +8,15 @@ type PostContentProps = {
 };
 
 const PostContent = ({ post }: PostContentProps) => {
-  const { text, user, image } = post;
+  const { description, image } = post;
 
   return (
-    <div>
-      <p className="font-ubuntu px-4 my-2 text-white break-all max-w-sm">
-        {text}
+    <div aria-label="post-content-section">
+      <p className="font-ubuntu px-2 my-2 text-lg text-secondary break-all max-w-sm">
+        {description}
       </p>
-      <PostImage user={user} image={image} />
-      <div className="px-4 border-solid border-b border-grey pb-2">
+      {post.image && <PostImage image={image} />}
+      <div className="px-4 border-solid border-b border-black/10 pb-2">
         <PostStats post={post} />
       </div>
     </div>

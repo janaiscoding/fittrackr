@@ -1,17 +1,28 @@
 import Title from "../../ui_elements/Title";
 import FriendRequests from "../../socials_users/FriendRequests";
-import NonFriendsUsers from "../../socials_users/NonFriendsUsers";
+import CommunityUsers from "../../socials_users/CommunityUsers";
 
 const Social = () => {
   return (
-    <div className="hidden md:flex flex-col w-1/2 gap-4">
-      <Title title="Friend Requests" />
+    <div className="hidden md:flex flex-col w-1/2 gap-4 sticky top-20 w-1/2">
+      <div className="text-xl font-ubuntu-500 self-start text-accent ">
+        Friend Requests
+      </div>
       <FriendRequests />
-      <Title title="Community" />
-      <NonFriendsUsers />
-      <a href="https://github.com/JanaIsCoding" className="text-xl font-ubuntu-500 self-start title my-1">
-        JanaIsCoding
-      </a>
+      <div className="text-xl font-ubuntu-500 self-start text-accent">
+        Community
+      </div>
+      <CommunityUsers />
+      <p className="text-center text-black">
+        Made with <span>🧡</span> by{" "}
+        <a
+          href="https://github.com/JanaIsCoding"
+          className="text-orange-700 hover:text-accent underline"
+          target="_blank"
+        >
+          JanaIsCoding
+        </a>
+      </p>
     </div>
   );
 };

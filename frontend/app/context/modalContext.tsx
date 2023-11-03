@@ -23,7 +23,6 @@ export const ModalContextProvider = ({
 }: ModalContextProviderProps) => {
   const [modalPost, setModalPost] = useState(false);
   const [modalBell, setModalBell] = useState(false);
-
   return (
     <ModalContext.Provider
       value={{
