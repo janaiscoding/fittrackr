@@ -5,7 +5,6 @@ const likePost = (
   userID: string | undefined,
   handleSuccess: (data: { likes: string[] }) => void
 ) => {
-  console.log("Making like request...");
   fetch(`https://socializer.fly.dev/posts/${postID}/like`, {
     method: "POST",
     headers: {
