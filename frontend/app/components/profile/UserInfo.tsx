@@ -6,7 +6,7 @@ import SocializeButtons from "../socials_users/SocializeButtons";
 import AvatarProfile from "../images/AvatarProfile";
 import EditButton from "../toggles/EditButton";
 import { User } from "@/app/utils/types";
-import EditModal from "../modals/EditModal";
+import EditUserModal from "../modals/EditUserModal";
 
 const UserInfo = ({
   profile,
@@ -43,7 +43,7 @@ const UserInfo = ({
         </div>
       </div>
 
-      {editContext.showEdit && <EditModal />}
+      {editContext.showEdit && <EditUserModal />}
     </div>
   );
 };

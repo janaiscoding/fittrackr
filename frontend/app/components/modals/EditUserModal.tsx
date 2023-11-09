@@ -1,9 +1,9 @@
 import Close from "@/app/utils/assets/svgs/Close";
-import EditForm from "../forms/EditForm";
+import EditUserForm from "../forms/EditUserForm";
 import { EditContext } from "@/app/context/editContext";
 import { useContext } from "react";
 
-const EditModal = () => {
+const EditUserModal = () => {
   const editContext = useContext(EditContext);
 
   return (
@@ -26,10 +26,10 @@ const EditModal = () => {
             <Close />
           </div>
         </div>
-        <EditForm />
+        <EditUserForm />
       </div>
     </div>
   );
 };
 
-export default EditModal;
+export default EditUserModal;

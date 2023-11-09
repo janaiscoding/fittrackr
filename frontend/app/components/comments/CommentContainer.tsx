@@ -11,7 +11,7 @@ import deleteComment from "@/app/utils/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/utils/api/posts/get_posts";
 import Close from "@/app/utils/assets/svgs/Close";
-import DeleteModal from "../modals/DeleteModal";
+import DeleteModal from "../modals/DeletePostModal";
 import { Comment } from "@/app/utils/types";
 import debounce from "lodash.debounce";
 

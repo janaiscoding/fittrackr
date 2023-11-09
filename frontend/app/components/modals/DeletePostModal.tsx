@@ -1,12 +1,12 @@
 import Close from "@/app/utils/assets/svgs/Close";
 import { SetStateAction } from "react";
 
-const DeleteModal = ({
+const DeletePostModal = ({
   handleDelete,
-  setShowModal,
+  setShowDelModal,
 }: {
   handleDelete: () => void;
-  setShowModal: React.Dispatch<SetStateAction<boolean>>;
+  setShowDelModal: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
     <div className="w-full h-full left-0 top-0 overflow-auto bg-gray-700/70 flex fixed z-[1000] justify-center items-center">
@@ -16,7 +16,7 @@ const DeleteModal = ({
             Delete post
           </p>
           <div
-            onClick={() => setShowModal(false)}
+            onClick={() => setShowDelModal(false)}
             className="hover:bg-gray-700/10 rounded-full p-1 hover:cursor-pointer"
           >
             <Close />
@@ -27,7 +27,7 @@ const DeleteModal = ({
         </p>
         <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-between">
           <button
-            onClick={() => setShowModal(false)}
+            onClick={() => setShowDelModal(false)}
             className="text-secondary bg-gray-700/10 hover:text-black hover:bg-gray-700/20 border-solid py-1 px-3"
           >
             Cancel
@@ -44,4 +44,4 @@ const DeleteModal = ({
   );
 };
 
-export default DeleteModal;
+export default DeletePostModal;

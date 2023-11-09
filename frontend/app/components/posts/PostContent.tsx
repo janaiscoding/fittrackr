@@ -1,7 +1,7 @@
-
 import { Post } from "@/app/utils/types";
 import PostImage from "./PostImage";
 import PostStats from "./PostStats";
+import React, { SetStateAction } from "react";
 
 type PostContentProps = {
   post: Post;
@@ -12,7 +12,7 @@ const PostContent = ({ post }: PostContentProps) => {
 
   return (
     <div aria-label="post-content-section">
-      <p className="font-ubuntu px-2 my-2 text-lg text-secondary break-all max-w-sm">
+      <p className="font-ubuntu px-2 my-2 text-lg text-secondary break-all">
         {description}
       </p>
       {post.image && <PostImage image={image} />}

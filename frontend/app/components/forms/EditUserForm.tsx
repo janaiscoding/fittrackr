@@ -4,7 +4,7 @@ import updateProfile from "@/app/utils/api/users/update_profile";
 import { User } from "@/app/utils/types";
 import { SyntheticEvent, useContext, useRef, useState } from "react";
 
-const EditForm = () => {
+const EditUserForm = () => {
   const userContext = useContext(UserContext);
   const editContext = useContext(EditContext);
   const saveButton = useRef<HTMLButtonElement>(null);
@@ -84,4 +84,4 @@ const EditForm = () => {
   );
 };
 
-export default EditForm;
+export default EditUserForm;

@@ -5,39 +5,56 @@ import Comments from "../comments/Comments";
 import { Post } from "@/app/utils/types";
 import deletePost from "@/app/utils/api/posts/delete_post";
 import { PostsContext } from "@/app/context/postsContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
-import DeleteModal from "../modals/DeleteModal";
+import DeletePostModal from "../modals/DeletePostModal";
 import getPostsSetter from "@/app/utils/api/posts/posts_setter";
+import UpdateDescriptionForm from "../modals/EditPostModal";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
 
-  const [showModal, setShowModal] = useState(false);
+  const [isAuthor, setIsAuthor] = useState<boolean>();
+
+  // Interacting with delete and edit happens on author sub-component where we know if the user author is the logged in user
+  const [showDelModal, setShowDelModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const postsContext = useContext(PostsContext);
+  const userContext = useContext(UserContext);
 
   const handleDelete = () => {
-    deletePost(_id, handleSuccess);
+    const handleSuccessDel = () => {
+      setShowDelModal(false);
+      getPostsSetter(postsContext.setPosts);
+    };
+    deletePost(_id, handleSuccessDel);
   };
 
-  const handleSuccess = () => {
-    // getPosts(postsContext.setPosts, () => {
-    //   //console.log("fresh batch");
-    // });
-    setShowModal(false);
-    // //@ts-ignore
-    // getProfile(userContext.user?._id, userContext.setUser);
-    getPostsSetter(postsContext.setPosts);
-  };
+  useEffect(() => {
+    if (userContext.user) {
+      setIsAuthor(user._id === userContext.user._id);
+    }
+  }, [userContext.user, postsContext.posts]);
 
   return (
     <article className="bg-bgContainers shadow-md py-2">
-      <Author setShowModal={setShowModal} author={user} createdAt={createdAt} />
+      <Author
+        setShowDelModal={setShowDelModal}
+        setShowEditModal={setShowEditModal}
+        author={user}
+        createdAt={createdAt}
+        isAuthor={isAuthor}
+      />
       <PostContent post={post} />
       <Comments postID={_id} postComments={comments} />
-      {showModal && (
-        <DeleteModal handleDelete={handleDelete} setShowModal={setShowModal} />
+      {showDelModal && (
+        <DeletePostModal
+          handleDelete={handleDelete}
+          setShowDelModal={setShowDelModal}
+        />
       )}
+      {showEditModal && <UpdateDescriptionForm post={post} setShowEditModal={setShowEditModal}/>}
     </article>
   );
 };
