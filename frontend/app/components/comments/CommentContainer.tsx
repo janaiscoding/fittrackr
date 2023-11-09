@@ -33,7 +33,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
   const handleLike = () => {
     likeComment(postID, _id, userContext.user?._id, handleSuccess);
   };
-  const [showModal, setShowModal] = useState(false);
+  const [showDelModal, setShowDelModal] = useState(false);
 
   const handleDelete = () => {
     deleteComment(postID, _id, userContext.user?._id, handleSuccessDelete);
@@ -49,7 +49,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
     getPosts(postsContext.setPosts, () => {
       setLoading(false);
     });
-    setShowModal(false);
+    setShowDelModal(false);
   };
 
   useEffect(() => {
@@ -83,16 +83,16 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
       <div className="flex flex-row-reverse gap-1 items-start">
         {isAuthor && (
           <button
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowDelModal(true)}
             aria-label="Delete comment icon"
           >
             <Close />
           </button>
         )}
-        {showModal && (
+        {showDelModal && (
           <DeleteModal
             handleDelete={handleDelete}
-            setShowModal={setShowModal}
+            setShowDelModal={setShowDelModal}
           />
         )}
         <button
