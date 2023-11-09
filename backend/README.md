@@ -34,7 +34,7 @@ Token expires in 24hr.
 | /posts                         | GET     | Posts page, gets all newest posts.                            | True      | True           | -               |
 | /posts                         | POST    | Create a new post from your account                           | True      | True           | userID, text    |
 | /posts/:postID                 | GET     | Fetch one individual post.                                    | True      | True           | -               |
-| /posts/:postID                 | PUT     | Update a post.                                                | True      | True           | userID, uText   |
+| /posts/:postID                 | PUT     | Update a post with a new description.                         | True      | True           | uDescription    |
 | /posts/:postID                 | DELETE  | Delete the post and update the account data.                  | True      | True           | userID          |
 | /posts/:postID                 | POST    | Create a comment on a specific post, associated with an user. | True      | True           | userID, comment |
 | /posts/:postID/like            | POST    | Like/dislike a post.                                          | True      | True           | userID          |

@@ -32,7 +32,7 @@ const posts_get = async (req: Request, res: Response) => {
       });
       res.json({ posts });
     } else {
-      // This only happens when posts is null - as in a DB error 
+      // This only happens when posts is null - as in a DB error
       res.status(404).json({ message: "No posts yet." });
     }
   } catch {
@@ -132,40 +132,34 @@ const post_update = [
     .trim()
     .exists()
     .withMessage("Description must be present")
-    .isLength({ min: 5 })
-    .withMessage("Description must be at least 5 characters long.")
+    .isLength({ min: 1 })
+    .withMessage("Description must be at least 1 character long.")
     .isLength({ max: 140 })
     .withMessage("Description must be maximum 140 characters long.")
     .escape(),
   async (req: Request, res: Response) => {
     const { postID } = req.params;
-    const { uDescription, userID } = req.body;
+    const { uDescription } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.json({
+      res.status(400).json({
         errors: errors.array(),
-        description: validator.unescape(uDescription),
+        uDescription: validator.unescape(uDescription),
       });
     }
+    
     try {
+      // Step 1: Find post and update it
       const post = await Post.findById(postID);
-      const user = await User.findById(userID);
-      if (post && user && post.user?.equals(userID)) {
-        await post
-          .updateOne({
-            description: uDescription,
-          })
-          .then(() => {
-            res.status(202).json({
-              message: "Post description was successfully updated!",
-            });
-          });
-      } else {
-        res.status(403).json({ message: "You cannot edit this post." });
-      }
+      if (!post) res.status(404).json({ message: "This post doesn't exist." });
+      if (post) await post.updateOne({ description: uDescription });
+      // Step 2: Return success message
+      res
+        .status(202)
+        .json({ message: "Post description was successfully updated!" });
     } catch {
-      res.status(404).json({ message: "This post doesn't exist." });
+      res.status(505).json({ message: "An unexpected error has occured." });
     }
   },
 ];
