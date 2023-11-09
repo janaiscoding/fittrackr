@@ -143,7 +143,7 @@ const post_update = [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({
+      return res.status(400).json({
         errors: errors.array(),
         uDescription: validator.unescape(uDescription),
       });
@@ -155,7 +155,7 @@ const post_update = [
       if (!post) res.status(404).json({ message: "This post doesn't exist." });
       if (post) await post.updateOne({ description: uDescription });
       // Step 2: Return success message
-      res
+      return res
         .status(202)
         .json({ message: "Post description was successfully updated!" });
     } catch {
