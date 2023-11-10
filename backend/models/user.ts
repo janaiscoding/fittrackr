@@ -20,8 +20,12 @@ const userSchema = new Schema(
     requestsSent: [{ type: Schema.Types.ObjectId, ref: "User" }],
     requestsReceived: [{ type: Schema.Types.ObjectId, ref: "User" }],
     avatar: {
-      url: { type: String },
-      alt: { type: String },
+      url: {
+        type: String,
+        default:
+          "https://res.cloudinary.com/dzj44ru2r/image/upload/v1699613615/DEV/gfoqaga92hjrxhsyouz7.jpg",
+      },
+      alt: { type: String, default: "nasa-Q1p7bh3SHj8-unsplash.jpg" },
     },
   },
   { timestamps: true }
