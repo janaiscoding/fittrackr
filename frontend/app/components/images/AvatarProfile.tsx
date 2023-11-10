@@ -5,6 +5,8 @@ import { UserContext } from "@/app/context/userContext";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import ErrorPopup from "../popups/ErrorPopup";
 import { CldImage } from "next-cloudinary";
+import { PostsContext } from "@/app/context/postsContext";
+import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 // This component is on user profiles, it displays picture and an icon for uploading a new avatar if you're on your profile.
 const AvatarProfile = ({
@@ -18,36 +20,37 @@ const AvatarProfile = ({
   const [showError, setShowError] = useState(false);
   const [file, setFile] = useState<any>();
 
+  const postsContext = useContext(PostsContext)
   const userContext = useContext(UserContext);
 
   const handleSuccess = (updatedUser: User) => {
     setFile(undefined);
     setUploadErrors(" ");
-    //When the upload is a success, I get back the updated user from the API, and I am now setting my new context.
+    //When the upload is a success, I get back the updated user from the API, and I am now setting my new contexts.
     userContext.setUser(updatedUser);
+    getPostsSetter(postsContext.setPosts)
   };
 
   const handleError = (data: string) => {
-    setUploadErrors(data);
-    // todo: pop-up for error - change the transition
     setShowError(true);
-    setTimeout(() => {
-      // Clear error after it was displayed to the user.
-      setShowError(false);
-      setUploadErrors(" ");
-      setFile(undefined);
-    }, 1500);
+    setUploadErrors(data);
+  };
+
+  const cancelError = () => {
+    setShowError(false);
+    setUploadErrors(" ");
+    setFile(undefined);
   };
 
   useEffect(() => {
-    // Auto-upload user avatar.
+    // Auto-upload user avatar whenever the file changes.
     const formData = new FormData();
     if (file && userContext.user) {
       formData.append("myImage", file);
       formData.append("mimeType", file.type);
       uploadAvatar(userContext.user._id, formData, handleSuccess, handleError);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
 
   return (
@@ -78,7 +81,9 @@ const AvatarProfile = ({
         )}
       </div>
 
-      {showError && <ErrorPopup message={uploadErrors} />}
+      {showError && (
+        <ErrorPopup message={uploadErrors} cancelError={cancelError} />
+      )}
     </>
   );
 };

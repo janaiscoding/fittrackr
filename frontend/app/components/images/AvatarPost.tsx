@@ -26,9 +26,9 @@ const AvatarPost = ({ avatar, userID, isAuthor }: AvatarProps) => {
     <a href={`/users/${userID}`}>
       <CldImage
         src={authorAvatar.url}
-        width={200}
-        height={200}
-        className="w-12 h-12 rounded-full"
+        width={400}
+        height={400}
+        className="w-12 h-12 rounded-full object-cover post-pic"
         alt={authorAvatar.alt}
       />
     </a>
