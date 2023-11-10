@@ -17,6 +17,9 @@ See [live preview here](https://socializerme.vercel.app/)
 - [ ] Improve UI design pattern (Add homepage/multiple columns/etc.);
 - [ ] Allow post authors to delete comments under their posts.
 
+### Known bugs: 
+- [] Delete account modals aren't displaying properly - z-index on overlay is currently broken.
+
 ### Nice to have:
 
 - [ ] CSS Animations on load/enter viewport
