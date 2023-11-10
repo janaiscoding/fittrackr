@@ -57,7 +57,7 @@ const AvatarProfile = ({
           src={avatar.url}
           width={200}
           height={200}
-          className="rounded-full border-slate-100 border border-solid max-w-[5rem] max-h-[5rem] h-20 w-20 md:max-w-[7rem] md:max-h-[7rem] md:w-28 md:h-28"
+          className="w-40 h-40 rounded-full object-cover profile-pic"
           alt={avatar.alt}
         />
         {isSame && (

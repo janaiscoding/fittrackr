@@ -28,7 +28,7 @@ const AvatarPost = ({ avatar, userID, isAuthor }: AvatarProps) => {
         src={authorAvatar.url}
         width={200}
         height={200}
-        className="w-12 h-12 rounded-full object-cover"
+        className="w-12 h-12 rounded-full"
         alt={authorAvatar.alt}
       />
     </a>
