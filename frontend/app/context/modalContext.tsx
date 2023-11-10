@@ -26,6 +26,8 @@ export const ModalContextProvider = ({
   const [modalPost, setModalPost] = useState(false);
   const [modalBell, setModalBell] = useState(false);
   const [modalDeleteAccount, setModalDeleteAccount] = useState(false);
+
+
   return (
     <ModalContext.Provider
       value={{

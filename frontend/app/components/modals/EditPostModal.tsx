@@ -73,7 +73,7 @@ const EditPostModal = ({ post, setShowEditModal }: UpdateProps) => {
             }
           }}
         />
-        <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-between">
+        <div className="flex gap-2 font-ubuntu-500 text-lg gap-4 justify-center">
           <button
             onClick={handleEdit}
             className="bg-green-900 text-white  py-1 px-3 hover:bg-green-950 hover:text-white"

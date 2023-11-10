@@ -1,7 +1,7 @@
 import Close from "@/app/utils/assets/svgs/Close";
 import { SetStateAction } from "react";
 
-const DeletePostModal = ({
+const DeleteCommentModal = ({
   handleDelete,
   setShowDelModal,
 }: {
@@ -13,7 +13,7 @@ const DeletePostModal = ({
       <div className="bg-white p-6 fixed z-[100] w-full md:max-w-sm  top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu">
         <div className="flex justify-between">
           <p className="text-xl font-ubuntu-500 text-secondary text-center">
-            Delete post
+            Delete comment
           </p>
           <div
             onClick={() => setShowDelModal(false)}
@@ -23,7 +23,7 @@ const DeletePostModal = ({
           </div>
         </div>
         <p className="text-red-900 font-ubuntu-500 text-center py-2 my-2">
-          Once deleted, this post cannot be recovered!
+          Once deleted, this comment cannot be recovered!
         </p>
         <div className="flex gap-2 font-ubuntu-500 text-lg gap-4 justify-center">
           <button
@@ -44,4 +44,4 @@ const DeletePostModal = ({
   );
 };
 
-export default DeletePostModal;
+export default DeleteCommentModal;

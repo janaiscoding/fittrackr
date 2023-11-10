@@ -11,9 +11,9 @@ import deleteComment from "@/app/utils/api/posts/delete_comment";
 import { PostsContext } from "@/app/context/postsContext";
 import getPosts from "@/app/utils/api/posts/get_posts";
 import Close from "@/app/utils/assets/svgs/Close";
-import DeleteModal from "../modals/DeletePostModal";
 import { Comment } from "@/app/utils/types";
 import debounce from "lodash.debounce";
+import DeleteCommentModal from "../modals/DeleteCommentModal";
 
 type CommContainerProps = {
   postID: string;
@@ -90,7 +90,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
           </button>
         )}
         {showDelModal && (
-          <DeleteModal
+          <DeleteCommentModal
             handleDelete={handleDelete}
             setShowDelModal={setShowDelModal}
           />
