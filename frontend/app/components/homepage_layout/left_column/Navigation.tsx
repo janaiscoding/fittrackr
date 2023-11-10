@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { ViewContext } from "../../../context/viewContext";
 import Community from "../../../utils/assets/svgs/Community";
 import FriendsSVG from "../../../utils/assets/svgs/Friends";
@@ -6,20 +6,21 @@ import User from "../../../utils/assets/svgs/User";
 import { UserContext } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
 import { removeJwtToken } from "@/app/utils/api/auth/auth_handler";
-import WheelSVG from "@/app/utils/assets/svgs/WheelSVG";
 import SignOut from "@/app/utils/assets/svgs/SignOut";
 import deleteAccount from "@/app/utils/api/auth/delete_account";
 import Trash from "@/app/utils/assets/svgs/Trash";
 import DeleteAccountModal from "../../modals/DeleteAccountModal";
 import DeleteNotAllowed from "../../modals/DeleteNotAllowed";
 
-const NavigationList = () => {
+type NavProps = {
+  setShowDelAcc: React.Dispatch<SetStateAction<boolean>>;
+  isDemo: boolean;
+  setWarning: React.Dispatch<SetStateAction<boolean>>;
+};
+
+const NavigationList = ({ setShowDelAcc, isDemo, setWarning }: NavProps) => {
   const viewContext = useContext(ViewContext);
   const userContext = useContext(UserContext);
-
-  const [showDelAcc, setShowDelAcc] = useState(false);
-  const [isDemo, setIsDemo] = useState(false);
-  const [warning, setWarning] = useState(false);
 
   const router = useRouter();
 
@@ -34,21 +35,6 @@ const NavigationList = () => {
     router.push(`/users/${userContext.user?._id}`);
   };
 
-  const handleDelete = () => {
-    const handleSuccess = () => {
-      userContext.setUser(null);
-      removeJwtToken();
-    };
-
-    if (userContext.user) {
-      deleteAccount(userContext.user._id, handleSuccess);
-    }
-  };
-  useEffect(() => {
-    if (userContext.user) {
-      setIsDemo(userContext.user._id === process.env.NEXT_PUBLIC_DEMO_ID);
-    }
-  }, [userContext]);
   return (
     <div className="flex text-lg flex-col gap-1 bg-bgContainers">
       {userContext.user ? (
@@ -89,7 +75,7 @@ const NavigationList = () => {
           className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
         >
           <Trash />
-          <p>Delete Account</p>
+          <p>Delete demo</p>
         </div>
       ) : (
         <div
@@ -109,14 +95,6 @@ const NavigationList = () => {
         <SignOut />
         <p>Sign Out</p>
       </div>
-      {showDelAcc && (
-        <DeleteAccountModal
-          handleDelete={handleDelete}
-          setShowDelModal={setShowDelAcc}
-        />
-      )}
-
-      {warning && <DeleteNotAllowed setWarning={setWarning} />}
     </div>
   );
 };

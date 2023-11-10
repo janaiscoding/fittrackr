@@ -2,13 +2,11 @@
 
 import { removeJwtToken } from "@/app/utils/api/auth/auth_handler";
 import Community from "@/app/utils/assets/svgs/Community";
-import Dumbbell from "@/app/utils/assets/svgs/Dumbbell";
 import HomeSVG from "@/app/utils/assets/svgs/Home";
 import Plus from "@/app/utils/assets/svgs/Plus";
 import SignOut from "@/app/utils/assets/svgs/SignOut";
 import { ModalContext } from "@/app/context/modalContext";
 import { UserContext } from "@/app/context/userContext";
-import { ViewContext } from "@/app/context/viewContext";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import User from "@/app/utils/assets/svgs/User";

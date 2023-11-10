@@ -1,23 +1,17 @@
-import Image from "next/image";
 import { ImageType, User } from "@/app/utils/types";
 import uploadAvatar from "@/app/utils/api/users/upload_avatar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
-import useCurrentUser from "@/app/hooks/useCurrentUser";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
-import getProfile from "@/app/utils/api/users/get_profile";
 import ErrorPopup from "../popups/ErrorPopup";
-import defaultPic from "../../../public/assets/default_avatar.jpg";
 import { CldImage } from "next-cloudinary";
-import verifyToken from "@/app/utils/api/auth/verify_token";
 
+// This component is on user profiles, it displays picture and an icon for uploading a new avatar if you're on your profile.
 const AvatarProfile = ({
   avatar,
-  userID,
   isSame,
 }: {
   avatar: ImageType;
-  userID: string;
   isSame: boolean | undefined;
 }) => {
   const [uploadErrors, setUploadErrors] = useState(" ");
@@ -58,57 +52,32 @@ const AvatarProfile = ({
 
   return (
     <>
-      {avatar !== undefined ? (
-        <div className="relative">
-          <CldImage
-            src={avatar.url}
-            width={200}
-            height={200}
-            className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover profile-image border-white/30 border border-solid"
-            alt={avatar.alt}
-          />
-          {isSame && (
-            <label
-              htmlFor="upload-avatar-edit-view"
-              className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
-            >
-              <UploadSVG />
-              <input
-                type="file"
-                name="myImage"
-                id="upload-avatar-edit-view"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setFile(e.target.files![0])}
-              />
-            </label>
-          )}
-        </div>
-      ) : (
-        <div className="relative">
-          <Image
-            src={defaultPic}
-            className="md:w-28 w-12 md:h-28 h-12 md:max-w-[7rem] md:max-h-[7rem] md:min-h-[7rem] md:min-w-[7rem] rounded-full object-cover"
-            alt="user-default-profile-picture"
-          />
-          {isSame && (
-            <label
-              htmlFor="upload-avatar-edit-view"
-              className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
-            >
-              <UploadSVG />
-              <input
-                type="file"
-                name="myImage"
-                id="upload-avatar-edit-view"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => setFile(e.target.files![0])}
-              />
-            </label>
-          )}
-        </div>
-      )}
+      <div className="relative">
+        <CldImage
+          src={avatar.url}
+          width={200}
+          height={200}
+          className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover profile-image border-white/30 border border-solid"
+          alt={avatar.alt}
+        />
+        {isSame && (
+          <label
+            htmlFor="upload-avatar-edit-view"
+            className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
+          >
+            <UploadSVG />
+            <input
+              type="file"
+              name="myImage"
+              id="upload-avatar-edit-view"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => setFile(e.target.files![0])}
+            />
+          </label>
+        )}
+      </div>
+
       {showError && <ErrorPopup message={uploadErrors} />}
     </>
   );
