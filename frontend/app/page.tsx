@@ -9,10 +9,27 @@ import FormModal from "./components/modals/FormModal";
 import useTokenVerification from "./hooks/useTokenVerification";
 import { ModalContext } from "./context/modalContext";
 import BotNav from "./components/navigation/BotNav";
+import DeleteAccountModal from "./components/modals/DeleteAccountModal";
+import { UserContext } from "./context/userContext";
+import { removeJwtToken } from "./utils/api/auth/auth_handler";
+import deleteAccount from "./utils/api/auth/delete_account";
 
 const Home = () => {
   useTokenVerification();
+
   const modalContext = useContext(ModalContext);
+  const userContext = useContext(UserContext);
+
+  const handleDelete = () => {
+    const handleSuccess = () => {
+      userContext.setUser(null);
+      removeJwtToken();
+    };
+
+    if (userContext.user) {
+      deleteAccount(userContext.user._id, handleSuccess);
+    }
+  };
 
   return (
     <div>
@@ -22,6 +39,9 @@ const Home = () => {
         <AppData />
         <Social />
         {modalContext.modalPost && <FormModal />}
+        {modalContext.modalDeleteAccount && (
+          <DeleteAccountModal handleDelete={handleDelete} />
+        )}
       </div>
       <BotNav />
     </div>

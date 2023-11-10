@@ -36,7 +36,6 @@ const PostStats = ({ post }: { post: Post }) => {
   const focusInput = () => {
     const commentFormInput = document.getElementById(`comment-form-${_id}`);
     commentFormInput?.focus();
-    console.log(commentFormInput);
   };
 
   const debounceRequest = debounce(() => handleLike(), 500);

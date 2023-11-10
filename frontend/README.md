@@ -9,17 +9,19 @@ See [live preview here](https://socializerme.vercel.app/)
 ### Main Tasks:
 
 - [x] Add debounce request on likes (posts, comments) in order to reduce unsynchronized or abusive API calls.
-- [x] Integrate update post functionality; 
-- [x] Update post description field now resizes automatically; 
-- [ ] Integrate delete account functionality;
+- [x] Integrate update post functionality;
+- [x] Update post description field now resizes automatically;
+- [x] Integrate delete account functionality on desktop;
+- [ ] Integrate delete account functionality on mobile;
 - [ ] Friend suggestions;
 - [ ] Integrate escape keys from modals;
 - [ ] Integrate clicking outside of a modal to close certain things;
 - [ ] Improve UI design pattern (Add homepage/multiple columns/etc.);
 - [ ] Allow post authors to delete comments under their posts.
 
-### Known bugs: 
-- [] Delete account modals aren't displaying properly - z-index on overlay is currently broken.
+### Known bugs:
+
+- [x] Delete account modals aren't displaying properly - z-index on overlay is currently broken.
 
 ### Nice to have:
 

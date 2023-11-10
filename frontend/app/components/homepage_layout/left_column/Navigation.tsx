@@ -8,17 +8,16 @@ import { useRouter } from "next/navigation";
 import { removeJwtToken } from "@/app/utils/api/auth/auth_handler";
 import SignOut from "@/app/utils/assets/svgs/SignOut";
 import Trash from "@/app/utils/assets/svgs/Trash";
+import { ModalContext } from "@/app/context/modalContext";
 
 type NavProps = {
-  setShowDelAcc: React.Dispatch<SetStateAction<boolean>>;
   isDemo: boolean;
-  setWarning: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const NavigationList = ({ setShowDelAcc, isDemo, setWarning }: NavProps) => {
+const NavigationList = ({ isDemo }: NavProps) => {
   const viewContext = useContext(ViewContext);
   const userContext = useContext(UserContext);
-
+  const modalContext = useContext(ModalContext)
   const router = useRouter();
 
   const handleSignout = () => {
@@ -36,6 +35,7 @@ const NavigationList = ({ setShowDelAcc, isDemo, setWarning }: NavProps) => {
     <div className="flex text-lg flex-col gap-1 bg-bgContainers">
       {userContext.user ? (
         <a
+          aria-label="Link to go to your profile"
           href={`/users/${userContext.user._id}`}
           className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
         >
@@ -49,14 +49,16 @@ const NavigationList = ({ setShowDelAcc, isDemo, setWarning }: NavProps) => {
         </div>
       )}
 
-      <div
+      <button
+        aria-label="Button go to your friends lists"
         onClick={handleFriendsRedirect}
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <FriendsSVG />
         <p>My Friends</p>
-      </div>
+      </button>
       <a
+        aria-label="Link to go to all users"
         href="/users"
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
@@ -65,33 +67,34 @@ const NavigationList = ({ setShowDelAcc, isDemo, setWarning }: NavProps) => {
       </a>
 
       {isDemo ? (
-        <div
-          onClick={() => {
-            setWarning(true);
-          }}
-          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        <button
+          aria-label="Not allowed to delete the demo account"
+          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-not-allowed hover:text-accent shadow-md bg-bgContainers"
+          disabled={true}
         >
           <Trash />
-          <p>Delete demo</p>
-        </div>
+          <p>Delete Account</p>
+        </button>
       ) : (
-        <div
+        <button
+          aria-label="Delete your account button"
           onClick={() => {
-            setShowDelAcc(true);
+            modalContext.setModalDeleteAccount(true);
           }}
           className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
         >
           <Trash />
           <p>Delete Account</p>
-        </div>
+        </button>
       )}
-      <div
+      <button
+        aria-label="Click this button for signing out"
         onClick={handleSignout}
         className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
       >
         <SignOut />
         <p>Sign Out</p>
-      </div>
+      </button>
     </div>
   );
 };

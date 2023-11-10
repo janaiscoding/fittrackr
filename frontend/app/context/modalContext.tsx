@@ -12,6 +12,8 @@ type ModalContextType = {
   setModalPost: React.Dispatch<React.SetStateAction<boolean>>;
   modalBell: boolean;
   setModalBell: React.Dispatch<React.SetStateAction<boolean>>;
+  modalDeleteAccount: boolean;
+  setModalDeleteAccount: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ModalContext = createContext<ModalContextType>(
@@ -23,6 +25,7 @@ export const ModalContextProvider = ({
 }: ModalContextProviderProps) => {
   const [modalPost, setModalPost] = useState(false);
   const [modalBell, setModalBell] = useState(false);
+  const [modalDeleteAccount, setModalDeleteAccount] = useState(false);
   return (
     <ModalContext.Provider
       value={{
@@ -30,6 +33,8 @@ export const ModalContextProvider = ({
         setModalPost,
         modalBell,
         setModalBell,
+        modalDeleteAccount,
+        setModalDeleteAccount,
       }}
     >
       {children}

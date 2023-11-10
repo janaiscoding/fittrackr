@@ -4,7 +4,7 @@ import CommunityUsers from "../../socials_users/CommunityUsers";
 
 const Social = () => {
   return (
-    <div className="hidden md:flex flex-col w-1/2 gap-4 top-20 w-1/2 z-[90]">
+    <div className="hidden md:flex flex-col w-1/2 gap-4 top-20 w-1/2 z-[49] sticky">
       <div className="text-xl font-ubuntu-500 self-start text-accent ">
         Friend Requests
       </div>
