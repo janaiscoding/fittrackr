@@ -60,7 +60,7 @@ const PostFormMD = () => {
     setError(" ");
   };
   return (
-    <div className="flex-col flex p-4 bg-bgContainers">
+    <div className="flex-col flex p-4 bg-bgContainers border shadow-md">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={description}
