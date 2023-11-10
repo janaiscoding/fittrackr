@@ -2,11 +2,7 @@ import { ModalContext } from "@/app/context/modalContext";
 import Close from "@/app/utils/assets/svgs/Close";
 import { SetStateAction, useContext } from "react";
 
-const DeleteAccountModal = ({
-  handleDelete,
-}: {
-  handleDelete: () => void;
-}) => {
+const DeleteAccountModal = ({ handleDelete }: { handleDelete: () => void }) => {
   const modalContext = useContext(ModalContext);
   return (
     <div className="w-full h-full left-0 top-0 overflow-auto bg-gray-700/70 flex fixed z-[1000] justify-center items-center">
@@ -23,20 +19,20 @@ const DeleteAccountModal = ({
           </div>
         </div>
         <p className="text-red-900 font-ubuntu-500 text-center py-2 my-2">
-          Once deleted, this account data cannot be recovered!
+          Once deleted, your account cannot be recovered!
         </p>
-        <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-between">
-          <button
-            onClick={() => modalContext.setModalDeleteAccount(false)}
-            className="text-secondary bg-gray-700/10 hover:text-black hover:bg-gray-700/20 border-solid py-1 px-3"
-          >
-            Cancel
-          </button>
+        <div className="flex gap-2 font-ubuntu-500 text-lg gap-2 justify-evenly">
           <button
             onClick={handleDelete}
             className="bg-red-900 text-white  py-1 px-3 hover:bg-error hover:text-white"
           >
             Delete
+          </button>
+          <button
+            onClick={() => modalContext.setModalDeleteAccount(false)}
+            className="text-secondary bg-gray-700/10 hover:text-black hover:bg-gray-700/20 border-solid py-1 px-3"
+          >
+            Cancel
           </button>
         </div>
       </div>

@@ -12,7 +12,6 @@ const Sidebar = () => {
   const userContext = useContext(UserContext);
   const [isDemo, setIsDemo] = useState(false);
 
-
   useEffect(() => {
     if (userContext.user) {
       setIsDemo(userContext.user._id === process.env.NEXT_PUBLIC_DEMO_ID);
@@ -20,7 +19,7 @@ const Sidebar = () => {
   }, [userContext]);
 
   return (
-    <div className="hidden md:block top-20 w-1/2">
+    <div className="hidden sticky md:block top-20 w-1/2">
       <div
         className={`${
           isLoadingUser && "self-center flex items-center justify-center"
@@ -32,10 +31,7 @@ const Sidebar = () => {
       <div className="text-xl font-ubuntu-500 self-start text-accent mt-10">
         Navigation
       </div>
-      <NavigationList
-           isDemo={isDemo}
-      />
-
+      <NavigationList isDemo={isDemo} />
     </div>
   );
 };
