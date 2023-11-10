@@ -16,7 +16,20 @@ const UserFriends = ({
       {isLoading && <Loader />}
       {!isLoading && friends.length === 0 && (
         <p className="w-full self-center text-secondary bg-bgContainers p-2 shadow-md">
-          {isSame ? `You don't` : `This user doesn't`} have any friends yet.
+          {isSame ? `You don't` : `This user doesn't`} have any friends yet.{" "}
+          {isSame && (
+            <span>
+              {" "}
+              Go add some{" "}
+              <a
+                href="/users"
+                className="text-accent hover:text-secondary underline"
+              >
+                new friends
+              </a>{" "}
+              now!
+            </span>
+          )}
         </p>
       )}
       <div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col gap-1 mt-2">

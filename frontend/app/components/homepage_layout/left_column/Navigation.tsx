@@ -1,4 +1,4 @@
-import { SetStateAction, useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext } from "react";
 import { ViewContext } from "../../../context/viewContext";
 import Community from "../../../utils/assets/svgs/Community";
 import FriendsSVG from "../../../utils/assets/svgs/Friends";
@@ -7,10 +7,7 @@ import { UserContext } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
 import { removeJwtToken } from "@/app/utils/api/auth/auth_handler";
 import SignOut from "@/app/utils/assets/svgs/SignOut";
-import deleteAccount from "@/app/utils/api/auth/delete_account";
 import Trash from "@/app/utils/assets/svgs/Trash";
-import DeleteAccountModal from "../../modals/DeleteAccountModal";
-import DeleteNotAllowed from "../../modals/DeleteNotAllowed";
 
 type NavProps = {
   setShowDelAcc: React.Dispatch<SetStateAction<boolean>>;

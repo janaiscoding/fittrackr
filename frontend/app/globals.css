@@ -51,12 +51,7 @@
   max-height: 4.5rem;
   max-width: 4.5rem;
 }
-.profile-image {
-  min-height: 6.5rem;
-  min-width: 6.5rem;
-  max-height: 6.5rem;
-  max-width: 6.5rem;
-}
+
 
 input.invalid,
 input:focus.invalid,

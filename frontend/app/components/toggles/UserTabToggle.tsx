@@ -13,11 +13,11 @@ const UserTabToggle = () => {
     viewContext.setCurrent("friends");
   };
   return (
-    <div className="flex justify-start gap-6 px-4 font-ubuntu-500 border-b border-t">
+    <div className="flex justify-center gap-6 px-4 font-ubuntu-500 border-b border-t">
       <button
-        className={`py-2 text-center hover:text-accent ${
+        className={`py-2 text-center text-lg hover:text-accent ${
           viewContext.current === "feed"
-            ? "border-secondary text-accent border-b"
+            ? "border-secondary text-accent  border-b border-t"
             : " text-secondary"
         }`}
         onClick={showFeed}
@@ -26,9 +26,9 @@ const UserTabToggle = () => {
       </button>
 
       <button
-        className={`py-2 text-center hover:text-accent ${
+        className={`py-2 text-center text-lg hover:text-accent ${
           viewContext.current === "friends"
-            ? "border-secondary text-accent border-b"
+            ? "border-secondary text-accent  border-b border-t"
             : "text-secondary"
         }`}
         onClick={showFriends}

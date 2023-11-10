@@ -12,6 +12,7 @@ See [live preview here](https://socializerme.vercel.app/)
 - [x] Integrate update post functionality; 
 - [x] Update post description field now resizes automatically; 
 - [ ] Integrate delete account functionality;
+- [ ] Friend suggestions;
 - [ ] Integrate escape keys from modals;
 - [ ] Integrate clicking outside of a modal to close certain things;
 - [ ] Improve UI design pattern (Add homepage/multiple columns/etc.);

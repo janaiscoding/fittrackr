@@ -57,13 +57,13 @@ const AvatarProfile = ({
           src={avatar.url}
           width={200}
           height={200}
-          className="md:w-28 w-12 md:h-28 h-12 rounded-full object-cover profile-image border-white/30 border border-solid"
+          className="rounded-full border-slate-100 border border-solid max-w-[5rem] max-h-[5rem] h-20 w-20 md:max-w-[7rem] md:max-h-[7rem] md:w-28 md:h-28"
           alt={avatar.alt}
         />
         {isSame && (
           <label
             htmlFor="upload-avatar-edit-view"
-            className="flex items-center absolute top-[60%] left-[60%] bg-white/60 border-white/30 border border-solid p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
+            className="flex items-center absolute top-[60%] left-[60%] bg-white/90 p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
           >
             <UploadSVG />
             <input
