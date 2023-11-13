@@ -60,7 +60,7 @@ const PostFormMD = () => {
     setError(" ");
   };
   return (
-    <div className="flex-col flex p-4 bg-bgContainers border shadow-md">
+    <div className="flex-col flex p-4 bg-bgContainers dark:bg-gray-800 shadow-md">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
         <input
           value={description}
@@ -71,7 +71,7 @@ const PostFormMD = () => {
               setError(" ");
             }
           }}
-          className="text-secondary w-full bg-accent/10 outline-none focus:ring-1 ring-outline rounded py-2 pb-10 px-4 pr-12 mb-2"
+          className="text-secondary dark:text-gray-400 w-full bg-accent/10 outline-none focus:ring-1 ring-outline rounded py-2 pb-10 px-4 pr-12 mb-2"
         />
         <div className="self-end flex gap-4 text-sm items-center">
           <div className="font-open flex flex-col items-center gap-2">
@@ -80,7 +80,7 @@ const PostFormMD = () => {
           </div>
           <label
             htmlFor="upload-image"
-            className="border border-outline hover:cursor-pointer hover:bg-accent/30 border-solid py-1 px-3 rounded flex gap-1 items-center justify-between"
+            className="border border-outline dark:bg-gray-800 dark:hover:bg-gray-900 hover:cursor-pointer hover:bg-accent/30 border-solid border-stone-950 py-1 px-3 rounded flex gap-1 items-center justify-between"
             aria-label="Upload a new picture"
           >
             <UploadSVG />
@@ -99,14 +99,14 @@ const PostFormMD = () => {
           <button
             aria-label="Create Post with Send Icon"
             type="submit"
-            className="flex gap-1 items-center text-secondary justify-between border border-outline hover:bg-accent/30 border-solid py-1 px-3 rounded"
+            className="dark:bg-gray-800 dark:hover:bg-gray-900 flex gap-1 items-center text-secondary dark:text-white justify-between border border-outline hover:bg-accent/30 border-stone-950 border-solid py-1 px-3 rounded"
           >
             Create Post
             <SendSVG />
           </button>
         </div>
         {file && (
-          <p className="font-ubuntu text-xs text-secondary">
+          <p className="font-ubuntu text-xs text-secondary dark:text-gray-400 ">
             File selected: <span className="text-accent">{file.name}</span>
           </p>
         )}

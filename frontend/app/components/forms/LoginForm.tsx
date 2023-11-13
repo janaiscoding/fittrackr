@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   const handleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
-   // console.log(email, password);
+    // console.log(email, password);
     loginRequest(email, password, handleSuccess, handleError);
   };
   const handleSuccess = (data: { token: string }) => {
@@ -36,17 +36,21 @@ const LoginForm = () => {
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">Email</span>
+        <span className="self-start text-secondary dark:text-gray-400">
+          Email
+        </span>
         <input
-          className="text-secondary bg-accent/10 w-full outline-none py-2 pl-4 pr-12 rounded"
+          className="input__field"
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
 
       <label className="flex flex-col">
-        <span className="self-start text-secondary">Password</span>
+        <span className="self-start text-secondary dark:text-gray-400">
+          Password
+        </span>
         <input
-          className="text-secondary bg-accent/10 w-full outline-none py-2 pl-4 pr-12 rounded "
+          className="input__field"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />

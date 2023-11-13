@@ -19,7 +19,7 @@ const Comments = ({ postID, postComments }: CommentsProps) => {
   return (
     <div aria-label="post-comments-section">
       {comments.length > 0 && (
-        <div className="px-4 text-secondary text-ubuntu border-solid border-b border-black/10 py-2">
+        <div className="px-4 text-ubuntu border-solid border-b border-black/10 dark:border-gray-300/10 py-2">
           {comments.map((c) => (
             <CommentContainer key={c._id} postID={postID} comm={c} />
           ))}

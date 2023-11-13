@@ -35,7 +35,7 @@ const Author = ({
         <div>
           <a
             href={`/users/${_id}`}
-            className="font-ubuntu-500 text-xl text-secondary hover:text-accent"
+            className="font-ubuntu-500 text-xl hover:text-accent"
           >
             {first_name} {last_name}
           </a>

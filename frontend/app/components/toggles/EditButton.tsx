@@ -6,7 +6,7 @@ const EditButton = () => {
   return (
     <button
       onClick={() => editContext.setShowEdit(true)}
-      className="md:text-xl text-secondary hover:text-accent bg-slate-700/20 hover:bg-slate-700/10 p-2"
+      className="md:text-xl text-secondary dark:text-white dark:bg-gray-800 dark:hover:bg-gray-900 hover:text-accent bg-slate-700/20 hover:bg-slate-700/10 p-2"
     >
       Customize
     </button>

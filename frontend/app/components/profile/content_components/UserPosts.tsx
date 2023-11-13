@@ -32,7 +32,7 @@ const UserPosts = ({
       {isSame && <PostFormMD />}
       {isLoadingPosts && <Loader />}
       {!isLoadingPosts && userPosts?.length === 0 && (
-        <p className="w-full self-center text-secondary bg-bgContainers p-2 shadow-md my-2 border">
+        <p className="w-full self-center text-secondary dark:text-gray-200 bg-bgContainers dark:bg-gray-800 p-2 shadow-md my-2">
           {isSame ? `You don't` : `This user doesn't`} have any posts yet. Create your first now!
         </p>
       )}

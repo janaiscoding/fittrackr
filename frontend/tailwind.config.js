@@ -5,11 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: ["class"],
   theme: {
     extend: {
       colors: {
         white: "#f9fbfd",
-        softWhite:"#C6C5C5",
+        softWhite: "#C6C5C5",
         accent: "#3F72AF",
         secondary: "#112D4E",
         bgContainers: "#F8F7F7",

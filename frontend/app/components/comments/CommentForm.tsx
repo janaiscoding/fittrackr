@@ -47,7 +47,7 @@ const CommentForm = ({ postID }: { postID: string }) => {
       >
         <input
           id={`comment-form-${postID}`}
-          className="text-secondary w-full bg-transparent outline-none pt-2 pr-12"
+          className="text-secondary dark:text-white w-full bg-transparent outline-none pt-2 pr-12"
           placeholder={"Add a comment..."}
           value={comment}
           onChange={(e) => {

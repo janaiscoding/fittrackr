@@ -25,7 +25,7 @@ const FriendRequests = () => {
       {isLoading ? (
         <Loader />
       ) : friendRequests.length === 0 ? (
-        <p className="w-full self-center text-secondary bg-bgContainers p-2">
+        <p className="w-full self-center text-secondary dark:text-gray-400 bg-bgContainers dark:bg-gray-800 p-2">
           You currently don&apos;t have any friend requests.
         </p>
       ) : (

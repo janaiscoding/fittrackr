@@ -67,11 +67,11 @@ const SignUpForm = () => {
       onSubmit={(e) => handleSignup(e)}
     >
       <label className="flex flex-col">
-        <span className="self-start text-secondary">First Name</span>
+        <span className="self-start text-secondary dark:text-gray-400">First Name</span>
         <input
           required
           type="text"
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b 
+          className={`input__field 
           ${validFirst && "valid"}`}
           onChange={(e) => {
             setFirst(e.target.value);
@@ -80,11 +80,11 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">Last Name</span>
+        <span className="self-start text-secondary dark:text-gray-400">Last Name</span>
         <input
           required
           type="text"
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b
+          className={`input__field
           ${validLast && "valid"}`}
           onChange={(e) => {
             setLast(e.target.value);
@@ -93,7 +93,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">
+        <span className="self-start text-secondary dark:text-gray-400">
           Email{" "}
           {validEmail !== null && !validEmail && (
             <span className="text-xs text-error">Must be a valid email.</span>
@@ -102,7 +102,7 @@ const SignUpForm = () => {
         <input
           required
           type="email"
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded ${
+          className={`input__field ${
             validEmail !== null && validEmail
               ? "valid"
               : validEmail !== null && !validEmail && "invalid"
@@ -114,7 +114,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">
+        <span className="self-start text-secondary dark:text-gray-400">
           Password{" "}
           {validPW !== null && !validPW && (
             <span className="text-xs text-error">Minimum 8 characters.</span>
@@ -123,7 +123,7 @@ const SignUpForm = () => {
         <input
           required
           type="password"
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b ${
+          className={`input__field ${
             validPW !== null && validPW
               ? "valid"
               : validPW !== null && !validPW && "invalid"
@@ -135,7 +135,7 @@ const SignUpForm = () => {
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">
+        <span className="self-start text-secondary dark:text-gray-400">
           Confirm Password{" "}
           {password === confPassword ? (
             " "
@@ -148,7 +148,7 @@ const SignUpForm = () => {
           required
           type="password"
           autoComplete="new-password"
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b ${
+          className={`input__field ${
             validConf !== null && validConf
               ? "valid"
               : validConf !== null && !validConf && "invalid"
@@ -159,10 +159,6 @@ const SignUpForm = () => {
           }}
         />
       </label>
-      {/* <label className="flex flex-col">
-          <span className="self-start text-green">Birthday</span>
-          <input type="date" onChange={(e) => setBirthday(e.target.value)} />
-        </label> */}
       {errors &&
         errors.map((err, i) => (
           <p key={i} className="text-error">

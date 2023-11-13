@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .input__field {
+    @apply text-secondary dark:text-white bg-accent/10 dark:bg-black/10 dark:border dark:border-white/10 w-full outline-none py-2 pl-4 pr-12 rounded;
+  }
+  .navigation__group {
+    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-950/20;
+  }
+  .navigation__group__not__allowed {
+    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-not-allowed hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-950/20;
+  }
+}
+
 @font-face {
   font-family: "OpenMedium";
   src: url("../public/Open_Sans/static/OpenSans-Medium.ttf");
@@ -23,20 +35,14 @@
 @layer base {
   html {
     font-family: "OpenMedium", sans-serif;
-    color: #f4fff3;
-    background-color: #f9fbfd;
-    text-underline-offset: 3px;
   }
 }
 
-::placeholder {
-  color: #1b1f3ca5 !important;
-}
-.profile-pic{
+.profile-pic {
   min-height: 5rem;
   min-width: 5rem;
   max-height: 5rem;
-  max-width: 5rem;  
+  max-width: 5rem;
 }
 
 .comment-image {
@@ -57,7 +63,6 @@
   max-height: 4.5rem;
   max-width: 4.5rem;
 }
-
 
 input.invalid,
 input:focus.invalid,

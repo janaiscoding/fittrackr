@@ -16,7 +16,7 @@ const SignUp = () => {
 
   return (
     <div className="m-auto max-w-5xl h-screen flex flex-col justify-between pt-10">
-      <div className="h-screen flex flex-col justify-start md:justify-evenly items-center md:flex-row bg-white">
+      <div className="h-screen flex flex-col justify-start md:justify-evenly items-center md:flex-row">
         <LogoFront />
         <div className="flex flex-col items-center justify-between gap-10 py-10 md:border-l md:border-gray-300">
           <div className="flex flex-col items-center justify-between md:p-10">
@@ -24,7 +24,7 @@ const SignUp = () => {
               Sign up
             </div>
             <SignUpForm />
-            <p className="text-center text-black mt-2">
+            <p className="text-center mt-2">
               Already have an account?{" "}
               <span className="text-accent font-bold">
                 <a href="/login">Sign in</a>

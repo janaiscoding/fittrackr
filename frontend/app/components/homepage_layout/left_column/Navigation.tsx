@@ -17,7 +17,7 @@ type NavProps = {
 const NavigationList = ({ isDemo }: NavProps) => {
   const viewContext = useContext(ViewContext);
   const userContext = useContext(UserContext);
-  const modalContext = useContext(ModalContext)
+  const modalContext = useContext(ModalContext);
   const router = useRouter();
 
   const handleSignout = () => {
@@ -32,18 +32,18 @@ const NavigationList = ({ isDemo }: NavProps) => {
   };
 
   return (
-    <div className="flex text-lg flex-col gap-1 bg-bgContainers">
+    <div className="flex text-lg flex-col gap-1">
       {userContext.user ? (
         <a
           aria-label="Link to go to your profile"
           href={`/users/${userContext.user._id}`}
-          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+          className="navigation__group"
         >
           <User />
           <p>My Profile</p>
         </a>
       ) : (
-        <div className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers">
+        <div className="navigation__group">
           <User />
           <p>Loading...</p>
         </div>
@@ -52,7 +52,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
       <button
         aria-label="Button go to your friends lists"
         onClick={handleFriendsRedirect}
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        className="navigation__group"
       >
         <FriendsSVG />
         <p>My Friends</p>
@@ -60,7 +60,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
       <a
         aria-label="Link to go to all users"
         href="/users"
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        className="navigation__group"
       >
         <Community />
         <p>All Users</p>
@@ -69,7 +69,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
       {isDemo ? (
         <button
           aria-label="Not allowed to delete the demo account"
-          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-not-allowed hover:text-accent shadow-md bg-bgContainers"
+          className="navigation__group__not__allowed"
           disabled={true}
         >
           <Trash />
@@ -81,7 +81,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
           onClick={() => {
             modalContext.setModalDeleteAccount(true);
           }}
-          className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+          className="navigation__group"
         >
           <Trash />
           <p>Delete Account</p>
@@ -90,7 +90,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
       <button
         aria-label="Click this button for signing out"
         onClick={handleSignout}
-        className="flex gap-2 items-center p-2 text-secondary hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers"
+        className="navigation__group"
       >
         <SignOut />
         <p>Sign Out</p>

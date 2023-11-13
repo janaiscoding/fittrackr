@@ -4,16 +4,12 @@ import CommunityUsers from "../../socials_users/CommunityUsers";
 
 const Social = () => {
   return (
-    <div className="hidden md:flex flex-col w-1/2 gap-4 top-20 w-1/2 z-[49] sticky">
-      <div className="text-xl font-ubuntu-500 self-start text-accent ">
-        Friend Requests
-      </div>
+    <div className="hidden md:flex flex-col w-1/2 gap-4 top-20 w-1/2 z-[49] sticky text-accent dark:text-gray-300">
+      <div className="text-xl font-ubuntu-500 self-start">Friend Requests</div>
       <FriendRequests />
-      <div className="text-xl font-ubuntu-500 self-start text-accent">
-        Community
-      </div>
+      <div className="text-xl font-ubuntu-500 self-start">Community</div>
       <CommunityUsers />
-      <p className="text-center text-black">
+      <p className="text-center">
         Made with <span>🧡</span> by{" "}
         <a
           href="https://github.com/JanaIsCoding"

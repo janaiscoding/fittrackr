@@ -39,12 +39,14 @@ const ProfileLayout = ({ id }: { id: string }) => {
   }, [profile, currentUser]);
 
   return (
-    <div className="flex flex-col font-ubuntu mb-10 w-full h-full min-h-screen text-softWhite max-w-4xl m-auto">
+    <div className="flex flex-col font-ubuntu mb-10 w-full h-full min-h-screen max-w-4xl m-auto">
       {isLoading && <Loader />}
       {!isLoading && (
         <div>
           <UserInfo profile={profile} isSame={isSame} />
-          <p className="text-secondary font-open md:hidden block px-4 break-words">{profile.bio} </p>
+          <p className="text-secondary dark:text-gray-400 font-open md:hidden block px-4 break-words">
+            {profile.bio}
+          </p>
           <UserTabToggle />
           <UserContent isSame={isSame} profile={profile} />
         </div>

@@ -28,7 +28,7 @@ const CommunityUsers = () => {
     <div className="flex flex-col gap-1">
       {isLoading && <Loader />}
       {!isLoading && community.length === 0 && (
-        <p className="w-full self-center text-secondary bg-bgContainers p-2 drop-shadow">
+        <p className="w-full self-center text-secondary dark:text-gray-300 bg-bgContainers dark:bg-gray-800 p-2 drop-shadow">
           You are alone for now...
         </p>
       )}

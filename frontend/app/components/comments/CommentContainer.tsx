@@ -71,7 +71,7 @@ const CommentContainer = ({ postID, comm }: CommContainerProps) => {
             <AvatarComment avatar={user.avatar} userID={user._id} />
             <a
               href={`/users/${user._id}`}
-              className="text-secondary hover:text-accent font-ubuntu-500"
+              className="text-secondary dark:text-gray-300 hover:text-accent dark:hover:text-accent font-ubuntu-500"
             >
               {user.first_name} {user.last_name}
             </a>

@@ -38,7 +38,7 @@ const PostArticle = ({ post }: { post: Post }) => {
   }, [userContext.user, postsContext.posts]);
 
   return (
-    <article className="bg-bgContainers border shadow-md py-2">
+    <article className="bg-bgContainers dark:bg-gray-800 shadow-md py-2 text-secondary dark:text-gray-300">
       <Author
         setShowDelModal={setShowDelModal}
         setShowEditModal={setShowEditModal}

@@ -24,7 +24,6 @@ const UserInfo = ({
     if (userContext.user?._id === profile._id) {
       setAvatar(userContext.user.avatar);
     }
-
   }, [userContext, profile]);
 
   return (
@@ -32,11 +31,11 @@ const UserInfo = ({
       <AvatarProfile avatar={avatar} isSame={isSame} />
       <div className="font-ubuntu-500 flex items-start justify-between w-full gap-1">
         <div className="flex flex-col gap-1 items-start">
-          <p className="flex items-center gap-2 text-black text-xl md:text-3xl">
+          <p className="flex items-center gap-2 text-black dark:text-white text-xl md:text-3xl">
             {profile.first_name} {profile.last_name}
           </p>
-          <p className="text-secondary font-open hidden md:block break-words max-w-md">
-            {profile.bio}{" "}
+          <p className="text-secondary dark:text-gray-400 font-open hidden md:block break-words max-w-md">
+            {profile.bio}
           </p>
         </div>
         <div>

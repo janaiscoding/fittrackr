@@ -15,7 +15,7 @@ const UserFriends = ({
     <div>
       {isLoading && <Loader />}
       {!isLoading && friends.length === 0 && (
-        <p className="w-full self-center text-secondary bg-bgContainers p-2 shadow-md">
+        <p className="w-full self-center text-secondary bg-bgContainers dark:bg-gray-800 dark:text-gray-200 p-2 shadow-md">
           {isSame ? `You don't` : `This user doesn't`} have any friends yet.{" "}
           {isSame && (
             <span>
@@ -23,7 +23,7 @@ const UserFriends = ({
               Go add some{" "}
               <a
                 href="/users"
-                className="text-accent hover:text-secondary underline"
+                className="text-accent dark:text-sky-300 hover:text-secondary underline"
               >
                 new friends
               </a>{" "}

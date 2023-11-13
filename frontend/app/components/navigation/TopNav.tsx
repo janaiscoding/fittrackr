@@ -20,7 +20,7 @@ const TopNav = () => {
     }
   }, [userContext]);
   return (
-    <nav className="drop-shadow-md sticky bg-white top-0 z-50 flex justify-between md:justify-center items-center mb-4 py-2 md:px-20">
+    <nav className="drop-shadow-md sticky bg-white dark:bg-gray-800 top-0 z-50 flex justify-between md:justify-center items-center mb-4 py-2 md:px-20">
       <div className="px-4">
         <Logo />
       </div>

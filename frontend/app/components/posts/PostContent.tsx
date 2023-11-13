@@ -12,11 +12,11 @@ const PostContent = ({ post }: PostContentProps) => {
 
   return (
     <div aria-label="post-content-section">
-      <p className="font-ubuntu px-2 my-2 text-lg text-secondary break-all">
+      <p className="font-ubuntu px-2 my-2 text-lg break-all">
         {description}
       </p>
       {post.image && <PostImage image={image} />}
-      <div className="px-4 border-solid border-b border-black/10 pb-2">
+      <div className="px-4 border-solid border-b border-black/10 dark:border-gray-300/10 pb-2">
         <PostStats post={post} />
       </div>
     </div>

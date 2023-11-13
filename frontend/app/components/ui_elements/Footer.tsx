@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <footer className="py-2 md:px-20">
-      <p className="text-center text-black">
+    <footer className="h-12 flex items-center justify-center">
+      <p className="text-center">
         Made with <span>🧡</span> by{" "}
         <a
           href="https://github.com/JanaIsCoding"
