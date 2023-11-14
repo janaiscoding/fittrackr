@@ -1,6 +1,7 @@
 import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
 import UserWrapper from "../../socials_users/UserWrapper";
+import UserWrapperCommunityPage from "../../socials_users/UserWrapperCommunityPage";
 
 const UserFriends = ({
   userID,
@@ -32,9 +33,9 @@ const UserFriends = ({
           )}
         </p>
       )}
-      <div className="md:grid md:grid-cols-3 md:gap-4 flex flex-col gap-1 mt-2">
+      <div className="flex flex-col md:flex-row md:flex-wrap gap-1 mt-2">
         {friends.map((user) => (
-          <UserWrapper user={user} key={user._id} />
+          <UserWrapperCommunityPage user={user} key={user._id} />
         ))}
       </div>
     </div>

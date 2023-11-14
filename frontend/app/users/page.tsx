@@ -17,6 +17,7 @@ const Users = () => {
       <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
         <Sidebar />
         <CommunityLayout />
+        <Social />
       </div>
       <BotNav />
     </div>

@@ -12,11 +12,11 @@ const EditUserModal = () => {
       flex fixed z-[1000] justify-center items-center"
     >
       <div
-        className="bg-white p-6 fixed z-[100] w-full md:max-w-sm 
+        className="bg-white dark:bg-gray-900 p-6 fixed z-[100] w-full md:max-w-sm 
         top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-[96%] font-ubuntu"
       >
         <div className="flex justify-between">
-          <p className="text-xl font-ubuntu-500 text-secondary text-center">
+          <p className="text-xl font-ubuntu-500 text-secondary dark:text-gray-300 text-center">
             Edit Profile
           </p>
           <div

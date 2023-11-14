@@ -40,7 +40,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
           className="navigation__group"
         >
           <User />
-          <p>My Profile</p>
+          <p>Profile</p>
         </a>
       ) : (
         <div className="navigation__group">
@@ -55,7 +55,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
         className="navigation__group"
       >
         <FriendsSVG />
-        <p>My Friends</p>
+        <p>Friends</p>
       </button>
       <a
         aria-label="Link to go to all users"
@@ -63,7 +63,7 @@ const NavigationList = ({ isDemo }: NavProps) => {
         className="navigation__group"
       >
         <Community />
-        <p>All Users</p>
+        <p>Users</p>
       </a>
 
       {isDemo ? (

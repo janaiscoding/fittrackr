@@ -40,7 +40,7 @@ const BotNav = () => {
   };
 
   return (
-    <div className="sticky bottom-0 flex justify-between items-center px-8 py-2 bg-bgContainers dark:bg-gray-800 shadow-md md:hidden">
+    <div className="sticky bottom-0 b-0 flex justify-between items-center px-8 py-2 bg-bgContainers dark:bg-gray-800 shadow-md md:hidden">
       <button
         onClick={showFeed}
         className="flex flex-col gap-1 items-center"

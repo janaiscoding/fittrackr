@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import { User } from "@/app/utils/types";
 import getAllUsers from "@/app/utils/api/users/get_all_users";
+import UserWrapperCommunityPage from "./UserWrapperCommunityPage";
 
 const CommunityUsers = () => {
   const [community, setCommunity] = useState<User[]>([]);
@@ -32,8 +33,8 @@ const CommunityUsers = () => {
           You are alone for now...
         </p>
       )}
-      {community.map((user) => (
-        <UserWrapper user={user} key={user._id} />
+      {community.filter((u) => u._id !== userContext.user?._id).map((user) => (
+        <UserWrapperCommunityPage user={user} key={user._id} />
       ))}
     </div>
   );

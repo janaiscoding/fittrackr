@@ -6,7 +6,7 @@ import { useContext } from "react";
 const RequestModal = () => {
   const modalContext = useContext(ModalContext);
   return (
-    <div className="md:hidden w-full absolute bg-white flex flex-col gap-1 p-2 rounded top-[3.5rem] border-t border-slate-400 drop-shadow">
+    <div className="md:hidden w-full absolute bg-white dark:bg-gray-800 flex flex-col gap-1 p-2 rounded top-[3.5rem] border-t border-slate-400 drop-shadow">
       <div
         onClick={() => modalContext.setModalBell(false)}
         className="flex justify-between bg-bgContainer"

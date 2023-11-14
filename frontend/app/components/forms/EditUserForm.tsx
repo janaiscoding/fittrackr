@@ -38,36 +38,36 @@ const EditUserForm = () => {
       onSubmit={(e) => handleEdit(e)}
     >
       <label className="flex flex-col">
-        <span className="self-start text-secondary">First Name</span>
+        <span className="self-start text-secondary dark:text-gray-300">First Name</span>
         <input
           required
           type="text"
           value={first}
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b `}
+          className={`input__field `}
           onChange={(e) => {
             setFirst(e.target.value);
           }}
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">Last Name</span>
+        <span className="self-start text-secondary dark:text-gray-300">Last Name</span>
         <input
           required
           type="text"
           value={last}
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b `}
+          className={`input__field`}
           onChange={(e) => {
             setLast(e.target.value);
           }}
         />
       </label>
       <label className="flex flex-col">
-        <span className="self-start text-secondary">About</span>
+        <span className="self-start text-secondary dark:text-gray-300">About</span>
         <input
           required
           type="text"
           value={bio}
-          className={`text-secondary w-full bg-accent/10 outline-none py-2 pl-4 pr-12 rounded border-solid border-b `}
+          className={`input__field`}
           onChange={(e) => {
             setBio(e.target.value);
           }}
