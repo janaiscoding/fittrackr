@@ -14,7 +14,7 @@ Record and share your amazing life moments, beautiful pictures or random thought
 
 # Media and previews 👇🏻
 
-![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/preview_desktop.gif)
+![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme-preview.gif)
 
 <details>
 
