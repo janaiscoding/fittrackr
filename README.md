@@ -9,7 +9,7 @@ Record and share your amazing life moments, beautiful pictures or random thought
 - Implemented a stable solution for dealing with image manipulation by relying on Cloudinary SaaS CDN, **improving performance by 90%** on fetching posts.
 - Secured sensitive information by adhering to using .env variables in all branches of the project.
 - All project routes are protected by verifying **JWT Token**. You can only access the app by validating the token with the API.
-- For UI I followed a **mobile-first approach** recommended by TailwindCSS best practices and opted for a **clean, modern design**, temporarily for light-mode only.
+- For UI I followed a **mobile-first approach** recommended by TailwindCSS best practices, now with Light and Dark mode!
 - Focused on creating an **accessible-friendly** experience, with a **95+ overall score** on Lighthouse scans.
 
 # Media and previews 👇🏻
@@ -17,12 +17,7 @@ Record and share your amazing life moments, beautiful pictures or random thought
 ![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/preview_desktop.gif)
 
 <details>
-<summary> See preview on mobile 📱 </summary>
-<br>
 
-![Live socializerme mobile preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/preview_mobile.gif)
-
-</details>
 
 <details>
 <summary> See Lighthouse Report 📊</summary>

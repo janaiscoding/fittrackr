@@ -21,7 +21,7 @@ See [live preview here](https://socializerme.vercel.app/)
 
 ### Known bugs:
 
-- [x] Delete account modals aren't displaying properly - z-index on overlay is currently broken.
+- [x] Delete account modals aren't displaying properly - z-index on overlay is currently broken. (fixed)
 
 ### Nice to have:
 
