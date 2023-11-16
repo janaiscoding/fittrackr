@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { User } from "@/app/utils/types";
 import UserWrapperCommunityPage from "../socials_users/UserWrapperCommunityPage";
 import { UserContext } from "@/app/context/userContext";
+import LoaderCommunityUser from "../ui_elements/LoaderCommunityUser";
 
 const CommunityLayout = () => {
   const [community, setCommunity] = useState<User[]>([]);
@@ -26,7 +27,13 @@ const CommunityLayout = () => {
         Users on Socializer
       </h1>
       <div className="flex flex-col md:flex-row md:flex-wrap font-ubuntu gap-3">
-        {isLoading && <Loader />}
+        {isLoading && (
+          <div className="flex gap-3 flex-col md:flex-row">
+            <LoaderCommunityUser />
+            <LoaderCommunityUser />
+            <LoaderCommunityUser />
+          </div>
+        )}
         {!isLoading && community.length === 0 && (
           <p className="w-full self-center bg-bgContainers dark:bg-gray-800 p-2 rounded">
             You are alone for now...

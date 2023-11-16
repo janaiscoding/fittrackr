@@ -5,6 +5,8 @@ import NavigationList from "./Navigation";
 import SidebarAvatar from "../../images/SidebarAvatar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
+import LoaderPost from "../../ui_elements/LoaderPost";
+import LoaderUser from "../../ui_elements/LoaderUser";
 
 const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
@@ -25,7 +27,11 @@ const Sidebar = () => {
           isLoadingUser && "self-center flex items-center justify-center"
         }`}
       >
-        {isLoadingUser ? <Loader /> : <UserPreview currentUser={currentUser} />}
+        {isLoadingUser ? (
+          <LoaderUser />
+        ) : (
+          <UserPreview currentUser={currentUser} />
+        )}
       </div>
 
       <div className="text-xl font-ubuntu-500 self-start text-accent dark:text-gray-300 mt-10">

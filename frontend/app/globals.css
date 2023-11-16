@@ -117,3 +117,30 @@ input:-webkit-autofill:focus.valid {
     opacity: 0;
   }
 }
+
+.animate-loading {
+  opacity: 0.9;
+  animation: animateloader 1s linear infinite alternate;
+}
+
+.animate-text {
+  animation: animatetext 1s linear infinite alternate;
+}
+
+@keyframes animatetext {
+  0% {
+    background-color: hsl(218, 1%, 20%);
+  }
+  100% {
+    background-color: hsl(218, 1%, 22%);
+  }
+}
+
+@keyframes animateloader {
+  0% {
+    background-color: hsl(215, 28%, 5%);
+  }
+  100% {
+    background-color: hsl(215, 28%, 8%);
+  }
+}

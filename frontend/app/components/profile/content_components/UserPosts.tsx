@@ -5,6 +5,7 @@ import Loader from "@/app/utils/assets/Loader";
 import PostArticle from "../../posts/PostArticle";
 import { Post } from "@/app/utils/types";
 import PostFormMD from "../../forms/PostFormMD";
+import LoaderPost from "../../ui_elements/LoaderPost";
 
 const UserPosts = ({
   isSame,
@@ -30,10 +31,18 @@ const UserPosts = ({
   return (
     <>
       {isSame && <PostFormMD />}
-      {isLoadingPosts && <Loader />}
+      {isLoadingPosts && (
+        <div className="flex flex-col gap-2 mt-4">
+          <LoaderPost />
+          <LoaderPost />
+          <LoaderPost />
+        </div>
+      )}
+
       {!isLoadingPosts && userPosts?.length === 0 && (
         <p className="w-full self-center text-secondary dark:text-gray-200 bg-bgContainers dark:bg-gray-800 p-2 shadow-md my-2">
-          {isSame ? `You don't` : `This user doesn't`} have any posts yet. Create your first now!
+          {isSame ? `You don't` : `This user doesn't`} have any posts yet.
+          Create your first now!
         </p>
       )}
       <div className="mt-4 flex flex-col font-ubuntu text-secondary gap-4 w-full h-full">
