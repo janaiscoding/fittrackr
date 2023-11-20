@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { User } from "@/app/utils/types";
 import { UserContext } from "@/app/context/userContext";
 import LoaderCommunityUser from "../ui_elements/LoaderCommunityUser";
-import UserWrapperNoPosts from "../socials_users/UserWrapperNoPosts";
 import UserWrapperWithButtons from "../socials_users/UserWrapperWithButtons";
 
 const CommunityLayout = () => {
