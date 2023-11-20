@@ -2,7 +2,19 @@
 
 Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected.
 
-[Live Deploy 🌎](https://socializerme.vercel.app/) \*Also with **demo** account! - [API Documentation 🖨️](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
+* Set your avatar/banner/ name and bio
+* Create posts with/without images
+* Can edit and delete your posts
+* Can comment to posts
+* Can delete your comments
+* Can like posts and comments
+* Add/Remove different users to your friends list
+* Can delete your account at any time
+* Can use the app from the demo account
+* Can swap to light or dark mode themes
+
+
+[🌎 Live Deploy](https://socializerme.vercel.app/) | [🖨️ API Documentation](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
 
 - Enhanced the user and developer experience by integrating the **React Context API** and **Custom Hooks**.
 - Implemented **debouncing** on certain functions, in order to reduce the API calls and improve overall UX.
@@ -15,9 +27,6 @@ Record and share your amazing life moments, beautiful pictures or random thought
 # Media and previews 👇🏻
 
 ![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme-preview.gif)
-
-<details>
-
 
 <details>
 <summary> See Lighthouse Report 📊</summary>
