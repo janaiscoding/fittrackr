@@ -5,8 +5,8 @@ const PostImage = ({ image }: { image: ImageType }) => {
   return (
     <CldImage
       src={image.url}
-      width={800}
-      height={800}
+      width={700}
+      height={700}
       className="object-cover w-full h-full"
       alt={image.alt}
     />
