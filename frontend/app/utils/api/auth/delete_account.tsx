@@ -9,8 +9,7 @@ const deleteAccount = (userID: string, handleSuccess: () => void) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
-      //handleSuccess();
+      handleSuccess();
     })
     .catch((err) => {
       console.log(err);

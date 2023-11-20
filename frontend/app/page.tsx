@@ -13,17 +13,21 @@ import DeleteAccountModal from "./components/modals/DeleteAccountModal";
 import { UserContext } from "./context/userContext";
 import { removeJwtToken } from "./utils/api/auth/auth_handler";
 import deleteAccount from "./utils/api/auth/delete_account";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   useTokenVerification();
 
   const modalContext = useContext(ModalContext);
   const userContext = useContext(UserContext);
+  const router = useRouter();
 
   const handleDelete = () => {
     const handleSuccess = () => {
+      modalContext.setModalDeleteAccount(false)
       userContext.setUser(null);
       removeJwtToken();
+      router.push("/login");
     };
 
     if (userContext.user) {
