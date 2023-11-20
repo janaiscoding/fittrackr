@@ -5,7 +5,7 @@ import AvatarPost from "../images/AvatarPost";
 import { UserContext } from "@/app/context/userContext";
 import Close from "@/app/utils/assets/svgs/Close";
 import { RelativeDate } from "../ui_elements/Date";
-import { User } from "@/app/utils/types";
+import { ImageType, User } from "@/app/utils/types";
 import Edit from "@/app/utils/assets/svgs/Edit";
 
 type AuthorProps = {
@@ -23,7 +23,7 @@ const Author = ({
   createdAt,
   setShowEditModal,
 }: AuthorProps) => {
-  const { avatar, _id, first_name, last_name } = author;
+  const { _id, first_name, last_name } = author;
 
   return (
     <div
@@ -31,7 +31,7 @@ const Author = ({
       className="flex items-center justify-between px-4"
     >
       <div className="flex items-center gap-2">
-        <AvatarPost avatar={avatar} userID={_id} isAuthor={isAuthor} />
+        <AvatarPost avatar={author.avatar} userID={_id} isAuthor={isAuthor} />
         <div>
           <a
             href={`/users/${_id}`}

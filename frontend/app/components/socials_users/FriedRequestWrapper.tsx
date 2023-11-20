@@ -13,7 +13,6 @@ const FriedRequestWrapper = ({ user }: { user: User }) => {
       setIsSame(user._id === userContext.user._id);
     }
   }, [userContext, user._id]);
-  console.log(isSame)
   return (
     <div
       key={user._id}

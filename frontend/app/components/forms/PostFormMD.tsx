@@ -1,11 +1,9 @@
 import createPost from "@/app/utils/api/posts/create_post";
-import getPosts from "@/app/utils/api/posts/get_posts";
-import getProfile from "@/app/utils/api/users/get_profile";
 import SendSVG from "@/app/utils/assets/svgs/SendSVG";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
-import { SyntheticEvent, useContext, useEffect, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
 import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 const PostFormMD = () => {
@@ -45,6 +43,7 @@ const PostFormMD = () => {
     setSuccess(true);
     clearData();
     //Update postsContext
+
     getPostsSetter(postsContext.setPosts);
 
     setTimeout(() => {

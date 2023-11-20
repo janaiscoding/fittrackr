@@ -8,14 +8,13 @@ import { PostsContext } from "@/app/context/postsContext";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import DeletePostModal from "../modals/DeletePostModal";
-import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 import UpdateDescriptionForm from "../modals/EditPostModal";
+import getPosts from "@/app/utils/api/posts/get_posts";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
 
   const [isAuthor, setIsAuthor] = useState<boolean>();
-
   // Interacting with delete and edit happens on author sub-component where we know if the user author is the logged in user
   const [showDelModal, setShowDelModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -25,8 +24,12 @@ const PostArticle = ({ post }: { post: Post }) => {
 
   const handleDelete = () => {
     const handleSuccessDel = () => {
+      //close delete modal
       setShowDelModal(false);
-      getPostsSetter(postsContext.setPosts);
+      //refresh posts 
+      getPosts(postsContext.setPosts, () => {
+        setShowDelModal(false);
+      });
     };
     deletePost(_id, handleSuccessDel);
   };

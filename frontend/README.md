@@ -13,7 +13,7 @@ See [live preview here](https://socializerme.vercel.app/)
 - [x] Update post description field now resizes automatically;
 - [x] Integrate delete account functionality on desktop;
 - [x] Add a loading state when clicking on the login buttons;
-- [x] Add profile banners: displays on every user instance; 
+- [x] Add profile banners: displays on every user instance;
 - [ ] Integrate delete account functionality on mobile;
 - [ ] Friend suggestions;
 - [ ] Integrate escape keys from modals;
@@ -24,6 +24,8 @@ See [live preview here](https://socializerme.vercel.app/)
 ### Known bugs:
 
 - [x] Delete account modals aren't displaying properly - z-index on overlay is currently broken. (fixed)
+- Turning light mode on from user doesn't stay on the whole app
+- [x] Bug with avatar on posts it sets all to current - Fixed from avatar image component
 
 ### Nice to have:
 
