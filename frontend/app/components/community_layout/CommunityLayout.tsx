@@ -1,5 +1,3 @@
-import Loader from "@/app/utils/assets/Loader";
-import UserWrapper from "../socials_users/UserWrapper";
 import getAllUsers from "@/app/utils/api/users/get_all_users";
 import { useContext, useEffect, useState } from "react";
 import { User } from "@/app/utils/types";
