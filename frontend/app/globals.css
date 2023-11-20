@@ -7,10 +7,10 @@
     @apply text-secondary dark:text-white bg-accent/10 dark:bg-black/10 dark:border dark:border-white/10 w-full outline-none py-2 pl-4 pr-12 rounded;
   }
   .navigation__group {
-    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-950/20;
+    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-pointer hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-700;
   }
   .navigation__group__not__allowed {
-    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-not-allowed hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-950/20;
+    @apply flex gap-2 items-center p-2 text-secondary dark:text-gray-400 dark:hover:text-gray-300 hover:bg-accent/30 hover:cursor-not-allowed hover:text-accent shadow-md bg-bgContainers dark:bg-gray-800 dark:hover:bg-gray-700;
   }
 }
 
