@@ -38,12 +38,6 @@
   }
 }
 
-.profile-pic {
-  min-height: 5rem;
-  min-width: 5rem;
-  max-height: 5rem;
-  max-width: 5rem;
-}
 
 .comment-image {
   min-height: 1.7rem;

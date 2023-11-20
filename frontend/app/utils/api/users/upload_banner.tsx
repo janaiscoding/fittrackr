@@ -1,13 +1,13 @@
 import { User } from "../../types";
 import { getJwtToken } from "../auth/auth_handler";
 
-const uploadAvatar = (
+const uploadBanner = (
   userID: string,
   formData: any,
   handleSuccess: (updatedUser: User) => void,
   handleError: (data: string) => void
 ) => {
-  fetch(`https://socializer.fly.dev/users/${userID}/avatar`, {
+  fetch(`https://socializer.fly.dev/users/${userID}/banner`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${getJwtToken()}`,
@@ -26,4 +26,4 @@ const uploadAvatar = (
     })
     .catch((err) => console.log(err));
 };
-export default uploadAvatar;
+export default uploadBanner;

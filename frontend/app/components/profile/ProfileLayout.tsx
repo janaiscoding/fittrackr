@@ -15,6 +15,7 @@ import UserPosts from "./content_components/UserPosts";
 import UserFriends from "./content_components/UserFriends";
 import LoaderPost from "../ui_elements/LoaderPost";
 import PostFormMD from "../forms/PostFormMD";
+import AvatarBanner from "../images/AvatarBanner";
 
 const ProfileLayout = ({ id }: { id: string }) => {
   const { currentUser } = useCurrentUser();
@@ -35,7 +36,6 @@ const ProfileLayout = ({ id }: { id: string }) => {
   useEffect(() => {
     // Initial profile loader.
     getProfile(id, setProfile, handleError);
-    //console.log("updating everytime user changes");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, userContext]);
 

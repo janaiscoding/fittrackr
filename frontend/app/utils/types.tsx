@@ -9,6 +9,7 @@ type User = {
   last_name: string;
   bio: string;
   avatar: ImageType;
+  banner: ImageType;
   posts: Post[];
   friends: string[];
   requestsSent: string[];

@@ -58,15 +58,15 @@ const AvatarProfile = ({
       <div className="relative">
         <CldImage
           src={avatar.url}
-          width={200}
-          height={200}
-          className="w-40 h-40 rounded-full object-cover profile-pic"
+          width={400}
+          height={400}
+          className="rounded-full object-cover max-w-[5rem] max-h-[5rem] min-w-[5rem] min-h-[5rem] md:max-w-[6rem] md:max-h-[6rem] md:min-w-[6rem] md:min-h-[6rem]"
           alt={avatar.alt}
         />
         {isSame && (
           <label
             htmlFor="upload-avatar-edit-view"
-            className="flex items-center absolute top-[60%] left-[60%] bg-white/90 p-2 rounded-full hover:bg-white/90 hover:cursor-pointer"
+            className="flex items-center absolute top-[60%] left-[60%] bg-white/90 p-2 rounded-full dark:bg-gray-800/60 dark:hover:bg-gray-900 hover:text-accent bg-slate-700/20 hover:bg-slate-700/10 p-2 hover:cursor-pointer"
           >
             <UploadSVG />
             <input

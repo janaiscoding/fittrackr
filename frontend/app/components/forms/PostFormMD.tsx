@@ -5,7 +5,7 @@ import SendSVG from "@/app/utils/assets/svgs/SendSVG";
 import UploadSVG from "@/app/utils/assets/svgs/Upload";
 import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
-import { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import getPostsSetter from "@/app/utils/api/posts/posts_setter";
 
 const PostFormMD = () => {
@@ -46,8 +46,6 @@ const PostFormMD = () => {
     clearData();
     //Update postsContext
     getPostsSetter(postsContext.setPosts);
-    //@ts-ignore
-    // getProfile(userContext.user?._id, userContext.setUser);
 
     setTimeout(() => {
       setSuccess(false);
@@ -59,6 +57,9 @@ const PostFormMD = () => {
     setFile(undefined);
     setError(" ");
   };
+  useEffect(() => {
+    console.log(file)
+  },[file])
   return (
     <div className="flex-col flex p-4 bg-bgContainers dark:bg-gray-800 shadow-md">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
