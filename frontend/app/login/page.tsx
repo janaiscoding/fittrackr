@@ -73,13 +73,20 @@ const Login = () => {
                 <a href="/signup">Sign up</a>
               </button>{" "}
             </p>
-            <button
-              className="text-accent dark:text-white text-center font-ubuntu-500 dark:bg-gray-800 rounded p-2 border border-solid border-gray-900 dark:hover:bg-gray-900"
-              aria-label="Click button to try the demo account"
-              onClick={handleDemo}
-            >
-              {isLoading ? "Loading..." : "Try on Demo account"}
-            </button>
+            {!isLoading && (
+              <button
+                className="text-accent dark:text-white text-center font-ubuntu-500 dark:bg-gray-800 rounded p-2 border border-solid border-gray-900 dark:hover:bg-gray-900"
+                aria-label="Click button to try the demo account"
+                onClick={handleDemo}
+              >
+                Try on Demo account
+              </button>
+            )}
+            {isLoading && (
+              <div className="text-accent dark:text-white text-center font-ubuntu-500 dark:bg-gray-800 rounded p-2 border border-solid border-gray-900 dark:hover:bg-gray-900">
+                Loading...
+              </div>
+            )}
           </div>
         </div>
       </div>
