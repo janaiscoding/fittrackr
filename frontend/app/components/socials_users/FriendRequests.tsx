@@ -1,6 +1,3 @@
-import Loader from "../../utils/assets/Loader";
-import useFriendRequests from "../../hooks/useFriendRequests";
-import UserWrapper from "./UserWrapper";
 import FriedRequestWrapper from "./FriedRequestWrapper";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";

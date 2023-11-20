@@ -1,11 +1,9 @@
-import { User } from "../../../utils/types";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import NavigationList from "./Navigation";
-import SidebarAvatar from "../../images/SidebarAvatar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import LoaderUser from "../../ui_elements/LoaderUser";
-import SidebarBanner from "../../images/SidebarBanner";
+import UserWrapperWithBannerAndPosts from "../../socials_users/UserWrapperWithBannerAndPosts";
 
 const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
@@ -29,7 +27,12 @@ const Sidebar = () => {
         {isLoadingUser ? (
           <LoaderUser />
         ) : (
-          <UserPreview currentUser={currentUser} />
+          <div className="bg-bgContainers dark:bg-gray-800 shadow-md">
+          <UserWrapperWithBannerAndPosts currentUser={currentUser} />
+          <p className="text-secondary dark:text-gray-300 text-center p-4">
+            {currentUser.bio}
+          </p>
+        </div>
         )}
       </div>
 
@@ -43,25 +46,3 @@ const Sidebar = () => {
 
 export default Sidebar;
 //@ts-ignore
-
-const UserPreview = ({ currentUser }: { currentUser: User }) => {
-  return (
-    <div className="bg-bgContainers dark:bg-gray-800 shadow-md">
-      <div className="bg-secondary/10 dark:bg-zinc-950/20 flex items-center flex-col gap-1 basis-full">
-        <SidebarBanner banner={currentUser.banner} />
-        <a
-          href={`/users/${currentUser._id}`}
-          className="flex gap-2 items-center p-2 w-full justify-center text-secondary dark:text-white font-ubuntu-500 text-2xl text-center hover:text-accent dark:hover:text-accent"
-        >
-          <SidebarAvatar avatar={currentUser.avatar} />
-          <p>
-            {currentUser.first_name} {currentUser.last_name}
-          </p>
-        </a>
-      </div>
-      <p className="text-secondary dark:text-gray-300 text-center p-4">
-        {currentUser.bio}
-      </p>
-    </div>
-  );
-};

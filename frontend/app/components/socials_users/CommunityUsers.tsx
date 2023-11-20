@@ -1,5 +1,3 @@
-import Loader from "@/app/utils/assets/Loader";
-import UserWrapper from "./UserWrapper";
 import { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "@/app/context/userContext";
@@ -17,15 +15,10 @@ const CommunityUsers = () => {
     setLoading(false);
     setCommunity(data);
   };
-  // useEffect(() => {
-  //   // Filter out the currently logged in user from the community list
-  //   if (userContext.user) {
-  //     getAllUsers(userContext.user._id, handleSuccess);
-  //   }
-  // }, [userContext.user]);
   useEffect(() => {
     getAllUsers(handleSuccess);
   }, []);
+
   return (
     <div className="flex flex-col gap-1">
       {isLoading && (
