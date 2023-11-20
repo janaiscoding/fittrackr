@@ -9,6 +9,7 @@ const FriendRequests = () => {
   // After receiving the logged in user id, I do an API call which fetches all the important info from the /received Endpoint
   const [friendRequests, setFRs] = useState([] as User[]);
   const [isLoading, setLoading] = useState(true);
+  
   useEffect(() => {
     if (currentUser.user?._id) {
       getFriendRequests(currentUser.user._id, setFRs, () => {
