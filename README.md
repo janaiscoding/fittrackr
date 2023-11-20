@@ -12,7 +12,7 @@
 
 ### How it works 👇🏻
 
-![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme-preview.gif)
+![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme.gif)
 
 ### Tech stack 🧰
 
