@@ -11,7 +11,7 @@ const UserWrapperNoPosts = ({ currentUser }: { currentUser: User }) => {
           src={currentUser.avatar.url}
           width={400}
           height={400}
-          className="w-12 h-12 rounded-full object-cover post-pic"
+          className="w-12 h-12 rounded-full object-cover sidebar-avatar border border-white/20 hover:border-white/50"
           alt={currentUser.avatar.alt}
           id="currentUserAvatar"
         />

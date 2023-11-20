@@ -51,11 +51,11 @@
   max-height: 3rem;
   max-width: 3rem;
 }
-.sidebar-avatar-image {
-  min-height: 4.5rem;
-  min-width: 4.5rem;
-  max-height: 4.5rem;
-  max-width: 4.5rem;
+.sidebar-avatar {
+  min-height: 4rem;
+  min-width: 4rem;
+  max-height: 4rem;
+  max-width: 4rem;
 }
 
 input.invalid,

@@ -8,7 +8,7 @@ const SidebarAvatar = ({ avatar }: { avatar: ImageType }) => {
       src={avatar.url}
       width={400}
       height={400}
-      className="w-12 h-12 rounded-full object-cover post-pic"
+      className="w-12 h-12 rounded-full object-cover sidebar-avatar"
       alt={avatar.alt}
       id="currentUserAvatar"
     />
