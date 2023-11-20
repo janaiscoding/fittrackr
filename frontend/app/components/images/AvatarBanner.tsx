@@ -62,7 +62,7 @@ const AvatarBanner = ({
         {isSame && (
           <label
             htmlFor="upload-banner-edit-view"
-            className="flex items-center absolute top-0 left-0 md:text-xl text-secondary dark:text-white dark:bg-gray-800/20 dark:hover:bg-gray-900 hover:text-accent bg-slate-700/20 hover:bg-slate-700/10 p-2 hover:cursor-pointer"
+            className="flex items-center absolute top-0 left-0 md:text-xl text-white bg-gray-800/60 hover:bg-gray-900 p-2 hover:cursor-pointer"
           >
             Change banner
             <input
