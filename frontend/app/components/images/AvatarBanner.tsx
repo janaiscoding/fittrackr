@@ -39,14 +39,14 @@ const AvatarBanner = ({
   };
 
   useEffect(() => {
-     // Auto-upload user banner whenever the file changes.
+    // Auto-upload user banner whenever the file changes.
     const formData = new FormData();
-    if(bannerFile && userContext.user){
-        formData.append("myBanner", bannerFile);
-        formData.append("mimeType", bannerFile.type);
-        uploadBanner(userContext.user._id, formData, handleSuccess, handleError);
+    if (bannerFile && userContext.user) {
+      formData.append("myBanner", bannerFile);
+      formData.append("mimeType", bannerFile.type);
+      uploadBanner(userContext.user._id, formData, handleSuccess, handleError);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bannerFile]);
 
   return (
@@ -73,7 +73,6 @@ const AvatarBanner = ({
               className="hidden"
               onChange={(e) => {
                 setBanner(e.target.files![0]);
-                console.log(e.target.files![0]);
               }}
             />
           </label>

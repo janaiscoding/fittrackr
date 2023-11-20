@@ -6,7 +6,7 @@ const UserWrapperWithBannerAndPosts = ({ currentUser }: { currentUser: User }) =
   return (
     <div className="relative bg-secondary/10 dark:bg-zinc-950/20 flex items-center flex-col gap-1 basis-full">
       <SidebarBanner banner={currentUser.banner} />
-      <div className="absolute bg-slate-950/80 flex gap-2 items-center w-full h-full justify-center">
+      <div className="absolute bg-neutral-950/70 flex gap-2 items-center w-full h-full justify-center">
         <CldImage
           src={currentUser.avatar.url}
           width={400}
