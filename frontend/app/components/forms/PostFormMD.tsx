@@ -57,9 +57,7 @@ const PostFormMD = () => {
     setFile(undefined);
     setError(" ");
   };
-  useEffect(() => {
-    console.log(file)
-  },[file])
+
   return (
     <div className="flex-col flex p-4 bg-bgContainers dark:bg-gray-800 shadow-md">
       <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col gap-1">
