@@ -9,7 +9,8 @@ const auth = passport.authenticate("jwt", { session: false });
 
 router.get("/", auth, UC.get_users);
 
-router.post("/:userID/upload", auth, UC.update_pfp);
+router.post("/:userID/avatar", auth, UC.update_pfp);
+router.post("/:userID/banner", auth, UC.update_banner);
 router.get("/:userID", auth, UC.get_profile);
 router.get("/:userID/posts", auth, UC.get_user_posts);
 router.put("/:userID", auth, rulesUpdateAcc(), valUpdateAcc, UC.update_account);

@@ -9,7 +9,7 @@ import upload from "../middleware/multerConfig";
 import unescapePost from "../utils/unescapePost";
 
 const fullUser = "-email -password";
-const shortUser = "avatar first_name last_name";
+const shortUser = "avatar banner first_name last_name";
 
 // @route GET /users
 // @access Private
@@ -128,7 +128,7 @@ const update_account = async (req: Request, res: Response) => {
   }
 };
 
-// @route POST /users/:userID/upload
+// @route POST /users/:userID/avatar
 // @access Private
 // @description Update the current user's avatar, and sends back the updated User object for context refresh.
 const update_pfp = [
@@ -139,6 +139,30 @@ const update_pfp = [
     if (user && req.file) {
       await user.updateOne({
         avatar: {
+          url: req.file.path,
+          alt: req.file.originalname,
+        },
+      });
+
+      const updatedUser = await User.findById(req.params.userID);
+      if (updatedUser) res.status(202).json({ updatedUser });
+    }
+    if (!user) res.status(404).json({ message: "User was not found" });
+    if (!req.file) res.status(404).json({ message: "No image found." });
+  },
+];
+
+// @route POST /users/:userID/banner
+// @access Private
+// @description Update the current user's banner, and sends back the updated User object for context refresh.
+const update_banner = [
+  //File related error handling happens inside multerConfig.
+  upload.single("myBanner"),
+  async (req: Request, res: Response) => {
+    const user = await User.findById(req.params.userID);
+    if (user && req.file) {
+      await user.updateOne({
+        banner: {
           url: req.file.path,
           alt: req.file.originalname,
         },
@@ -475,6 +499,7 @@ export default {
   get_user_posts,
   update_account,
   update_pfp,
+  update_banner,
   delete_account,
   get_friends_list,
   get_fr_received,

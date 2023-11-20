@@ -27,6 +27,13 @@ const userSchema = new Schema(
       },
       alt: { type: String, default: "nasa-Q1p7bh3SHj8-unsplash.jpg" },
     },
+    banner: {
+      url: {
+        type:String, 
+        default: "https://res.cloudinary.com/dzj44ru2r/image/upload/c_limit,w_700/f_auto/q_auto/v1700484710/DEV/sjaewhr5gqq7vlbppc0x?_a=BAVADNGd0"
+      },
+      alt: {type: String, default: "pexels-antonio-batinić-4164418.jpg"}
+    }
   },
   { timestamps: true }
 );
