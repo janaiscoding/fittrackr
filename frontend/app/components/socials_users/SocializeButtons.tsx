@@ -14,7 +14,7 @@ const SocializeButtons = ({ user }: { user: User }) => {
   } = useSocializer(user);
 
   return (
-    <div className="text-sm text-white">
+    <div className="text-sm text-white pb-2">
       {isPending && (
         <button
           onClick={handleCancel}

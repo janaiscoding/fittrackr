@@ -29,13 +29,11 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <div>
       <TopNav />
-      <div className="max-w-7xl m-auto min-h-[90vh] flex justify-between items-start gap-2 p-2">
-        <ProfileLayout id={id} />
+      <div className="max-w-7xl m-auto flex justify-between items-start gap-2 p-2">
+        <ProfileLayout userID={id} />
       </div>
       {modalContext.modalPost && <FormModal />}
-      <Footer />
       <BotNav />
-
     </div>
   );
 };

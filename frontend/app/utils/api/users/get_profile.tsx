@@ -4,12 +4,12 @@ import { getJwtToken } from "../auth/auth_handler";
 import { User } from "../../types";
 
 const getProfile = (
-  id: string | undefined,
+  userID: string | undefined,
   setter: React.Dispatch<SetStateAction<User>>,
   handleError: () => void
 ) => {
   axios
-    .get(`https://socializer.fly.dev/users/${id}`, {
+    .get(`https://socializer.fly.dev/users/${userID}`, {
       headers: {
         Authorization: `Bearer ${getJwtToken()}`,
       },
@@ -18,7 +18,7 @@ const getProfile = (
       setter(res.data.user);
     })
     .catch((err) => {
-      handleError()
+      handleError();
     });
 };
 

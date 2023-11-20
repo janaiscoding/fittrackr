@@ -24,17 +24,17 @@ const UserInfo = ({
 
   useEffect(() => {
     //This handles context changes when the user will change the avatar or banner
-    if (userContext.user) {
+    if (userContext.user && isSame) {
       setAvatar(userContext.user.avatar);
       setBanner(userContext.user.banner)
     }
-  }, [userContext]);
+  }, [isSame, userContext]);
 
   return (
     <div className="flex flex-col items-center gap-3 my-2">
-      <AvatarBanner banner={banner} isSame={isSame} />
+      {banner && <AvatarBanner banner={banner} isSame={isSame} />}
       <div className="flex items-center gap-3 basis-full w-full">
-        <AvatarProfile avatar={avatar} isSame={isSame} />
+        {avatar && <AvatarProfile avatar={avatar} isSame={isSame} />}
         <div className="font-ubuntu-500 flex items-start justify-between w-full gap-1">
           <div className="flex flex-col gap-1 items-start">
             <p className="flex items-center gap-2 text-black dark:text-white text-xl md:text-3xl">

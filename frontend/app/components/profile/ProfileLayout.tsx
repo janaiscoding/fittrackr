@@ -13,11 +13,9 @@ import LoaderCommunityUser from "../ui_elements/LoaderCommunityUser";
 import { ViewContext } from "@/app/context/viewContext";
 import UserPosts from "./content_components/UserPosts";
 import UserFriends from "./content_components/UserFriends";
-import LoaderPost from "../ui_elements/LoaderPost";
-import PostFormMD from "../forms/PostFormMD";
-import AvatarBanner from "../images/AvatarBanner";
 
-const ProfileLayout = ({ id }: { id: string }) => {
+
+const ProfileLayout = ({ userID }: { userID: string }) => {
   const { currentUser } = useCurrentUser();
   const userContext = useContext(UserContext);
   const viewContext = useContext(ViewContext);
@@ -35,9 +33,9 @@ const ProfileLayout = ({ id }: { id: string }) => {
 
   useEffect(() => {
     // Initial profile loader.
-    getProfile(id, setProfile, handleError);
+    getProfile(userID, setProfile, handleError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, userContext]);
+  }, [userID, userContext]);
 
   useEffect(() => {
     if (profile) {
