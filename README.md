@@ -2,15 +2,12 @@
 
 [🌎 Live Deploy](https://socializerme.vercel.app/) | [🖨️ API Documentation](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
 
-* Set your avatar/banner/ name and bio
-* Create posts with/without images
-* Can edit and delete your posts
-* Can comment to posts
-* Can delete your comments
-* Can like posts and comments
-* Add/Remove different users to your friends list
-* Can delete your account at any time
-* Can use the app from the demo account
+* **Customize** your name, avatar, banner and bio
+* Create posts with or without images. You can edit and delete your posts anytime
+* Comment to posts, you can delete your comments
+* You can like posts and comments. If you liked something, you can also remove your like at any time.
+* Add or remove different users to your friends list. You can cancel outgoing requests, you can decline outcoming requests.
+* You can delete your account at any time. You can try the app with full features with the **demo** account
 * Can swap to light or dark mode themes
 
 ### How it works 👇🏻
