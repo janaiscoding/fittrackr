@@ -8,6 +8,8 @@ import loginRequest from "@/app/utils/api/auth/login_request";
 const LoginForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const [errors, setErrors] = useState<{ msg: string }[]>(
     [] as { msg: string }[]
   );
@@ -16,10 +18,11 @@ const LoginForm = () => {
 
   const handleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
-    // console.log(email, password);
-    loginRequest(email, password, handleSuccess, handleError);
+    loginRequest(email, password, setIsLoading, handleSuccess, handleError);
   };
+
   const handleSuccess = (data: { token: string }) => {
+    setIsLoading(false);
     setJwtToken(data.token);
     router.push("/");
   };
@@ -27,12 +30,14 @@ const LoginForm = () => {
     errors: { msg: string }[];
     message: string;
   }) => {
+    setIsLoading(false);
     if (data.errors) {
       setErrors(data.errors);
     } else {
       setErrors([{ msg: data.message }]);
     }
   };
+
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleLogin(e)}>
       <label className="flex flex-col">
@@ -61,13 +66,24 @@ const LoginForm = () => {
             {err.msg}
           </p>
         ))}
-      <button
-        type="submit"
-        className="text-2xl text-center text-white bg-accent rounded font-medium py-2 w-full md:self-center mt-3 hover:bg-accent/90"
-        aria-label="Sign in button"
-      >
-        Log in
-      </button>
+      {isLoading && (
+        <div
+          className="text-2xl text-center text-white bg-accent rounded font-medium py-2 w-full md:self-center mt-3"
+          aria-label="Sign in button"
+        >
+          Loading...
+        </div>
+      )}
+
+      {!isLoading && (
+        <button
+          type="submit"
+          className="text-2xl text-center text-white bg-accent rounded font-medium py-2 w-full md:self-center mt-3 hover:bg-accent/90"
+          aria-label="Sign in button"
+        >
+          Log In
+        </button>
+      )}
     </form>
   );
 };

@@ -1,28 +1,35 @@
 "use client";
 import { useRouter } from "next/navigation";
-import loginRequest from "../utils/api/auth/login_request";
 import LoginForm from "../components/forms/LoginForm";
 import { useState } from "react";
 import { setJwtToken } from "../utils/api/auth/auth_handler";
 import LogoFront from "../utils/assets/LogoFront";
-import loginDemo from "../demo/loginDemo";
 import Footer from "../components/ui_elements/Footer";
-import Image from "next/image";
-
-import frontImage from "../../public/assets/jon-tyson-5KKglNl852A-unsplash.jpg";
+import loginRequest from "../utils/api/auth/login_request";
 
 const Login = () => {
   const [errors, setErrors] = useState<{ msg: string }[]>(
     [] as { msg: string }[]
   );
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const router = useRouter();
 
   const handleDemo = () => {
-    loginDemo(handleSuccess, handleError);
+    // It needs a loading status
+    loginRequest(
+      //@ts-ignore
+      process.env.NEXT_PUBLIC_DEMO_EMAIL,
+      process.env.NEXT_PUBLIC_DEMO_PASSWORD,
+      setIsLoading,
+      handleSuccess,
+      handleError
+    );
   };
 
   const handleSuccess = (data: { token: string }) => {
+    setIsLoading(false);
     setJwtToken(data.token);
     router.push("/");
   };
@@ -31,6 +38,7 @@ const Login = () => {
     errors: { msg: string }[];
     message: string;
   }) => {
+    setIsLoading(false);
     if (data.errors) {
       setErrors(data.errors);
     } else {
@@ -47,7 +55,7 @@ const Login = () => {
         <div className="basis-full flex flex-col items-center justify-between gap-10 py-10 md:border-l md:border-slate-700">
           <div className="flex flex-col items-center justify-between md:p-10">
             <div className="text-center text-accent dark:text-gray-400 text-3xl font-ubuntu-500">
-              Log in
+              Welcome Back
             </div>
             <LoginForm />
             {errors.length > 0 &&
@@ -70,7 +78,7 @@ const Login = () => {
               aria-label="Click button to try the demo account"
               onClick={handleDemo}
             >
-              Try on Demo Account
+              {isLoading ? "Loading..." : "Try on Demo account"}
             </button>
           </div>
         </div>
