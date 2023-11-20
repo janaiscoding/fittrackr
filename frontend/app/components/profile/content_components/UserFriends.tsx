@@ -1,6 +1,6 @@
 import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
-import UserWrapperCommunityPage from "../../socials_users/UserWrapperCommunityPage";
+import UserWrapperCommunityPage from "../../socials_users/UserWrapperWithButtons";
 
 const UserFriends = ({
   userID,

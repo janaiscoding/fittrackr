@@ -1,4 +1,3 @@
-import Title from "../../ui_elements/Title";
 import FriendRequests from "../../socials_users/FriendRequests";
 import CommunityUsers from "../../socials_users/CommunityUsers";
 

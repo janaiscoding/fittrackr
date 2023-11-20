@@ -2,7 +2,7 @@ import { User } from "@/app/utils/types";
 import { CldImage } from "next-cloudinary";
 import SidebarBanner from "../images/SidebarBanner";
 
-const UserWrapperWithBannerAndPosts = ({
+const UserWrapperWithPosts = ({
   currentUser,
 }: {
   currentUser: User;
@@ -53,4 +53,4 @@ const UserWrapperWithBannerAndPosts = ({
   );
 };
 
-export default UserWrapperWithBannerAndPosts;
+export default UserWrapperWithPosts;

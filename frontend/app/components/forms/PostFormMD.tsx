@@ -5,6 +5,7 @@ import { PostsContext } from "@/app/context/postsContext";
 import { UserContext } from "@/app/context/userContext";
 import { SyntheticEvent, useContext, useState } from "react";
 import getPostsSetter from "@/app/utils/api/posts/posts_setter";
+import getProfile from "@/app/utils/api/users/get_profile";
 
 const PostFormMD = () => {
   const [description, setDescription] = useState("");
@@ -42,9 +43,10 @@ const PostFormMD = () => {
     //Display success message
     setSuccess(true);
     clearData();
-    //Update postsContext
-
+    // Update postsContext and userContext
     getPostsSetter(postsContext.setPosts);
+    //@ts-ignore
+    getProfile(userContext.user?._id, userContext.setUser, () => {});
 
     setTimeout(() => {
       setSuccess(false);

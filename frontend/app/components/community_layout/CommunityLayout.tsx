@@ -1,9 +1,10 @@
 import getAllUsers from "@/app/utils/api/users/get_all_users";
 import { useContext, useEffect, useState } from "react";
 import { User } from "@/app/utils/types";
-import UserWrapperCommunityPage from "../socials_users/UserWrapperCommunityPage";
 import { UserContext } from "@/app/context/userContext";
 import LoaderCommunityUser from "../ui_elements/LoaderCommunityUser";
+import UserWrapperNoPosts from "../socials_users/UserWrapperNoPosts";
+import UserWrapperWithButtons from "../socials_users/UserWrapperWithButtons";
 
 const CommunityLayout = () => {
   const [community, setCommunity] = useState<User[]>([]);
@@ -40,7 +41,7 @@ const CommunityLayout = () => {
         {community
           .filter((user) => user._id !== currentUser.user?._id)
           .map((user, i) => (
-            <UserWrapperCommunityPage user={user} key={i} />
+            <UserWrapperWithButtons user={user} key={i} />
           ))}
       </div>
     </div>

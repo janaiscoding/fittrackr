@@ -10,6 +10,7 @@ import { UserContext } from "@/app/context/userContext";
 import DeletePostModal from "../modals/DeletePostModal";
 import UpdateDescriptionForm from "../modals/EditPostModal";
 import getPosts from "@/app/utils/api/posts/get_posts";
+import getProfile from "@/app/utils/api/users/get_profile";
 
 const PostArticle = ({ post }: { post: Post }) => {
   const { _id, user, comments, createdAt } = post;
@@ -26,10 +27,12 @@ const PostArticle = ({ post }: { post: Post }) => {
     const handleSuccessDel = () => {
       //close delete modal
       setShowDelModal(false);
-      //refresh posts 
+      //refresh posts and user context
       getPosts(postsContext.setPosts, () => {
         setShowDelModal(false);
       });
+      //@ts-ignore
+      getProfile(userContext.user?._id, userContext.setUser, () => {});
     };
     deletePost(_id, handleSuccessDel);
   };

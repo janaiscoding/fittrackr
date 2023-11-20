@@ -3,7 +3,7 @@ import NavigationList from "./Navigation";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/context/userContext";
 import LoaderUser from "../../ui_elements/LoaderUser";
-import UserWrapperWithBannerAndPosts from "../../socials_users/UserWrapperWithBannerAndPosts";
+import UserWrapperWithPosts from "../../socials_users/UserWrapperWithPosts";
 
 const Sidebar = () => {
   const { currentUser, isLoadingUser } = useCurrentUser();
@@ -28,7 +28,7 @@ const Sidebar = () => {
           <LoaderUser />
         ) : (
           <div className="bg-bgContainers dark:bg-gray-800 shadow-md">
-          <UserWrapperWithBannerAndPosts currentUser={currentUser} />
+          <UserWrapperWithPosts currentUser={currentUser} />
           <p className="text-secondary dark:text-gray-300 text-center p-4">
             {currentUser.bio}
           </p>
