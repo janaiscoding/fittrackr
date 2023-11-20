@@ -1,6 +1,6 @@
 # Socializer. Full-stack Social Media Platform 🫶
 
-Record and share your amazing life moments, beautiful pictures or random thoughts. Make friends and stay connected.
+[🌎 Live Deploy](https://socializerme.vercel.app/) | [🖨️ API Documentation](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
 
 * Set your avatar/banner/ name and bio
 * Create posts with/without images
@@ -13,8 +13,16 @@ Record and share your amazing life moments, beautiful pictures or random thought
 * Can use the app from the demo account
 * Can swap to light or dark mode themes
 
+### How it works 👇🏻
 
-[🌎 Live Deploy](https://socializerme.vercel.app/) | [🖨️ API Documentation](https://github.com/janaiscoding/socializer/tree/main/backend#readme)
+![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme-preview.gif)
+
+### Tech stack 🧰
+
+- ReactJs | Next.js | Node.js | MongoDB | JavaScript | TypeScript | TailwindCSS
+- Postman for API routes testing | Cloudinary CDN | Figma for UI/UX design | Visual Studio Code | npm | Linux |  Git and Github
+
+### Details 
 
 - Enhanced the user and developer experience by integrating the **React Context API** and **Custom Hooks**.
 - Implemented **debouncing** on certain functions, in order to reduce the API calls and improve overall UX.
@@ -24,19 +32,8 @@ Record and share your amazing life moments, beautiful pictures or random thought
 - For UI I followed a **mobile-first approach** recommended by TailwindCSS best practices, now with Light and Dark mode!
 - Focused on creating an **accessible-friendly** experience, with a **95+ overall score** on Lighthouse scans.
 
-# Media and previews 👇🏻
 
-![Live socializerme client preview](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/socializerme-preview.gif)
-
-<details>
-<summary> See Lighthouse Report 📊</summary>
-<br>
-
-![Lighthouse report](https://github.com/janaiscoding/socializer/blob/main/frontend/public/assets/lighthouse_reports.png)
-
-</details>
-
-## Getting Started ⚙️
+### Getting Started ⚙️
 
 ```
 git clone git@github.com:janaiscoding/socializer.git
@@ -45,25 +42,6 @@ npm install
 npm run dev
 Listening on localhost:3000
 ```
-
-# Built with 🧰
-
-### Technologies
-
-- ReactJs, Next.js
-- Node.js, MongoDB
-- JavaScript, TypeScript
-- TailwindCSS
-
-### Tools Used
-
-- Postman for API routes testing
-- Cloudinary CDN
-- Figma for UI/UX design
-- Visual Studio Code
-- npm package manager
-- Linux Terminal
-- Git and Github
 
 ### Extras
 
