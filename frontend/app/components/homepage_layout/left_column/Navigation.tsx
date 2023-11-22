@@ -28,7 +28,9 @@ const NavigationList = ({ isDemo }: NavProps) => {
 
   const handleFriendsRedirect = () => {
     viewContext.setCurrent("friends");
-    router.push(`/users/${userContext.user?._id}`);
+    if (userContext.user) {
+      router.push(`/users/${userContext.user._id}`);
+    }
   };
 
   return (

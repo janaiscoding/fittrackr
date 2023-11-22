@@ -1,6 +1,9 @@
 import Loader from "@/app/utils/assets/Loader";
 import useFriendsList from "@/app/hooks/useFriendsList";
 import UserWrapperCommunityPage from "../../socials_users/UserWrapperWithButtons";
+import { useEffect, useState } from "react";
+import { User } from "@/app/utils/types";
+import getFriends from "@/app/utils/api/users/get_friends";
 
 const UserFriends = ({
   userID,
@@ -9,12 +12,15 @@ const UserFriends = ({
   userID: string;
   isSame: boolean | undefined;
 }) => {
-  const { friends, isLoading } = useFriendsList(userID);
-
+  const [f, setFriends] = useState<User[]>([] as User[]);
+  useEffect(() => {
+    getFriends(userID, (friends: User[]) => {
+      setFriends(friends);
+    });
+  }, [userID]);
   return (
     <div>
-      {isLoading && <Loader />}
-      {!isLoading && friends.length === 0 && (
+      {f && f.length === 0 && (
         <p className="w-full self-center text-secondary bg-bgContainers dark:bg-gray-800 dark:text-gray-200 p-2 shadow-md">
           {isSame ? `You don't` : `This user doesn't`} have any friends yet.{" "}
           {isSame && (
@@ -33,9 +39,10 @@ const UserFriends = ({
         </p>
       )}
       <div className="flex flex-col md:flex-row md:flex-wrap gap-1 mt-2">
-        {friends.map((user) => (
-          <UserWrapperCommunityPage user={user} key={user._id} />
-        ))}
+        {f &&
+          f.map((user) => (
+            <UserWrapperCommunityPage user={user} key={user._id} />
+          ))}
       </div>
     </div>
   );
