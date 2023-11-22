@@ -36,6 +36,8 @@
 git clone git@github.com:janaiscoding/socializer.git
 cd socializer/frontend
 npm install
+create .env.local file at root directory of /frontend 
+add your NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME variable
 npm run dev
 Listening on localhost:3000
 ```
